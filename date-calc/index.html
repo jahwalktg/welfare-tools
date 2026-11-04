@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>날짜·기간·만 나이 계산기 | 사회복지사 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="생년월일과 기준일로 만 나이와 자격 연령(34세 이하·60세·65세 이상 등)을, 시작일·끝날로 일수·개월 수·평일 수(공휴일 뺌)를, N개월·평일 N일 뒤 날짜를 계산합니다. 명단을 넣으면 사람마다 만 나이를 붙여 대상자만 골라 줍니다.">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/date-calc/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="날짜·기간·만 나이 계산기 | 사회복지사 업무 도구">
+<meta property="og:description" content="생년월일과 기준일로 만 나이와 자격 연령(34세 이하·60세·65세 이상 등)을, 시작일·끝날로 일수·개월 수·평일 수(공휴일 뺌)를, N개월·평일 N일 뒤 날짜를 계산합니다. 명단을 넣으면 사람마다 만 나이를 붙여 대상자만 골라 줍니다.">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/date-calc/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --red:#C62E3A; --green:#1F8A4C;
+  --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC;
+  --text:#1A2B50; --muted:#5B6885;
+  --blue-bg:#E8F0FF; --amber:#8A5A00; --amber-bg:#FFF1CC; --amber-line:#E5B93C; --green-bg:#E3F5EA; --red-bg:#FDECEE; --btn-text:#FFFFFF;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#27407A; --red:#FF7A84; --green:#5FD08E;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+  }
+}
+:root[data-theme="dark"]{
+  --blue:#6BA1FF; --navy:#27407A; --red:#FF7A84; --green:#5FD08E;
+  --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+  --text:#EAF0FF; --muted:#A9B6DA;
+  --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
+.lead{margin:0 0 6px;color:var(--muted)}
+.now{margin:0 0 14px;font-size:14px;color:var(--muted)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.tabs button{min-height:46px;padding:0 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:16px}
+.tabs button.on{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:19px}
+.row{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end}
+.fld{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fld label,.fld .lbl{font-size:14px;color:var(--muted);font-weight:600}
+input[type=text],input[type=date],input[type=number],select,textarea{min-height:46px;padding:8px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-size:17px;max-width:100%}
+input[type=text].wide{width:240px}
+input[type=number]{width:110px}
+textarea{width:100%;min-height:140px;font-size:15px;font-family:inherit}
+.btn{min-height:44px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.btn-main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.btn-small{min-height:36px;font-size:14px;padding:0 10px}
+.chk{display:inline-flex;align-items:center;gap:6px;min-height:40px;font-size:15px}
+.chk input{width:20px;height:20px}
+.hint{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.err{color:var(--red);font-weight:700}
+.big{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:14px 0 0}
+.big .box{padding:12px 14px;border-radius:12px;background:var(--bg);border:1.5px solid var(--line)}
+.big .box .k{font-size:14px;color:var(--muted)}
+.big .box .v{font-size:26px;font-weight:800;line-height:1.3}
+.big .box .s{font-size:14px;color:var(--muted)}
+.big .box.main{background:var(--blue-bg);border-color:var(--blue)}
+.big .box button{margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1.5px solid var(--line);font-size:15px;font-weight:600;background:var(--surface)}
+.chip.yes{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.chip.no{color:var(--muted)}
+.chip small{font-weight:400}
+details{margin-top:12px}
+details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;align-items:center}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--bg);font-size:14px}
+.tblwrap{overflow-x:auto;max-width:100%;margin-top:10px}
+.rules td input{width:100%;min-height:38px;font-size:15px;padding:4px 8px}
+.rules td input[type=number]{width:72px}
+.note{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:var(--amber-bg);border:1.5px solid var(--amber-line);font-size:14px}
+.tag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:13px;font-weight:700;margin:1px 2px}
+.tag.y{background:var(--green-bg);color:var(--green)}
+.tag.h{background:var(--red-bg);color:var(--red)}
+.listres td.age{font-weight:800;white-space:nowrap}
+.listres tr.bad td{background:var(--amber-bg)}
+.uses{margin-top:20px}
+.uses ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.uses li{padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);font-size:15px}
+.foot{margin-top:24px;padding:14px 4px 0;border-top:1.5px solid var(--line);font-size:15px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:999px;font-size:15px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+.toast.show{opacity:1}
+[hidden]{display:none!important}
+</style>
+<script src="../rates.js"></script>
+</head>
+<body>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › <a href="../index.html#office">사무 도우미</a></p>
+  <h1>날짜·기간·만 나이 계산기</h1>
+  <p class="lead">만 나이와 자격 연령, 참여·계약 기간의 일수·개월 수·평일 수, N개월 뒤 날짜를 바로 계산합니다. 명단을 넣으면 사람마다 만 나이를 붙여 연령 대상자만 골라 줍니다.</p>
+  <p class="now" id="now"></p>
+
+  <div class="tabs" role="tablist" id="tabs"></div>
+
+  <!-- 1. 만 나이 -->
+  <section class="card" id="paneAge">
+    <h2>만 나이</h2>
+    <div class="row">
+      <div class="fld"><label for="birth">생년월일</label><input type="text" id="birth" class="wide" placeholder="1980.10.10 / 801010" autocomplete="off" inputmode="numeric"></div>
+      <div class="fld"><label for="ageBase">기준일</label><input type="date" id="ageBase"></div>
+      <button class="btn btn-small" id="ageToday" type="button">오늘로</button>
+    </div>
+    <p class="hint">1980.10.10 · 1980-10-10 · 19801010 · 801010 · 801010-1(주민번호 앞자리와 뒷자리 첫 숫자)처럼 써도 됩니다. 뒷자리는 첫 숫자만 씁니다.</p>
+    <div id="ageOut"></div>
+    <div class="chips" id="ageChips"></div>
+    <details id="ruleBox">
+      <summary>나이 기준 고치기</summary>
+      <p class="hint">칩은 만 나이로 봅니다. 숫자를 비우면 그쪽 끝은 제한 없음. 이 브라우저에만 저장됩니다.</p>
+      <div class="tblwrap"><table class="rules"><thead><tr><th>이름</th><th>만 이상</th><th>만 이하</th><th>근거</th><th></th></tr></thead><tbody id="ruleRows"></tbody></table></div>
+      <div class="row" style="margin-top:8px"><button class="btn btn-small" id="ruleAdd" type="button">기준 더하기</button><button class="btn btn-small" id="ruleReset" type="button">처음 목록으로</button></div>
+    </details>
+    <p class="note">나이 기준은 해마다 바뀔 수 있고, 사업마다 「신청일」·「연도 말」 등 기준일이 다릅니다. 표시된 근거 문서로 확인하세요. <b>확정은 담당 부서</b>에서 합니다.</p>
+  </section>
+
+  <!-- 2. 기간 -->
+  <section class="card" id="paneSpan" hidden>
+    <h2>기간 (일수·개월 수·평일 수)</h2>
+    <div class="row">
+      <div class="fld"><label for="spS">시작일</label><input type="date" id="spS"></div>
+      <div class="fld"><label for="spE">끝날</label><input type="date" id="spE"></div>
+      <button class="btn btn-small" id="spSwap" type="button">⇄ 바꾸기</button>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <label class="chk"><input type="radio" name="spInc" value="both" checked> 첫날·끝날 모두 넣기 (참여·계약 기간)</label>
+      <label class="chk"><input type="radio" name="spInc" value="end"> 첫날 빼기 (며칠 지났나)</label>
+    </div>
+    <div id="spanOut"></div>
+    <details id="holBox">
+      <summary>공휴일 목록 (평일 수에서 뺌)</summary>
+      <p class="hint">한 줄에 「YYYY-MM-DD 이름」. 처음 목록은 <a href="../rates/index.html">기준값 표</a>의 공휴일(2026·2027년 월력요항)과 같고, 새해 목록은 저절로 더해집니다. 기관 휴무일(창립기념일 등)을 더해도 됩니다. 이 브라우저에만 저장됩니다.</p>
+      <textarea id="holText" spellcheck="false"></textarea>
+      <div class="row" style="margin-top:8px"><button class="btn btn-small" id="holSave" type="button">공휴일 저장</button><button class="btn btn-small" id="holReset" type="button">처음 목록으로</button><span class="hint" id="holStat"></span></div>
+    </details>
+  </section>
+
+  <!-- 3. 날짜 더하기 -->
+  <section class="card" id="paneAdd" hidden>
+    <h2>날짜 더하기·빼기</h2>
+    <div class="row">
+      <div class="fld"><label for="adBase">기준일</label><input type="date" id="adBase"></div>
+      <div class="fld"><label for="adN">얼마나</label><input type="number" id="adN" value="3" min="0" step="1"></div>
+      <div class="fld"><span class="lbl">단위</span><select id="adUnit"><option value="d">일</option><option value="w">주</option><option value="m" selected>개월</option><option value="y">년</option><option value="b">평일(근무일)</option></select></div>
+      <div class="fld"><span class="lbl">방향</span><select id="adDir"><option value="1">뒤</option><option value="-1">앞</option></select></div>
+    </div>
+    <div class="chips" id="adQuick"></div>
+    <div id="addOut"></div>
+    <p class="hint">달의 말일을 넘으면 그달 말일로 맞춥니다(1월 31일 + 1개월 = 2월 28일). 평일은 토·일과 「기간」 탭의 공휴일 목록을 뺍니다.</p>
+  </section>
+
+  <!-- 4. 명단 -->
+  <section class="card" id="paneList" hidden>
+    <h2>명단 한꺼번에 — 만 나이 붙이기·연령 대상자 고르기</h2>
+    <div class="row">
+      <button class="btn btn-main" id="lsFile" type="button">엑셀·CSV 고르기</button>
+      <input type="file" id="lsInput" accept=".xlsx,.xls,.csv" hidden>
+      <div class="fld"><label for="lsBase">기준일</label><input type="date" id="lsBase"></div>
+      <button class="btn btn-small" id="lsExample" type="button">예시 넣어 보기</button>
+      <button class="btn btn-small" id="lsClear" type="button">비우기</button>
+    </div>
+    <p class="hint">또는 엑셀에서 머리글째 복사해 아래에 붙여 넣으세요. 생년월일(또는 주민번호) 칸을 자동으로 찾습니다. 주민번호는 뒷자리 첫 숫자만 쓰고 결과에는 「801010-1******」로 가려 보여 줍니다.</p>
+    <textarea id="lsPaste" placeholder="성명&#9;생년월일&#9;부서&#10;홍길동&#9;1980-10-10&#9;○○팀"></textarea>
+    <div id="lsCols" class="row" style="margin-top:8px"></div>
+    <div id="lsFilter" class="row" style="margin-top:8px" hidden>
+      <div class="fld"><span class="lbl">보기</span><select id="lsRule"></select></div>
+      <div class="fld"><label for="lsMin">만 이상</label><input type="number" id="lsMin" min="0" max="130"></div>
+      <div class="fld"><label for="lsMax">만 이하</label><input type="number" id="lsMax" min="0" max="130"></div>
+      <button class="btn btn-small" id="lsCopy" type="button">보이는 줄 복사</button>
+      <button class="btn btn-small" id="lsXlsx" type="button">보이는 줄 엑셀로</button>
+    </div>
+    <p class="hint" id="lsStat"></p>
+    <div class="tblwrap"><table class="listres" id="lsTable"></table></div>
+  </section>
+
+  <section class="uses">
+    <h2 style="font-size:19px;margin:0">이럴 때 좋아요</h2>
+    <ul>
+      <li><strong>자격 연령 확인</strong> 18세 미만 아동, 19~34세 청년, 65세 이상 노인 같은 기준을 기준일 하나로 바로 봅니다.</li>
+      <li><strong>참여·계약·교육 기간</strong> 「○년 ○개월 ○일」과 평일 수를 함께 봅니다. 공휴일·대체공휴일을 빼서 셉니다.</li>
+      <li><strong>기한 계산</strong> 3개월 뒤 끝날, 평일 7일 안 같은 기한을 구합니다.</li>
+      <li><strong>명단에서 대상자 추리기</strong> 이용자 명단을 넣고 「만 60세 이상」처럼 골라 복사·엑셀로 받습니다.</li>
+    </ul>
+  </section>
+
+  <footer class="foot">
+    <p><strong>입력은 이 PC 브라우저 안에서만 계산하고 저장하지 않습니다.</strong> 저장되는 것은 나이 기준 칩과 공휴일 목록뿐입니다.</p>
+    <p>만든 사람: 서울강남지역자활센터 김태균</p>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id);};
+  var KEY_RULES='welfare-tools.date-calc.rules.v1',KEY_HOL='welfare-tools.date-calc.hol.v1';
+  var WD=['일','월','화','수','목','금','토'];
+  function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+  function lsSet(k,v){try{if(v==null)localStorage.removeItem(k);else localStorage.setItem(k,v);}catch(e){}}
+  function toast(t){var el=$('toast');el.textContent=t;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(function(){el.classList.remove('show');},1600);}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function copyText(t){
+    function fb(){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}ta.remove();}
+    if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).catch(fb);else fb();
+    toast('복사했습니다');
+  }
+
+  /* ---------- 날짜 기본 ---------- */
+  function D(y,m,d){return new Date(y,m-1,d);}
+  function ymd(dt){return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');}
+  function kdate(dt){return dt.getFullYear()+'년 '+(dt.getMonth()+1)+'월 '+dt.getDate()+'일 ('+WD[dt.getDay()]+')';}
+  function dotdate(dt){return dt.getFullYear()+'. '+(dt.getMonth()+1)+'. '+dt.getDate()+'.';}
+  function fromInput(v){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v||'');return m?D(+m[1],+m[2],+m[3]):null;}
+  function today(){var n=new Date();return D(n.getFullYear(),n.getMonth()+1,n.getDate());}
+  function dayDiff(a,b){return Math.round((Date.UTC(b.getFullYear(),b.getMonth(),b.getDate())-Date.UTC(a.getFullYear(),a.getMonth(),a.getDate()))/864e5);}
+  function addDays(dt,n){return D(dt.getFullYear(),dt.getMonth()+1,dt.getDate()+n);}
+  function lastDay(y,m){return new Date(y,m,0).getDate();}
+  function addMonths(dt,n){var y=dt.getFullYear(),m=dt.getMonth()+n;var ty=y+Math.floor(m/12),tm=((m%12)+12)%12+1;return D(ty,tm,Math.min(dt.getDate(),lastDay(ty,tm)));}
+  function valid(y,m,d){return y>=1880&&y<=2200&&m>=1&&m<=12&&d>=1&&d<=lastDay(y,m);}
+
+  /* 생년월일 읽기: 여러 모양 + 주민번호 + 엑셀 일련번호 */
+  function parseBirth(v,refYear){
+    if(v==null)return null;
+    if(v instanceof Date&&!isNaN(v))return {d:D(v.getFullYear(),v.getMonth()+1,v.getDate())};
+    var s=String(v).trim();if(!s)return null;
+    if(/^\d{12}$/.test(s))s='0'+s; /* 숫자 칸에 들어가 앞 0이 빠진 2000년대생 주민번호 */
+    refYear=refYear||today().getFullYear();
+    var m;
+    /* 주민번호 801010-1… */
+    if((m=/^(\d{2})(\d{2})(\d{2})\s*[-–]?\s*([0-9])(?:[0-9*xX●○]{0,6})$/.exec(s))&&(/[-–*xX●○]/.test(s)||/^\d{13}$/.test(s))){
+      var g=+m[4],c=(g===1||g===2||g===5||g===6)?1900:(g===3||g===4||g===7||g===8)?2000:1800;
+      var y=c+(+m[1]);if(valid(y,+m[2],+m[3]))return {d:D(y,+m[2],+m[3]),rrn:m[1]+m[2]+m[3]+'-'+m[4]+'******'};
+      return null;
+    }
+    if((m=/^(\d{4})\s*[.\-\/년]\s*(\d{1,2})\s*[.\-\/월]\s*(\d{1,2})\s*[.일]?$/.exec(s))&&valid(+m[1],+m[2],+m[3]))return {d:D(+m[1],+m[2],+m[3])};
+    if((m=/^(\d{4})(\d{2})(\d{2})$/.exec(s))&&valid(+m[1],+m[2],+m[3]))return {d:D(+m[1],+m[2],+m[3])};
+    if((m=/^(\d{2})\s*[.\-\/]?\s*(\d{2})\s*[.\-\/]?\s*(\d{2})$/.exec(s))){
+      var yy=+m[1],y2=(2000+yy>refYear?1900:2000)+yy;if(valid(y2,+m[2],+m[3]))return {d:D(y2,+m[2],+m[3]),guess:true};
+    }
+    if(/^\d{4,5}(\.\d+)?$/.test(s)){var n=parseFloat(s);if(n>=1&&n<80000&&window.XLSX){var o=XLSX.SSF.parse_date_code(n);if(o&&valid(o.y,o.m,o.d))return {d:D(o.y,o.m,o.d)};}}
+    return null;
+  }
+  function ageOn(b,base){var a=base.getFullYear()-b.getFullYear();var bm=b.getMonth(),bd=b.getDate();
+    /* 2월 29일생은 평년에 3월 1일부터 한 살 더 */
+    if(bm===1&&bd===29&&lastDay(base.getFullYear(),2)===28){bm=2;bd=1;}
+    if(base.getMonth()<bm||(base.getMonth()===bm&&base.getDate()<bd))a--;return a;}
+  function nextBirthday(b,base){var y=base.getFullYear();function at(yy){var d=b.getDate(),m=b.getMonth()+1;if(m===2&&d===29&&lastDay(yy,2)===28){m=3;d=1;}return D(yy,m,d);}var n=at(y);if(dayDiff(base,n)<0)n=at(y+1);return n;}
+
+  /* ---------- 나이 기준 ---------- */
+  var RULES_DEFAULT=[
+    {name:'만 18세 미만 (아동)',min:'',max:'17',src:'아동복지법 제3조 (18세 미만)'},
+    {name:'만 19~34세 (청년)',min:'19',max:'34',src:'청년기본법 제3조 (19세 이상 34세 이하)'},
+    {name:'만 60세 이상 (국민연금 가입 대상 아님)',min:'60',max:'',src:'국민연금법 제6조'},
+    {name:'만 65세 이상 (노인복지법·기초연금 기준)',min:'65',max:'',src:'노인복지법 제26조, 기초연금법 제3조'}
+  ];
+  var RULES=(function(){try{var r=JSON.parse(lsGet(KEY_RULES)||'null');if(Array.isArray(r))return r;}catch(e){}return JSON.parse(JSON.stringify(RULES_DEFAULT));})();
+  function saveRules(){lsSet(KEY_RULES,JSON.stringify(RULES));}
+  function ruleHit(r,age){var mn=r.min===''||r.min==null?null:+r.min,mx=r.max===''||r.max==null?null:+r.max;if(mn==null&&mx==null)return false;return (mn==null||age>=mn)&&(mx==null||age<=mx);}
+  function renderRules(){
+    var tb=$('ruleRows');tb.textContent='';
+    RULES.forEach(function(r,i){var tr=document.createElement('tr');
+      [['name','text'],['min','number'],['max','number'],['src','text']].forEach(function(f){var td=document.createElement('td');var inp=document.createElement('input');inp.type=f[1];inp.value=r[f[0]]==null?'':r[f[0]];inp.setAttribute('aria-label',{name:'이름',min:'만 이상',max:'만 이하',src:'근거'}[f[0]]);
+        inp.addEventListener('input',function(){r[f[0]]=inp.value;saveRules();renderAge();renderListRule();renderList();});td.appendChild(inp);tr.appendChild(td);});
+      var td=document.createElement('td');var b=document.createElement('button');b.type='button';b.className='btn btn-small';b.textContent='빼기';b.addEventListener('click',function(){RULES.splice(i,1);saveRules();renderRules();renderAge();renderListRule();renderList();});td.appendChild(b);tr.appendChild(td);
+      tb.appendChild(tr);});
+  }
+  $('ruleAdd').addEventListener('click',function(){RULES.push({name:'새 기준',min:'',max:'',src:''});saveRules();renderRules();});
+  $('ruleReset').addEventListener('click',function(){if(!confirm('나이 기준을 처음 목록으로 되돌릴까요?'))return;RULES=JSON.parse(JSON.stringify(RULES_DEFAULT));lsSet(KEY_RULES,null);renderRules();renderAge();renderListRule();renderList();});
+
+  /* ---------- 공휴일 ---------- */
+  var HOL_FALLBACK=['2026-01-01 신정','2026-02-16 설날 연휴','2026-02-17 설날','2026-02-18 설날 연휴','2026-03-01 삼일절','2026-03-02 삼일절 대체공휴일','2026-05-01 노동절','2026-05-05 어린이날','2026-05-24 부처님오신날','2026-05-25 부처님오신날 대체공휴일','2026-06-03 지방선거','2026-06-06 현충일','2026-07-17 제헌절','2026-08-15 광복절','2026-08-17 광복절 대체공휴일','2026-09-24 추석 연휴','2026-09-25 추석','2026-09-26 추석 연휴','2026-10-03 개천절','2026-10-05 개천절 대체공휴일','2026-10-09 한글날','2026-12-25 성탄절',
+    '2027-01-01 신정','2027-02-06 설날 연휴','2027-02-07 설날','2027-02-08 설날 연휴','2027-02-09 설날 대체공휴일','2027-03-01 삼일절','2027-05-01 노동절','2027-05-03 노동절 대체공휴일','2027-05-05 어린이날','2027-05-13 부처님오신날','2027-06-06 현충일','2027-07-17 제헌절','2027-07-19 제헌절 대체공휴일','2027-08-15 광복절','2027-08-16 광복절 대체공휴일','2027-09-14 추석 연휴','2027-09-15 추석','2027-09-16 추석 연휴','2027-10-03 개천절','2027-10-04 개천절 대체공휴일','2027-10-09 한글날','2027-10-11 한글날 대체공휴일','2027-12-25 성탄절','2027-12-27 성탄절 대체공휴일'].join('\n');
+  var HOL_DEFAULT=window.JT_RATES?JT_RATES.holidays().join('\n'):HOL_FALLBACK;window.JT_RATES&&JT_RATES.use(['holidays']);
+  var HOL={};
+  function loadHol(text){HOL={};String(text||'').split(/\n/).forEach(function(l){var m=/^\s*(\d{4})-(\d{1,2})-(\d{1,2})\s*(.*)$/.exec(l);if(m&&valid(+m[1],+m[2],+m[3]))HOL[ymd(D(+m[1],+m[2],+m[3]))]=(m[4]||'공휴일').trim();});$('holStat').textContent=Object.keys(HOL).length+'일';}
+  var holText=lsGet(KEY_HOL)||HOL_DEFAULT;
+  /* 저장해 둔 목록에 없는 해의 공휴일은 기준값에서 더함(새해 목록이 저절로 들어오게) */
+  if(lsGet(KEY_HOL)){holText=holText.split(/\n/).filter(function(l){return !/\(예상\)/.test(l);}).join('\n');var _have={};holText.split(/\n/).forEach(function(l){var m=/^\s*(\d{4})-/.exec(l);if(m)_have[m[1]]=1;});var _add=HOL_DEFAULT.split('\n').filter(function(l){var m=/^(\d{4})-/.exec(l);return m&&!_have[m[1]];});if(_add.length)holText=holText.replace(/\s*$/,'')+'\n'+_add.join('\n');}$('holText').value=holText;loadHol(holText);
+  $('holSave').addEventListener('click',function(){lsSet(KEY_HOL,$('holText').value);loadHol($('holText').value);renderSpan();renderAdd();toast('공휴일을 저장했습니다');});
+  $('holReset').addEventListener('click',function(){if(!confirm('공휴일 목록을 처음으로 되돌릴까요?'))return;lsSet(KEY_HOL,null);$('holText').value=HOL_DEFAULT;loadHol(HOL_DEFAULT);renderSpan();renderAdd();});
+  function isOff(dt){return dt.getDay()===0||dt.getDay()===6||!!HOL[ymd(dt)];}
+
+  /* ---------- 결과 상자 ---------- */
+  function boxes(el,list){el.className='big';el.textContent='';list.forEach(function(b){var d=document.createElement('div');d.className='box'+(b.main?' main':'');d.innerHTML='<div class="k">'+esc(b.k)+'</div><div class="v">'+esc(b.v)+'</div>'+(b.s?'<div class="s">'+esc(b.s)+'</div>':'');
+    var bt=document.createElement('button');bt.type='button';bt.className='btn btn-small';bt.textContent='복사';bt.addEventListener('click',function(){copyText(b.copy||b.v);});d.appendChild(bt);el.appendChild(d);});}
+  function msg(el,t){el.className='';el.innerHTML='<p class="hint err">'+esc(t)+'</p>';}
+
+  /* ---------- 1. 만 나이 ---------- */
+  function renderAge(){
+    var out=$('ageOut'),chips=$('ageChips');chips.textContent='';
+    var v=$('birth').value.trim(),base=fromInput($('ageBase').value)||today();
+    if(!v){out.className='';out.innerHTML='<p class="hint">생년월일을 넣으면 바로 계산합니다.</p>';return;}
+    var p=parseBirth(v,base.getFullYear());
+    if(!p){msg(out,'날짜로 읽지 못했습니다. 1980.10.10처럼 넣어 주세요.');return;}
+    var b=p.d;if(dayDiff(b,base)<0){msg(out,'기준일이 생년월일보다 앞입니다.');return;}
+    var a=ageOn(b,base),nb=nextBirthday(b,base),left=dayDiff(base,nb);
+    boxes(out,[
+      {k:'만 나이 ('+dotdate(base)+' 기준)',v:'만 '+a+'세',main:true,s:kdate(b)+' 생'+(p.guess?' · 앞 두 자리로 '+b.getFullYear()+'년으로 봄':'')},
+      {k:'연 나이 (올해 − 출생 연도)',v:(base.getFullYear()-b.getFullYear())+'세',s:b.getFullYear()+'년생'},
+      {k:'다음 생일까지',v:left===0?'오늘이 생일':left+'일',s:kdate(nb)+' 만 '+(a+(left===0?0:1))+'세'},
+      {k:'태어난 지',v:dayDiff(b,base).toLocaleString('ko-KR')+'일'}
+    ]);
+    RULES.forEach(function(r){if(!r.name)return;var hit=ruleHit(r,a);var c=document.createElement('span');c.className='chip '+(hit?'yes':'no');c.title=r.src||'';c.innerHTML=(hit?'✔ 해당 · ':'아님 · ')+esc(r.name)+(r.src?' <small>('+esc(r.src)+')</small>':'');chips.appendChild(c);});
+  }
+  ['input','change'].forEach(function(ev){$('birth').addEventListener(ev,renderAge);$('ageBase').addEventListener(ev,renderAge);});
+  $('ageToday').addEventListener('click',function(){$('ageBase').value=ymd(today());renderAge();});
+
+  /* ---------- 2. 기간 ---------- */
+  function ymdSpan(a,bEx){ /* a 부터 bEx(끝 다음 날) 직전까지 → 년·개월·일 */
+    var mo=0;while(dayDiff(addMonths(a,mo+1),bEx)>=0)mo++;
+    var rest=dayDiff(addMonths(a,mo),bEx);return {y:Math.floor(mo/12),m:mo%12,mo:mo,d:rest};
+  }
+  function renderSpan(){
+    var out=$('spanOut'),s=fromInput($('spS').value),e=fromInput($('spE').value);
+    if(!s||!e){out.className='';out.innerHTML='<p class="hint">시작일과 끝날을 고르세요.</p>';return;}
+    if(dayDiff(s,e)<0){msg(out,'끝날이 시작일보다 앞입니다. 「⇄ 바꾸기」를 누르세요.');return;}
+    var both=document.querySelector('input[name=spInc]:checked').value==='both';
+    var from=both?s:addDays(s,1),endEx=addDays(e,1);
+    var days=dayDiff(from,endEx);
+    var sp=ymdSpan(from,endEx);
+    var work=0,wk=0,hol=[];for(var d=from;dayDiff(d,endEx)>0;d=addDays(d,1)){if(d.getDay()===0||d.getDay()===6)wk++;else if(HOL[ymd(d)])hol.push(d);else work++;}
+    var ymTxt=(sp.y?sp.y+'년 ':'')+(sp.m?sp.m+'개월 ':'')+(sp.d||(!sp.y&&!sp.m)?sp.d+'일':'');
+    boxes(out,[
+      {k:both?'일수 (첫날·끝날 포함)':'지난 날 (첫날 빼기)',v:days.toLocaleString('ko-KR')+'일',main:true,s:Math.floor(days/7)+'주 '+(days%7)+'일'},
+      {k:'년·개월·일',v:ymTxt.trim(),s:'개월로만: '+sp.mo+'개월 '+sp.d+'일'},
+      {k:'평일 (토·일·공휴일 뺌)',v:work+'일',s:'토·일 '+wk+'일 · 평일 공휴일 '+hol.length+'일'}
+    ]);
+    if(hol.length){var p=document.createElement('p');p.className='hint';p.style.gridColumn='1/-1';p.textContent='뺀 공휴일: '+hol.map(function(d){return (d.getMonth()+1)+'/'+d.getDate()+'('+WD[d.getDay()]+') '+HOL[ymd(d)];}).join(', ');out.appendChild(p);}
+    var yrs={};for(var y=from.getFullYear();y<=e.getFullYear();y++)yrs[y]=1;
+    var noHol=Object.keys(yrs).filter(function(y){return !Object.keys(HOL).some(function(k){return k.indexOf(y+'-')===0;});});
+    if(noHol.length){var q=document.createElement('p');q.className='hint err';q.style.gridColumn='1/-1';q.textContent=noHol.join('·')+'년 공휴일이 목록에 없어 평일 수에 공휴일이 빠지지 않았습니다. 아래 「공휴일 목록」에 더하세요.';out.appendChild(q);}
+  }
+  ['input','change'].forEach(function(ev){$('spS').addEventListener(ev,renderSpan);$('spE').addEventListener(ev,renderSpan);});
+  document.querySelectorAll('input[name=spInc]').forEach(function(r){r.addEventListener('change',renderSpan);});
+  $('spSwap').addEventListener('click',function(){var a=$('spS').value;$('spS').value=$('spE').value;$('spE').value=a;renderSpan();});
+
+  /* ---------- 3. 날짜 더하기 ---------- */
+  var QUICK=[['3개월 뒤',3,'m',1],['6개월 뒤',6,'m',1],['1년 뒤',1,'y',1],['30일 뒤',30,'d',1],['평일 7일 뒤',7,'b',1],['평일 14일 뒤',14,'b',1]];
+  QUICK.forEach(function(q){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=q[0];b.addEventListener('click',function(){$('adN').value=q[1];$('adUnit').value=q[2];$('adDir').value=String(q[3]);renderAdd();});$('adQuick').appendChild(b);});
+  function renderAdd(){
+    var out=$('addOut'),base=fromInput($('adBase').value),n=parseInt($('adN').value,10),u=$('adUnit').value,dir=+$('adDir').value;
+    if(!base||isNaN(n)||n<0){out.className='';out.innerHTML='<p class="hint">기준일과 숫자를 넣으세요.</p>';return;}
+    var r,list=[];
+    if(u==='d')r=addDays(base,n*dir);
+    else if(u==='w')r=addDays(base,7*n*dir);
+    else if(u==='m')r=addMonths(base,n*dir);
+    else if(u==='y')r=addMonths(base,12*n*dir);
+    else{r=base;var c=0;while(c<n){r=addDays(r,dir);if(!isOff(r))c++;}}
+    var off=HOL[ymd(r)]?HOL[ymd(r)]:(r.getDay()===0||r.getDay()===6?(r.getDay()===0?'일요일':'토요일'):'');
+    var unitName={d:'일',w:'주',m:'개월',y:'년',b:'평일'}[u];
+    list.push({k:dotdate(base)+'에서 '+n+(u==='b'?'일(평일)':unitName)+' '+(dir>0?'뒤':'앞'),v:kdate(r),main:true,s:off?'⚠ 쉬는 날('+off+')입니다':'근무일입니다',copy:ymd(r)});
+    if(off){var nx=r;while(isOff(nx))nx=addDays(nx,dir>0?1:-1);list.push({k:dir>0?'다음 근무일':'앞 근무일',v:kdate(nx),copy:ymd(nx)});}
+    if((u==='m'||u==='y'||u==='w'||u==='d')&&dir>0){var last=addDays(r,-1);list.push({k:'첫날을 넣어 세는 기간의 끝날',v:kdate(last),s:dotdate(base)+' ~ '+dotdate(last)+' (참여·계약 기간)',copy:ymd(last)});}
+    var dd=dayDiff(today(),r);list.push({k:'오늘부터',v:dd===0?'오늘':(dd>0?'D-'+dd:'D+'+(-dd)),s:dd>0?dd+'일 남음':dd<0?(-dd)+'일 지남':''});
+    boxes(out,list);
+  }
+  ['input','change'].forEach(function(ev){['adBase','adN','adUnit','adDir'].forEach(function(id){$(id).addEventListener(ev,renderAdd);});});
+
+  /* ---------- 4. 명단 ---------- */
+  var LS={head:[],rows:[],bCol:-1,nCol:-1,parsed:[]};
+  var BIRTH_H=/^(생년월일|생일|출생일|출생일자|생년|주민(등록)?번호|주민등록번호\(?앞자리\)?|생년월일\(.*\))$/;
+  var NAME_H=/^(성명|이름|이용자|이용자명|대상자|대상자명|수급자명|성함)$/;
+  function hcell(c){return String(c==null?'':c).replace(/\s/g,'');}
+  function setTable(arr){
+    arr=arr.filter(function(r){return r&&r.some(function(c){return String(c==null?'':c).trim()!=='';});});
+    if(!arr.length){LS={head:[],rows:[],bCol:-1,nCol:-1,parsed:[]};renderList();return;}
+    /* 머리글 줄: 앞 10줄 중 생년월일·이름 낱말이 든 줄 */
+    var hi=-1,hs=0;for(var i=0;i<Math.min(10,arr.length);i++){var t=arr[i].map(hcell);var sc=t.filter(function(c){return BIRTH_H.test(c);}).length*2+t.filter(function(c){return NAME_H.test(c);}).length;if(sc>hs){hs=sc;hi=i;}}
+    var head,rows;if(hi>=0){head=arr[hi].map(function(c,i){return String(c==null?'':c).trim()||('칸'+(i+1));});rows=arr.slice(hi+1);}else{var w=Math.max.apply(null,arr.map(function(r){return r.length;}));head=[];for(var k=0;k<w;k++)head.push('칸'+(k+1));rows=arr;}
+    var w2=Math.max(head.length,Math.max.apply(null,rows.map(function(r){return r.length;})));while(head.length<w2)head.push('칸'+(head.length+1));
+    LS.head=head;LS.rows=rows.map(function(r){var o=r.slice();while(o.length<w2)o.push('');return o;});
+    /* 생년월일 칸: 머리글 → 없으면 날짜로 읽히는 줄이 가장 많은 칸 */
+    function okCount(c){return LS.rows.filter(function(r){return parseBirth(r[c]);}).length;}
+    LS.bCol=-1;var bb=-1;head.forEach(function(h,i){if(BIRTH_H.test(hcell(h))){var n=okCount(i);if(n>bb){bb=n;LS.bCol=i;}}});
+    if(LS.bCol<0){var best=-1,bc=0;for(var c=0;c<w2;c++){var n=LS.rows.filter(function(r){return parseBirth(r[c]);}).length;if(n>bc){bc=n;best=c;}}LS.bCol=bc>=Math.max(1,LS.rows.length*0.5)?best:-1;}
+    LS.nCol=head.findIndex(function(h){return NAME_H.test(hcell(h));});
+    renderCols();renderList();
+  }
+  function renderCols(){
+    var el=$('lsCols');el.textContent='';if(!LS.head.length)return;
+    [['생년월일(주민번호) 칸','bCol'],['이름 칸','nCol']].forEach(function(f){var d=document.createElement('div');d.className='fld';var l=document.createElement('span');l.className='lbl';l.textContent=f[0];var s=document.createElement('select');
+      var o0=document.createElement('option');o0.value='-1';o0.textContent='(없음)';s.appendChild(o0);
+      LS.head.forEach(function(h,i){var o=document.createElement('option');o.value=String(i);o.textContent=h;s.appendChild(o);});s.value=String(LS[f[1]]);
+      s.addEventListener('change',function(){LS[f[1]]=+s.value;renderList();});d.appendChild(l);d.appendChild(s);el.appendChild(d);});
+  }
+  function renderListRule(){var s=$('lsRule'),cur=s.value;s.textContent='';var o=document.createElement('option');o.value='all';o.textContent='모두';s.appendChild(o);
+    RULES.forEach(function(r,i){if(!r.name)return;var op=document.createElement('option');op.value=String(i);op.textContent=r.name+'만';s.appendChild(op);});
+    var bad=document.createElement('option');bad.value='bad';bad.textContent='생년월일 못 읽은 줄만';s.appendChild(bad);
+    s.value=Array.prototype.some.call(s.options,function(x){return x.value===cur;})?cur:'all';}
+  function visibleRows(){
+    var base=fromInput($('lsBase').value)||today(),sel=$('lsRule').value,mn=$('lsMin').value,mx=$('lsMax').value;
+    return LS.rows.map(function(r){var p=LS.bCol>=0?parseBirth(r[LS.bCol],base.getFullYear()):null;var a=p&&dayDiff(p.d,base)>=0?ageOn(p.d,base):null;
+      return {r:r,p:p,a:a,hits:RULES.map(function(x){return a!=null&&ruleHit(x,a);})};})
+      .filter(function(o){
+        if(sel==='bad')return o.a==null;
+        if(sel!=='all'&&!(o.hits[+sel]))return false;
+        if(mn!==''&&(o.a==null||o.a<+mn))return false;
+        if(mx!==''&&(o.a==null||o.a>+mx))return false;
+        return true;});
+  }
+  /* 주민번호 모양(어느 칸이든)은 뒷자리 첫 숫자만 남기고 가림 */
+  function maskRrn(v){var t=String(v==null?'':v).trim();if(/^\d{12}$/.test(t))t='0'+t;var m=/^(\d{6})\s*[-–]?\s*([0-9])[0-9*xX●○]{6}$/.exec(t);return m?m[1]+'-'+m[2]+'******':null;}
+  function cellOut(o,i){if(i===LS.bCol){if(o.p&&o.p.rrn)return o.p.rrn;if(o.p)return ymd(o.p.d);}var mk=maskRrn(o.r[i]);if(mk)return mk;return o.r[i]==null?'':String(o.r[i]);}
+  function renderList(){
+    var tb=$('lsTable');tb.textContent='';
+    $('lsFilter').hidden=!LS.rows.length;
+    if(!LS.rows.length){$('lsStat').textContent='';return;}
+    if(LS.bCol<0){$('lsStat').innerHTML='<span class="err">생년월일 칸을 찾지 못했습니다. 위에서 칸을 골라 주세요.</span>';}
+    var vis=visibleRows(),base=fromInput($('lsBase').value)||today();
+    var all=LS.rows.length,bad=LS.rows.filter(function(r){return !(LS.bCol>=0&&parseBirth(r[LS.bCol]));}).length;
+    if(LS.bCol>=0)$('lsStat').textContent='전체 '+all+'명 · 보이는 줄 '+vis.length+'명 · 기준일 '+dotdate(base)+(bad?' · 생년월일 못 읽음 '+bad+'명(노란 줄)':'');
+    var th='<thead><tr>'+LS.head.map(function(h){return '<th>'+esc(h)+'</th>';}).join('')+'<th>만 나이</th><th>해당 기준</th></tr></thead>';
+    var body=vis.slice(0,1000).map(function(o){
+      return '<tr'+(o.a==null?' class="bad"':'')+'>'+LS.head.map(function(h,i){return '<td>'+esc(cellOut(o,i))+'</td>';}).join('')+
+        '<td class="age">'+(o.a==null?'?':'만 '+o.a+'세')+'</td><td>'+RULES.map(function(r,i){return o.hits[i]?'<span class="tag y">'+esc(r.name)+'</span>':'';}).join('')+'</td></tr>';}).join('');
+    tb.innerHTML=th+'<tbody>'+body+'</tbody>';
+    if(vis.length>1000){var p=document.createElement('caption');p.textContent='화면에는 1,000줄까지만 보입니다. 복사·엑셀에는 모두 들어갑니다.';tb.prepend(p);}
+  }
+  function exportRows(){var vis=visibleRows();var head=LS.head.concat(['만 나이']).concat(RULES.filter(function(r){return r.name;}).map(function(r){return r.name;}));
+    var rows=vis.map(function(o){return LS.head.map(function(h,i){return cellOut(o,i);}).concat([o.a==null?'':o.a]).concat(RULES.map(function(r,i){return r.name?(o.hits[i]?'해당':''):null;}).filter(function(x){return x!==null;}));});
+    return [head].concat(rows);}
+  $('lsCopy').addEventListener('click',function(){copyText(exportRows().map(function(r){return r.map(function(c){return String(c).replace(/[\t\n]/g,' ');}).join('\t');}).join('\n'));});
+  $('lsXlsx').addEventListener('click',function(){if(!window.XLSX){toast('엑셀 도구를 불러오지 못했습니다');return;}var data=exportRows();var ws=XLSX.utils.aoa_to_sheet(data);
+    var bi=LS.bCol;if(bi>=0){for(var r=1;r<data.length;r++){var a=XLSX.utils.encode_cell({r:r,c:bi});if(ws[a]){ws[a].t='s';ws[a].z='@';}}}
+    ws['!cols']=data[0].map(function(h){return {wch:Math.max(8,Math.min(30,String(h).length*2+2))};});
+    var wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'만나이');var base=fromInput($('lsBase').value)||today();XLSX.writeFile(wb,'만나이_'+ymd(base)+'기준.xlsx');});
+  $('lsFile').addEventListener('click',function(){$('lsInput').click();});
+  $('lsInput').addEventListener('change',function(){var f=$('lsInput').files[0];$('lsInput').value='';if(f)readFile(f);});
+  function readFile(f){
+    if(!window.XLSX){toast('엑셀 도구를 불러오지 못했습니다. 인터넷 연결을 확인하세요.');return;}
+    var rd=new FileReader();rd.onload=function(){try{
+      var wb=XLSX.read(new Uint8Array(rd.result),{type:'array'});var ws=wb.Sheets[wb.SheetNames[0]];
+      var arr=XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:''});
+      /* 날짜 서식 칸은 엑셀 일련번호로 오고 parseBirth가 읽음 (cellDates는 하루 밀려서 쓰지 않음) */
+      $('lsPaste').value='';setTable(arr);toast(f.name+' 읽음 ('+wb.SheetNames[0]+' 시트)');
+    }catch(e){toast('파일을 읽지 못했습니다');}};rd.readAsArrayBuffer(f);
+  }
+  var pasteT;$('lsPaste').addEventListener('input',function(){clearTimeout(pasteT);pasteT=setTimeout(function(){var t=$('lsPaste').value;setTable(t.split(/\r?\n/).map(function(l){return l.split(/\t/);}));},300);});
+  $('lsExample').addEventListener('click',function(){$('lsPaste').value=['성명\t생년월일\t부서','김하늘\t1958.03.14\t○○팀','이바다\t911207-2\t○○팀','박구름\t19900615\t○○팀','최들판\t1966-11-02\t○○가공','정새벽\t030405-3\t○○편의점','한별\t1961.10.30\t○○팀','오솔\t모름\t○○가공'].join('\n');setTable($('lsPaste').value.split('\n').map(function(l){return l.split('\t');}));});
+  $('lsClear').addEventListener('click',function(){$('lsPaste').value='';setTable([]);});
+  ['input','change'].forEach(function(ev){['lsBase','lsRule','lsMin','lsMax'].forEach(function(id){$(id).addEventListener(ev,renderList);});});
+  window._dc={setTable:setTable,parseBirth:parseBirth,ageOn:ageOn,visibleRows:visibleRows};
+
+  /* ---------- 탭 ---------- */
+  var TABS=[['age','만 나이','paneAge',['나이','age']],['span','기간','paneSpan',['기간','span','period']],['add','날짜 더하기','paneAdd',['더하기','add']],['list','명단 한꺼번에','paneList',['명단','list']]];
+  function showTab(id,push){TABS.forEach(function(t){$(t[2]).hidden=t[0]!==id;var b=document.querySelector('#tabs [data-t="'+t[0]+'"]');b.className=t[0]===id?'on':'';b.setAttribute('aria-selected',t[0]===id?'true':'false');});
+    if(push){var t=TABS.filter(function(x){return x[0]===id;})[0];try{history.replaceState(null,'','#'+t[3][0]);}catch(e){}}}
+  TABS.forEach(function(t){var b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.dataset.t=t[0];b.textContent=t[1];b.addEventListener('click',function(){showTab(t[0],true);});$('tabs').appendChild(b);});
+  function fromHash(){var h=decodeURIComponent(location.hash.replace('#',''));var t=TABS.filter(function(x){return x[3].indexOf(h)>=0;})[0];showTab(t?t[0]:'age',false);}
+  window.addEventListener('hashchange',fromHash);
+
+  /* ---------- 시작 ---------- */
+  var t0=today(),ti=ymd(t0);
+  $('ageBase').value=ti;$('spS').value=ti;$('spE').value=ymd(addDays(addMonths(t0,3),-1));$('adBase').value=ti;$('lsBase').value=ti;
+  function tick(){var n=new Date();$('now').textContent='오늘 '+kdate(n)+' '+String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');}
+  tick();setInterval(tick,30000);
+  renderRules();renderListRule();renderAge();renderSpan();renderAdd();renderList();fromHash();
+})();
+</script>
+<script src="../drop.js"></script>
+<script src="../videos.js?v=5"></script>
+<script src="../remake.js"></script>
+</body>
+</html>

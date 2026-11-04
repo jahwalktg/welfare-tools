@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>우편 주소 라벨 인쇄 | 사회복지사 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="(우편번호 자동 채움 가능) 주소 명단 엑셀(xlsx·xls·csv)을 넣거나 붙여 넣으면 → 빠진 우편번호를 찾아 채우고 → A4 스티커 용지를 칸 수·간격대로 나눠(자르는 선 포함) 또는 시판 라벨지에 인쇄합니다. 우편번호만 더한 엑셀로도 받을 수 있습니다.">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/labels/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="우편 주소 라벨 인쇄 | 사회복지사 업무 도구">
+<meta property="og:description" content="(우편번호 자동 채움 가능) 주소 명단 엑셀(xlsx·xls·csv)을 넣거나 붙여 넣으면 → 빠진 우편번호를 찾아 채우고 → A4 스티커 용지를 칸 수·간격대로 나눠(자르는 선 포함) 또는 시판 라벨지에 인쇄합니다. 우편번호만 더한 엑셀로도 받을 수 있습니다.">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/labels/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --red:#E63946; --green:#1F8A4C;
+  --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC;
+  --text:#1A2B50; --muted:#5B6885;
+  --blue-bg:#E8F0FF; --amber:#8A5A00; --amber-bg:#FFF1CC; --red-bg:#FDECEE; --green-bg:#E3F5EA; --btn-text:#FFFFFF;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#27407A; --red:#FF6B76; --green:#5FD08E;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --red-bg:#3D1620; --green-bg:#123524; --btn-text:#0E1630;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1400px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
+.lead{margin:0 0 14px;color:var(--muted)}
+.layout{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:1050px){.layout{grid-template-columns:470px minmax(0,1fr);align-items:start}.right{position:sticky;top:10px;max-height:calc(100vh - 20px);overflow:auto}}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 8px;font-size:19px;display:flex;align-items:center;gap:8px}
+.card h2 .no{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--blue);color:var(--btn-text);font-size:14px;flex:none}
+.sub{margin:0 0 10px;color:var(--muted);font-size:14px}
+.drop{display:grid;place-items:center;text-align:center;min-height:86px;padding:10px;border:2px dashed var(--line);border-radius:12px;background:var(--bg);cursor:pointer;color:var(--muted)}
+.drop.over{border-color:var(--blue);background:var(--blue-bg)}
+.drop b{color:var(--text)}
+.field{display:block;margin-bottom:8px}
+.field>span{display:block;font-size:13px;color:var(--muted);margin-bottom:2px}
+.in,select.in,textarea.in{width:100%;min-height:40px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg)}
+textarea.in{min-height:80px;resize:vertical;font-size:14px}
+.row2{display:grid;gap:8px;grid-template-columns:1fr 1fr}
+.row3{display:grid;gap:8px;grid-template-columns:1fr 1fr 1fr}
+.btn{min-height:40px;padding:0 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.btn-main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.note{font-size:14px;color:var(--muted);margin:6px 0 0}
+.note.ok{color:var(--green);font-weight:600}
+.note.warn{color:var(--amber);font-weight:600}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;margin:4px 0}
+.chk input{width:18px;height:18px}
+details.more{margin-top:8px}
+details.more summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--blue)}
+.tblwrap{max-height:300px;overflow:auto;border:1.5px solid var(--line);border-radius:10px;margin-top:8px}
+table.list{border-collapse:collapse;width:100%;font-size:13px}
+table.list th,table.list td{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left;vertical-align:top}
+table.list th{position:sticky;top:0;background:var(--surface);z-index:1}
+table.list tr.bad td{background:var(--red-bg)}
+table.list tr.warn td{background:var(--amber-bg)}
+table.list tr.dup td{opacity:.55}
+.sum{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;font-size:13px;font-weight:700}
+.sum span{padding:2px 9px;border-radius:999px;background:var(--bg)}
+.sum .s-bad{background:var(--red-bg);color:var(--red)}
+.sum .s-warn{background:var(--amber-bg);color:var(--amber)}
+.zipbox{margin-top:14px;padding:12px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg)}
+.zipbox h3{margin:0 0 4px;font-size:17px}
+.zf{font-size:11px;font-weight:800;border-radius:6px;padding:0 5px;margin-left:4px}
+.zf.ok{background:var(--green-bg);color:var(--green)}
+.zf.none{background:var(--red-bg);color:var(--red)}
+.zf.multi{background:var(--amber-bg);color:var(--amber)}
+table.list select{font-size:12px;max-width:220px;padding:2px}
+.howto{margin:0 0 14px;padding:12px 14px 12px 34px;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;font-size:15px}
+.howto li{margin:2px 0}
+.stage{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.bar .grow{flex:1}
+#pages{display:flex;flex-direction:column;gap:14px;align-items:center}
+.pagewrap{background:#DDE2EA;padding:10px;border-radius:10px;max-width:100%;overflow:hidden}
+/* 라벨지 (실제 mm) */
+.page{position:relative;width:210mm;height:297mm;background:#fff;color:#111;box-shadow:0 2px 10px rgba(0,0,0,.2);overflow:hidden;font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+.lab{position:absolute;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:.6mm;padding:2.5mm 4mm;line-height:1.3}
+.page.guide .lab{outline:0.25mm dashed #9AA6B8;outline-offset:-0.25mm}
+.lab .from{font-size:.72em;color:#555}
+.lab .zip{font-size:.85em;letter-spacing:.06em;color:#222}
+.lab .addr{font-size:1em}
+.lab .to{font-size:1.18em;font-weight:700;text-align:right;margin-top:.4mm}
+.page.cut-solid .lab{outline:0.2mm solid #8A8F98;outline-offset:-0.1mm}
+.page.cut-dash .lab{outline:0.25mm dashed #8A8F98;outline-offset:-0.12mm}
+.lab.empty{background:repeating-linear-gradient(45deg,transparent 0 3mm,rgba(0,0,0,.04) 3mm 6mm)}
+.page.print-only .lab.empty{background:none}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20;max-width:calc(100% - 32px)}
+.toast.on{opacity:1}
+.hidden{display:none !important}
+.foot{margin-top:24px;padding-top:14px;border-top:1.5px solid var(--line);font-size:14px;color:var(--muted)}
+.foot p{margin:2px 0}
+#printArea{display:none}
+@media print{
+  @page{size:A4;margin:0}
+  body{background:#fff}
+  body > *{display:none !important}
+  body > #printArea{display:block !important}
+  #printArea .page{box-shadow:none;break-after:page;page-break-after:always}
+  #printArea .page:last-child{break-after:auto;page-break-after:auto}
+  #printArea .lab.empty{background:none}
+  #printArea .page.cut-solid .lab{outline:0.2mm solid #8A8F98}
+  #printArea .page.cut-dash .lab{outline:0.25mm dashed #8A8F98}
+}
+</style>
+</head>
+<body>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › 문서·명단 도구</p>
+  <h1>우편 주소 라벨 인쇄 <small style="font-size:17px;color:var(--green);font-weight:700">(우편번호 자동 채움 가능)</small></h1>
+  <p class="lead">엑셀 명단(이름·주소)을 넣으면 빠진 우편번호를 찾아 채우고, A4 스티커 용지를 원하는 칸 수·간격으로 나눠(자르는 선 포함) 또는 시판 라벨지 칸에 맞춰 주소 라벨을 채우고 바로 인쇄합니다. 칸은 머리글 이름으로 알아서 찾고, 주소가 빠진 사람·같은 사람은 미리 알려 줍니다. 명단은 이 PC 안에서만 처리합니다.</p>
+  <ol class="howto">
+    <li><b>명단 넣기</b> — 엑셀 파일(xlsx·xls·csv)을 끌어다 놓거나, 엑셀에서 머리글 줄까지 복사해 붙여 넣기. 이름·주소 칸만 있으면 됩니다(우편번호·기관·직함·상세주소 칸은 있으면 씀).</li>
+    <li><b>칸 확인</b> — 머리글 이름으로 칸을 알아서 고릅니다. 빨간 줄(주소 없음)·노란 줄(우편번호 없음)을 확인하세요.</li>
+    <li><b>우편번호 채우기 (필요할 때)</b> — 「우편번호 찾기」를 누르면 빠진 우편번호를 찾아 채웁니다. 우편번호만 필요하면 「우편번호 더한 엑셀 받기」로 끝.</li>
+    <li><b>인쇄</b> — 용지(A4 스티커 칸 나누기 또는 시판 라벨지)를 고르고 「인쇄」. 처음엔 보통 종이로 시험 인쇄해 겹쳐 보세요.</li>
+  </ol>
+
+  <div class="layout">
+    <div>
+      <section class="card">
+        <h2><span class="no">1</span>명단 넣기</h2>
+        <div class="drop" id="drop" tabindex="0"><div><b>엑셀 파일을 끌어다 놓거나 눌러서 고르기</b><br><span class="note">xlsx · xls · csv</span></div></div>
+        <input type="file" id="file" accept=".xlsx,.xls,.csv,.txt" hidden>
+        <label class="field hidden" id="sheetRow" style="margin-top:8px"><span>시트</span><select class="in" id="sheet"></select></label>
+        <details class="more"><summary>엑셀에서 복사해 붙여 넣기</summary>
+          <textarea class="in" id="paste" placeholder="엑셀에서 머리글 줄까지 함께 복사해 여기에 붙여 넣으세요"></textarea>
+        </details>
+        <div class="btns"><button class="btn" type="button" id="btnSample">예시 명단 넣어 보기</button></div>
+        <p class="note" id="fileNote"></p>
+      </section>
+
+      <section class="card hidden" id="mapCard">
+        <h2><span class="no">2</span>칸 맞추기·명단 확인</h2>
+        <p class="sub">머리글 이름으로 알아서 골랐습니다. 다르면 고쳐 주세요. 주소에 우편번호가 붙어 있으면(예: (06000) 서울…) 떼어서 씁니다.</p>
+        <div class="row2" id="maps"></div>
+        <div class="sum" id="sum"></div>
+        <div class="tblwrap"><table class="list" id="list"></table></div>
+        <p class="note">빨간 줄 = 주소 없음(라벨에서 뺌), 노란 줄 = 우편번호 없음, 흐린 줄 = 이름·주소가 같은 사람(한 번만). 왼쪽 칸을 눌러 넣고 뺄 수 있습니다.</p>
+        <div class="zipbox" id="zipBox">
+          <h3>우편번호 채우기</h3>
+          <p class="sub">주소 글자만 행정안전부 「도로명주소 검색」(공식)으로 보내 우편번호와 정리된 도로명주소를 찾습니다. 이름·연락처 등 다른 칸은 보내지 않습니다. 지번 주소도 찾습니다.</p>
+          <label class="chk"><input type="checkbox" id="recheck"> 이미 적힌 우편번호도 다시 찾아 바꾸기</label>
+          <label class="chk"><input type="checkbox" id="useRoad"> 라벨 주소를 찾은 도로명주소(정리된 주소)로 쓰기</label>
+          <div class="btns"><button class="btn btn-main" type="button" id="btnZip">우편번호 찾기</button><button class="btn" type="button" id="btnXlsx">우편번호 더한 엑셀 받기</button></div>
+          <p class="note" id="zipNote"></p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2><span class="no">3</span>용지·칸 나누기</h2>
+        <label class="field"><span>용지 종류 (시판 라벨지면 포장에 적힌 칸 수·크기로 고르세요)</span><select class="in" id="preset"></select></label>
+        <div id="gridBox">
+          <div class="row3">
+            <label class="field"><span>가로 칸 수</span><input class="in" type="number" min="1" max="6" data-g="cols"></label>
+            <label class="field"><span>세로 칸 수</span><input class="in" type="number" min="1" max="20" data-g="rows"></label>
+            <label class="field"><span>바깥 여백 (mm)</span><input class="in" type="number" step="0.5" min="0" data-g="m"></label>
+            <label class="field"><span>칸 사이 가로 간격</span><input class="in" type="number" step="0.5" min="0" data-g="gx"></label>
+            <label class="field"><span>칸 사이 세로 간격</span><input class="in" type="number" step="0.5" min="0" data-g="gy"></label>
+            <label class="field"><span>자르는 선</span><select class="in" id="cut"><option value="solid">실선 인쇄</option><option value="dash">점선 인쇄</option><option value="none">인쇄 안 함</option></select></label>
+          </div>
+          <p class="note" id="gridNote"></p>
+        </div>
+        <details class="more" id="customBox"><summary>칸 크기 직접 맞추기 (mm)</summary>
+          <div class="row3" style="margin-top:6px">
+            <label class="field"><span>가로 칸 수</span><input class="in" type="number" data-c="cols" min="1" max="6"></label>
+            <label class="field"><span>세로 칸 수</span><input class="in" type="number" data-c="rows" min="1" max="20"></label>
+            <label class="field"><span>칸 사이 가로 틈</span><input class="in" type="number" step="0.1" data-c="gx"></label>
+            <label class="field"><span>라벨 가로</span><input class="in" type="number" step="0.1" data-c="w"></label>
+            <label class="field"><span>라벨 세로</span><input class="in" type="number" step="0.1" data-c="h"></label>
+            <label class="field"><span>칸 사이 세로 틈</span><input class="in" type="number" step="0.1" data-c="gy"></label>
+            <label class="field"><span>위 여백</span><input class="in" type="number" step="0.1" data-c="top"></label>
+            <label class="field"><span>왼쪽 여백</span><input class="in" type="number" step="0.1" data-c="left"></label>
+          </div>
+        </details>
+        <div class="row3" style="margin-top:8px">
+          <label class="field"><span>인쇄 밀림 보정 →(mm)</span><input class="in" type="number" step="0.5" id="offX" value="0"></label>
+          <label class="field"><span>보정 ↓(mm)</span><input class="in" type="number" step="0.5" id="offY" value="0"></label>
+          <label class="field"><span>시작 칸</span><input class="in" type="number" min="1" id="start" value="1"></label>
+        </div>
+        <p class="note">시작 칸: 쓰다 남은 용지에 이어 찍을 때, 첫 번째로 찍을 칸 번호(왼쪽 위부터 1, 2, 3…). 처음엔 보통 종이에 시험 인쇄해 라벨지와 겹쳐 보고, 밀리면 보정 값을 넣으세요.</p>
+      </section>
+
+      <section class="card">
+        <h2><span class="no">4</span>라벨 모양</h2>
+        <div class="row2">
+          <label class="field"><span>이름 뒤</span><select class="in" id="honor"><option value="님">님</option><option value="귀하">귀하</option><option value="님 귀하">님 귀하</option><option value="선생님">선생님</option><option value="title">직함 칸 쓰기 (없으면 님)</option><option value="">붙이지 않음</option></select></label>
+          <label class="field"><span>우편번호</span><select class="in" id="zipPos"><option value="top">맨 위</option><option value="none">넣지 않음</option></select></label>
+        </div>
+        <div class="row2">
+          <label class="field"><span>같은 사람 몇 장씩</span><input class="in" type="number" min="1" max="20" id="copies" value="1"></label>
+          <label class="field"><span>순서</span><select class="in" id="order"><option value="orig">명단 순서</option><option value="zip">우편번호 순</option><option value="name">이름 순</option></select></label>
+        </div>
+        <label class="field"><span>글자 크기</span><select class="in" id="fsize"><option value="auto">칸에 맞게 자동</option><option value="9">작게 (9pt)</option><option value="10.5">보통 (10.5pt)</option><option value="12">크게 (12pt)</option></select></label>
+        <label class="field"><span>보내는 곳 (선택, 라벨 맨 위 작은 글씨)</span><input class="in" id="from" placeholder="예: ○○복지관 (02-000-0000)"></label>
+      </section>
+    </div>
+
+    <div class="right">
+      <div class="stage">
+        <div class="bar">
+          <span class="grow" id="pageInfo" style="font-weight:700"></span>
+          <label class="chk"><input type="checkbox" id="guide" checked> 칸 테두리 보기(화면만)</label>
+          <button class="btn" type="button" id="btnTest">시험 인쇄(테두리 포함)</button>
+          <button class="btn btn-main" type="button" id="btnPrint">인쇄</button>
+        </div>
+        <div id="pages"><p class="note">명단을 넣으면 여기에 라벨지가 나옵니다.</p></div>
+        <p class="note">인쇄 창에서 용지 A4, 배율 「실제 크기(100%)」, 여백 「없음」을 고르세요. 「맞춤」으로 인쇄하면 칸이 어긋납니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>명단은 브라우저 안에서만 읽고 저장하지 않습니다(용지·모양 설정만 이 PC에 기억). 엑셀 읽는 프로그램만 인터넷(cdnjs)에서 받습니다.</p>
+    <p>「우편번호 찾기」를 누를 때만 주소 글자가 행정안전부 도로명주소 검색(business.juso.go.kr)으로 갑니다. 이름·연락처는 보내지 않습니다.</p>
+    <p>라벨지 크기는 흔히 쓰는 A4 규격 기준이며 회사마다 조금씩 다를 수 있습니다. 포장에 적힌 크기로 「직접 맞추기」를 고치세요.</p>
+    <p>만든 사람: 서울강남지역자활센터 김태균</p>
+  </div>
+</div>
+<div id="printArea"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+'use strict';
+(() => {
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function toast(m){ const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('on'), 2600); }
+
+/* ── 라벨지 (A4, 가운데 정렬 기준 규격) ── */
+const A4W = 210, A4H = 297;
+function centered(cols, rows, w, h, gx, gy){ return { cols, rows, w, h, gx, gy, left: +((A4W - (cols * w + (cols - 1) * gx)) / 2).toFixed(2), top: +((A4H - (rows * h + (rows - 1) * gy)) / 2).toFixed(2) }; }
+const PRESETS = [
+  ['grid', 'A4 스티커 용지 — 칸 수·간격 정해서 나누기', null],
+  ['21', '21칸 (3×7) 63.5×38.1mm', centered(3, 7, 63.5, 38.1, 2.54, 0)],
+  ['24', '24칸 (3×8) 63.5×33.9mm', centered(3, 8, 63.5, 33.9, 2.54, 0)],
+  ['18', '18칸 (3×6) 63.5×46.6mm', centered(3, 6, 63.5, 46.6, 2.54, 0)],
+  ['14', '14칸 (2×7) 99.1×38.1mm', centered(2, 7, 99.1, 38.1, 2.5, 0)],
+  ['16', '16칸 (2×8) 99.1×33.9mm', centered(2, 8, 99.1, 33.9, 2.5, 0)],
+  ['10', '10칸 (2×5) 99.1×57mm', centered(2, 5, 99.1, 57, 2.5, 0)],
+  ['8', '8칸 (2×4) 99.1×67.7mm', centered(2, 4, 99.1, 67.7, 2.5, 0)],
+  ['custom', '직접 맞추기', null]
+];
+
+/* ── 상태 ── */
+const KEY = 'jahwal.labels.v1';
+let C = { preset: 'grid', cols: 2, rows: 8, gx: 0, gy: 0, m: 5, w: 100, h: 35.875, top: 5, left: 5 };
+let O = { useRoad: false, cut: 'solid', honor: '님', zipPos: 'top', copies: 1, order: 'orig', fsize: 'auto', from: '', offX: 0, offY: 0, guide: true };
+try { const v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v) { if (v.C) C = Object.assign(C, v.C); if (v.O) O = Object.assign(O, v.O); } } catch (e) {}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify({ C, O })); } catch (e) {} }
+let book = null, rows = [], head = [], M = {}, people = [], srcName = '';
+
+/* ── 엑셀 읽기 ── */
+async function readFile(f){
+  if (typeof XLSX === 'undefined') { toast('엑셀 읽는 프로그램을 불러오지 못했습니다. 인터넷 연결을 확인하거나 붙여 넣기를 쓰세요'); return; }
+  try {
+    const buf = await f.arrayBuffer();
+    book = XLSX.read(buf, { type: 'array' });
+    const names = book.SheetNames;
+    $('sheet').innerHTML = names.map((n, i) => '<option value="' + i + '">' + esc(n) + '</option>').join('');
+    $('sheetRow').classList.toggle('hidden', names.length < 2);
+    // 사람이 가장 많아 보이는 시트를 먼저
+    let best = 0, bestN = -1; names.forEach((n, i) => { const r = XLSX.utils.sheet_to_json(book.Sheets[n], { header: 1, raw: false, defval: '' }); if (r.length > bestN) { bestN = r.length; best = i; } });
+    $('sheet').value = best; useSheet(best);
+    $('fileNote').textContent = f.name + ' 읽음'; srcName = f.name;
+    $('fileNote').className = 'note ok';
+  } catch (e) { toast('파일을 읽지 못했습니다: ' + (e.message || e)); }
+}
+function useSheet(i){ const r = XLSX.utils.sheet_to_json(book.Sheets[book.SheetNames[i]], { header: 1, raw: false, defval: '' }); setRows(r); }
+$('sheet').addEventListener('change', e => useSheet(+e.target.value));
+function setRows(r){
+  r = r.map(x => x.map(v => String(v == null ? '' : v).trim())).filter(x => x.some(Boolean));
+  if (!r.length) { toast('명단에 내용이 없습니다'); return; }
+  // 머리글 줄 찾기: 앞 10줄 중 이름·주소 낱말이 가장 많은 줄
+  let hi = 0, hs = -1;
+  r.slice(0, 10).forEach((x, i) => { const sc = x.filter(v => /이름|성명|성함|받는|수신|주소|우편|소재지|기관|소속|직함|연락|전화/.test(v)).length; if (sc > hs) { hs = sc; hi = i; } });
+  if (hs <= 0) hi = -1;
+  head = hi >= 0 ? r[hi] : r[0].map((_, k) => '칸 ' + (k + 1));
+  rows = r.slice(hi + 1); found = {}; off = new Set();
+  autoMap(); $('mapCard').classList.remove('hidden'); build();
+}
+const FIELDS = [
+  ['name', '받는 분 이름', /^(이름|성명|성함|받는\s*분|받는사람|수신자|수신인|대상자|이용자\s*이름|대표자\s*성명|대표자)/],
+  ['org', '기관·소속 (선택)', /(기관|소속|회사|업체|단체|상호|학교)/],
+  ['title', '직함 (선택)', /(직함|직위|직책|호칭)/],
+  ['zip', '우편번호', /(우편)/],
+  ['addr', '주소', /(주소|소재지)/],
+  ['detail', '상세주소 (선택)', /(상세|나머지|동\s*호)/]
+];
+function autoMap(){
+  M = {};
+  FIELDS.forEach(([k, , re]) => {
+    let idx = head.findIndex((h, i) => re.test(h.replace(/\s/g, '')) && !Object.values(M).includes(i) && !(k === 'addr' && /상세|나머지|우편/.test(h)));
+    M[k] = idx;
+  });
+  const sel = k => '<select class="in" data-m="' + k + '"><option value="-1">(없음)</option>' + head.map((h, i) => '<option value="' + i + '"' + (M[k] === i ? ' selected' : '') + '>' + esc(h || '칸 ' + (i + 1)) + '</option>').join('') + '</select>';
+  $('maps').innerHTML = FIELDS.map(([k, lab]) => '<label class="field"><span>' + lab + '</span>' + sel(k) + '</label>').join('');
+}
+$('maps').addEventListener('change', e => { const k = e.target.dataset.m; if (!k) return; M[k] = +e.target.value; build(); });
+
+/* ── 명단 정리 ── */
+let off = new Set(), found = {};
+function build(){
+  const g = (r, k) => M[k] >= 0 ? String(r[M[k]] || '').trim() : '';
+  const seen = new Map();
+  people = rows.map((r, i) => {
+    let zip = g(r, 'zip').replace(/[^\d]/g, ''), addr = g(r, 'addr'), detail = g(r, 'detail');
+    const m = addr.match(/^\(?\s*(\d{5})\s*\)?\s*(.*)$/); if (m) { if (!zip) zip = m[1]; addr = m[2]; }
+    if (/^\d{3}-?\d{3}$/.test(g(r, 'zip').trim())) zip = g(r, 'zip').replace(/[^\d]/g, '');
+    if (detail && addr.includes(detail)) detail = '';
+    const p = { i, name: g(r, 'name'), org: g(r, 'org'), title: g(r, 'title'), zip, addr, detail };
+    const key = (p.name + '|' + p.addr + p.detail).replace(/\s/g, '');
+    p.dup = seen.has(key); if (!p.dup) seen.set(key, i);
+    const F = found[i];
+    if (F) {
+      const hit = F.st === 'ok' ? F : (F.st === 'multi' && F.pick != null ? F.cands[F.pick] : null);
+      if (hit) { p.road = hit.road; if (!p.zip || F.recheck) { p.zipOld = p.zip; p.zip = hit.zip; } }
+      p.look = F.st === 'multi' && F.pick != null ? 'ok' : F.st;
+    }
+    p.bad = !p.addr; p.warn = !p.bad && !p.zip;
+    return p;
+  });
+  renderList(); render();
+}
+function included(p){ return off.has(p.i) ? false : !(p.bad || p.dup) || (p.forceOn && !p.bad); }
+function renderList(){
+  const nBad = people.filter(p => p.bad).length, nWarn = people.filter(p => p.warn).length, nDup = people.filter(p => p.dup).length, nIn = people.filter(included).length;
+  $('sum').innerHTML = '<span>명단 ' + people.length + '명</span><span>라벨 ' + nIn + '명</span>' + (nBad ? '<span class="s-bad">주소 없음 ' + nBad + '</span>' : '') + (nWarn ? '<span class="s-warn">우편번호 없음 ' + nWarn + '</span>' : '') + (nDup ? '<span>같은 사람 ' + nDup + '</span>' : '');
+  /* 다시 그려도 표 스크롤 위치·방금 누른 칸은 그대로 */
+  const wrap = $('list').parentElement, st = wrap.scrollTop, ae = document.activeElement;
+  const act = ae && ae.dataset ? (ae.dataset.p != null ? '[data-p="' + ae.dataset.p + '"]' : ae.dataset.pick != null ? '[data-pick="' + ae.dataset.pick + '"]' : '') : '';
+  setTimeout(() => { wrap.scrollTop = st; if (act) { const el = $('list').querySelector(act); if (el) try { el.focus({ preventScroll: true }); } catch (e) {} } }, 0);
+  $('list').innerHTML = '<tr><th></th><th>이름</th><th>우편번호</th><th>주소</th></tr>' + people.map(p =>
+    '<tr class="' + (p.bad ? 'bad' : p.dup ? 'dup' : p.warn ? 'warn' : '') + '"><td><input type="checkbox" data-p="' + p.i + '"' + (included(p) ? ' checked' : '') + (p.bad ? ' disabled' : '') + '></td><td>' + esc([p.org, p.name, p.title].filter(Boolean).join(' ')) + '</td><td>' + zipCell(p) + '</td><td>' + esc([p.addr, p.detail].filter(Boolean).join(' ') || '주소 없음') + (p.road && p.road.replace(/\s/g, '') !== p.addr.replace(/\s/g, '') ? '<br><span class="note" style="font-size:12px">→ ' + esc(p.road) + '</span>' : '') + '</td></tr>').join('');
+}
+function zipCell(p){
+  const F = found[p.i];
+  if (F && F.st === 'multi') return '<select data-pick="' + p.i + '"><option value="">후보 ' + F.cands.length + '개 — 고르기</option>' + F.cands.map((c, k) => '<option value="' + k + '"' + (F.pick === k ? ' selected' : '') + '>' + esc(c.zip + ' ' + c.road + (c.bd ? ' (' + c.bd + ')' : '')) + '</option>').join('') + '</select>';
+  return esc(p.zip) + (p.look === 'ok' ? '<span class="zf ok">찾음</span>' : p.look === 'none' ? '<span class="zf none">못 찾음</span>' : p.look === 'err' ? '<span class="zf none">오류</span>' : '');
+}
+$('list').addEventListener('change', e => {
+  if (e.target.dataset.pick != null) { const F = found[e.target.dataset.pick]; F.pick = e.target.value === '' ? null : +e.target.value; build(); return; }
+  const i = e.target.dataset.p; if (i == null) return; const p = people.find(x => x.i === +i);
+  if (e.target.checked) { off.delete(p.i); if (p.dup) p.forceOn = true; } else { off.add(p.i); p.forceOn = false; }
+  renderList(); render();
+});
+
+/* ── 우편번호 찾기 (행정안전부 도로명주소 검색 API, 승인 사이트: jahwalktg.github.io) ── */
+const JUSO = 'https://business.juso.go.kr/addrlink/addrLinkApi.do', JKEY = 'U01TX0FVVEgyMDI2MTAyMDE2MTgxMjEyMDc4Mjc=';
+const clean = s => String(s).replace(/[%=><\[\]{}"'`;\\|^*+]/g, ' ').replace(/\s+/g, ' ').trim();
+function variants(a){
+  const base = clean(a.replace(/\([^)]*\)/g, ' ').replace(/,/g, ' '));
+  const out = [base];
+  let m = base.match(/^(.*?길\s*\d+(?:-\d+)?)/); if (m) out.push(m[1]);
+  m = base.match(/^(.*?(?:로|대로)\s*\d+(?:-\d+)?)(?![\d-])(?!\s*길)/); if (m) out.push(m[1]);
+  m = base.match(/^(.*?(?:동|리|가)\s*(?:산\s*)?\d+(?:-\d+)?)/); if (m) out.push(m[1]);
+  return [...new Set(out.filter(x => x.length >= 4))];
+}
+async function lookup(addr){
+  for (const kw of variants(addr)) {
+    const r = await fetch(JUSO + '?confmKey=' + encodeURIComponent(JKEY) + '&currentPage=1&countPerPage=10&resultType=json&keyword=' + encodeURIComponent(kw));
+    const j = await r.json(), c = j.results && j.results.common;
+    if (!c || c.errorCode !== '0') throw new Error(c ? c.errorMessage : '응답 없음');
+    const list = j.results.juso || [];
+    if (list.length) {
+      const cands = list.map(x => ({ zip: x.zipNo, road: x.roadAddrPart1, bd: x.bdNm || '' }));
+      const zips = [...new Set(cands.map(x => x.zip))];
+      if (zips.length === 1) return { st: 'ok', zip: zips[0], road: cands[0].road, cands };
+      /* 도로명 + 건물번호가 정확히 같은 후보가 하나면 그것으로 */
+      const m = clean(addr).match(/(\S+(?:로|길))\s*(\d+(?:-\d+)?)(?![\d-])/);
+      if (m) {
+        const want = (m[1] + ' ' + m[2]).replace(/\s+/g, ' ');
+        const ex = cands.filter(c => c.road === want || c.road.endsWith(' ' + want));
+        const ez = [...new Set(ex.map(c => c.zip))];
+        if (ez.length === 1) return { st: 'ok', zip: ez[0], road: ex[0].road, cands };
+      }
+      return { st: 'multi', cands, pick: null };
+    }
+  }
+  return { st: 'none' };
+}
+let looking = false;
+$('btnZip').addEventListener('click', async () => {
+  if (looking) return;
+  const recheck = $('recheck').checked;
+  const todo = people.filter(p => !p.bad && !p.dup && (recheck || !p.zip || (found[p.i] && found[p.i].st === 'err')));
+  if (!todo.length) { toast('찾을 주소가 없습니다(우편번호가 다 있으면 「다시 찾아 바꾸기」를 켜세요)'); return; }
+  if (!confirm('주소 ' + todo.length + '개를 행정안전부 도로명주소 검색으로 보내 우편번호를 찾습니다. 이름 등 다른 칸은 보내지 않습니다. 진행할까요?')) return;
+  looking = true; $('btnZip').disabled = true; let done = 0, ok = 0, multi = 0, none = 0, err = 0;
+  const queue = todo.slice();
+  async function worker(){
+    while (queue.length) {
+      const p = queue.shift();
+      try { const R = await lookup(p.addr + (p.detail && !/동|호|층/.test(p.detail) ? ' ' + p.detail : '')); R.recheck = recheck; found[p.i] = R; if (R.st === 'ok') ok++; else if (R.st === 'multi') multi++; else none++; }
+      catch (e) { found[p.i] = { st: 'err', msg: e.message }; err++; if (/승인|KEY|키/.test(e.message)) queue.length = 0; }
+      done++; $('zipNote').textContent = '찾는 중… ' + done + ' / ' + todo.length;
+    }
+  }
+  await Promise.all([worker(), worker(), worker(), worker()]);
+  looking = false; $('btnZip').disabled = false;
+  build();
+  $('zipNote').textContent = '찾음 ' + ok + '명' + (multi ? ', 후보 여러 개 ' + multi + '명(목록에서 고르기)' : '') + (none ? ', 못 찾음 ' + none + '명(주소 확인)' : '') + (err ? ', 오류 ' + err + '명(' + (Object.values(found).find(f => f.st === 'err') || {}).msg + ')' : '');
+  $('zipNote').className = 'note ' + (none || err || multi ? 'warn' : 'ok');
+});
+$('recheck').addEventListener('change', () => {});
+$('useRoad').checked = !!O.useRoad; $('useRoad').addEventListener('change', e => { O.useRoad = e.target.checked; render(); });
+$('btnXlsx').addEventListener('click', () => {
+  if (!rows.length || typeof XLSX === 'undefined') { toast('먼저 명단을 넣으세요'); return; }
+  const by = {}; people.forEach(p => { by[p.i] = p; });
+  const aoa = [head.concat(['우편번호(찾음)', '정리된 도로명주소', '찾기 결과'])].concat(rows.map((r, i) => {
+    const p = by[i] || {}, F = found[i];
+    const st = !F ? (p.zip ? '원래 있음' : '') : F.st === 'ok' ? '찾음' : F.st === 'multi' ? (F.pick != null ? '골라서 찾음' : '후보 여러 개') : F.st === 'none' ? '못 찾음' : '오류';
+    return r.concat([F && (F.st === 'ok' || F.pick != null) ? p.zip : (p.zip || ''), p.road || '', st]);
+  }));
+  const ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = head.map(() => ({ wch: 14 })).concat([{ wch: 10 }, { wch: 40 }, { wch: 12 }]);
+  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '우편번호');
+  XLSX.writeFile(wb, (srcName || '주소명단').replace(/\.(xlsx|xls|csv|txt)$/i, '') + '_우편번호.xlsx');
+  toast('우편번호를 더한 엑셀을 받았습니다');
+});
+
+/* ── 라벨 그리기 ── */
+function toLine(p){
+  let h = O.honor;
+  if (h === 'title') h = p.title || '님';
+  const nm = [p.org, p.name].filter(Boolean).join(' ');
+  if (!nm) return '';
+  return nm + (h ? ' ' + h : '');
+}
+function labelHTML(p){
+  if (!p) return '';
+  return (O.from ? '<div class="from">' + esc(O.from) + '</div>' : '')
+    + (O.zipPos === 'top' && p.zip ? '<div class="zip">' + esc(p.zip) + '</div>' : '')
+    + '<div class="addr">' + esc([O.useRoad && p.road ? p.road : p.addr, p.detail].filter(Boolean).join(' ')) + '</div>'
+    + '<div class="to">' + esc(toLine(p)) + '</div>';
+}
+function seq(){
+  let list = people.filter(included);
+  if (O.order === 'zip') list = list.slice().sort((a, b) => (a.zip || '99999').localeCompare(b.zip || '99999'));
+  if (O.order === 'name') list = list.slice().sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+  const out = []; list.forEach(p => { for (let k = 0; k < Math.max(1, +O.copies || 1); k++) out.push(p); });
+  return out;
+}
+function gridCalc(){
+  if (C.preset !== 'grid') return;
+  const m = Math.max(0, +C.m || 0), cols = Math.max(1, Math.round(+C.cols || 1)), rows = Math.max(1, Math.round(+C.rows || 1));
+  C.cols = cols; C.rows = rows; C.left = m; C.top = m;
+  C.w = +((A4W - 2 * m - (cols - 1) * (+C.gx || 0)) / cols).toFixed(2);
+  C.h = +((A4H - 2 * m - (rows - 1) * (+C.gy || 0)) / rows).toFixed(2);
+}
+function pagesHTML(guide){
+  gridCalc();
+  const per = C.cols * C.rows, start = Math.max(1, Math.min(per, +$('start').value || 1)) - 1;
+  const items = Array(start).fill(null).concat(seq());
+  if (!seq().length) return { pages: [], count: 0 };
+  const pages = Math.ceil(items.length / per), out = [];
+  const base = O.fsize === 'auto' ? Math.max(7, Math.min(12, C.h / 3.6)) : +O.fsize;
+  for (let pg = 0; pg < pages; pg++) {
+    let h = '<div class="page' + (guide ? ' guide' : '') + (O.cut !== 'none' ? ' cut-' + O.cut : '') + '">';
+    for (let k = 0; k < per; k++) {
+      const p = items[pg * per + k], r = Math.floor(k / C.cols), c = k % C.cols;
+      if (pg === pages - 1 && pg * per + k >= items.length && !guide && O.cut === 'none') continue;
+      const x = C.left + c * (C.w + C.gx) + (+O.offX || 0), y = C.top + r * (C.h + C.gy) + (+O.offY || 0);
+      h += '<div class="lab' + (p ? '' : ' empty') + '" data-k="' + (pg * per + k) + '" data-fs="' + base + '" style="left:' + x + 'mm;top:' + y + 'mm;width:' + C.w + 'mm;height:' + C.h + 'mm;font-size:' + base + 'pt">' + labelHTML(p) + '</div>';
+    }
+    out.push(h + '</div>');
+  }
+  return { pages: out, count: seq().length };
+}
+function fit(root){
+  if (O.fsize !== 'auto') return;
+  root.querySelectorAll('.lab:not(.empty)').forEach(el => {
+    let fs = +el.dataset.fs;
+    while (fs > 6 && (el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1)) { fs -= 0.5; el.style.fontSize = fs + 'pt'; }
+    el.dataset.fit = fs;
+  });
+}
+function render(){
+  save();
+  const r = pagesHTML(O.guide);
+  $('pageInfo').textContent = r.count ? '라벨 ' + r.count + '장 · A4 ' + r.pages.length + '쪽' : '';
+  if (!r.count) { $('pages').innerHTML = '<p class="note">' + (people.length ? '라벨에 넣을 사람이 없습니다. 칸 맞추기를 확인하세요.' : '명단을 넣으면 여기에 라벨지가 나옵니다.') + '</p>'; return; }
+  const host = $('pages'); host.innerHTML = r.pages.map(pg => '<div class="pagewrap">' + pg + '</div>').join('');
+  // 화면 폭에 맞춰 줄이기
+  const avail = host.clientWidth - 20, mm = 3.7795;
+  const z = Math.min(1, avail / (A4W * mm));
+  host.querySelectorAll('.pagewrap').forEach(w => { w.style.zoom = z; });
+  fit(host);
+}
+window.addEventListener('resize', () => { clearTimeout(render._t); render._t = setTimeout(render, 200); });
+
+/* ── 설정 칸 ── */
+function renderPreset(){
+  gridCalc();
+  $('gridBox').classList.toggle('hidden', C.preset !== 'grid');
+  document.querySelectorAll('[data-g]').forEach(el => { el.value = C[el.dataset.g]; });
+  $('gridNote').textContent = C.preset === 'grid' ? '한 장에 ' + (C.cols * C.rows) + '칸, 칸 하나 ' + C.w + ' × ' + C.h + 'mm. 간격을 0으로 두면 자르는 선 하나로 이웃 칸이 함께 잘립니다.' : '';
+  $('preset').innerHTML = PRESETS.map(([k, n]) => '<option value="' + k + '"' + (C.preset === k ? ' selected' : '') + '>' + n + '</option>').join('');
+  document.querySelectorAll('[data-c]').forEach(el => { el.value = C[el.dataset.c]; });
+}
+$('preset').addEventListener('change', e => {
+  const p = PRESETS.find(x => x[0] === e.target.value);
+  if (p[0] === 'grid') { C = Object.assign({ cols: 2, rows: 8, gx: 0, gy: 0, m: 5 }, C.preset === 'grid' ? C : {}, { preset: 'grid' }); }
+  else if (p[2]) C = Object.assign({ preset: p[0] }, p[2]); else { C.preset = 'custom'; $('customBox').open = true; }
+  renderPreset(); render();
+});
+document.querySelectorAll('[data-c]').forEach(el => el.addEventListener('input', () => { const v = parseFloat(el.value); if (!isNaN(v)) { C[el.dataset.c] = v; C.preset = 'custom'; $('preset').value = 'custom'; render(); } }));
+[['honor', 'value'], ['zipPos', 'value'], ['copies', 'value'], ['order', 'value'], ['fsize', 'value'], ['from', 'value'], ['offX', 'value'], ['offY', 'value']].forEach(([id]) => {
+  const el = $(id); el.value = O[id]; el.addEventListener('input', () => { O[id] = el.value; render(); });
+});
+$('start').addEventListener('input', render);
+document.querySelectorAll('[data-g]').forEach(el => el.addEventListener('input', () => { const v = parseFloat(el.value); if (!isNaN(v)) { C[el.dataset.g] = v; renderPreset(); render(); } }));
+$('cut').value = O.cut; $('cut').addEventListener('change', e => { O.cut = e.target.value; render(); });
+$('guide').checked = O.guide; $('guide').addEventListener('change', e => { O.guide = e.target.checked; render(); });
+
+/* ── 파일 넣기 ── */
+$('drop').addEventListener('click', () => $('file').click());
+$('drop').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('file').click(); } });
+$('file').addEventListener('change', () => { if ($('file').files[0]) readFile($('file').files[0]); $('file').value = ''; });
+['dragenter', 'dragover'].forEach(t => $('drop').addEventListener(t, e => { e.preventDefault(); $('drop').classList.add('over'); }));
+['dragleave', 'drop'].forEach(t => $('drop').addEventListener(t, e => { e.preventDefault(); $('drop').classList.remove('over'); }));
+$('drop').addEventListener('drop', e => { const f = e.dataTransfer.files[0]; if (f) readFile(f); });
+document.addEventListener('dragover', e => e.preventDefault());
+document.addEventListener('drop', e => { if (!$('drop').contains(e.target)) { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) readFile(f); } });
+$('paste').addEventListener('input', () => {
+  const t = $('paste').value; if (!t.trim()) return;
+  const r = t.replace(/\r/g, '').split('\n').map(l => l.split(l.includes('\t') ? '\t' : ','));
+  book = null; $('sheetRow').classList.add('hidden'); setRows(r); $('fileNote').textContent = '붙여 넣은 명단 ' + Math.max(0, r.length - 1) + '줄'; $('fileNote').className = 'note ok';
+});
+$('btnSample').addEventListener('click', () => {
+  const r = [['이름', '소속', '직함', '우편번호', '주소', '상세주소'],
+    ['김○○', '○○복지관', '관장', '06000', '○○시 ○○구 ○○대로 123', '2층'], ['이○○', '', '', '06100', '○○시 ○○구 ○○로 45길 6', '101동 1001호'],
+    ['박○○', '○○협동조합', '대표', '', '(06200) ○○시 ○○구 ○○로 78', ''], ['최○○', '', '', '06300', '', ''],
+    ['정○○', '○○구청', '팀장', '06400', '○○시 ○○구 ○○로 9', '○○구청 3층'], ['이○○', '', '', '06100', '○○시 ○○구 ○○로 45길 6', '101동 1001호'],
+    ['한○○', '', '', '06500', '○○시 ○○구 ○○동 아주 긴 주소 예시 ○○로 123번길 45-6 ○○아파트', '105동 1203호']];
+  book = null; $('sheetRow').classList.add('hidden'); setRows(r); $('fileNote').textContent = '예시 명단(가상)'; $('fileNote').className = 'note ok';
+});
+
+/* ── 인쇄 ── */
+function prep(guide){
+  const r = pagesHTML(guide); if (!r.count) { toast('먼저 명단을 넣으세요'); return false; }
+  const area = $('printArea'); area.innerHTML = r.pages.join('');
+  /* 화면에서 칸에 맞춘 글자 크기를 칸 번호로 인쇄본에 옮김 */
+  const fitOf = {}; $('pages').querySelectorAll('.lab[data-fit]').forEach(el => { fitOf[el.dataset.k] = el.dataset.fit; });
+  area.querySelectorAll('.lab').forEach(el => { if (fitOf[el.dataset.k]) el.style.fontSize = fitOf[el.dataset.k] + 'pt'; });
+  return true;
+}
+function doPrint(guide){ if (prep(guide)) setTimeout(() => window.print(), 100); }
+$('btnPrint').addEventListener('click', () => doPrint(false));
+$('btnTest').addEventListener('click', () => doPrint(true));
+window.addEventListener('afterprint', () => { $('printArea').innerHTML = ''; });
+
+renderPreset(); render();
+if (location.hash === '#zip') { $('fileNote').textContent = '명단을 넣으면 아래 「칸 맞추기·명단 확인」에 「우편번호 채우기」가 나옵니다.'; $('fileNote').className = 'note warn'; }
+/* 시험용: 주소 끝 #printtest 면 예시 명단으로 인쇄본(테두리 포함)을 준비 */
+if (location.hash === '#printtest') { $('btnSample').click(); setTimeout(() => prep(false), 300); }
+window._labels = { lookup, variants, get found(){ return found; }, setRows, get people(){ return people; }, C, O, render, prep };
+})();
+</script>
+<script src="../videos.js?v=5"></script>
+<script src="../remake.js"></script>
+</body>
+</html>

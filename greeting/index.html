@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>인사장·초대장 만들기 | 사회복지사 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="새해 연하장·송년 인사·초대장·설·추석·감사 인사를 고른 인사말과 디자인으로 바로 만듭니다. 받는 분 명단을 넣으면 이름이 들어간 이미지를 한꺼번에, 인쇄용 엽서와 문자용 글까지.">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/greeting/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="인사장·초대장 만들기 | 사회복지사 업무 도구">
+<meta property="og:description" content="새해 연하장·송년 인사·초대장·설·추석·감사 인사를 고른 인사말과 디자인으로 바로 만듭니다. 받는 분 명단을 넣으면 이름이 들어간 이미지를 한꺼번에, 인쇄용 엽서와 문자용 글까지.">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/greeting/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Nanum+Pen+Script&display=swap">
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --red:#E63946; --green:#1F8A4C;
+  --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC;
+  --text:#1A2B50; --muted:#5B6885;
+  --blue-bg:#E8F0FF; --amber:#8A5A00; --amber-bg:#FFF1CC;
+  --green-bg:#E3F5EA; --btn-text:#FFFFFF;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#27407A; --red:#FF6B76; --green:#5FD08E;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10;
+    --green-bg:#123524; --btn-text:#0E1630;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1400px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
+.lead{margin:0 0 14px;color:var(--muted)}
+.layout{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:1000px){.layout{grid-template-columns:460px minmax(0,1fr);align-items:start}.right{position:sticky;top:10px}}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 8px;font-size:19px;display:flex;align-items:center;gap:8px}
+.card h2 .no{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--blue);color:var(--btn-text);font-size:14px;flex:none}
+.sub{margin:0 0 10px;color:var(--muted);font-size:14px}
+.field{display:block;margin-bottom:10px}
+.field>span{display:flex;justify-content:space-between;gap:8px;font-size:14px;color:var(--muted);margin-bottom:3px}
+.in,select.in,textarea.in{width:100%;min-height:42px;padding:7px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg)}
+textarea.in{min-height:96px;resize:vertical;line-height:1.5}
+.row2{display:grid;gap:8px;grid-template-columns:1fr 1fr}
+@media (max-width:420px){.row2{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chips button{min-height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:6px}
+.chips button.on{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.chips button i{width:16px;height:16px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,.2)}
+.chips.small button{min-height:34px;font-size:14px;padding:0 11px}
+.btn{min-height:42px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.btn-main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.btn-small{min-height:34px;font-size:14px;padding:0 10px}
+.link{border:0;background:none;color:var(--blue);font-weight:700;font-size:14px;padding:0}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.note{font-size:14px;color:var(--muted);margin:6px 0 0}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;flex-wrap:wrap}
+.seg button{border:0;background:var(--surface);padding:7px 12px;font-size:14px;font-weight:600}
+.seg button.on{background:var(--blue);color:var(--btn-text)}
+.drop{display:grid;place-items:center;text-align:center;min-height:56px;padding:8px;border:2px dashed var(--line);border-radius:10px;background:var(--bg);cursor:pointer;font-size:14px;color:var(--muted)}
+.drop.over{border-color:var(--blue);background:var(--blue-bg)}
+.has{display:flex;align-items:center;gap:8px;font-size:14px;margin-top:6px}
+.has img{height:40px;border-radius:6px;border:1px solid var(--line)}
+.stage{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:14px}
+#cv{display:block;width:100%;max-width:640px;height:auto;margin:0 auto;border-radius:10px;box-shadow:0 3px 14px rgba(0,0,0,.18)}
+.who{display:flex;align-items:center;justify-content:center;gap:10px;margin:10px 0 0;font-size:14px;color:var(--muted)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20;max-width:calc(100% - 32px)}
+.toast.on{opacity:1}
+.hidden{display:none !important}
+.foot{margin-top:24px;padding-top:14px;border-top:1.5px solid var(--line);font-size:14px;color:var(--muted)}
+.foot p{margin:2px 0}
+#printArea{display:none}
+@media print{
+  @page{size:A4;margin:12mm}
+  body{background:#fff}
+  body > *{display:none !important}
+  body > #printArea{display:block !important}
+  #printArea img{display:block;margin:0 auto 8mm;break-inside:avoid;page-break-inside:avoid}
+  #printArea img.sq{width:150mm}
+  #printArea img.tall{width:140mm}
+  #printArea img.post{width:148mm;border:0.2mm dashed #bbb}
+  #printArea img.one{break-after:page;page-break-after:always}
+}
+</style>
+</head>
+<body>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › 홍보 도구</p>
+  <h1>인사장·초대장 만들기</h1>
+  <p class="lead">새해 연하장, 송년 인사, 초대장, 명절 인사, 감사 인사를 고른 인사말과 디자인으로 바로 만듭니다. 받는 분 명단을 넣으면 이름이 들어간 이미지를 한꺼번에 받을 수 있습니다. 카카오톡·문자로 보낼 이미지, 인쇄용 엽서, 문자용 글까지 한 번에 나옵니다.</p>
+
+  <div class="layout">
+    <div>
+      <section class="card">
+        <h2><span class="no">1</span>무엇을 보내나요</h2>
+        <div class="chips" id="kinds"></div>
+        <div class="row2" id="yearRow">
+          <label class="field"><span>해 (연도)</span><input class="in" id="year" type="number" min="2000" max="2100"></label>
+          <div class="field"><span>간지</span><div id="gjText" style="padding:9px 2px;font-weight:700"></div></div>
+        </div>
+        <div id="inviteBox" class="hidden">
+          <label class="field"><span>행사 이름</span><input class="in" data-f="event" placeholder="예: 2026 복지 한마당"></label>
+          <div class="row2">
+            <label class="field"><span>날짜</span><input class="in" data-f="date" type="date"></label>
+            <label class="field"><span>시간</span><input class="in" data-f="time" placeholder="예: 오후 2시"></label>
+          </div>
+          <label class="field"><span>장소</span><input class="in" data-f="place" placeholder="예: ○○구민회관 2층 대강당"></label>
+          <label class="field"><span>오시는 길 (선택)</span><input class="in" data-f="way" placeholder="예: ○○역 2번 출구 도보 5분"></label>
+          <label class="field"><span>회신·문의 (선택)</span><input class="in" data-f="rsvp" placeholder="예: 12월 1일까지 02-000-0000으로 참석 여부 회신"></label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2><span class="no">2</span>인사말</h2>
+        <p class="sub">고른 종류의 기본 인사말이 들어 있습니다. 「다른 인사말」로 바꿔 보거나 직접 고쳐 쓰세요.</p>
+        <label class="field"><span>윗줄 (작은 글씨)<button class="link" type="button" data-reset="label">기본으로</button></span><input class="in" data-t="label"></label>
+        <label class="field"><span>큰 제목<button class="link" type="button" data-reset="title">기본으로</button></span><input class="in" data-t="title"></label>
+        <label class="field"><span>인사말 <button class="link" type="button" id="nextTpl">다른 인사말 ↻</button></span><textarea class="in" data-t="body" style="min-height:130px"></textarea></label>
+        <div class="row2">
+          <label class="field"><span>보내는 곳</span><input class="in" data-o="org" placeholder="○○복지관"></label>
+          <label class="field"><span>보내는 사람 (직함 이름)</span><input class="in" data-o="head" placeholder="기관장 홍길동"></label>
+        </div>
+        <label class="field"><span>아랫줄 (선택)</span><input class="in" data-o="all" placeholder="임직원·이용자 일동"></label>
+        <label class="field"><span>받는 분 명단 (선택, 한 줄에 한 분)</span><textarea class="in" id="names" placeholder="예:&#10;김○○ 대표님&#10;이○○&#10;△△복지관 관장님" style="min-height:90px"></textarea></label>
+        <p class="note">명단을 넣으면 맨 위에 「○○○ 님께」가 들어가고, 사람마다 한 장씩 받을 수 있습니다. 비우면 이름 없이 한 장입니다.</p>
+      </section>
+
+      <section class="card">
+        <h2><span class="no">3</span>꾸미기</h2>
+        <div class="field"><span>디자인</span></div>
+        <div class="chips small" id="styles"></div>
+        <div class="field"><span>글꼴</span><div class="seg" id="fonts"></div></div>
+        <div class="field"><span>크기</span><div class="seg" id="sizes"></div></div>
+        <div class="field"><span>사진 (선택)</span>
+          <div class="drop" id="photoDrop" tabindex="0">사진을 끌어다 놓거나 눌러서 고르기</div>
+          <input type="file" id="photoIn" accept="image/*" hidden>
+          <div class="has hidden" id="photoHas"><img id="photoThumb" alt="넣은 사진"><div class="seg" id="photoModes"></div><button class="btn btn-small" id="photoDel" type="button">빼기</button></div>
+        </div>
+        <div class="field"><span>기관 로고 (선택)</span>
+          <div class="drop" id="logoDrop" tabindex="0">로고 그림 넣기 (배경이 투명한 PNG가 좋습니다)</div>
+          <input type="file" id="logoIn" accept="image/*" hidden>
+          <div class="has hidden" id="logoHas"><img id="logoThumb" alt="넣은 로고"><button class="btn btn-small" id="logoDel" type="button">빼기</button></div>
+        </div>
+        <div class="btns"><button class="btn" id="btnShuffle" type="button">무늬 바꿔 보기</button><button class="btn" id="btnNew" type="button">처음부터 다시</button></div>
+      </section>
+    </div>
+
+    <div class="right">
+      <div class="stage">
+        <canvas id="cv" width="1080" height="1080" aria-label="인사장 미리보기"></canvas>
+        <div class="who hidden" id="whoBar"><button class="btn btn-small" id="prevName" type="button">◀</button><span id="whoText"></span><button class="btn btn-small" id="nextName" type="button">▶</button></div>
+        <div class="bar">
+          <button class="btn btn-main" id="btnPng" type="button">이미지 받기</button>
+          <button class="btn hidden" id="btnZip" type="button">명단대로 모두 받기</button>
+          <button class="btn" id="btnPrint" type="button">인쇄</button>
+          <button class="btn" id="btnText" type="button">문자용 글 복사</button>
+        </div>
+        <p class="note" style="text-align:center">카카오톡·문자에는 이미지 + 「문자용 글」을 함께 보내면 받는 쪽에서 읽기 편합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>입력한 글과 사진은 브라우저 안에서만 처리되고 어디에도 올라가지 않습니다. 명조·손글씨 글꼴만 구글 글꼴에서 내려받습니다(인터넷이 안 되면 기본 글꼴로 그립니다).</p>
+    <p>인쇄: 정사각·세로는 A4에 한 장씩, 가로 엽서는 A4에 두 장씩(자르는 선) 나옵니다. 인쇄 창에서 「배경 그래픽」을 켜 주세요.</p>
+    <p>만든 사람: 서울강남지역자활센터 김태균</p>
+  </div>
+</div>
+<div id="printArea"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+'use strict';
+(() => {
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function toast(m){ const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('on'), 2600); }
+
+/* ── 간지 ── */
+function ganji(y){
+  const st = '갑을병정무기경신임계', br = '자축인묘진사오미신유술해';
+  const an = ['쥐', '소', '호랑이', '토끼', '용', '뱀', '말', '양', '원숭이', '닭', '개', '돼지'];
+  const col = ['푸른', '푸른', '붉은', '붉은', '황금', '황금', '흰', '흰', '검은', '검은'];
+  const s = ((y - 4) % 10 + 10) % 10, b = ((y - 4) % 12 + 12) % 12;
+  return { gj: st[s] + br[b] + '년', animal: col[s] + ' ' + an[b] };
+}
+function jong(w){ const s = String(w || '').replace(/[\s」』)\]"'”’.,!?…]+$/, ''); const c = s.slice(-1).charCodeAt(0); if (c >= 0xAC00 && c <= 0xD7A3) return (c - 0xAC00) % 28; const ch = s.slice(-1); return /[0-9]/.test(ch) ? ({ 0: 1, 1: 8, 3: 1, 6: 1, 7: 8, 8: 8 }[ch] || 0) : 0; }
+const J = (w, a, b) => w + (jong(w) ? a : b);
+const WD = '일월화수목금토';
+
+/* ── 종류·인사말 ── */
+const KINDS = [
+  { id: 'newyear', name: '새해 연하장', style: 'sunrise', label: '{year} {gj}', title: '새해 복 많이 받으세요', body: [
+    '{gj} 새해가 밝았습니다.\n지난 한 해 보내 주신 따뜻한 관심과 응원에 깊이 감사드립니다.\n새해에도 늘 건강하시고, 가정에 웃음과 행복이 가득하시길 바랍니다.',
+    '{animal}의 해, {yearJ} 맞아 인사드립니다.\n함께해 주신 덕분에 이용자의 일과 삶이 한 걸음씩 나아갔습니다.\n새해에도 서로 기대어 더 따뜻한 지역을 만들어 가겠습니다.',
+    '희망찬 {year}, 새로운 시작을 응원합니다.\n지난해 보내 주신 마음 잊지 않고, 올해도 자립의 길을 함께 걷겠습니다.',
+    '새해 복 많이 받으세요.\n올 한 해도 건강과 기쁨이 늘 함께하시길 빕니다.' ] },
+  { id: 'yearend', name: '송년 인사', style: 'snow', label: '{year} 송년 인사', title: '고마운 한 해였습니다', body: [
+    '어느덧 한 해의 끝자락입니다.\n올 한 해 저희와 함께해 주셔서 진심으로 감사드립니다.\n남은 날들 따뜻하게 마무리하시고, 다가오는 새해에도 행복이 가득하시길 바랍니다.',
+    '보내 주신 관심과 응원 덕분에 이용자들이 일하며 꿈꾸는 한 해를 보냈습니다.\n고마운 마음을 담아 송년 인사를 드립니다.\n따뜻하고 평안한 연말 보내세요.',
+    '한 해 동안 정말 고마웠습니다.\n따뜻한 연말, 행복한 새해 맞으세요.' ] },
+  { id: 'invite', name: '초대장', style: 'ribbon', label: 'INVITATION', title: '초대합니다', body: [
+    '{eventE} 귀하를 모시고자 합니다.\n이용자들이 정성껏 준비한 자리에 오셔서 격려와 응원을 보내 주시면 큰 힘이 되겠습니다.',
+    '그동안 함께해 주신 분들을 모시고 {eventJ} 엽니다.\n바쁘시더라도 꼭 오셔서 자리를 빛내 주시기 바랍니다.',
+    '{eventE} 초대합니다.\n함께해 주시면 고맙겠습니다.' ] },
+  { id: 'seollal', name: '설 인사', style: 'saekdong', label: '{year} 설날', title: '즐거운 설 보내세요', body: [
+    '풍성하고 넉넉한 설 명절 보내세요.\n오가는 길 평안하시고, 가족과 함께 복된 시간 되시길 바랍니다.',
+    '새해 첫 명절, 설을 맞아 인사드립니다.\n늘 보내 주시는 관심에 감사드리며, 올 한 해 건강과 행운이 함께하시길 빕니다.' ] },
+  { id: 'chuseok', name: '추석 인사', style: 'moon', label: '{year} 한가위', title: '풍성한 한가위 보내세요', body: [
+    '한가위 보름달처럼 마음 가득 풍성한 추석 보내세요.\n늘 함께해 주셔서 고맙습니다.',
+    '더도 말고 덜도 말고 한가위만 같아라.\n가족과 함께 따뜻하고 넉넉한 명절 되시길 바랍니다.' ] },
+  { id: 'thanks', name: '감사 인사', style: 'pastel', label: 'THANK YOU', title: '감사합니다', body: [
+    '보내 주신 따뜻한 나눔에 진심으로 감사드립니다.\n소중한 마음은 이용자의 자립을 위해 귀하게 쓰겠습니다.',
+    '함께해 주셔서 고맙습니다.\n덕분에 우리 지역이 조금 더 따뜻해졌습니다.' ] }
+];
+const STYLES = [
+  { id: 'sunrise', name: '해돋이', dot: '#FF8A5B' },
+  { id: 'plum', name: '매화', dot: '#E58FA5' },
+  { id: 'saekdong', name: '색동', dot: '#3D7DD8' },
+  { id: 'snow', name: '눈 오는 밤', dot: '#2E4A7D' },
+  { id: 'moon', name: '보름달', dot: '#FFD36B' },
+  { id: 'ribbon', name: '금테 초대장', dot: '#C9A45C' },
+  { id: 'pastel', name: '파스텔', dot: '#FFC7D1' },
+  { id: 'clean', name: '깔끔', dot: '#1F3A5F' }
+];
+const FONTS = [
+  { id: 'gothic', name: '고딕', fam: '"Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif', tw: 800, bw: 400, k: 1 },
+  { id: 'myeongjo', name: '명조', fam: '"Nanum Myeongjo","Batang",serif', tw: 800, bw: 400, k: 1 },
+  { id: 'pen', name: '손글씨', fam: '"Nanum Pen Script","Malgun Gothic",cursive', tw: 400, bw: 400, k: 1.3 }
+];
+const SIZES = [
+  { id: 'sq', name: '정사각 (카톡·SNS)', w: 1080, h: 1080 },
+  { id: 'tall', name: '세로 (인스타)', w: 1080, h: 1350 },
+  { id: 'post', name: '가로 엽서 (인쇄)', w: 1800, h: 1200 }
+];
+const PHOTO_MODES = [{ id: 'top', name: '위쪽에' }, { id: 'bg', name: '배경으로' }];
+
+const KEY = 'jahwal.greeting.v1';
+/* 새해·설은 가을부터 다음 해, 송년·추석은 올해 */
+const yearFor = kind => { const d = new Date(); return (kind === 'newyear' || kind === 'seollal') && d.getMonth() >= 9 ? d.getFullYear() + 1 : d.getFullYear(); };
+const defYear = () => yearFor('newyear');
+const blank = () => ({ kind: 'newyear', year: defYear(), style: 'sunrise', font: 'myeongjo', size: 'sq', seed: 1, tpl: 0,
+  auto: { label: true, title: true, body: true }, t: { label: '', title: '', body: '' }, f: {}, o: { org: '', head: '', all: '임직원·이용자 일동' },
+  names: '', photo: null, photoMode: 'top', logo: null });
+let S = blank();
+try { const v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v && v.kind) S = Object.assign(blank(), v); } catch (e) {}
+function save(){
+  try { localStorage.setItem(KEY, JSON.stringify(S)); }
+  catch (e) { try { localStorage.setItem(KEY, JSON.stringify(Object.assign({}, S, { photo: null }))); toast('사진이 커서 브라우저에는 사진 빼고 저장했습니다'); } catch (e2) {} }
+}
+const kindOf = () => KINDS.find(k => k.id === S.kind) || KINDS[0];
+
+/* ── 자리표 채우기 ── */
+function fill(tpl){
+  const g = ganji(+S.year || defYear()), y = (S.year || defYear()) + '년';
+  const ev = S.f.event ? '「' + S.f.event + '」' : '행사';
+  return String(tpl).replace(/\{year\}/g, y).replace(/\{yearJ\}/g, J(y, '을', '를')).replace(/\{gj\}/g, g.gj).replace(/\{animal\}/g, g.animal)
+    .replace(/\{eventE\}/g, ev + '에').replace(/\{eventJ\}/g, J(ev, '을', '를'));
+}
+function autoText(k){ const kd = kindOf(); return fill(k === 'body' ? kd.body[S.tpl % kd.body.length] : kd[k]); }
+function syncAuto(){ ['label', 'title', 'body'].forEach(k => { if (S.auto[k]) S.t[k] = autoText(k); }); }
+function namesList(){ return String(S.names || '').split('\n').map(s => s.trim()).filter(Boolean); }
+function toWho(n){ if (!n) return ''; if (/께$/.test(n)) return n; if (/님$/.test(n)) return n + '께'; return n + ' 님께'; }
+function inviteLines(){
+  if (S.kind !== 'invite') return [];
+  const f = S.f, out = [];
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(f.date || '');
+  if (m || f.time) { let s = ''; if (m) { const d = new Date(+m[1], m[2] - 1, +m[3]); s = (+m[1]) + '년 ' + (+m[2]) + '월 ' + (+m[3]) + '일(' + WD[d.getDay()] + ')'; } out.push(['일시', [s, f.time].filter(Boolean).join(' ')]); }
+  if (f.place) out.push(['장소', f.place]);
+  if (f.way) out.push(['오시는 길', f.way]);
+  if (f.rsvp) out.push(['회신', f.rsvp]);
+  return out;
+}
+
+/* ── 그림 도우미 ── */
+function rng(seed){ let a = seed >>> 0; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function grad(ctx, x0, y0, x1, y1, stops){ const g = ctx.createLinearGradient(x0, y0, x1, y1); stops.forEach((c, i) => g.addColorStop(i / (stops.length - 1), c)); return g; }
+function circle(ctx, x, y, r, fill){ ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fillStyle = fill; ctx.fill(); }
+function flake(ctx, x, y, r, col){
+  ctx.save(); ctx.translate(x, y); ctx.strokeStyle = col; ctx.lineWidth = Math.max(1.2, r / 7); ctx.lineCap = 'round';
+  for (let i = 0; i < 6; i++) { ctx.rotate(Math.PI / 3); ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -r); ctx.moveTo(0, -r * .55); ctx.lineTo(r * .25, -r * .78); ctx.moveTo(0, -r * .55); ctx.lineTo(-r * .25, -r * .78); ctx.stroke(); }
+  ctx.restore();
+}
+function blossom(ctx, x, y, r, petal, core){
+  for (let i = 0; i < 5; i++) { const a = i * Math.PI * 2 / 5 - Math.PI / 2; circle(ctx, x + Math.cos(a) * r * .62, y + Math.sin(a) * r * .62, r * .5, petal); }
+  circle(ctx, x, y, r * .28, core);
+}
+function heart(ctx, x, y, s, col){
+  ctx.save(); ctx.translate(x, y); ctx.scale(s, s); ctx.beginPath(); ctx.moveTo(0, 6);
+  ctx.bezierCurveTo(-14, -6, -8, -18, 0, -9); ctx.bezierCurveTo(8, -18, 14, -6, 0, 6); ctx.fillStyle = col; ctx.fill(); ctx.restore();
+}
+function hills(ctx, W, H, y, amp, col, r, n){
+  ctx.beginPath(); ctx.moveTo(0, H); ctx.lineTo(0, y);
+  const k = n || 3; for (let i = 1; i <= k; i++) { const x = W * i / k; ctx.quadraticCurveTo(x - W / k / 2, y - amp * (0.6 + r() * 0.8), x, y + (r() - .5) * amp * .4); }
+  ctx.lineTo(W, H); ctx.closePath(); ctx.fillStyle = col; ctx.fill();
+}
+
+/* ── 디자인: 배경 그리고 글 자리(y0~y1)·색 돌려주기 ── */
+function drawStyle(ctx, W, H, id, r, top){
+  const s = Math.min(W, H) / 1080;
+  const T = { y0: .16, y1: .88, padX: 90, text: '#2B2B2B', accent: '#B4472E', sub: '#555' };
+  switch (id) {
+    case 'sunrise': {
+      ctx.fillStyle = grad(ctx, 0, 0, 0, H, ['#FFE3BD', '#FFF4E4', '#FFFBF4']); ctx.fillRect(0, 0, W, H);
+      const wide = W > H, cy = top ? H * .62 : H * (wide ? .19 : .25), sr = (wide ? 92 : 118) * s;
+      const g = ctx.createRadialGradient(W / 2, cy, 10 * s, W / 2, cy, 330 * s); g.addColorStop(0, 'rgba(255,170,90,.55)'); g.addColorStop(1, 'rgba(255,200,140,0)');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      if (!top) circle(ctx, W / 2, cy, sr, grad(ctx, 0, cy - sr, 0, cy + sr, ['#FF7A4D', '#FFB257']));
+      hills(ctx, W, H, H * .93, 70 * s, '#F2C6A0', r, 3); hills(ctx, W, H, H * .965, 50 * s, '#E3A47F', r, 4);
+      Object.assign(T, { y0: top ? .52 : (wide ? .33 : .42), y1: .87, text: '#55301E', accent: '#C2502F', sub: '#7A5440' }); break;
+    }
+    case 'plum': {
+      ctx.fillStyle = '#FBF6EE'; ctx.fillRect(0, 0, W, H);
+      const br = (x0, y0, pts, sc) => {
+        ctx.strokeStyle = '#5B4334'; ctx.lineCap = 'round'; ctx.lineWidth = 11 * s * sc; ctx.beginPath(); ctx.moveTo(x0, y0);
+        pts.forEach(p => ctx.quadraticCurveTo(p[0], p[1], p[2], p[3])); ctx.stroke();
+        pts.forEach((p, i) => { const n = 2 + Math.floor(r() * 3); for (let k = 0; k < n; k++) blossom(ctx, p[2] + (r() - .5) * 90 * s, p[3] + (r() - .5) * 70 * s, (16 + r() * 12) * s * sc, k % 2 ? '#F4B6C4' : '#EC8FA7', '#F9E27A'); });
+      };
+      br(-20 * s, H * .05, [[W * .18, H * .02, W * .3, H * .1], [W * .42, H * .17, W * .5, H * .12]], 1);
+      br(W + 20 * s, H * .97, [[W * .82, H * .99, W * .72, H * .9], [W * .63, H * .83, W * .55, H * .88]], .8);
+      Object.assign(T, { y0: .2, y1: .82, text: '#43342A', accent: '#C2475A', sub: '#6E5A4C' }); break;
+    }
+    case 'saekdong': {
+      ctx.fillStyle = '#FFFDF7'; ctx.fillRect(0, 0, W, H);
+      const cols = ['#E8483B', '#F6B33C', '#3FA66B', '#3D7DD8', '#8E5BB5', '#F28CB1', '#FFFFFF'];
+      const band = (y, h) => { const k = h / cols.length; cols.forEach((c, i) => { ctx.fillStyle = c; ctx.fillRect(0, y + i * k, W, k + .5); }); };
+      band(0, 70 * s); band(H - 70 * s, 70 * s);
+      if (!top) { /* 복주머니 */
+        const cx = W / 2, cy = H * .17, R = 62 * s;
+        ctx.beginPath(); ctx.moveTo(cx - R * .55, cy - R * .55); ctx.quadraticCurveTo(cx - R * 1.25, cy + R * .1, cx - R * .9, cy + R * .75);
+        ctx.quadraticCurveTo(cx, cy + R * 1.15, cx + R * .9, cy + R * .75); ctx.quadraticCurveTo(cx + R * 1.25, cy + R * .1, cx + R * .55, cy - R * .55); ctx.closePath();
+        ctx.fillStyle = '#D8343C'; ctx.fill();
+        ctx.fillStyle = '#F2C14E'; ctx.fillRect(cx - R * .62, cy - R * .62, R * 1.24, R * .18);
+        circle(ctx, cx, cy - R * .78, R * .2, '#F2C14E');
+        ctx.fillStyle = '#F2C14E'; ctx.font = '700 ' + Math.round(R * .7) + 'px "Nanum Myeongjo",serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('福', cx, cy + R * .3);
+      }
+      Object.assign(T, { y0: top ? .5 : .3, y1: .88, text: '#3A2A20', accent: '#C8323A', sub: '#6A5546' }); break;
+    }
+    case 'snow': {
+      ctx.fillStyle = grad(ctx, 0, 0, 0, H, ['#16244A', '#24396A', '#355487']); ctx.fillRect(0, 0, W, H);
+      for (let i = 0; i < 70; i++) circle(ctx, r() * W, r() * H * .8, (r() * 2 + .6) * s, 'rgba(255,255,255,' + (.35 + r() * .5) + ')');
+      for (let i = 0; i < 18; i++) { /* 눈송이는 글 자리(가운데)를 피해 가장자리에만 */
+        const side = r() < .5, x = side ? r() * W * .16 : W - r() * W * .16, y = r() * H * .85;
+        flake(ctx, i % 3 === 0 ? r() * W : x, i % 3 === 0 ? r() * H * .1 + 10 * s : y, (10 + r() * 22) * s, 'rgba(255,255,255,' + (.35 + r() * .45) + ')'); }
+      hills(ctx, W, H, H * .92, 60 * s, 'rgba(235,242,255,.9)', r, 3); hills(ctx, W, H, H * .96, 40 * s, '#FFFFFF', r, 4);
+      Object.assign(T, { y0: top ? .5 : .16, y1: .84, text: '#FFFFFF', accent: '#FFD98A', sub: '#DCE6FF' }); break;
+    }
+    case 'moon': {
+      ctx.fillStyle = grad(ctx, 0, 0, 0, H, ['#0F1F45', '#22386A', '#3B5688']); ctx.fillRect(0, 0, W, H);
+      for (let i = 0; i < 40; i++) circle(ctx, r() * W, r() * H * .6, (r() * 1.8 + .5) * s, 'rgba(255,255,255,' + (.3 + r() * .5) + ')');
+      if (!top) { const mx = W * .74, my = H * .2, mr = 110 * s;
+        const g = ctx.createRadialGradient(mx, my, mr * .6, mx, my, mr * 2.4); g.addColorStop(0, 'rgba(255,233,168,.5)'); g.addColorStop(1, 'rgba(255,233,168,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+        circle(ctx, mx, my, mr, '#FFEAB0'); circle(ctx, mx - mr * .3, my - mr * .2, mr * .14, 'rgba(230,200,130,.45)'); circle(ctx, mx + mr * .25, my + mr * .3, mr * .1, 'rgba(230,200,130,.4)'); }
+      hills(ctx, W, H, H * .9, 80 * s, '#1B2B52', r, 3);
+      ctx.strokeStyle = 'rgba(236,222,186,.75)'; ctx.lineCap = 'round';
+      for (let i = 0; i < 22; i++) { const x = r() * W * .45, h = (90 + r() * 120) * s; ctx.lineWidth = (2 + r() * 2) * s; ctx.beginPath(); ctx.moveTo(x, H); ctx.quadraticCurveTo(x + 20 * s, H - h * .6, x + (30 + r() * 30) * s, H - h); ctx.stroke(); }
+      Object.assign(T, { y0: top ? .5 : .36, y1: .84, text: '#FFF6DD', accent: '#FFD36B', sub: '#E5DCC0' }); break;
+    }
+    case 'ribbon': {
+      ctx.fillStyle = '#FFFBF2'; ctx.fillRect(0, 0, W, H);
+      const m = 38 * s; ctx.strokeStyle = '#C9A45C'; ctx.lineWidth = 5 * s; ctx.strokeRect(m, m, W - m * 2, H - m * 2);
+      ctx.lineWidth = 1.6 * s; ctx.strokeRect(m + 14 * s, m + 14 * s, W - (m + 14 * s) * 2, H - (m + 14 * s) * 2);
+      [[m, m], [W - m, m], [m, H - m], [W - m, H - m]].forEach(([x, y]) => { ctx.save(); ctx.translate(x, y); ctx.rotate(Math.PI / 4); ctx.fillStyle = '#C9A45C'; ctx.fillRect(-11 * s, -11 * s, 22 * s, 22 * s); ctx.restore(); });
+      if (!top) { const y = H * .12; ctx.strokeStyle = '#C9A45C'; ctx.lineWidth = 2 * s; ctx.beginPath(); ctx.moveTo(W / 2 - 160 * s, y); ctx.lineTo(W / 2 - 30 * s, y); ctx.moveTo(W / 2 + 30 * s, y); ctx.lineTo(W / 2 + 160 * s, y); ctx.stroke(); blossom(ctx, W / 2, y, 16 * s, '#E3C68B', '#B8913F'); }
+      Object.assign(T, { y0: top ? .5 : .16, y1: .88, padX: 130, text: '#3B2F22', accent: '#A7782F', sub: '#6B5A45' }); break;
+    }
+    case 'pastel': {
+      ctx.fillStyle = '#FFF8F3'; ctx.fillRect(0, 0, W, H);
+      [['#FFD9DE', .05, .08, 260], ['#D9ECFF', .95, .12, 220], ['#DFF5E3', .1, .95, 240], ['#FFF0C2', .92, .9, 260]].forEach(([c, x, y, rr]) => { ctx.globalAlpha = .85; circle(ctx, W * x, H * y, rr * s, c); });
+      ctx.globalAlpha = 1;
+      for (let i = 0; i < 9; i++) heart(ctx, r() * W, (r() < .5 ? r() * .14 : .86 + r() * .12) * H, (1.2 + r() * 1.6) * s, ['#F7A1B5', '#9CC7F2', '#F5C96B'][i % 3]);
+      Object.assign(T, { y0: top ? .5 : .16, y1: .86, text: '#463744', accent: '#D9577A', sub: '#76667A' }); break;
+    }
+    default: {
+      ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = '#1F3A5F'; ctx.fillRect(0, 0, W, 22 * s); ctx.fillRect(0, H - 22 * s, W, 22 * s);
+      ctx.fillStyle = '#2D6CDF'; ctx.fillRect(W / 2 - 40 * s, top ? H * .5 - 30 * s : H * .12, 80 * s, 6 * s);
+      Object.assign(T, { y0: top ? .52 : .16, y1: .88, text: '#1F2B3D', accent: '#2D6CDF', sub: '#5A6577' });
+    }
+  }
+  T.padX *= s; return T;
+}
+
+/* ── 사진 ── */
+const imgCache = new Map();
+function loadImg(src){
+  if (!src) return Promise.resolve(null);
+  if (imgCache.has(src)) return Promise.resolve(imgCache.get(src));
+  return new Promise(res => { const im = new Image(); im.onload = () => { imgCache.set(src, im); res(im); }; im.onerror = () => res(null); im.src = src; });
+}
+function cover(ctx, im, x, y, w, h){
+  const k = Math.max(w / im.width, h / im.height), sw = w / k, sh = h / k;
+  ctx.drawImage(im, (im.width - sw) / 2, (im.height - sh) / 2, sw, sh, x, y, w, h);
+}
+
+/* ── 글 줄바꿈 ── */
+function wrap(ctx, text, maxW){
+  const out = [];
+  for (const para of String(text).split('\n')) {
+    let line = '';
+    for (const word of para.split(/(\s+)/)) {
+      if (!word) continue;
+      const test = line + word;
+      if (ctx.measureText(test).width <= maxW) { line = test; continue; }
+      if (line.trim()) { out.push(line.trimEnd()); line = ''; }
+      if (/^\s+$/.test(word)) continue;
+      let w = word;
+      while (ctx.measureText(w).width > maxW) { let k = w.length; while (k > 1 && ctx.measureText(w.slice(0, k)).width > maxW) k--; out.push(w.slice(0, k)); w = w.slice(k); }
+      line = w;
+    }
+    out.push(line.trimEnd());
+  }
+  return out;
+}
+
+/* ── 한 장 그리기 ── */
+async function draw(canvas, who){
+  const sz = SIZES.find(x => x.id === S.size) || SIZES[0], W = sz.w, H = sz.h;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d'), s = Math.min(W, H) / 1080;
+  const r = rng(S.seed * 7919 + STYLES.findIndex(x => x.id === S.style) * 131 + 7);
+  const photo = await loadImg(S.photo), logo = await loadImg(S.logo);
+  const mode = photo ? S.photoMode : '';
+  let T;
+  if (mode === 'bg') {
+    cover(ctx, photo, 0, 0, W, H);
+    ctx.fillStyle = grad(ctx, 0, 0, 0, H, ['rgba(0,0,0,.25)', 'rgba(0,0,0,.45)', 'rgba(0,0,0,.65)']); ctx.fillRect(0, 0, W, H);
+    T = { y0: .14, y1: .9, padX: 90 * s, text: '#FFFFFF', accent: '#FFE08A', sub: '#EEEEEE' };
+  } else {
+    T = drawStyle(ctx, W, H, S.style, r, mode === 'top');
+    if (mode === 'top') {
+      const m = S.style === 'ribbon' ? 70 * s : (S.style === 'saekdong' ? 90 * s : 46 * s), ph = H * .43 - m;
+      ctx.save(); ctx.beginPath(); const x = m, y = m, w = W - m * 2, rr = 24 * s;
+      ctx.moveTo(x + rr, y); ctx.arcTo(x + w, y, x + w, y + ph, rr); ctx.arcTo(x + w, y + ph, x, y + ph, rr); ctx.arcTo(x, y + ph, x, y, rr); ctx.arcTo(x, y, x + w, y, rr); ctx.closePath(); ctx.clip();
+      cover(ctx, photo, x, y, w, ph); ctx.restore();
+      T.y0 = .5;
+    }
+  }
+  const F = FONTS.find(x => x.id === S.font) || FONTS[0];
+  const big = W > H ? 1.3 : 1;
+  const fz = (n, w) => (w || F.bw) + ' ' + Math.round(n * F.k * big) + 'px ' + F.fam;
+  const maxW = W - T.padX * 2;
+  const y0 = H * T.y0, y1 = H * T.y1 - (logo ? 90 * s : 0);
+  const label = S.t.label.trim(), title = S.t.title.trim(), body = S.t.body.trim();
+  const inv = inviteLines();
+  const sender = [S.o.org, S.o.head].filter(Boolean).join(' ').trim(), all = (S.o.all || '').trim();
+  const wide = W > H;
+  /* 크기를 줄여 가며 자리에 맞추기 */
+  let lay;
+  for (let k = 1; k >= .5; k -= .04) {
+    const L = []; let h = 0;
+    const add = (txt, size, weight, color, lh, gap, align) => {
+      ctx.font = fz(size * k * s, weight);
+      const lines = wrap(ctx, txt, maxW);
+      const lineH = size * k * s * F.k * big * lh;
+      L.push({ lines, font: ctx.font, color, lineH, gap: gap * k * s, align }); h += lines.length * lineH + gap * k * s;
+    };
+    if (who) add(who, 40, F.tw === 400 ? 400 : 700, T.text, 1.3, 22);
+    if (label) add(label, 34, F.tw === 400 ? 400 : 700, T.accent, 1.3, 14);
+    if (title) add(title, wide ? 92 : 84, F.tw, T.text, 1.25, 34);
+    if (body) add(body, 38, F.bw, T.text, 1.62, 30);
+    inv.forEach((x, i) => add(x[0] + '   ' + x[1], 33, F.bw, T.text, 1.45, i === inv.length - 1 ? 30 : 6, 'inv'));
+    if (sender) add(sender, 38, F.tw === 400 ? 400 : 700, T.text, 1.35, all ? 6 : 0);
+    if (all) add(all, 31, F.bw, T.sub, 1.35, 0);
+    lay = { L, h, k };
+    if (h <= y1 - y0) break;
+  }
+  /* 가운데 정렬로 쓰기 (세로로도 자리 가운데) */
+  let y = y0 + Math.max(0, (y1 - y0 - lay.h) / 2);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  lay.L.forEach(b => {
+    ctx.font = b.font; ctx.fillStyle = b.color;
+    b.lines.forEach(line => {
+      y += b.lineH;
+      if (b.align === 'inv') {
+        const i = line.indexOf('   ');
+        if (i > 0) { const a = line.slice(0, i), c = line.slice(i); const wa = ctx.measureText(a).width, wc = ctx.measureText(c).width; const x0 = W / 2 - (wa + wc) / 2;
+          ctx.textAlign = 'left'; ctx.fillStyle = T.accent; ctx.fillText(a, x0, y - b.lineH * .22); ctx.fillStyle = b.color; ctx.fillText(c, x0 + wa, y - b.lineH * .22); ctx.textAlign = 'center'; return; }
+      }
+      ctx.fillText(line, W / 2, y - b.lineH * .22);
+    });
+    y += b.gap;
+  });
+  if (logo) { const lh = 70 * s, lw = Math.min(W * .5, logo.width * lh / logo.height); ctx.drawImage(logo, W / 2 - lw / 2, H * T.y1 - lh, lw, lh); }
+  return canvas;
+}
+
+/* ── 화면 ── */
+let cur = 0;
+function chips(el, list, on, cb, dot){
+  el.innerHTML = list.map(x => '<button type="button" data-id="' + x.id + '" class="' + (x.id === on ? 'on' : '') + '">' + (dot && x.dot ? '<i style="background:' + x.dot + '"></i>' : '') + esc(x.name) + '</button>').join('');
+  el.onclick = e => { const b = e.target.closest('button[data-id]'); if (b) cb(b.dataset.id); };
+}
+function renderControls(){
+  chips($('kinds'), KINDS, S.kind, id => { S.kind = id; S.year = yearFor(id); S.tpl = 0; S.auto = { label: true, title: true, body: true }; S.style = kindOf().style; if (id === 'invite' && S.o.all === '임직원·이용자 일동') {} renderControls(); update(); toast(kindOf().name + ' 기본 인사말과 디자인으로 바꿨습니다'); });
+  chips($('styles'), STYLES, S.style, id => { S.style = id; renderControls(); update(); }, true);
+  chips($('fonts'), FONTS, S.font, id => { S.font = id; renderControls(); update(); });
+  chips($('sizes'), SIZES, S.size, id => { S.size = id; renderControls(); update(); });
+  chips($('photoModes'), PHOTO_MODES, S.photoMode, id => { S.photoMode = id; renderControls(); update(); });
+  const yr = ['newyear', 'yearend', 'seollal', 'chuseok'].includes(S.kind);
+  $('yearRow').classList.toggle('hidden', !yr);
+  $('inviteBox').classList.toggle('hidden', S.kind !== 'invite');
+  $('year').value = S.year;
+  const g = ganji(+S.year || defYear()); $('gjText').textContent = g.gj + ' · ' + g.animal + '의 해';
+  document.querySelectorAll('[data-f]').forEach(el => { el.value = S.f[el.dataset.f] || ''; });
+  document.querySelectorAll('[data-o]').forEach(el => { el.value = S.o[el.dataset.o] || ''; });
+  syncAuto();
+  document.querySelectorAll('[data-t]').forEach(el => { el.value = S.t[el.dataset.t] || ''; });
+  $('names').value = S.names || '';
+  $('photoHas').classList.toggle('hidden', !S.photo); $('photoDrop').classList.toggle('hidden', !!S.photo); if (S.photo) $('photoThumb').src = S.photo;
+  $('logoHas').classList.toggle('hidden', !S.logo); $('logoDrop').classList.toggle('hidden', !!S.logo); if (S.logo) $('logoThumb').src = S.logo;
+}
+let drawing = null;
+async function update(){
+  syncAuto();
+  document.querySelectorAll('[data-t]').forEach(el => { if (document.activeElement !== el) el.value = S.t[el.dataset.t] || ''; });
+  const L = namesList(); if (cur >= L.length) cur = 0;
+  $('whoBar').classList.toggle('hidden', L.length < 2);
+  $('whoText').textContent = L.length ? '미리보기: ' + L[cur] + ' (' + (cur + 1) + '/' + L.length + ')' : '';
+  $('btnZip').classList.toggle('hidden', L.length < 2); $('btnZip').textContent = '명단대로 모두 받기 (' + L.length + '장)';
+  save();
+  const my = drawing = {};
+  await fontsReady;
+  if (drawing !== my) return;
+  await draw($('cv'), toWho(L[cur]));
+}
+const fontsReady = (async () => {
+  try { await Promise.race([Promise.all(['800 40px "Nanum Myeongjo"', '400 40px "Nanum Myeongjo"', '400 40px "Nanum Pen Script"'].map(f => document.fonts.load(f, '가나다'))), new Promise(r => setTimeout(r, 3000))]); } catch (e) {}
+})();
+
+/* ── 입력 이벤트 ── */
+$('year').addEventListener('input', e => { S.year = +e.target.value || defYear(); const g = ganji(S.year); $('gjText').textContent = g.gj + ' · ' + g.animal + '의 해'; update(); });
+document.querySelectorAll('[data-f]').forEach(el => el.addEventListener('input', () => { S.f[el.dataset.f] = el.value; update(); }));
+document.querySelectorAll('[data-o]').forEach(el => el.addEventListener('input', () => { S.o[el.dataset.o] = el.value; update(); }));
+document.querySelectorAll('[data-t]').forEach(el => el.addEventListener('input', () => { S.t[el.dataset.t] = el.value; S.auto[el.dataset.t] = false; update(); }));
+document.querySelectorAll('[data-reset]').forEach(b => b.addEventListener('click', () => { S.auto[b.dataset.reset] = true; syncAuto(); document.querySelector('[data-t="' + b.dataset.reset + '"]').value = S.t[b.dataset.reset]; update(); }));
+$('nextTpl').addEventListener('click', () => {
+  if (!S.auto.body && !confirm('직접 고친 인사말을 다른 기본 인사말로 바꿀까요?')) return;
+  S.tpl = (S.tpl + 1) % kindOf().body.length; S.auto.body = true; syncAuto(); document.querySelector('[data-t="body"]').value = S.t.body; update();
+});
+$('names').addEventListener('input', e => { S.names = e.target.value; update(); });
+$('prevName').addEventListener('click', () => { const n = namesList().length; cur = (cur - 1 + n) % n; update(); });
+$('nextName').addEventListener('click', () => { const n = namesList().length; cur = (cur + 1) % n; update(); });
+$('btnShuffle').addEventListener('click', () => { S.seed++; update(); });
+$('btnNew').addEventListener('click', () => {
+  if (!confirm('글과 사진을 지우고 처음부터 다시 할까요? (보내는 곳·사람은 남겨 둡니다)')) return;
+  const o = S.o, logo = S.logo; S = blank(); S.o = o; S.logo = logo; cur = 0; renderControls(); update();
+});
+
+/* 사진·로고 */
+async function readImg(file, max, keepPng){
+  let bmp;
+  try { bmp = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+  catch (e) { bmp = await new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = URL.createObjectURL(file); }); }
+  const k = Math.min(1, max / Math.max(bmp.width, bmp.height));
+  const c = document.createElement('canvas'); c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+  c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+  return keepPng ? c.toDataURL('image/png') : c.toDataURL('image/jpeg', .86);
+}
+function bindDrop(drop, input, onFile){
+  drop.addEventListener('click', () => input.click());
+  drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); } });
+  input.addEventListener('change', () => { if (input.files[0]) onFile(input.files[0]); input.value = ''; });
+  ['dragenter', 'dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', e => { const f = [...(e.dataTransfer.files || [])].find(x => /^image/.test(x.type)); if (f) onFile(f); else toast('그림 파일만 넣을 수 있습니다'); });
+}
+bindDrop($('photoDrop'), $('photoIn'), async f => { try { S.photo = await readImg(f, 1800, false); renderControls(); update(); } catch (e) { toast('사진을 읽지 못했습니다'); } });
+bindDrop($('logoDrop'), $('logoIn'), async f => { try { S.logo = await readImg(f, 600, true); renderControls(); update(); } catch (e) { toast('로고를 읽지 못했습니다'); } });
+$('photoDel').addEventListener('click', () => { S.photo = null; renderControls(); update(); });
+$('logoDel').addEventListener('click', () => { S.logo = null; renderControls(); update(); });
+
+/* ── 내보내기 ── */
+function dl(blob, name){ const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
+const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function zip(files){
+  const enc = new TextEncoder(), parts = [], cent = []; let off = 0;
+  const le = (n, k) => { const a = new Uint8Array(k); for (let i = 0; i < k; i++) a[i] = (n >>> (8 * i)) & 0xFF; return a; };
+  files.forEach(([name, data]) => {
+    const nm = enc.encode(name); let c = 0xFFFFFFFF; for (let i = 0; i < data.length; i++) c = CRC[(c ^ data[i]) & 0xFF] ^ (c >>> 8); c = (c ^ 0xFFFFFFFF) >>> 0;
+    [le(0x04034b50, 4), le(20, 2), le(0x0800, 2), le(0, 2), le(0, 2), le(0x21, 2), le(c, 4), le(data.length, 4), le(data.length, 4), le(nm.length, 2), le(0, 2), nm].forEach(h => parts.push(h)); parts.push(data);
+    cent.push(le(0x02014b50, 4), le(20, 2), le(20, 2), le(0x0800, 2), le(0, 2), le(0, 2), le(0x21, 2), le(c, 4), le(data.length, 4), le(data.length, 4), le(nm.length, 2), le(0, 2), le(0, 2), le(0, 2), le(0, 2), le(0, 4), le(off, 4), nm);
+    off += 30 + nm.length + data.length;
+  });
+  const cl = cent.reduce((n, a) => n + a.length, 0);
+  return new Blob([...parts, ...cent, le(0x06054b50, 4), le(0, 2), le(0, 2), le(files.length, 2), le(files.length, 2), le(cl, 4), le(off, 4), le(0, 2)], { type: 'application/zip' });
+}
+const safe = s => String(s).replace(/[\\/:*?"<>|]/g, '').trim();
+const fileName = n => safe(kindOf().name.replace(/\s/g, '') + (n ? '_' + n : '')) + '.png';
+const toBlob = c => new Promise(res => c.toBlob(res, 'image/png'));
+$('btnPng').addEventListener('click', async () => {
+  await fontsReady; const L = namesList(); const c = await draw(document.createElement('canvas'), toWho(L[cur]));
+  dl(await toBlob(c), fileName(L[cur])); toast('이미지를 받았습니다');
+});
+$('btnZip').addEventListener('click', async () => {
+  await fontsReady; const L = namesList(); if (!L.length) return;
+  toast(L.length + '장 만드는 중…'); const files = [], used = new Set();
+  for (const n of L) {
+    const c = await draw(document.createElement('canvas'), toWho(n));
+    let nm = fileName(n), k = 2; while (used.has(nm)) nm = fileName(n + ' ' + k++); used.add(nm);
+    files.push([nm, new Uint8Array(await (await toBlob(c)).arrayBuffer())]);
+  }
+  dl(zip(files), safe(kindOf().name.replace(/\s/g, '')) + '_' + L.length + '장.zip'); toast(L.length + '장을 묶어 받았습니다');
+});
+$('btnPrint').addEventListener('click', async () => {
+  await fontsReady; const L = namesList(), list = L.length ? L : [''];
+  const area = $('printArea'); area.innerHTML = '';
+  for (let i = 0; i < list.length; i++) {
+    const c = await draw(document.createElement('canvas'), toWho(list[i]));
+    const im = new Image(); im.src = c.toDataURL('image/png');
+    im.className = S.size + (S.size === 'post' ? (i % 2 === 1 && i < list.length - 1 ? ' one' : '') : (i < list.length - 1 ? ' one' : ''));
+    area.appendChild(im);
+  }
+  await new Promise(r => setTimeout(r, 300));
+  window.print();
+});
+window.addEventListener('afterprint', () => { $('printArea').innerHTML = ''; });
+$('btnText').addEventListener('click', () => {
+  const L = namesList(), who = toWho(L[cur]);
+  const parts = [];
+  if (who) parts.push(who);
+  parts.push([S.t.label, S.t.title].filter(Boolean).join(' · '));
+  parts.push(S.t.body.trim());
+  const inv = inviteLines(); if (inv.length) parts.push(inv.map(x => '■ ' + x[0] + ': ' + x[1]).join('\n'));
+  parts.push([[S.o.org, S.o.head].filter(Boolean).join(' '), S.o.all].filter(Boolean).join('\n'));
+  const text = parts.filter(Boolean).join('\n\n');
+  const done = () => toast('문자용 글을 복사했습니다');
+  const fb = () => { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) { toast('복사가 막혔습니다'); } ta.remove(); };
+  try { if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fb); else fb(); } catch (e) { fb(); }
+});
+
+/* ── 시작 ── */
+if (location.hash === '#sample' && !S.o.org) { S.o.org = '○○복지관'; S.o.head = '기관장 홍길동'; S.names = '김○○ 대표님\n이○○ 님\n△△복지관 관장님'; }
+renderControls(); update();
+window._greet = { S, draw, ganji, update, renderControls, set: (o) => { Object.assign(S, o); renderControls(); return update(); } };
+})();
+</script>
+<script src="../videos.js?v=5"></script>
+<script src="../remake.js"></script>
+</body>
+</html>

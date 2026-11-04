@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>안전 표지·게시물 만들기 | 사회복지사 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="법정 안전보건표지 43종(금지·경고·지시·안내)을 「미끄럼·낙하물·세제」처럼 찾아 A4 한 장에 1~15개 크기로 인쇄합니다. 표지 아래 글을 덧붙이고, 「칼 사용 주의」·「소화기」 같은 글자 표지도 만듭니다.">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/safety/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="안전보건표지 인쇄 | 사회복지사 업무 도구">
+<meta property="og:description" content="법정 안전보건표지 43종(금지·경고·지시·안내)을 「미끄럼·낙하물·세제」처럼 찾아 A4 한 장에 1~15개 크기로 인쇄합니다. 표지 아래 글을 덧붙이고, 「칼 사용 주의」·「소화기」 같은 글자 표지도 만듭니다.">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/safety/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<style id="pageStyle">@page{size:A4;margin:0}</style>
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --red:#E63946; --green:#1F8A4C;
+  --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC;
+  --text:#1A2B50; --muted:#5B6885;
+  --blue-bg:#E8F0FF; --amber:#8A5A00; --amber-bg:#FFF1CC; --btn-text:#FFFFFF;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#27407A; --red:#FF6B76; --green:#5FD08E;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --btn-text:#0E1630;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1300px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
+.lead{margin:0 0 14px;color:var(--muted)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.tabs button{min-height:46px;padding:0 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:800;font-size:16px}
+.tabs button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.layout{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
+.layout > *{min-width:0}
+@media (min-width:1000px){.layout{grid-template-columns:minmax(0,1fr) 420px;align-items:start}.side{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:19px}
+.card h2 small{font-size:14px;color:var(--muted);font-weight:600;margin-left:6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{min-height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:15px}
+.chips button.on{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.chips .n{font-weight:600;font-size:12px;opacity:.8;margin-left:4px}
+.search{width:100%;min-height:50px;padding:8px 14px;border:2px solid var(--line);border-radius:12px;background:var(--bg);font-size:17px;margin-bottom:10px}
+.sgrid{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));margin-top:12px}
+.sc{position:relative;border:2px solid var(--line);border-radius:12px;background:#fff;color:#1A2B50;padding:8px 6px 6px;text-align:center;cursor:pointer}
+.sc:hover{border-color:var(--blue)}
+.sc.on{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-bg)}
+.sc svg{width:84px;height:84px;display:block;margin:0 auto}
+.sc b{display:block;font-size:13.5px;line-height:1.3;margin-top:4px}
+.sc small{display:block;font-size:11px;color:#5B6885}
+.sc .ck{position:absolute;right:6px;top:6px;width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-weight:800;font-size:14px;line-height:24px;display:none}
+.sc.on .ck{display:block}
+.sec{margin:14px 0 4px;font-size:17px}
+.sec small{font-size:13px;color:var(--muted);font-weight:600;margin-left:6px}
+.btn{min-height:42px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:700}
+.btn-main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.btn-sm{min-height:34px;padding:0 10px;font-size:14px}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.btns .btn{flex:1 1 140px}
+.fields{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-top:10px}
+.fields .wide{grid-column:1/-1}
+label.f{display:flex;flex-direction:column;gap:3px;font-size:14px;font-weight:700;color:var(--muted)}
+label.f input,label.f select,label.f textarea{min-height:42px;padding:7px 11px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);font-size:15.5px;font-weight:500;color:var(--text)}
+label.f textarea{min-height:90px;resize:vertical}
+.note{font-size:14px;color:var(--muted);margin:8px 0 0}
+.tip{background:var(--amber-bg);border-radius:10px;padding:8px 12px;font-size:14px;margin:8px 0 0}
+.sel{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+.sel li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:8px;align-items:center;border:1.5px solid var(--line);border-radius:10px;padding:6px 8px;background:var(--bg)}
+.sel li svg,.sel li .tmini{width:44px;height:44px;display:block}
+.tmini{border-radius:6px;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.1}
+.sel input{width:100%;min-height:36px;padding:4px 8px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);font-size:14.5px}
+.sel .ctl{display:flex;gap:4px;align-items:center}
+.sel .ctl input{width:52px;text-align:center}
+.sel .x{width:34px;height:34px;border:0;background:none;font-size:20px;color:var(--muted);border-radius:8px}
+.empty{color:var(--muted);padding:10px 0;font-size:15px}
+.sheetwrap{margin-top:12px;background:#C9CFDB;border-radius:12px;padding:12px;overflow:hidden;text-align:center}
+.sheetbox{overflow:hidden;margin:0 auto;width:0;height:0;text-align:left}
+.sheetbox .sheet{transform-origin:top left;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.pages{font-size:13px;color:#33415c;margin-top:6px}
+.rows{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+.rows th{font-size:13px;color:var(--muted);text-align:left;padding:4px}
+.rows td{padding:3px}
+.rows input,.rows select{width:100%;min-height:36px;padding:4px 8px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);font-size:14px}
+.rows .x{width:32px;height:32px;border:0;background:none;font-size:18px;color:var(--muted)}
+.links{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.links a{display:block;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);color:inherit;text-decoration:none}
+.links a:hover{border-color:var(--blue)}
+.links b{display:block;font-size:16px}
+.links span{display:block;font-size:14px;color:var(--muted)}
+.links em{font-style:normal;font-size:12px;font-weight:700;color:var(--blue)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.toast.on{opacity:1}
+.hidden{display:none !important}
+.foot{margin-top:24px;padding-top:14px;border-top:1.5px solid var(--line);font-size:14px;color:var(--muted)}
+.foot p{margin:2px 0}
+/* ---------- 인쇄 종이 ---------- */
+.sheet{width:210mm;height:297mm;background:#fff;color:#111;font-family:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif;position:relative;overflow:hidden;word-break:keep-all;line-height:1.35}
+.sheet.land{width:297mm;height:210mm}
+.sheet svg{display:block}
+.cell{position:absolute;display:flex;align-items:center;justify-content:center;gap:5mm}
+.cell.v{flex-direction:column}
+.cell.cut{outline:0.25mm dashed #aaa}
+.cell .cp{font-weight:800;text-align:center;color:#000;line-height:1.25;max-width:100%}
+.cell.h .cp{text-align:left;flex:1}
+.ts{width:100%;height:100%;border:1.2mm solid #000;border-radius:3mm;display:flex;flex-direction:column;overflow:hidden;background:#fff}
+.ts .hd{display:flex;align-items:center;justify-content:center;gap:2mm;font-weight:900;letter-spacing:.1em}
+.ts .bd{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:800;padding:2mm 4mm;color:#000;white-space:pre-line}
+.ts.warn .hd{background:#FFD100;color:#000}
+.ts.ban .hd{background:#D7282F;color:#fff}
+.ts.must .hd{background:#1E5BAA;color:#fff}
+.ts.guide .hd{background:#00843D;color:#fff}
+.ts.fire{border-color:#D7282F;background:#D7282F}
+.ts.fire .hd{display:none}
+.ts.fire .bd{color:#fff}
+.post{padding:16mm 16mm 14mm}
+.post.land{padding:12mm 12mm 10mm}
+.post .ph{font-size:24pt;font-weight:900;text-align:center;padding-bottom:3mm;border-bottom:1mm solid #111;margin-bottom:6mm}
+.post .ph small{display:block;font-size:12pt;font-weight:700;color:#444;margin-top:1mm}
+.post .lead2{font-size:13pt;margin:0 0 5mm;line-height:1.6}
+.post ol.pl{margin:0;padding-left:8mm;font-size:13.5pt;line-height:1.7}
+.post ol.pl li{margin-bottom:3mm}
+.post .goal{margin-top:6mm;border:0.4mm solid #333;padding:4mm 5mm;font-size:12pt;white-space:pre-line}
+.post .goal b{display:block;margin-bottom:1mm}
+.post .sign{position:absolute;right:16mm;bottom:22mm;text-align:right;font-size:14pt;line-height:1.8}
+.post .sign b{font-size:16pt}
+.post table{width:100%;border-collapse:collapse;font-size:11.5pt}
+.post th,.post td{border:0.3mm solid #333;padding:2.2mm 2.5mm;vertical-align:middle}
+.post th{background:#E9EDF3;font-weight:800}
+.post td.c{text-align:center}
+.post .h2{font-size:14pt;font-weight:900;margin:6mm 0 2mm}
+.post .box{border:0.4mm solid #333;border-radius:2mm;padding:3mm 4mm;font-size:12pt;white-space:pre-line;line-height:1.6}
+.post .act{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-top:2mm}
+.post .act div{border:0.6mm solid #D7282F;border-radius:2mm;padding:3mm;text-align:center;font-weight:800;font-size:12pt}
+.post .act div b{display:block;color:#D7282F;font-size:16pt}
+.post .img{width:100%;max-height:120mm;object-fit:contain;border:0.3mm solid #999}
+.post .foot2{position:absolute;left:16mm;right:16mm;bottom:10mm;font-size:9.5pt;color:#555;border-top:0.3mm solid #bbb;padding-top:2mm;display:flex;justify-content:space-between}
+.post.land .foot2{left:12mm;right:12mm;bottom:6mm}
+.post table.chk{font-size:9pt;table-layout:fixed}
+.post table.chk th,.post table.chk td{padding:1.2mm 0.6mm;text-align:center}
+.post table.chk td.it{text-align:left;padding-left:1.5mm;font-size:9.5pt}
+.post .lines td{height:16mm}
+#printArea{display:none}
+@media print{
+  body{background:#fff}
+  body > *{display:none !important}
+  body > #printArea{display:block !important}
+  #printArea .sheet{break-after:page;page-break-after:always}
+  #printArea .sheet:last-child{break-after:auto;page-break-after:auto}
+  .sheet *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › 안전 관리</p>
+  <h1>안전 표지·게시물 만들기</h1>
+  <p class="lead">법정 안전보건표지(산업안전보건법 시행규칙 별표 6~9 기준)를 골라 크기별로 인쇄하고, 사업장 유형별 표지 꾸러미와 중대재해 점검 때 보는 게시물(경영방침·비상연락망·위험성평가 결과 등)을 칸만 채워 A4로 만듭니다.</p>
+  <div class="tabs" role="tablist" id="tabs">
+    <button type="button" data-tab="signs">① 안전보건표지</button>
+    <button type="button" data-tab="pack">② 사업장별 꾸러미</button>
+    <button type="button" data-tab="post">③ 점검 대비 게시물</button>
+    <button type="button" data-tab="links">④ 공식 자료 바로가기</button>
+  </div>
+
+  <!-- ① 표지 -->
+  <section id="tab-signs" class="layout">
+    <div>
+      <div class="card">
+        <input class="search" id="q" type="search" placeholder="찾기 (예: 미끄럼, 낙하물, 뜨거움, 세제, 전기, 비상구, 장갑)" autocomplete="off">
+        <div class="chips" id="cats"></div>
+        <div id="sgrid"></div>
+      </div>
+      <div class="card">
+        <h2>글자 표지 만들기 <small>법정 그림이 없는 내용 (예: 칼 사용 주의, 소화기)</small></h2>
+        <div class="chips" id="tkinds"></div>
+        <div class="fields"><label class="f wide">표지 글 (줄 바꿈 가능)<textarea id="tText" rows="2" placeholder="예: 칼 사용 주의"></textarea></label></div>
+        <div class="chips" id="tpresets" style="margin-top:8px"></div>
+        <div class="btns"><button class="btn btn-main" type="button" id="tAdd">인쇄 목록에 넣기</button></div>
+      </div>
+    </div>
+    <aside class="side">
+      <div class="card">
+        <h2>인쇄 목록 <small id="selCount"></small></h2>
+        <ul class="sel" id="sel"></ul>
+        <p class="note">표지 아래(옆) 글은 고칠 수 있습니다. 법에 따라 덧붙이는 글은 흰 바탕에 검은 한글 고딕으로 인쇄됩니다.</p>
+        <div class="fields">
+          <label class="f">한 장에<select id="lay"><option value="p1">A4 세로 1개 (크게)</option><option value="l1">A4 가로 1개 (표지 + 옆 글)</option><option value="p2">A4 2개 (A5 크기)</option><option value="p4">A4 4개</option><option value="p8">A4 8개</option><option value="p15">A4 15개 (스티커)</option></select></label>
+          <label class="f">덧붙이는 글<select id="capOn"><option value="1">넣기</option><option value="0">빼기 (그림만)</option></select></label>
+          <label class="f">자르는 선<select id="cutOn"><option value="1">점선 넣기</option><option value="0">없음</option></select></label>
+        </div>
+        <div class="sheetwrap"><div class="sheetbox" id="sbox1"></div><div class="pages" id="pg1"></div></div>
+        <div class="btns"><button class="btn btn-main" type="button" id="pr1">인쇄 · PDF로 저장</button><button class="btn" type="button" id="clr1">목록 비우기</button></div>
+        <p class="tip">코팅하거나 투명 시트에 끼우면 오래 갑니다. 법은 「쉽게 파손·변형되지 않는 재료」와 「빠르고 쉽게 알아볼 수 있는 크기」를 요구합니다.</p>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ② 꾸러미 -->
+  <section id="tab-pack" class="hidden">
+    <div class="card">
+      <h2>사업장 유형 고르기</h2>
+      <div class="chips" id="packs"></div>
+      <div id="packBody"></div>
+    </div>
+  </section>
+
+  <!-- ③ 게시물 -->
+  <section id="tab-post" class="layout hidden">
+    <div>
+      <div class="card">
+        <h2>게시물 고르기</h2>
+        <div class="chips" id="posts"></div>
+        <p class="note" id="postNote"></p>
+        <div class="fields">
+          <label class="f">기관 이름<input id="pOrg" placeholder="예: ○○복지관"></label>
+          <label class="f">사업장(부서) 이름<input id="pUnit" placeholder="예: 사례관리팀 / 기관 전체"></label>
+        </div>
+        <div id="postForm"></div>
+      </div>
+    </div>
+    <aside class="side">
+      <div class="card">
+        <h2>미리보기</h2>
+        <div class="sheetwrap"><div class="sheetbox" id="sbox2"></div><div class="pages" id="pg2"></div></div>
+        <div class="btns"><button class="btn btn-main" type="button" id="pr2">인쇄 · PDF로 저장</button></div>
+        <p class="note">입력한 내용은 이 PC 브라우저에만 저장됩니다(다음에 열면 그대로). 연락처가 들어가므로 공용 PC라면 다 쓴 뒤 「이 게시물 입력 지우기」를 누르세요.</p>
+        <div class="btns"><button class="btn btn-sm" type="button" id="postReset">이 게시물 입력 지우기</button></div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ④ 자료 -->
+  <section id="tab-links" class="hidden">
+    <div class="card">
+      <h2>공식 자료 바로가기 <small>포스터·교육자료는 공식 기관 자료를 쓰세요</small></h2>
+      <div class="links" id="links"></div>
+      <p class="tip">안전보건공단 「미디어 현장배송」에서는 포스터·스티커 등 인쇄물을 사업장으로 무료 배송 신청할 수 있습니다(재고·조건은 공단 안내 확인). 자료의 저작권은 각 기관에 있으니 이용 조건을 확인하고 쓰세요.</p>
+    </div>
+  </section>
+
+  <div class="foot">
+    <p>표지 모양·색은 산업안전보건법 시행규칙 별표 6(종류와 형태)·7(용도와 색채)·8(색도기준)·9(기본모형)를 따라 이 화면이 직접 그린 것입니다. 그림 세부 모양은 법정 도안과 조금 다를 수 있으니, 공식 도안이 필요하면 ④의 협회·공단 자료를 쓰세요. 꾸러미의 점검 항목·위험요인은 예시이므로 사업장에 맞게 고쳐 쓰세요.</p>
+    <p>입력한 내용은 이 PC의 브라우저 안에서만 쓰이고 어디로도 보내지 않습니다. 만든 사람: 서울강남지역자활센터 김태균</p>
+  </div>
+</div>
+<div id="printArea"></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(function(){
+'use strict';
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const toast = m => { const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 2200); };
+const KEY = 'jahwal.safety.v1';
+let ST = { tab: 'signs', cat: 'all', items: [], lay: 'p4', capOn: '1', cutOn: '1', tkind: 'warn', pack: 'common', post: 'policy', org: '', unit: '', pf: {} };
+try { const v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v) ST = Object.assign(ST, v); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(ST)); } catch (e) {} };
+
+/* ===================== 표지 그림 (100×100 안에 그림) ===================== */
+const RED = '#D7282F', YEL = '#FFD100', BLU = '#1E5BAA', GRN = '#00843D', BLK = '#111111', WHT = '#FFFFFF';
+const S_ = (d, f, w) => '<path d="' + d + '" fill="none" stroke="' + f + '" stroke-width="' + (w || 9) + '" stroke-linecap="round" stroke-linejoin="round"/>';
+const F_ = (d, f) => '<path d="' + d + '" fill="' + f + '"/>';
+const C_ = (x, y, r, f) => '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + f + '"/>';
+const FLAME = 'M50 12 C60 26 72 38 70 56 C68 72 60 80 50 80 C40 80 31 72 30 58 C29 44 40 38 42 24 C47 32 49 38 48 46 C55 38 56 26 50 12 Z';
+const RUN = f => C_(44, 20, 8, f) + S_('M42 34 L36 58 M42 38 L54 48 L62 44 M41 38 L28 44 M36 58 L50 68 L52 84 M36 58 L28 72 L16 74', f, 8);
+function rays(cx, cy, r1, r2, n, from, to, f, w){ let s = ''; for (let i = 0; i < n; i++) { const a = (from + (to - from) * (n === 1 ? 0 : i / (n - 1))) * Math.PI / 180; s += 'M' + (cx + r1 * Math.cos(a)).toFixed(1) + ' ' + (cy + r1 * Math.sin(a)).toFixed(1) + 'L' + (cx + r2 * Math.cos(a)).toFixed(1) + ' ' + (cy + r2 * Math.sin(a)).toFixed(1); } return S_(s, f, w); }
+function star(cx, cy, r1, r2, n, f){ let d = ''; for (let i = 0; i < n * 2; i++) { const a = (i * 180 / n - 90) * Math.PI / 180, r = i % 2 ? r2 : r1; d += (i ? 'L' : 'M') + (cx + r * Math.cos(a)).toFixed(1) + ' ' + (cy + r * Math.sin(a)).toFixed(1); } return F_(d + 'Z', f); }
+function trefoil(f){ let d = ''; [-90, 30, 150].forEach(c => { const a1 = (c - 30) * Math.PI / 180, a2 = (c + 30) * Math.PI / 180, r1 = 11, r2 = 34; d += 'M' + (50 + r1 * Math.cos(a1)).toFixed(1) + ' ' + (54 + r1 * Math.sin(a1)).toFixed(1) + 'L' + (50 + r2 * Math.cos(a1)).toFixed(1) + ' ' + (54 + r2 * Math.sin(a1)).toFixed(1) + 'A' + r2 + ' ' + r2 + ' 0 0 1 ' + (50 + r2 * Math.cos(a2)).toFixed(1) + ' ' + (54 + r2 * Math.sin(a2)).toFixed(1) + 'L' + (50 + r1 * Math.cos(a2)).toFixed(1) + ' ' + (54 + r1 * Math.sin(a2)).toFixed(1) + 'A' + r1 + ' ' + r1 + ' 0 0 0 ' + (50 + r1 * Math.cos(a1)).toFixed(1) + ' ' + (54 + r1 * Math.sin(a1)).toFixed(1) + 'Z'; }); return F_(d, f) + C_(50, 54, 7, f); }
+function snow(f){ let s = ''; [90, 30, -30].forEach(a0 => { const a = a0 * Math.PI / 180, dx = Math.cos(a), dy = Math.sin(a); s += 'M' + (50 - 36 * dx).toFixed(1) + ' ' + (50 - 36 * dy).toFixed(1) + 'L' + (50 + 36 * dx).toFixed(1) + ' ' + (50 + 36 * dy).toFixed(1); [-1, 1].forEach(k => { const bx = 50 + k * 24 * dx, by = 50 + k * 24 * dy; [-1, 1].forEach(m => { const b = a + k * m * 0.7 + (k < 0 ? Math.PI : 0); s += 'M' + bx.toFixed(1) + ' ' + by.toFixed(1) + 'L' + (bx + 11 * Math.cos(b)).toFixed(1) + ' ' + (by + 11 * Math.sin(b)).toFixed(1); }); }); }); return S_(s, f, 6); }
+const HEAD = f => C_(50, 50, 25, f);
+/* 그림: (f = 그림색, b = 바탕색) */
+const PIC = {
+  101: f => C_(50, 16, 8, f) + S_('M50 29 V58 M50 33 L64 27 L66 13 M50 33 L39 50 M50 58 L44 86 M50 58 L56 86', f),
+  102: f => C_(57, 16, 8, f) + S_('M55 30 L48 56 M54 34 L66 46 M53 34 L40 44 M48 56 L60 70 L62 86 M48 56 L40 72 L28 78', f),
+  103: f => F_('M24 46 H62 V76 H24 Z', f) + S_('M31 46 L34 28 H54 L60 46', f, 5) + F_('M66 16 H72 V82 H66 Z', f) + F_('M72 75 H90 V81 H72 Z', f) + C_(34, 80, 8, f) + C_(55, 80, 8, f),
+  104: f => F_('M45 14 a5 5 0 0 1 10 0 V48 H45 Z', f) + F_('M34 44 h32 a6 6 0 0 1 6 6 v16 c0 12 -8 20 -20 20 h-4 c-12 0 -20 -8 -20 -20 v-16 a6 6 0 0 1 6 -6 Z', f),
+  105: f => C_(40, 18, 7, f) + S_('M40 30 V56 M40 34 L31 50 M40 34 L49 50 M40 56 L34 78 M40 56 L46 78', f, 8) + F_('M18 80 H62 V88 H18 Z', f) + S_('M76 82 V32', f, 7) + F_('M65 36 L76 16 L87 36 Z', f),
+  106: f => F_('M14 56 H70 V68 H14 Z', f) + F_('M73 56 H85 V68 H73 Z', f) + S_('M79 48 q-7 -8 0 -16 q7 -8 0 -16', f, 5),
+  107: f => '<g transform="translate(8 0) scale(0.84)">' + F_(FLAME, f) + '</g>' + F_('M46 70 H54 V92 H46 Z', f),
+  108: f => F_('M28 44 H72 V84 H28 Z', f) + S_('M16 30 H72', f, 7) + F_('M68 19 L86 30 L68 41 Z', f),
+  201: f => F_(FLAME, f) + F_('M22 84 H78 V90 H22 Z', f),
+  202: f => '<g transform="translate(20 0) scale(0.6)">' + F_(FLAME, f) + '</g>' + '<circle cx="50" cy="68" r="15" fill="none" stroke="' + f + '" stroke-width="8"/>',
+  203: f => C_(50, 64, 13, f) + rays(50, 64, 18, 34, 7, -170, -10, f, 6) + F_('M18 30 l8 -4 l3 8 l-8 3 Z M76 22 l7 2 l-2 8 l-7 -3 Z M48 12 l6 0 l0 7 l-6 0 Z', f),
+  204: (f, b) => S_('M22 62 L78 90 M78 62 L22 90', f, 9) + C_(50, 38, 21, f) + F_('M37 50 H63 V66 H37 Z', f) + C_(41, 37, 6.5, b) + C_(59, 37, 6.5, b) + F_('M50 44 L46 52 H54 Z', b) + S_('M44 58 V66 M50 58 V66 M56 58 V66', b, 2.5),
+  205: (f, b) => S_('M18 14 L34 30 M82 14 L66 30', f, 9) + C_(38, 40, 3.5, f) + C_(38, 52, 3.5, f) + C_(62, 40, 3.5, f) + C_(62, 52, 3.5, f) + F_('M12 66 H44 V80 H12 Z', f) + F_('M24 66 Q29 74 34 66 Z', b) + F_('M56 86 V68 a3.5 3.5 0 0 1 7 0 V62 a3.5 3.5 0 0 1 7 0 V64 a3.5 3.5 0 0 1 7 0 V68 a3.5 3.5 0 0 1 7 0 V86 Z', f) + F_('M62 66 Q66 73 70 66 Z', b),
+  206: f => trefoil(f),
+  207: f => F_('M58 10 L28 56 H48 L38 92 L74 40 H54 L66 10 Z', f),
+  208: f => S_('M50 6 V34', f, 6) + S_('M50 34 V42 a8 8 0 1 1 -8 8', f, 6) + S_('M50 60 L30 70 M50 60 L70 70', f, 4) + F_('M26 70 H74 V92 H26 Z', f),
+  209: f => F_('M54 8 L76 14 L70 36 L48 30 Z', f) + S_('M42 16 L34 24 M46 34 L38 42', f, 4) + C_(42, 58, 9, f) + F_('M22 94 C22 76 31 70 42 70 C53 70 62 76 62 94 Z', f),
+  210: f => F_('M16 80 H84 V88 H16 Z', f) + S_('M32 70 q-8 -11 0 -22 q8 -11 0 -22 M50 70 q-8 -11 0 -22 q8 -11 0 -22 M68 70 q-8 -11 0 -22 q8 -11 0 -22', f, 6),
+  211: f => snow(f),
+  212: f => C_(64, 20, 8, f) + S_('M58 32 L44 56 M56 36 L72 40 M54 36 L38 28 M44 56 L64 66 L82 58 M44 56 L32 74', f) + S_('M10 88 H90', f, 5),
+  213: f => C_(30, 50, 6, f) + rays(30, 50, 10, 20, 8, 0, 315, f, 4) + S_('M30 50 H92', f, 5),
+  214: (f, b) => C_(50, 24, 11, f) + F_('M20 94 C20 62 33 48 50 48 C67 48 80 62 80 94 Z', f) + star(50, 72, 13, 5, 8, b),
+  215: f => F_('M43 12 H57 L55 64 H45 Z', f) + C_(50, 80, 7.5, f),
+  301: (f, b) => HEAD(f) + F_('M24 38 H76 V54 H58 L50 48 L42 54 H24 Z', b),
+  302: (f, b) => HEAD(f) + '<ellipse cx="50" cy="50" rx="19" ry="23" fill="' + b + '"/>' + C_(43, 44, 5, f) + C_(57, 44, 5, f) + C_(50, 64, 8, f) + C_(50, 64, 4, b),
+  303: (f, b) => HEAD(f) + F_('M33 52 Q50 44 67 52 Q65 70 50 75 Q35 70 33 52 Z', b) + S_('M33 54 L25 46 M67 54 L75 46', b, 3),
+  304: (f, b) => HEAD(f) + F_('M25 28 H75 V35 H25 Z', b) + '<path d="M29 35 H71 V68 Q50 80 29 68 Z" fill="none" stroke="' + b + '" stroke-width="4"/>',
+  305: (f, b) => F_('M20 56 C20 33 33 20 50 20 C67 20 80 33 80 56 Z', f) + F_('M12 56 H88 V64 H12 Z', f) + S_('M50 23 V54', b, 4) + F_('M32 66 H68 V72 Q50 86 32 72 Z', f),
+  306: (f, b) => C_(50, 54, 21, f) + S_('M24 52 C24 14 76 14 76 52', f, 6) + '<rect x="14" y="40" width="16" height="26" rx="6" fill="' + f + '" stroke="' + b + '" stroke-width="3"/><rect x="70" y="40" width="16" height="26" rx="6" fill="' + f + '" stroke="' + b + '" stroke-width="3"/>',
+  307: (f, b) => F_('M30 12 H54 V56 L80 64 Q88 68 88 76 V84 H22 V18 Q22 12 30 12 Z', f) + S_('M22 76 H88', b, 4),
+  308: (f, b) => F_('M32 92 V58 L20 44 a5 5 0 0 1 8 -6 L36 48 V20 a5 5 0 0 1 10 0 V44 H48 V14 a5 5 0 0 1 10 0 V44 H60 V18 a5 5 0 0 1 10 0 V46 H72 V28 a5 5 0 0 1 10 0 V64 Q82 82 70 92 Z', f) + S_('M32 80 H72', b, 4),
+  309: (f, b) => F_('M36 12 L22 20 L12 50 L22 54 L28 40 V90 H72 V40 L78 54 L88 50 L78 20 L64 12 L50 28 Z', f) + S_('M50 30 V88', b, 3),
+  402: f => F_('M40 18 H60 V40 H82 V60 H60 V82 H40 V60 H18 V40 H40 Z', f),
+  403: f => S_('M12 66 H88', f, 6) + S_('M24 66 V80 M76 66 V80', f, 5) + C_(28, 54, 7, f) + F_('M38 48 H80 V60 H38 Z', f) + F_('M66 14 H74 V22 H82 V30 H74 V38 H66 V30 H58 V22 H66 Z', f),
+  404: (f, b) => F_('M12 64 Q50 34 88 64 Q50 94 12 64 Z', f) + C_(50, 64, 11, b) + C_(50, 64, 5, f) + F_('M34 14 q-5 8 0 11 q5 -3 0 -11 Z M50 10 q-5 8 0 11 q5 -3 0 -11 Z M66 14 q-5 8 0 11 q5 -3 0 -11 Z', f) + S_('M34 30 V38 M50 26 V38 M66 30 V38', f, 3),
+  405: f => '<text x="50" y="44" font-size="20" font-weight="900" text-anchor="middle" fill="' + f + '" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif">비상용</text><text x="50" y="70" font-size="20" font-weight="900" text-anchor="middle" fill="' + f + '" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif">기구</text>',
+  406: (f, b) => F_('M60 12 H88 V90 H60 Z', f) + F_('M65 17 H83 V90 H65 Z', b) + RUN(f),
+  407: (f, b) => '<g transform="translate(100 0) scale(-1 1) translate(10 -6) scale(0.8)">' + PIC[406](f, b) + '</g>' + S_('M86 86 H24', f, 7) + F_('M30 76 L12 86 L30 96 Z', f),
+  408: (f, b) => '<g transform="translate(10 -6) scale(0.8)">' + PIC[406](f, b) + '</g>' + S_('M14 86 H76', f, 7) + F_('M70 76 L88 86 L70 96 Z', f)
+};
+const SIGNS = [
+  ['101', '출입금지', 'ban', '출입을 통제해야 할 장소', '출입 통제 관계자 외'],
+  ['102', '보행금지', 'ban', '사람이 걸어 다녀서는 안 될 장소', '걷기 통행'],
+  ['103', '차량통행금지', 'ban', '운반기기·차량의 통행을 금지해야 할 장소', '지게차 차량 통행'],
+  ['104', '사용금지', 'ban', '수리·고장 등으로 만지거나 작동시키면 안 되는 기계·설비', '고장 수리 만지지 작동'],
+  ['105', '탑승금지', 'ban', '엘리베이터 등에 타거나 올라가는 것을 금지할 때', '엘리베이터 올라가지 탑승'],
+  ['106', '금연', 'ban', '담배를 피워서는 안 될 장소', '담배 흡연'],
+  ['107', '화기금지', 'ban', '화재 염려가 있어 화기 취급을 금지하는 장소', '불 화기 라이터 성냥'],
+  ['108', '물체이동금지', 'ban', '정리 상태를 유지하거나 움직이면 안 되는 물체가 있는 곳', '옮기지 이동 정리'],
+  ['201', '인화성물질 경고', 'chem', '휘발유 등 화기 취급에 극히 주의해야 할 물질이 있는 장소', '가스 휘발유 시너 알코올 인화 LPG'],
+  ['202', '산화성물질 경고', 'chem', '가열·압축 등으로 강한 산화성을 띠는 물질이 있는 장소', '산화 과산화'],
+  ['203', '폭발성물질 경고', 'chem', '폭발성 물질이 있는 장소', '폭발 스프레이'],
+  ['204', '급성독성물질 경고', 'chem', '급성독성 물질이 있는 장소', '농약 독 살충제 독성'],
+  ['205', '부식성물질 경고', 'chem', '신체나 물체를 부식시키는 물질이 있는 장소', '세제 락스 산 알칼리 부식 화학'],
+  ['206', '방사성물질 경고', 'warn', '방사능 물질이 있는 장소', '방사선 방사능'],
+  ['207', '고압전기 경고', 'warn', '발전소나 고전압이 흐르는 장소(감전 우려)', '전기 감전 분전반 두꺼비집 고압'],
+  ['208', '매달린 물체 경고', 'warn', '머리 위에 크레인 등 매달린 물체가 있는 장소', '크레인 매달린 머리 위'],
+  ['209', '낙하물 경고', 'warn', '돌·블록 등 떨어질 우려가 있는 물체가 있는 장소', '떨어짐 낙하 선반 적재 머리'],
+  ['210', '고온 경고', 'warn', '고도의 열을 내는 물체나 온도가 아주 높은 장소', '뜨거움 화상 조리 오븐 튀김 스팀 온수'],
+  ['211', '저온 경고', 'warn', '아주 차가운 물체나 온도가 아주 낮은 장소', '냉동 냉장 저온'],
+  ['212', '몸균형 상실 경고', 'warn', '미끄러운 장소 등 넘어지기 쉬운 장소', '미끄럼 미끄러짐 넘어짐 바닥 젖은 경사 계단'],
+  ['213', '레이저광선 경고', 'warn', '레이저광선에 노출될 우려가 있는 장소', '레이저'],
+  ['214', '발암성·변이원성·생식독성·전신독성·호흡기과민성 물질 경고', 'chem', '해당 물질이 있는 장소', '발암 분진 납 독성 건강'],
+  ['215', '위험장소 경고', 'warn', '그 밖에 위험한 물체나 장소', '위험 주의 느낌표 맨홀'],
+  ['301', '보안경 착용', 'must', '보안경을 써야 작업·출입할 수 있는 장소', '보안경 눈 튀는 그라인더 세제'],
+  ['302', '방독마스크 착용', 'must', '방독마스크를 써야 작업·출입할 수 있는 장소', '방독 마스크 유해가스'],
+  ['303', '방진마스크 착용', 'must', '방진마스크를 써야 작업·출입할 수 있는 장소', '먼지 분진 마스크'],
+  ['304', '보안면 착용', 'must', '보안면을 써야 작업·출입할 수 있는 장소', '용접 보안면 얼굴'],
+  ['305', '안전모 착용', 'must', '안전모를 써야 작업·출입할 수 있는 장소', '안전모 헬멧 머리 공사'],
+  ['306', '귀마개 착용', 'must', '소음 장소 등 귀마개를 해야 하는 장소', '소음 귀마개 귀덮개'],
+  ['307', '안전화 착용', 'must', '안전화를 신어야 작업·출입할 수 있는 장소', '안전화 발 장화'],
+  ['308', '안전장갑 착용', 'must', '안전장갑을 껴야 작업·출입할 수 있는 장소', '장갑 칼 베임 손 고무장갑'],
+  ['309', '안전복 착용', 'must', '방열복·방한복 등 안전복을 입어야 하는 장소', '안전복 방열복 방한복 앞치마'],
+  ['401', '녹십자표지', 'gc', '안전의식을 북돋우기 위하여 필요한 장소', '녹십자 안전제일'],
+  ['402', '응급구호표지', 'guide', '응급구호설비가 있는 장소', '구급함 응급 구급약 구호'],
+  ['403', '들것', 'guide', '구호를 위한 들것이 있는 장소', '들것 구호'],
+  ['404', '세안장치', 'guide', '세안장치가 있는 장소', '눈 씻기 세안 세척'],
+  ['405', '비상용기구', 'guide', '비상용기구가 있는 장소', '비상 기구'],
+  ['406', '비상구', 'guide', '비상출입구', '비상구 대피 탈출 출구'],
+  ['407', '좌측비상구', 'guide', '비상구가 왼쪽에 있음을 알리는 곳', '비상구 왼쪽 좌측 대피'],
+  ['408', '우측비상구', 'guide', '비상구가 오른쪽에 있음을 알리는 곳', '비상구 오른쪽 우측 대피'],
+  ['501', '관계자외 출입금지 (허가대상물질)', 't5', '허가대상유해물질 제조·사용 작업장', '관계자 외 출입금지 허가대상'],
+  ['502', '관계자외 출입금지 (석면)', 't5', '석면 제조·사용·해체·제거 작업장', '석면 관계자'],
+  ['503', '관계자외 출입금지 (금지물질)', 't5', '금지유해물질 제조·사용설비가 설치된 장소', '금지유해물질 발암 관계자']
+];
+const SIGN = {}; SIGNS.forEach(s => { SIGN[s[0]] = s; });
+const T5 = { 501: '○○○ 제조/사용/보관 중', 502: '석면 취급/해체 중', 503: '발암물질 취급 중' };
+const CATS = [['all', '전체'], ['ban', '금지'], ['warn', '경고'], ['must', '지시'], ['guide', '안내'], ['t5', '관계자외 출입금지']];
+const catOf = c => c === 'chem' ? 'warn' : c === 'gc' ? 'guide' : c;
+
+/* 표지 하나 → SVG (viewBox 100×100, 501~503만 160×100) */
+function signSVG(id, attrs){
+  const s = SIGN[id], c = s[2], A = attrs || '';
+  const pic = (scale, cx, cy, f, b) => '<g transform="translate(' + cx + ' ' + cy + ') scale(' + scale + ') translate(-50 -50)">' + PIC[id](f, b) + '</g>';
+  let g = '';
+  if (c === 'ban') g = C_(50, 50, 48, WHT) + pic(0.62, 50, 50, BLK, WHT) + '<circle cx="50" cy="50" r="43.5" fill="none" stroke="' + RED + '" stroke-width="9"/>' + '<line x1="19.2" y1="19.2" x2="80.8" y2="80.8" stroke="' + RED + '" stroke-width="9"/>';
+  else if (c === 'warn') g = F_('M50 4 L97 89 H3 Z', BLK) + F_('M50 20.5 L85 82 H15 Z', YEL) + pic(0.52, 50, 61, BLK, YEL);
+  else if (c === 'chem') g = F_('M50 2 L98 50 L50 98 L2 50 Z', RED) + F_('M50 11.6 L88.4 50 L50 88.4 L11.6 50 Z', WHT) + pic(0.5, 50, 50, BLK, WHT);
+  else if (c === 'must') g = C_(50, 50, 48, BLU) + pic(0.66, 50, 50, WHT, BLU);
+  else if (c === 'guide') g = '<rect x="2" y="2" width="96" height="96" rx="4" fill="' + GRN + '"/>' + pic(0.78, 50, 50, WHT, GRN);
+  else if (c === 'gc') g = C_(50, 50, 48, WHT) + '<circle cx="50" cy="50" r="43.5" fill="none" stroke="' + GRN + '" stroke-width="9"/>' + F_('M42 20 H58 V42 H80 V58 H58 V80 H42 V58 H20 V42 H42 Z', GRN);
+  else if (c === 't5') return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 100" ' + A + '><rect x="2" y="2" width="156" height="96" fill="#fff" stroke="#000" stroke-width="3"/><text x="80" y="33" font-size="16.5" font-weight="900" text-anchor="middle" fill="#000" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif">관계자외 출입금지</text><text x="80" y="58" font-size="11.5" font-weight="800" text-anchor="middle" fill="' + RED + '" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif">' + esc(T5[id]) + '</text><text x="80" y="80" font-size="9" font-weight="700" text-anchor="middle" fill="#000" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif">보호구/보호복 착용</text><text x="80" y="92" font-size="9" font-weight="700" text-anchor="middle" fill="#000" font-family="Malgun Gothic, Apple SD Gothic Neo, sans-serif">흡연 및 음식물 섭취 금지</text></svg>';
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" ' + A + '>' + g + '</svg>';
+}
+
+/* ===================== 글자 표지 ===================== */
+const TKINDS = [['warn', '주의 (노랑)', '⚠ 주의'], ['ban', '금지 (빨강)', '⊘ 금지'], ['must', '지시 (파랑)', '● 지시'], ['guide', '안내 (초록)', '안내'], ['fire', '소화기·소방 (빨강)', '']];
+const TPRE = { warn: ['바닥 미끄럼 주의', '칼 사용 주의', '뜨거운 물·기름 주의', '손 끼임 주의', '머리 조심', '계단 주의', '전선 걸림 주의'], ban: ['락스와 산성 세제\n섞어 쓰지 마세요', '비상구 앞\n물건 적치 금지', '기계 작동 중\n손 넣지 마세요', '젖은 손으로\n전기 만지지 마세요'], must: ['작업 전 손 씻기', '장갑 착용', '사용 후 가스 밸브 잠금', '정리정돈'], guide: ['구급함', '비상 연락처', '대피 장소', 'MSDS 비치 장소'], fire: ['소화기', '소화전', '화재 시 119'] };
+const tHead = k => (TKINDS.find(t => t[0] === k) || TKINDS[0])[2];
+
+/* ===================== 꾸러미 ===================== */
+const PACKS = [
+  { id: 'common', n: '사무실·공통', signs: ['106', '406', '407', '408', '402'], text: [['fire', '소화기'], ['guide', '구급함'], ['warn', '전선 걸림 주의'], ['ban', '비상구 앞\n물건 적치 금지']],
+    checks: ['비상구·통로에 물건이 쌓여 있지 않다', '소화기 압력이 정상(녹색)이고 제자리에 있다', '멀티탭 문어발·전선 손상이 없다', '구급함 약품 유효기간을 확인했다', '바닥에 물기·걸려 넘어질 물건이 없다', '퇴근 전 전열기·전원을 껐다'],
+    risks: [['사무 공간 통행', '바닥 전선·물건에 걸려 넘어짐', '중', '전선 덮개, 통로 물건 치우기'], ['전기 사용', '문어발 멀티탭 과열·화재', '중', '멀티탭 용량 지키기, 사용 후 전원 끄기'], ['비상 대피', '비상구 앞 적치로 대피 지연', '상', '비상구 앞 적치 금지, 매일 점검']] },
+  { id: 'clean', n: '청소', signs: ['212', '205', '308', '301', '303'], text: [['warn', '바닥 청소 중\n미끄럼 주의'], ['ban', '락스와 산성 세제\n섞어 쓰지 마세요'], ['must', '세제 사용 시\n장갑·보안경 착용']],
+    checks: ['세제 용기에 이름표(제품명)가 붙어 있다', '락스와 산성 세제를 섞지 않는다', '보호장갑·마스크·보안경을 갖췄다', '젖은 바닥에 「미끄럼 주의」 표지를 세웠다', '사다리는 평평한 곳에서 2인 1조로 쓴다', '청소 후 세제를 정해진 곳에 보관했다'],
+    risks: [['바닥 물청소', '젖은 바닥 미끄러짐', '상', '미끄럼 주의 표지, 미끄럼 방지 신발'], ['세제 사용', '락스+산성 세제 혼합 시 유독가스', '상', '혼합 금지 교육, 환기, MSDS 비치'], ['높은 곳 청소', '사다리에서 떨어짐', '중', '사다리 2인 1조, 높은 곳은 작업발판'], ['세제 취급', '피부·눈 손상', '중', '보호장갑·보안경 착용']] },
+  { id: 'wash', n: '세차', signs: ['212', '207', '205', '308', '307'], text: [['warn', '바닥 미끄럼 주의'], ['warn', '고압 세척기 사용 중'], ['ban', '젖은 손으로\n전기 만지지 마세요']],
+    checks: ['세척기 전선·플러그에 물이 닿지 않는다(누전차단기 확인)', '바닥 물기·거품을 수시로 치운다', '차량 이동 때 유도자를 둔다', '보호장갑·안전화를 신었다', '약품 용기에 이름표가 있다', '고압 노즐을 사람에게 향하지 않는다'],
+    risks: [['고압 세척', '젖은 바닥 미끄러짐', '상', '미끄럼 방지 장화, 배수 관리'], ['전기 장비 사용', '물기로 감전', '상', '누전차단기 시험, 전선 정리'], ['차량 이동', '차량에 부딪힘', '중', '유도자 배치, 작업 구역 표시'], ['세정 약품', '피부·눈 손상', '중', '보호장갑·보안경']] },
+  { id: 'food', n: '식당·카페·도시락', signs: ['210', '212', '308', '201', '402'], text: [['warn', '뜨거운 물·기름 주의'], ['warn', '칼 사용 주의'], ['must', '조리 전 손 씻기'], ['must', '사용 후 가스 밸브 잠금'], ['fire', '소화기']],
+    checks: ['가스 밸브·호스에 새는 곳이 없다(사용 후 잠금)', '튀김기·오븐 주변을 정리했다', '칼은 정해진 곳에 보관한다', '바닥 기름·물기를 바로 닦는다', '주방 소화기 위치를 안다', '뜨거운 용기는 장갑을 끼고 옮긴다', '손 씻기·위생모·앞치마를 갖췄다'],
+    risks: [['조리(튀김·끓이기)', '뜨거운 물·기름 화상', '상', '내열 장갑, 손잡이 안쪽으로, 주변 정리'], ['칼 사용', '손 베임', '중', '칼 보관대, 베임 방지 장갑'], ['주방 바닥', '기름·물 미끄러짐', '상', '미끄럼 방지 매트·신발, 즉시 청소'], ['가스 사용', '가스 누설·화재', '상', '사용 후 밸브 잠금, 가스 경보기, 주방용 소화기'], ['식재료 운반', '허리 부담', '중', '2인 운반, 대차 사용']] },
+  { id: 'make', n: '조립·가공', signs: ['308', '301', '209', '212', '104'], text: [['warn', '손 끼임 주의'], ['ban', '기계 작동 중\n손 넣지 마세요'], ['guide', '정리정돈\n통로 확보']],
+    checks: ['기계 방호 덮개가 제자리에 있다', '작업대·통로에 물건이 쌓여 있지 않다', '칼·커터를 쓸 때 장갑을 꼈다', '선반 위 무거운 물건은 아래 칸에 둔다', '오래 앉아 일할 때 쉬는 시간에 스트레칭한다', '전동공구 전선에 손상이 없다'],
+    risks: [['기계 작업', '끼임·베임', '상', '방호 덮개, 전원 끈 뒤 청소·점검'], ['반복 작업', '손목·어깨 근골격계 부담', '중', '작업대 높이 조절, 휴식·스트레칭'], ['선반 적재', '물건 떨어짐', '중', '무거운 것은 아래, 적재 높이 제한'], ['커터·칼 사용', '손 베임', '중', '베임 방지 장갑']] },
+  { id: 'store', n: '편의점·매장', signs: ['209', '212', '211', '406', '308'], text: [['warn', '선반 위 물건\n떨어짐 주의'], ['warn', '창고 바닥\n미끄럼 주의'], ['guide', '비상 연락처']],
+    checks: ['진열대·창고 선반의 무거운 물건은 아래 칸에 있다', '상자를 어깨 높이 넘게 쌓지 않았다', '냉동고 문·바닥에 얼음·물기가 없다', '비상구·창고 통로가 막혀 있지 않다', '야간 근무자 비상 연락처가 붙어 있다', '무거운 짐은 대차로 옮긴다'],
+    risks: [['상품 진열·입고', '선반 물건 떨어짐', '중', '무거운 것은 아래, 받침대 사용'], ['상자 운반', '허리 부담·넘어짐', '중', '대차 사용, 시야 가리지 않게'], ['냉동 창고', '저온·미끄러짐', '중', '방한 장갑, 바닥 얼음 제거'], ['야간 근무', '폭언·폭행 등 위협', '중', '비상벨·연락망, 대응 요령 교육']] },
+  { id: 'bath', n: '목욕탕', signs: ['212', '210', '207', '205', '402'], text: [['warn', '바닥 미끄럼 주의'], ['warn', '뜨거운 물 주의'], ['ban', '락스와 산성 세제\n섞어 쓰지 마세요']],
+    checks: ['탕 바닥·계단 미끄럼 방지 상태를 확인했다', '온수 온도 표시·보일러에 이상이 없다', '전기 설비 주변에 물기가 없다(누전차단기 확인)', '청소 약품 이름표·보관 장소를 확인했다', '쓰러짐 등 응급 상황 연락처가 붙어 있다', '고온 작업 때 물 마시고 쉰다'],
+    risks: [['탕·바닥 청소', '미끄러짐', '상', '미끄럼 방지 신발, 손잡이'], ['온수·스팀', '화상', '중', '온도 확인, 보호장갑'], ['약품 청소', '유독가스·피부 손상', '상', '혼합 금지, 환기, 보호구'], ['고온 작업 환경', '온열질환', '중', '물·그늘·휴식']] },
+  { id: 'drive', n: '배송·운전', signs: ['209', '308', '307', '212'], text: [['warn', '차량 후진 주의'], ['must', '운전 중 안전띠 착용'], ['warn', '짐 실을 때\n허리 주의']],
+    checks: ['차량 일일 점검(타이어·브레이크·등화)을 했다', '운전 중 휴대전화를 쓰지 않는다', '안전띠를 맸다', '짐을 묶어 고정했다', '무거운 짐은 2인 또는 대차로 옮긴다', '폭염·한파 때 쉬는 시간을 지킨다'],
+    risks: [['차량 운전', '교통사고', '상', '안전띠, 휴대전화 금지, 과속 금지, 일일 점검'], ['상하차', '허리 부담·떨어뜨림', '중', '2인 작업, 대차'], ['계단 배달', '넘어짐', '중', '시야 확보, 미끄럼 방지 신발'], ['폭염·한파', '온열·한랭 질환', '중', '물·휴식·보온']] }
+];
+
+/* ===================== 인쇄 공통 ===================== */
+let PAGE_LAND = false;
+function fitBox(boxId, pgId, pages){
+  const box = $(boxId); box.innerHTML = pages[0] || '<div class="sheet"></div>';
+  const sh = box.querySelector('.sheet'), w = Math.min(box.parentElement.clientWidth - 24, 380), s = Math.min(1, w / sh.offsetWidth);
+  sh.style.transform = 'scale(' + s + ')'; box.style.width = (sh.offsetWidth * s) + 'px'; box.style.height = (sh.offsetHeight * s) + 'px';
+  $(pgId).textContent = pages.length ? (pages.length > 1 ? '첫 쪽 미리보기 · 모두 ' + pages.length + '쪽' : '1쪽') : '';
+}
+function printPages(pages, land){
+  if (!pages.length) { toast('인쇄할 것이 없습니다'); return; }
+  $('pageStyle').textContent = '@page{size:A4 ' + (land ? 'landscape' : 'portrait') + ';margin:0}';
+  $('printArea').innerHTML = pages.join('');
+  setTimeout(() => window.print(), 80);
+}
+window.addEventListener('afterprint', () => { $('printArea').innerHTML = ''; });
+
+/* ===================== ① 표지 화면 ===================== */
+function matches(s, q){ if (!q) return true; const t = (s[0] + ' ' + s[1] + ' ' + s[3] + ' ' + s[4]).replace(/\s+/g, ''); return q.split(/\s+/).filter(Boolean).every(w => t.includes(w)); }
+function renderCats(){
+  const q = $('q').value.trim();
+  $('cats').innerHTML = CATS.map(([v, t]) => '<button type="button" data-cat="' + v + '" class="' + (ST.cat === v ? 'on' : '') + '">' + t + '<span class="n">' + SIGNS.filter(s => (v === 'all' || catOf(s[2]) === v) && matches(s, q)).length + '</span></button>').join('');
+}
+const inSel = id => ST.items.some(it => it.k === 'sign' && it.id === id);
+function renderGrid(){
+  const q = $('q').value.trim();
+  const groups = CATS.slice(1).filter(([v]) => ST.cat === 'all' || ST.cat === v).map(([v, t]) => [t, SIGNS.filter(s => catOf(s[2]) === v && matches(s, q))]).filter(g => g[1].length);
+  $('sgrid').innerHTML = groups.length ? groups.map(([t, list]) => '<h3 class="sec">' + t + '<small>' + list.length + '</small></h3><div class="sgrid">' + list.map(s => '<div class="sc' + (inSel(s[0]) ? ' on' : '') + '" data-sign="' + s[0] + '" role="button" tabindex="0" title="' + esc(s[3]) + '"><span class="ck">✓</span>' + signSVG(s[0], s[2] === 't5' ? 'style="width:120px;height:75px"' : '') + '<b>' + esc(s[1]) + '</b><small>' + s[0] + ' · ' + esc(s[3]) + '</small></div>').join('') + '</div>').join('') : '<p class="empty">맞는 표지가 없습니다. 아래 「글자 표지 만들기」로 직접 만들 수 있습니다.</p>';
+}
+function toggleSign(id){
+  const i = ST.items.findIndex(it => it.k === 'sign' && it.id === id);
+  if (i >= 0) ST.items.splice(i, 1); else ST.items.push({ k: 'sign', id, cap: SIGN[id][1].replace(/ \(.+\)$/, ''), n: 1 });
+  renderGrid(); renderSel(); save();
+}
+function tTile(kind, text, px){ /* 글자 표지 작은 그림 */
+  const bg = { warn: '#FFD100', ban: '#D7282F', must: '#1E5BAA', guide: '#00843D', fire: '#D7282F' }[kind], fg = kind === 'warn' ? '#000' : '#fff', big = px > 60;
+  return '<span class="tmini" style="width:' + px + 'px;height:' + px + 'px;margin:0 auto;padding:3px;background:' + bg + ';color:' + fg + ';font-size:' + (big ? 13 : 10) + 'px;border-radius:' + (big ? 10 : 6) + 'px">' + esc(text.split('\n')[0].slice(0, big ? 14 : 8)) + '</span>';
+}
+function miniOf(it){
+  if (it.k === 'sign') return signSVG(it.id, SIGN[it.id][2] === 't5' ? 'viewBox="20 0 120 100"' : '');
+  return tTile(it.kind, it.text, 44);
+}
+function renderSel(){
+  $('selCount').textContent = ST.items.length ? ST.items.length + '가지 · ' + ST.items.reduce((a, b) => a + (+b.n || 1), 0) + '장' : '';
+  $('sel').innerHTML = ST.items.length ? ST.items.map((it, i) => '<li>' + miniOf(it) + '<input data-cap="' + i + '" value="' + esc(it.k === 'sign' ? it.cap : it.text.replace(/\n/g, ' / ')) + '" aria-label="' + (it.k === 'sign' ? '덧붙이는 글' : '표지 글') + '" placeholder="' + (it.k === 'sign' ? '덧붙이는 글 (비우면 그림만)' : '표지 글') + '"><span class="ctl"><input type="number" min="1" max="99" data-n="' + i + '" value="' + (it.n || 1) + '" aria-label="장 수" title="장 수"><button class="x" type="button" data-del="' + i + '" aria-label="빼기">×</button></span></li>').join('') : '<li style="display:block" class="empty">왼쪽에서 표지를 누르면 여기에 담깁니다. 꾸러미(②)에서 한꺼번에 담을 수도 있습니다.</li>';
+  $('lay').value = ST.lay; $('capOn').value = ST.capOn; $('cutOn').value = ST.cutOn;
+  fitBox('sbox1', 'pg1', signPages());
+}
+const longW = t => Math.max(...String(t).split(/\s+/).map(w => w.length), 2); /* 낱말 중간에서 줄이 바뀌지 않게 가장 긴 낱말 기준 */
+const LAYS = { p1: [1, 1, false, 'v'], l1: [1, 1, true, 'h'], p2: [1, 2, false, 'h'], p4: [2, 2, false, 'v'], p8: [2, 4, false, 'h'], p15: [3, 5, false, 'v'] };
+function signPages(){
+  const [cols, rows, land, dir] = LAYS[ST.lay], W = land ? 297 : 210, H = land ? 210 : 297, cw = W / cols, ch = H / rows, per = cols * rows;
+  const flat = []; ST.items.forEach(it => { for (let k = 0; k < Math.min(99, +it.n || 1); k++) flat.push(it); });
+  const pad = per >= 8 ? 5 : 10, cap = ST.capOn === '1', cut = ST.cutOn === '1' && per > 1, pages = [];
+  for (let p = 0; p < flat.length; p += per) {
+    let h = '<div class="sheet' + (land ? ' land' : '') + '">';
+    flat.slice(p, p + per).forEach((it, i) => {
+      const c = i % cols, r = Math.floor(i / cols), iw = cw - pad * 2, ih = ch - pad * 2;
+      const pos = 'left:' + (c * cw + pad) + 'mm;top:' + (r * ch + pad) + 'mm;width:' + iw + 'mm;height:' + ih + 'mm';
+      if (it.k === 'text') {
+        const hd = Math.min(ih * 0.24, iw * 0.2), lines = it.text.split('\n'), longest = Math.max(...lines.map(l => l.length), 1);
+        const fs = Math.min((ih - hd) * 0.7 / lines.length, iw * 0.9 / longest * 1.05, ih * 0.42, iw * 0.92 / (Math.max(...lines.map(longW)) * 1.05));
+        h += '<div class="cell' + (cut ? ' cut' : '') + '" style="' + pos + '"><div class="ts ' + it.kind + '"><div class="hd" style="height:' + hd.toFixed(1) + 'mm;font-size:' + (hd * 0.55).toFixed(1) + 'mm">' + esc(tHead(it.kind)) + '</div><div class="bd" style="font-size:' + fs.toFixed(1) + 'mm">' + esc(it.text) + '</div></div></div>';
+        return;
+      }
+      const isT5 = SIGN[it.id][2] === 't5', txt = cap ? (it.cap || '').trim() : '', ratio = isT5 ? 1.6 : 1;
+      let sw, fs = 0;
+      if (dir === 'v') { const capH = txt ? ih * 0.22 : 0; sw = Math.min(iw, (ih - capH - (txt ? 4 : 0)) * ratio); if (txt) fs = Math.min(capH * 0.48, iw * 1.7 / Math.max(txt.length, 2), iw / (longW(txt) * 1.08)); }
+      else { sw = Math.min(txt ? iw * (isT5 ? 0.6 : 0.46) : iw, ih * ratio); if (txt) { const tw = iw - sw - 5; fs = Math.min(ih * 0.26, tw * 1.75 / Math.max(txt.length, 2), tw / (longW(txt) * 1.08)); } }
+      h += '<div class="cell ' + dir + (cut ? ' cut' : '') + '" style="' + pos + '"><div style="width:' + sw.toFixed(1) + 'mm;flex:none">' + signSVG(it.id, 'width="100%"') + '</div>' + (txt ? '<div class="cp" style="font-size:' + Math.max(fs, 3).toFixed(1) + 'mm">' + esc(txt) + '</div>' : '') + '</div>';
+    });
+    pages.push(h + '</div>');
+  }
+  PAGE_LAND = land;
+  return pages;
+}
+function renderTKinds(){
+  $('tkinds').innerHTML = TKINDS.map(([v, t]) => '<button type="button" data-tk="' + v + '" class="' + (ST.tkind === v ? 'on' : '') + '">' + t + '</button>').join('');
+  $('tpresets').innerHTML = (TPRE[ST.tkind] || []).map(p => '<button type="button" data-tp="' + esc(p) + '">' + esc(p.replace(/\n/g, ' ')) + '</button>').join('');
+}
+
+/* ===================== ② 꾸러미 ===================== */
+function renderPacks(){
+  $('packs').innerHTML = PACKS.map(p => '<button type="button" data-pack="' + p.id + '" class="' + (ST.pack === p.id ? 'on' : '') + '">' + esc(p.n) + '</button>').join('');
+  const p = PACKS.find(x => x.id === ST.pack) || PACKS[0];
+  $('packBody').innerHTML = '<h3 class="sec">붙일 표지<small>법정 표지 ' + p.signs.length + ' + 글자 표지 ' + p.text.length + '</small></h3><div class="sgrid">'
+    + p.signs.map(id => '<div class="sc" style="cursor:default"><span></span>' + signSVG(id) + '<b>' + esc(SIGN[id][1]) + '</b><small>' + id + '</small></div>').join('')
+    + p.text.map(([k, t]) => '<div class="sc" style="cursor:default">' + tTile(k, t, 84) + '<b>' + esc(t.replace(/\n/g, ' ')) + '</b><small>글자 표지</small></div>').join('')
+    + '</div><div class="btns"><button class="btn btn-main" type="button" id="packAdd">이 표지들을 인쇄 목록에 담기 (①로)</button></div>'
+    + '<h3 class="sec">작업 전 안전점검 항목 (예시)<small>' + p.checks.length + '개</small></h3><ul style="margin:4px 0 0;padding-left:22px">' + p.checks.map(c => '<li>' + esc(c) + '</li>').join('') + '</ul>'
+    + '<h3 class="sec">위험요인·감소대책 (예시)</h3><div style="overflow:auto"><table class="rows"><tr><th>작업</th><th>유해·위험요인</th><th>위험성</th><th>감소대책</th></tr>' + p.risks.map(r => '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td><td>' + esc(r[3]) + '</td></tr>').join('') + '</table></div>'
+    + '<div class="btns"><button class="btn" type="button" id="packChk">작업 전 안전점검표로 만들기 (③)</button><button class="btn" type="button" id="packRisk">위험성평가 결과 게시표로 만들기 (③)</button></div>'
+    + '<p class="note">점검 항목·위험요인은 흔한 예시입니다. 실제 사업장 작업을 보고 고치거나 더해 쓰세요(③에서 고칠 수 있음).</p>';
+}
+
+/* ===================== ③ 게시물 ===================== */
+const POSTS = [
+  ['policy', '안전보건 경영방침', '기관장이 정하고 서명해 게시하는 방침. 기본 문장을 고쳐 쓰세요.'],
+  ['contact', '비상연락망', '사고·화재 때 누구에게, 어디에 연락할지. 사업장마다 한 장씩.'],
+  ['evac', '비상 대피 안내', '비상구·대피 경로·집결 장소·소화기 위치. 도면 사진을 넣을 수 있습니다.'],
+  ['risk', '위험성평가 결과 게시', '찾은 위험요인과 감소대책을 근로자가 보도록 게시. ②꾸러미 예시를 불러올 수 있습니다.'],
+  ['msds', 'MSDS 비치 안내', '사용하는 화학제품(세제 등) 목록과 물질안전보건자료 비치 장소, 응급조치 요령.'],
+  ['check', '작업 전 안전점검표', '한 달 날짜 칸(1~31)에 매일 표시하는 점검표. A4 가로.'],
+  ['near', '아차사고·위험 제보 양식', '다칠 뻔한 일이나 위험한 곳을 누구나 적어 내는 양식(의견 청취).']
+];
+const DEF_POLICY = '우리 기관은 이용자와 종사자의 생명과 안전을 가장 먼저 생각하며, 다음과 같이 안전보건 경영방침을 정하고 실천합니다.';
+const DEF_POLICY_ITEMS = '안전보건 관계 법령을 지키고, 안전보건 관리체계를 갖추어 운영합니다.\n작업장의 유해·위험요인을 찾아 개선하고(위험성평가), 그 결과를 모든 구성원과 나눕니다.\n이용자·종사자의 의견을 듣고, 안전보건 활동에 함께하도록 보장합니다.\n안전보건 교육을 정기적으로 하고, 필요한 보호구와 예산을 지원합니다.\n사고가 나면 작업을 멈추고 대피하며, 원인을 찾아 재발 방지 대책을 실행합니다.';
+const today = () => { const d = new Date(); return d.getFullYear() + '년 ' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일'; };
+const PF = () => (ST.pf[ST.post] = ST.pf[ST.post] || {});
+function defaults(id){
+  const pk = PACKS.find(x => x.id === ST.pack) || PACKS[0];
+  if (id === 'policy') return { lead: DEF_POLICY, items: DEF_POLICY_ITEMS, goal: '', date: today(), boss: '', title: '대표' };
+  if (id === 'contact') return { people: [['안전보건 총괄(기관장)', '', ''], ['안전보건 담당자', '', ''], ['현장 관리감독자(팀장)', '', ''], ['', '', '']], hosp: '', hospTel: '', gas: '', gasTel: '', addr: '' };
+  if (id === 'evac') return { exit: '', route: '', meet: '', ext: '', aid: '', staff: '', img: '' };
+  if (id === 'risk') return { date: today(), who: '', rows: pk.risks.map(r => r.concat(['', ''])) };
+  if (id === 'msds') return { rows: [['', '', ''], ['', '', ''], ['', '', '']], place: '', staff: '' };
+  if (id === 'check') return { title: '작업 전 안전점검표', ym: (() => { const d = new Date(); return d.getFullYear() + '년 ' + (d.getMonth() + 1) + '월'; })(), items: pk.checks.join('\n') };
+  if (id === 'near') return { per: '1' };
+  return {};
+}
+function pf(){ const d = defaults(ST.post), v = PF(); Object.keys(d).forEach(k => { if (v[k] === undefined) v[k] = d[k]; }); return v; }
+function inp(k, label, ph, wide, area){ const v = pf()[k] || ''; return '<label class="f' + (wide ? ' wide' : '') + '">' + label + (area ? '<textarea data-pf="' + k + '" rows="' + (area === true ? 4 : area) + '" placeholder="' + esc(ph || '') + '">' + esc(v) + '</textarea>' : '<input data-pf="' + k + '" value="' + esc(v) + '" placeholder="' + esc(ph || '') + '">') + '</label>'; }
+function rowsTable(key, heads, widths, sel){
+  const v = pf()[key];
+  return '<div style="overflow:auto"><table class="rows"><tr>' + heads.map(h => '<th>' + h + '</th>').join('') + '<th></th></tr>' + v.map((r, i) => '<tr>' + heads.map((h, j) => '<td style="min-width:' + widths[j] + 'px">' + (sel && sel[j] ? '<select data-row="' + key + '|' + i + '|' + j + '">' + sel[j].map(o => '<option' + (r[j] === o ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>' : '<input data-row="' + key + '|' + i + '|' + j + '" value="' + esc(r[j] || '') + '">') + '</td>').join('') + '<td><button class="x" type="button" data-rdel="' + key + '|' + i + '" aria-label="줄 지우기">×</button></td></tr>').join('') + '</table></div><div class="btns"><button class="btn btn-sm" type="button" data-radd="' + key + '|' + heads.length + '">＋ 줄 넣기</button></div>';
+}
+function renderPostForm(){
+  $('posts').innerHTML = POSTS.map(p => '<button type="button" data-post="' + p[0] + '" class="' + (ST.post === p[0] ? 'on' : '') + '">' + p[1] + '</button>').join('');
+  $('postNote').textContent = (POSTS.find(p => p[0] === ST.post) || [])[2] || '';
+  $('pOrg').value = ST.org; $('pUnit').value = ST.unit;
+  const id = ST.post; pf();
+  let h = '<div class="fields">';
+  if (id === 'policy') h += inp('lead', '머리글', '', true, 3) + inp('items', '방침 (한 줄에 하나)', '', true, 7) + inp('goal', '올해 목표 (선택, 한 줄에 하나)', '예: 중대재해 0건\n이용자 안전교육 매월 실시', true, 3) + inp('date', '날짜', '') + inp('title', '직위', '대표, 기관장 등') + inp('boss', '이름', '');
+  if (id === 'contact') h += '</div><h3 class="sec">기관 안 연락처</h3>' + rowsTable('people', ['역할', '이름', '전화'], [170, 100, 130]) + '<div class="fields">' + inp('hosp', '가까운 병원', '예: ○○병원 응급실') + inp('hospTel', '병원 전화', '') + inp('gas', '가스 회사(고장 신고)', '예: ○○도시가스') + inp('gasTel', '가스 회사 전화', '') + inp('addr', '사업장 주소 (119 신고 때 말할 주소)', '', true);
+  if (id === 'evac') h += inp('exit', '비상구 위치', '예: 1층 주방 뒤 철문, 정문') + inp('meet', '모이는 곳(집결 장소)', '예: 건물 앞 주차장') + inp('ext', '소화기 위치', '예: 주방 입구, 계산대 옆') + inp('aid', '구급함 위치', '예: 사무실 책상 옆') + inp('staff', '대피 안내 담당', '예: 팀장 홍길동') + inp('route', '대피 경로 (순서대로)', '예: 작업장 → 복도 왼쪽 → 비상계단 → 1층 출구', true, 3) + '<label class="f wide">도면·사진 (선택, 약도 도구 그림도 됨)<input type="file" id="evacImg" accept="image/*"></label>' + (pf().img ? '<div class="wide"><button class="btn btn-sm" type="button" id="evacImgDel">그림 빼기</button></div>' : '');
+  if (id === 'risk') h += inp('date', '평가일', '') + inp('who', '평가자', '예: 팀장 홍길동, 이용자 대표 김○○') + '</div><h3 class="sec">위험요인과 감소대책</h3><div class="btns" style="margin-top:0"><button class="btn btn-sm" type="button" id="riskLoad">②에서 고른 부서 예시 불러오기 (' + esc((PACKS.find(x => x.id === ST.pack) || PACKS[0]).n) + ')</button></div>' + rowsTable('rows', ['작업·공정', '유해·위험요인', '위험성', '감소대책', '담당', '완료(예정)일'], [110, 140, 70, 170, 80, 90], { 2: ['상', '중', '하'] }) + '<div class="fields">';
+  if (id === 'msds') h += '</div><h3 class="sec">사용하는 화학제품</h3>' + rowsTable('rows', ['제품명', '용도', '보관 장소'], [140, 120, 140]) + '<div class="fields">' + inp('place', 'MSDS 비치 장소', '예: 창고 입구 파일함') + inp('staff', '관리 담당자', '');
+  if (id === 'check') h += inp('title', '제목', '') + inp('ym', '달', '예: 2026년 11월') + inp('items', '점검 항목 (한 줄에 하나, 18개까지)', '', true, 8) + '</div><div class="btns"><button class="btn btn-sm" type="button" id="chkLoad">②에서 고른 부서 예시 불러오기 (' + esc((PACKS.find(x => x.id === ST.pack) || PACKS[0]).n) + ')</button></div><div class="fields">';
+  if (id === 'near') h += '<label class="f">한 장에<select data-pf="per"><option value="1"' + (pf().per === '1' ? ' selected' : '') + '>1장</option><option value="2"' + (pf().per === '2' ? ' selected' : '') + '>2장 (A5)</option></select></label>';
+  $('postForm').innerHTML = h + '</div>';
+  renderPostPreview();
+}
+const nl = s => esc(s).replace(/\n/g, '<br>');
+const lines = s => String(s || '').split('\n').map(x => x.trim()).filter(Boolean);
+function foot2(){ return '<div class="foot2"><span>' + esc(ST.org) + (ST.unit ? ' · ' + esc(ST.unit) : '') + '</span><span>게시일 ' + today() + '</span></div>'; }
+function postPages(){
+  const id = ST.post, v = pf(), org = esc(ST.org), unit = esc(ST.unit), sub = unit ? '<small>' + unit + '</small>' : '';
+  if (id === 'policy') return [{ land: false, html: '<div class="sheet post"><div class="ph">안전보건 경영방침' + sub + '</div><p class="lead2">' + nl(v.lead) + '</p><ol class="pl">' + lines(v.items).map(l => '<li>' + esc(l) + '</li>').join('') + '</ol>' + (lines(v.goal).length ? '<div class="goal"><b>올해 안전보건 목표</b>' + lines(v.goal).map(l => '· ' + esc(l)).join('\n') + '</div>' : '') + '<div class="sign">' + esc(v.date) + '<br><b>' + org + '</b><br>' + esc(v.title) + ' ' + esc(v.boss) + ' (인)</div></div>' }];
+  if (id === 'contact') return [{ land: false, html: '<div class="sheet post"><div class="ph">비상연락망' + sub + '</div><div class="h2">사고·화재가 나면</div><div class="act"><div><b>①</b>작업 멈춤·대피</div><div><b>②</b>119 신고</div><div><b>③</b>담당자에게 보고</div><div><b>④</b>현장 그대로 두기</div></div>'
+    + (v.addr ? '<div class="h2">119에 말할 주소</div><div class="box" style="font-size:15pt;font-weight:800">' + esc(v.addr) + '</div>' : '')
+    + '<div class="h2">기관 안 연락처</div><table><tr><th style="width:42%">역할</th><th style="width:24%">이름</th><th>전화</th></tr>' + v.people.filter(r => r.some(x => x)).map(r => '<tr><td>' + esc(r[0]) + '</td><td class="c">' + esc(r[1]) + '</td><td class="c" style="font-size:13pt;font-weight:800">' + esc(r[2]) + '</td></tr>').join('') + '</table>'
+    + '<div class="h2">밖으로 연락할 곳</div><table><tr><th style="width:42%">곳</th><th>전화</th></tr><tr><td>화재·구급</td><td class="c" style="font-size:16pt;font-weight:900;color:#D7282F">119</td></tr><tr><td>경찰</td><td class="c" style="font-size:14pt;font-weight:800">112</td></tr>' + (v.hosp || v.hospTel ? '<tr><td>' + esc(v.hosp || '가까운 병원') + '</td><td class="c" style="font-weight:800">' + esc(v.hospTel) + '</td></tr>' : '') + (v.gas || v.gasTel ? '<tr><td>' + esc(v.gas || '가스 고장') + '</td><td class="c" style="font-weight:800">' + esc(v.gasTel) + '</td></tr>' : '') + '<tr><td>전기 고장(한국전력)</td><td class="c" style="font-weight:800">123</td></tr><tr><td>고용노동부 고객상담센터</td><td class="c" style="font-weight:800">1350</td></tr></table>' + foot2() + '</div>' }];
+  if (id === 'evac') return [{ land: false, html: '<div class="sheet post"><div class="ph">비상 대피 안내' + sub + '</div><div style="display:flex;gap:5mm;align-items:center;margin-bottom:4mm"><div style="width:30mm;flex:none">' + signSVG('406', 'width="100%"') + '</div><div style="font-size:14pt;font-weight:800;line-height:1.6">불이 나거나 위험하면 하던 일을 멈추고<br>아래 경로로 침착하게 대피하세요.</div></div>'
+    + (v.img ? '<img class="img" src="' + v.img + '" alt="">' : '')
+    + '<table style="margin-top:4mm"><tr><th style="width:28%">비상구</th><td style="font-size:13pt;font-weight:800">' + esc(v.exit) + '</td></tr><tr><th>대피 경로</th><td style="font-size:13pt">' + nl(v.route) + '</td></tr><tr><th>모이는 곳</th><td style="font-size:13pt;font-weight:800">' + esc(v.meet) + '</td></tr><tr><th>소화기</th><td>' + esc(v.ext) + '</td></tr><tr><th>구급함</th><td>' + esc(v.aid) + '</td></tr><tr><th>대피 안내 담당</th><td>' + esc(v.staff) + '</td></tr></table>'
+    + '<div class="box" style="margin-top:4mm">· 엘리베이터는 타지 않습니다.  · 연기가 있으면 젖은 수건으로 코와 입을 막고 낮은 자세로.  · 모이는 곳에서 인원을 확인하고, 없는 사람은 119에 알립니다.</div>' + foot2() + '</div>' }];
+  if (id === 'risk') { const rows = v.rows.filter(r => r.some(x => x)); return [{ land: true, html: '<div class="sheet post land"><div class="ph">위험성평가 결과' + sub + '</div><div style="display:flex;justify-content:space-between;font-size:11.5pt;margin-bottom:3mm"><span>평가일: ' + esc(v.date) + '</span><span>평가자: ' + esc(v.who) + '</span></div><table><tr><th style="width:5%">번호</th><th style="width:15%">작업·공정</th><th style="width:22%">유해·위험요인</th><th style="width:8%">위험성</th><th>감소대책</th><th style="width:10%">담당</th><th style="width:11%">완료(예정)일</th></tr>' + rows.map((r, i) => '<tr><td class="c">' + (i + 1) + '</td><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td class="c" style="font-weight:800;color:' + (r[2] === '상' ? '#D7282F' : r[2] === '중' ? '#B36B00' : '#1F6B3A') + '">' + esc(r[2]) + '</td><td>' + esc(r[3]) + '</td><td class="c">' + esc(r[4]) + '</td><td class="c">' + esc(r[5]) + '</td></tr>').join('') + '</table><p style="font-size:10.5pt;margin-top:3mm">위험성: 상(즉시 개선) · 중(계획 세워 개선) · 하(현재 관리 유지). 새로운 위험을 발견하면 담당자에게 알려 주세요.</p>' + foot2() + '</div>' }]; }
+  if (id === 'msds') { const rows = v.rows.filter(r => r.some(x => x)); return [{ land: false, html: '<div class="sheet post"><div class="ph">물질안전보건자료(MSDS) 비치 안내' + sub + '</div><div class="box" style="font-size:14pt;font-weight:800;text-align:center">MSDS 비치 장소: ' + esc(v.place || '　　　　　　') + (v.staff ? '　|　담당: ' + esc(v.staff) : '') + '</div><div class="h2">이 사업장에서 쓰는 화학제품</div><table><tr><th style="width:8%">번호</th><th style="width:34%">제품명</th><th style="width:26%">용도</th><th>보관 장소</th></tr>' + (rows.length ? rows : [['', '', ''], ['', '', ''], ['', '', '']]).map((r, i) => '<tr><td class="c">' + (i + 1) + '</td><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td></tr>').join('') + '</table><div class="h2">급할 때 (일반 응급조치 — 제품별 MSDS를 꼭 확인)</div><table><tr><th style="width:22%">눈에 들어감</th><td>흐르는 물로 15분 이상 씻고 병원으로</td></tr><tr><th>피부에 묻음</th><td>오염된 옷을 벗고 물과 비누로 충분히 씻기</td></tr><tr><th>들이마심</th><td>바로 신선한 공기가 있는 곳으로 옮기고, 이상하면 119</td></tr><tr><th>삼킴</th><td>억지로 토하게 하지 말고, 제품 용기·MSDS를 가지고 병원으로</td></tr></table><div class="box" style="margin-top:4mm">· 제품 용기에는 이름표(경고표지)를 붙여 둡니다. 다른 용기에 덜어 쓸 때도 이름을 적습니다.\n· 서로 다른 세제를 섞지 않습니다(예: 락스와 산성 세제를 섞으면 유독가스).</div>' + foot2() + '</div>' }]; }
+  if (id === 'check') {
+    const items = lines(v.items).slice(0, 18), days = 31;
+    return [{ land: true, html: '<div class="sheet post land"><div class="ph" style="font-size:20pt;margin-bottom:3mm">' + esc(v.title) + ' <span style="font-size:14pt">(' + esc(v.ym) + ')</span>' + sub + '</div><p style="font-size:10pt;margin:0 0 2mm">매일 작업 전에 확인하고 칸에 ○(양호) / ×(불량 → 바로 조치·보고)를 적습니다.</p><table class="chk"><tr><th style="width:4%">번호</th><th style="width:26%">점검 항목</th>' + Array.from({ length: days }, (_, i) => '<th>' + (i + 1) + '</th>').join('') + '</tr>' + items.map((it, i) => '<tr><td>' + (i + 1) + '</td><td class="it">' + esc(it) + '</td>' + '<td></td>'.repeat(days) + '</tr>').join('') + '<tr><td colspan="2" style="font-weight:800">점검자 확인</td>' + '<td style="height:9mm"></td>'.repeat(days) + '</tr></table><p style="font-size:9.5pt;margin-top:2mm">불량 내용·조치: ______________________________________________________________________________________________</p>' + foot2() + '</div>' }];
+  }
+  if (id === 'near') {
+    const one = (h) => '<div style="height:' + h + 'mm;position:relative;padding-bottom:4mm"><div class="ph" style="font-size:' + (h > 200 ? 22 : 17) + 'pt;margin-bottom:3mm">아차사고·위험 제보' + sub + '</div><p style="font-size:10.5pt;margin:0 0 2mm">다칠 뻔했던 일, 위험해 보이는 곳을 알려 주세요. 이름은 적지 않아도 됩니다. 제보는 벌이 아니라 개선에 쓰입니다.</p><table class="lines"><tr><th style="width:24%">언제</th><td style="height:' + (h > 200 ? 12 : 8) + 'mm">　　년　　월　　일　　시쯤</td></tr><tr><th>어디서</th><td style="height:' + (h > 200 ? 12 : 8) + 'mm"></td></tr><tr><th>무슨 일이<br>있었나요</th><td style="height:' + (h > 200 ? 40 : 22) + 'mm"></td></tr><tr><th>왜 그랬을까요</th><td style="height:' + (h > 200 ? 28 : 16) + 'mm"></td></tr><tr><th>어떻게 바꾸면<br>좋을까요</th><td style="height:' + (h > 200 ? 28 : 16) + 'mm"></td></tr><tr><th>제보한 사람<br>(선택)</th><td style="height:' + (h > 200 ? 12 : 8) + 'mm"></td></tr><tr><th style="background:#FFF1CC">조치 결과<br>(담당자)</th><td style="height:' + (h > 200 ? 24 : 14) + 'mm"></td></tr></table></div>';
+    return [{ land: false, html: '<div class="sheet post">' + (v.per === '2' ? one(130) + '<div style="border-top:0.4mm dashed #999;margin:2mm 0 6mm"></div>' + one(130) : one(250) + foot2()) + '</div>' }];
+  }
+  return [];
+}
+function renderPostPreview(){ const P = postPages(); fitBox('sbox2', 'pg2', P.map(p => p.html)); }
+
+/* ===================== ④ 자료 ===================== */
+const LINKS = [
+  ['대한산업안전협회', '안전보건표지 자료실', '법정 표지 42종 그림 파일(내려받기)', 'https://www.safety.or.kr/safety/bbs/BMSR00018/list.do?menuNo=200087'],
+  ['대한산업안전협회', '안전포스터', '현장 게시용 안전 포스터', 'https://www.safety.or.kr/safety/bbs/BMSR00201/list.do?menuNo=200086'],
+  ['대한산업안전협회', '교육자료 · 재해사례 · 서식자료', '안전교육 자료와 재해 사례, 각종 서식', 'https://www.safety.or.kr/safety/bbs/BMSR00203/list.do?menuNo=200088'],
+  ['안전보건공단', '산업안전포털 안전보건 자료실', 'OPS(한 장 안전자료)·포스터·교육자료 검색', 'https://portal.kosha.or.kr/archive/cent-archive/master-arch'],
+  ['안전보건공단', '미디어 현장배송', '포스터·스티커 등 인쇄물 배송 신청', 'https://portal.kosha.or.kr/archive/cent-archive/media/hTrGi/list'],
+  ['안전보건공단', '대표 누리집', '안전보건 정보, 상담 1644-4544', 'https://www.kosha.or.kr/'],
+  ['국가법령정보센터', '산업안전보건법 시행규칙', '안전보건표지 별표 6~9 원문 확인', 'https://www.law.go.kr/법령/산업안전보건법시행규칙'],
+  ['국가법령정보센터', '중대재해 처벌 등에 관한 법률', '법 원문(시행령은 법령 화면에서)', 'https://www.law.go.kr/법령/중대재해처벌등에관한법률']
+];
+function renderLinks(){ $('links').innerHTML = LINKS.map(l => '<a href="' + esc(l[3]) + '" target="_blank" rel="noopener"><em>' + esc(l[0]) + '</em><b>' + esc(l[1]) + ' ↗</b><span>' + esc(l[2]) + '</span></a>').join(''); }
+
+/* ===================== 탭·입력 연결 ===================== */
+function showTab(t){
+  ST.tab = t; save();
+  document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === t));
+  ['signs', 'pack', 'post', 'links'].forEach(x => $('tab-' + x).classList.toggle('hidden', x !== t));
+  if (t === 'signs') { renderCats(); renderGrid(); renderSel(); renderTKinds(); }
+  if (t === 'pack') renderPacks();
+  if (t === 'post') renderPostForm();
+  if (t === 'links') renderLinks();
+  if (location.hash.slice(1) !== t) history.replaceState(null, '', '#' + t);
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('button, .sc[data-sign]'); if (!b) return;
+  const d = b.dataset;
+  if (d.tab) showTab(d.tab);
+  else if (d.cat) { ST.cat = d.cat; renderCats(); renderGrid(); save(); }
+  else if (d.sign) toggleSign(d.sign);
+  else if (d.del !== undefined) { ST.items.splice(+d.del, 1); renderGrid(); renderSel(); save(); }
+  else if (d.tk) { ST.tkind = d.tk; renderTKinds(); save(); }
+  else if (d.tp) { $('tText').value = d.tp; }
+  else if (b.id === 'tAdd') { const t = $('tText').value.trim(); if (!t) { toast('표지 글을 적으세요'); return; } ST.items.push({ k: 'text', kind: ST.tkind, text: t, n: 1 }); $('tText').value = ''; renderSel(); save(); toast('인쇄 목록에 넣었습니다'); }
+  else if (b.id === 'clr1') { if (ST.items.length && confirm('인쇄 목록을 비울까요?')) { ST.items = []; renderGrid(); renderSel(); save(); } }
+  else if (b.id === 'pr1') printPages(signPages(), PAGE_LAND);
+  else if (d.pack) { ST.pack = d.pack; renderPacks(); save(); }
+  else if (b.id === 'packAdd') { const p = PACKS.find(x => x.id === ST.pack); let n = 0; p.signs.forEach(id => { if (!inSel(id)) { ST.items.push({ k: 'sign', id, cap: SIGN[id][1], n: 1 }); n++; } }); p.text.forEach(([k, t]) => { if (!ST.items.some(it => it.k === 'text' && it.text === t)) { ST.items.push({ k: 'text', kind: k, text: t, n: 1 }); n++; } }); save(); showTab('signs'); toast(n + '가지를 담았습니다. 표지 아래 글을 고쳐 쓰세요'); }
+  else if (b.id === 'packChk') { ST.post = 'check'; const v = PF(); v.items = PACKS.find(x => x.id === ST.pack).checks.join('\n'); if (!ST.unit) ST.unit = PACKS.find(x => x.id === ST.pack).n; save(); showTab('post'); }
+  else if (b.id === 'packRisk') { ST.post = 'risk'; const v = PF(); v.rows = PACKS.find(x => x.id === ST.pack).risks.map(r => r.concat(['', ''])); save(); showTab('post'); }
+  else if (d.post) { ST.post = d.post; renderPostForm(); save(); }
+  else if (b.id === 'riskLoad') { if (!confirm('지금 표를 예시로 바꿀까요?')) return; PF().rows = (PACKS.find(x => x.id === ST.pack) || PACKS[0]).risks.map(r => r.concat(['', ''])); renderPostForm(); save(); }
+  else if (b.id === 'chkLoad') { PF().items = (PACKS.find(x => x.id === ST.pack) || PACKS[0]).checks.join('\n'); renderPostForm(); save(); }
+  else if (d.radd) { const [k, n] = d.radd.split('|'); pf()[k].push(Array(+n).fill('')); renderPostForm(); save(); }
+  else if (d.rdel) { const [k, i] = d.rdel.split('|'); pf()[k].splice(+i, 1); renderPostForm(); save(); }
+  else if (b.id === 'evacImgDel') { PF().img = ''; renderPostForm(); save(); }
+  else if (b.id === 'postReset') { if (confirm('「' + POSTS.find(p => p[0] === ST.post)[1] + '」 입력을 처음으로 되돌릴까요?')) { delete ST.pf[ST.post]; renderPostForm(); save(); } }
+  else if (b.id === 'pr2') { const P = postPages(); printPages(P.map(p => p.html), P[0] && P[0].land); }
+});
+document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.sc[data-sign]')) { e.preventDefault(); toggleSign(e.target.dataset.sign); } });
+$('q').addEventListener('input', () => { renderCats(); renderGrid(); });
+$('sel').addEventListener('input', e => {
+  const t = e.target;
+  if (t.dataset.cap !== undefined) { const it = ST.items[+t.dataset.cap]; if (it.k === 'sign') it.cap = t.value; else it.text = t.value.replace(/\s*\/\s*/g, '\n'); }
+  else if (t.dataset.n !== undefined) ST.items[+t.dataset.n].n = Math.max(1, Math.min(99, +t.value || 1));
+  else return;
+  clearTimeout(renderSel.t); renderSel.t = setTimeout(() => { fitBox('sbox1', 'pg1', signPages()); $('selCount').textContent = ST.items.length + '가지 · ' + ST.items.reduce((a, b) => a + (+b.n || 1), 0) + '장'; }, 250); save();
+});
+['lay', 'capOn', 'cutOn'].forEach(k => $(k).addEventListener('change', e => { ST[k] = e.target.value; renderSel(); save(); }));
+$('pOrg').addEventListener('input', e => { ST.org = e.target.value; renderPostPreview(); save(); });
+$('pUnit').addEventListener('input', e => { ST.unit = e.target.value; renderPostPreview(); save(); });
+$('postForm').addEventListener('input', e => {
+  const t = e.target;
+  if (t.dataset.pf) pf()[t.dataset.pf] = t.value;
+  else if (t.dataset.row) { const [k, i, j] = t.dataset.row.split('|'); pf()[k][+i][+j] = t.value; }
+  else return;
+  clearTimeout(renderPostPreview.t); renderPostPreview.t = setTimeout(renderPostPreview, 200); save();
+});
+$('postForm').addEventListener('change', e => {
+  const t = e.target;
+  if (t.tagName === 'SELECT') { if (t.dataset.pf) pf()[t.dataset.pf] = t.value; else if (t.dataset.row) { const [k, i, j] = t.dataset.row.split('|'); pf()[k][+i][+j] = t.value; } renderPostPreview(); save(); }
+  if (t.id === 'evacImg' && t.files[0]) {
+    const rd = new FileReader();
+    rd.onload = () => { const im = new Image(); im.onload = () => { const s = Math.min(1, 1600 / Math.max(im.naturalWidth, im.naturalHeight)), c = document.createElement('canvas'); c.width = Math.round(im.naturalWidth * s); c.height = Math.round(im.naturalHeight * s); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); PF().img = c.toDataURL('image/jpeg', 0.85); renderPostForm(); save(); }; im.onerror = () => toast('그림을 열지 못했습니다'); im.src = rd.result; };
+    rd.readAsDataURL(t.files[0]);
+  }
+});
+window.addEventListener('resize', () => { if (ST.tab === 'signs') fitBox('sbox1', 'pg1', signPages()); if (ST.tab === 'post') renderPostPreview(); });
+
+const h0 = location.hash.slice(1);
+showTab(['signs', 'pack', 'post', 'links'].includes(h0) ? h0 : 'signs');
+if (h0.startsWith('printtest')) { /* 인쇄 모양 시험용: #printtest-p4, #printpost-risk */
+  const lay = h0.split('-')[1] || 'p15'; ST.lay = lay; ST.items = (lay === 'p15' ? SIGNS : SIGNS.filter(s => ['212', '209', '205', '308', '406'].includes(s[0]))).map(s => ({ k: 'sign', id: s[0], cap: s[1], n: 1 })).concat([{ k: 'text', kind: 'warn', text: '칼 사용 주의', n: 1 }, { k: 'text', kind: 'fire', text: '소화기', n: 1 }]);
+  $('pageStyle').textContent = '@page{size:A4 ' + (LAYS[lay][2] ? 'landscape' : 'portrait') + ';margin:0}'; $('printArea').innerHTML = signPages().join('');
+}
+if (h0.startsWith('printpost')) { ST.post = h0.split('-')[1]; ST.org = '가상복지관'; ST.unit = '가상 사업장'; const P = postPages(); $('pageStyle').textContent = '@page{size:A4 ' + (P[0].land ? 'landscape' : 'portrait') + ';margin:0}'; $('printArea').innerHTML = P.map(x => x.html).join(''); }
+window._sf = { SIGNS, signSVG, signPages, postPages, ST, showTab, PACKS, renderPostForm };
+})();
+</script>
+<script src="../videos.js?v=5"></script>
+<script src="../remake.js"></script>
+</body>
+</html>

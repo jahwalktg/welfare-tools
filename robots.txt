@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://jahwalktg.github.io/welfare-tools/sitemap.xml

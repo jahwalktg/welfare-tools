@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>단축키 안내 | 사회복지사 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="윈도우·엑셀·한글(HWP)·인터넷 창 단축키를 「캡처·표 합치기·되돌리기」처럼 하고 싶은 일로 찾습니다. ☆로 내 목록을 만들고 모니터 옆에 붙일 한 장짜리 단축키표로 인쇄합니다.">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/shortcuts/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="단축키 안내 | 사회복지사 업무 도구">
+<meta property="og:description" content="윈도우·엑셀·한글(HWP)·인터넷 창 단축키를 「캡처·표 합치기·되돌리기」처럼 하고 싶은 일로 찾습니다. ☆로 내 목록을 만들고 모니터 옆에 붙일 한 장짜리 단축키표로 인쇄합니다.">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/shortcuts/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --red:#E63946; --green:#1F8A4C;
+  --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC;
+  --text:#1A2B50; --muted:#5B6885;
+  --blue-bg:#E8F0FF; --amber:#8A5A00; --amber-bg:#FFF1CC; --btn-text:#FFFFFF;
+  --key:#FFFFFF; --key-line:#B8C2D3;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#27407A; --red:#FF6B76; --green:#5FD08E;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --btn-text:#0E1630;
+    --key:#22305E; --key-line:#4A5C92;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1300px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
+.lead{margin:0 0 14px;color:var(--muted)}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.search{width:100%;min-height:52px;padding:8px 14px;border:2px solid var(--line);border-radius:12px;background:var(--bg);font-size:17px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chips button{min-height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:15px}
+.chips button.on{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.chips button .n{font-weight:600;font-size:12px;opacity:.8;margin-left:4px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+.bar .grow{flex:1;font-size:14px;color:var(--muted)}
+.btn{min-height:40px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.btn-main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.sec{margin:16px 0 8px;font-size:19px}
+.sec small{font-size:14px;color:var(--muted);font-weight:600;margin-left:6px}
+.grid{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.sc{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface)}
+.sc .keys{flex:none;min-width:128px;display:flex;flex-wrap:wrap;gap:3px;align-items:center}
+.sc .what{flex:1;min-width:0}
+.sc .what b{display:block;font-size:15px}
+.sc .what span{display:block;font-size:13px;color:var(--muted)}
+.sc .app{font-size:11px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:0 5px;margin-left:4px;vertical-align:middle}
+kbd{display:inline-block;min-width:26px;padding:2px 7px;border:1.5px solid var(--key-line);border-bottom-width:3px;border-radius:7px;background:var(--key);font-family:var(--font);font-size:13px;font-weight:700;text-align:center;line-height:1.4;color:var(--text)}
+.plus{font-size:12px;color:var(--muted)}
+.then{font-size:11px;color:var(--muted);margin:0 1px}
+.star{flex:none;width:38px;height:38px;border:0;background:none;font-size:20px;color:#C3CAD8;border-radius:10px}
+.star.on{color:#F5B700}
+.star:hover{background:var(--bg)}
+.empty{color:var(--muted);padding:16px 0}
+.tip{background:var(--amber-bg);border-radius:10px;padding:8px 12px;font-size:14px;margin:8px 0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.toast.on{opacity:1}
+.hidden{display:none !important}
+.foot{margin-top:24px;padding-top:14px;border-top:1.5px solid var(--line);font-size:14px;color:var(--muted)}
+.foot p{margin:2px 0}
+#printArea{display:none}
+@media print{
+  @page{size:A4;margin:10mm}
+  body{background:#fff}
+  body > *{display:none !important}
+  body > #printArea{display:block !important;color:#111;font-family:"Malgun Gothic",sans-serif}
+  #printArea h1{font-size:18px;margin:0 0 6px}
+  #printArea .pcols{column-count:2;column-gap:8mm}
+  #printArea h2{font-size:13px;margin:6px 0 3px;padding:2px 6px;background:#E8EEF8;break-after:avoid}
+  #printArea table{width:100%;border-collapse:collapse;font-size:10.5px;break-inside:auto}
+  #printArea td{padding:2px 4px;border-bottom:1px solid #DDD;vertical-align:top}
+  #printArea td.k{white-space:nowrap;font-weight:700;width:42%}
+  #printArea tr{break-inside:avoid}
+  #printArea .pf{font-size:9px;color:#666;margin-top:6px}
+}
+</style>
+</head>
+<body>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › 사무 도우미</p>
+  <h1>단축키 안내</h1>
+  <p class="lead">윈도우·엑셀·한글(HWP)·인터넷 창에서 자주 쓰는 단축키를 「하고 싶은 일」로 찾습니다. ☆를 눌러 내 목록을 만들고, 모니터 옆에 붙일 한 장짜리 단축키표로 인쇄할 수 있습니다.</p>
+
+  <section class="card">
+    <input class="search" id="q" type="search" placeholder="하고 싶은 일로 찾기 (예: 캡처, 표 합치기, 되돌리기, 오늘 날짜, 닫은 탭)" autocomplete="off">
+    <div class="chips" id="cats"></div>
+  </section>
+
+  <div class="bar"><span class="grow" id="count"></span><button class="btn" type="button" id="btnPrintMine">☆ 내 목록 인쇄</button><button class="btn btn-main" type="button" id="btnPrint">지금 보이는 것 인쇄</button></div>
+  <div id="out"></div>
+
+  <div class="foot">
+    <p>Win = 윈도우 로고 키(⊞). 「→」는 차례로 누르기(예: Ctrl+N → T = Ctrl+N을 누른 뒤 T), 「+」는 함께 누르기입니다.</p>
+    <p>한글 단축키는 한글 2010 이상 기본 설정 기준입니다. 버전·설정(한글 2007 이하, 사용자 단축키)에 따라 다를 수 있습니다. 별표 목록은 이 PC 브라우저에만 저장됩니다.</p>
+    <p>만든 사람: 서울강남지역자활센터 김태균</p>
+  </div>
+</div>
+<div id="printArea"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+'use strict';
+(() => {
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function toast(m){ const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('on'), 2200); }
+
+const CATS = [['all', '어디서나'], ['win', '윈도우'], ['cap', '화면 캡처'], ['xl', '엑셀'], ['hwp', '한글(HWP)'], ['web', '인터넷 창']];
+/* [분류, 키, 하는 일, 덧붙임, 찾기 낱말, 자주(1)] — 키: "Ctrl+C", 차례는 " → " */
+const SC = [
+  ['all', 'Ctrl+C', '복사', '', '복사 카피', 1], ['all', 'Ctrl+V', '붙여넣기', '', '붙이기 붙여넣기', 1], ['all', 'Ctrl+X', '잘라내기', '', '잘라내기 옮기기', 1],
+  ['all', 'Ctrl+Z', '되돌리기 (방금 한 것 취소)', '', '되돌리기 취소 실수 언두', 1], ['all', 'Ctrl+Y', '다시 실행', '한글은 Ctrl+Shift+Z', '다시 실행 복구 리두'],
+  ['all', 'Ctrl+A', '모두 선택', '', '전체 선택 모두'], ['all', 'Ctrl+S', '저장', '', '저장 세이브', 1], ['all', 'Ctrl+P', '인쇄', '', '인쇄 프린트', 1],
+  ['all', 'Ctrl+F', '찾기', '', '찾기 검색', 1], ['all', 'Ctrl+H', '찾아 바꾸기', '엑셀·한글·워드', '바꾸기 치환 찾아바꾸기'], ['all', 'Ctrl+N', '새 문서·새 창', '', '새 문서 새로 만들기'],
+  ['all', 'Ctrl+O', '파일 열기', '', '열기 파일'], ['all', 'Ctrl+W', '문서·탭 닫기', '', '닫기 창 닫기'], ['all', 'Ctrl+B', '글자 진하게', '', '굵게 진하게 볼드'],
+  ['all', 'Ctrl+마우스 휠', '화면 확대·축소', '', '확대 축소 크게 작게 줌'], ['all', 'Shift+방향키', '한 글자·한 칸씩 선택 넓히기', '', '선택 블록'], ['all', 'Ctrl+Shift+방향키', '낱말·끝까지 한 번에 선택', '', '선택 끝까지'],
+  ['all', 'Home / End', '줄 처음 / 줄 끝으로', '', '처음 끝 줄'], ['all', 'Ctrl+Home', '문서(표) 맨 처음으로', '', '맨 처음 맨 위'],
+
+  ['win', 'Win+D', '바탕화면 보기 (다시 누르면 되돌림)', '', '바탕화면 창 숨기기', 1], ['win', 'Win+E', '파일 탐색기 열기', '', '탐색기 내 PC 폴더', 1], ['win', 'Win+L', '화면 잠금 (자리 비울 때)', '개인정보 보호', '잠금 자리비움 보안', 1],
+  ['win', 'Alt+Tab', '열린 창 바꾸기', '', '창 전환 바꾸기', 1], ['win', 'Win+←', '창을 화면 왼쪽 반에 붙이기', '→ 오른쪽 반', '반쪽 나란히 두 창 배치', 1], ['win', 'Win+↑', '창 최대화', 'Win+↓ 작게', '최대화 크게'],
+  ['win', 'Win+Shift+←', '창을 다른 모니터로 옮기기', '듀얼 모니터', '모니터 옮기기 듀얼'], ['win', 'Win+V', '클립보드 기록 (예전에 복사한 것)', '처음 한 번 「켜기」', '클립보드 기록 여러개 복사', 1],
+  ['win', 'Win+.', '이모지·특수문자 창', '☆ ※ ① 등', '이모지 특수문자 기호', 1], ['win', 'Win+P', '화면 연결 방식 (복제·확장) — 빔프로젝터·TV', '회의실', '프로젝터 빔 화면 복제 확장 회의'],
+  ['win', 'Win+Tab', '작업 보기·가상 데스크톱', '', '작업 보기 데스크톱'], ['win', 'Win+I', '설정 열기', '', '설정'], ['win', 'Win+R', '실행 창', '', '실행'],
+  ['win', 'Ctrl+Shift+Esc', '작업 관리자 (멈춘 프로그램 끄기)', '', '작업관리자 멈춤 응답없음 강제종료'], ['win', 'Alt+F4', '지금 창 닫기', '바탕화면에서는 끄기 창', '닫기 종료 끄기'],
+  ['win', 'F2', '파일·폴더 이름 바꾸기', '탐색기', '이름 바꾸기'], ['win', 'Ctrl+Shift+N', '새 폴더', '탐색기', '새 폴더 만들기'], ['win', 'Shift+Delete', '휴지통 없이 바로 삭제 (주의)', '되살릴 수 없음', '완전 삭제'],
+  ['win', 'Win++', '돋보기 (화면 크게)', 'Win+Esc 끄기', '돋보기 확대'],
+
+  ['cap', 'Win+Shift+S', '원하는 부분만 캡처 → 붙여넣기', '가장 많이 씀', '캡처 스크린샷 부분 화면 갈무리', 1], ['cap', 'Alt+PrtSc', '지금 창만 캡처 → 붙여넣기', '', '창 캡처'],
+  ['cap', 'Win+PrtSc', '전체 화면을 사진 › 스크린샷 폴더에 저장', '', '전체 화면 저장 캡처'], ['cap', 'PrtSc', '전체 화면 캡처', '설정에 따라 캡처 도구가 열림', '전체 캡처 프린트스크린'],
+
+  ['xl', 'Ctrl+;', '오늘 날짜 넣기', 'Ctrl+Shift+; = 지금 시각', '오늘 날짜 입력', 1], ['xl', 'Alt+Enter', '칸 안에서 줄 바꾸기', '', '줄바꿈 칸 안 엔터', 1], ['xl', 'Ctrl+Enter', '고른 칸 모두에 같은 값 넣기', '', '한번에 입력 같은 값', 1],
+  ['xl', 'F2', '칸 고치기 (수식 보기)', '', '수정 편집'], ['xl', 'F4', '수식에서 $ 고정 바꾸기 / 방금 작업 반복', '', '절대참조 고정 달러 반복', 1], ['xl', 'Ctrl+1', '셀 서식 창', '날짜·숫자 모양', '셀 서식 표시형식', 1],
+  ['xl', 'Ctrl+Shift+L', '필터 켜기·끄기', '', '필터 거르기', 1], ['xl', 'Alt+=', '자동 합계 (SUM)', '', '합계 자동합계 썸', 1], ['xl', 'Ctrl+방향키', '자료 끝으로 이동', '', '끝으로 이동 맨 아래', 1],
+  ['xl', 'Ctrl+Shift+방향키', '자료 끝까지 선택', '', '끝까지 선택 범위', 1], ['xl', 'Ctrl+PgDn', '다음 시트로', 'Ctrl+PgUp 앞 시트', '시트 이동 탭', 1], ['xl', 'Ctrl+Alt+V', '선택하여 붙여넣기 (값만·서식만)', '', '값만 붙여넣기 선택하여', 1],
+  ['xl', 'Ctrl+D', '위 칸 값을 아래로 채우기', 'Ctrl+R 오른쪽으로', '아래로 채우기 복사'], ['xl', 'Ctrl+E', '빠른 채우기 (규칙대로 자동 채움)', '엑셀 2013 이상', '빠른 채우기 플래시'], ['xl', 'Ctrl+T', '표로 만들기', '', '표 만들기 테이블'],
+  ['xl', 'Ctrl+Space', '열 전체 선택', 'Shift+Space 행 전체', '열 선택 세로줄'], ['xl', 'Ctrl+-', '행·열 삭제', 'Ctrl+Shift+= 삽입', '행 삭제 열 삭제'], ['xl', 'Ctrl+Shift+=', '행·열 삽입', '', '행 추가 열 추가 삽입'],
+  ['xl', 'Ctrl+Shift+1', '천 단위 쉼표 서식 (1,234)', '', '쉼표 천단위 숫자'], ['xl', 'Ctrl+`', '수식 전체 보기·끄기', '숫자 1 왼쪽 키', '수식 보기'], ['xl', 'Shift+F11', '새 시트 넣기', '', '시트 추가'],
+  ['xl', 'Alt → H → O → I', '열 너비 자동 맞춤', '차례로 누르기', '열 너비 자동 폭'], ['xl', 'F12', '다른 이름으로 저장', '', '다른이름 저장'],
+
+  ['hwp', 'Alt+L', '글자 모양 (글꼴·크기·색)', '', '글자모양 글꼴 폰트 크기', 1], ['hwp', 'Alt+T', '문단 모양 (줄 간격·들여쓰기)', '', '문단모양 줄간격 들여쓰기', 1], ['hwp', 'F7', '편집 용지 (여백·가로세로)', '', '용지 여백 가로 세로 A4', 1],
+  ['hwp', 'Ctrl+N → T', '표 만들기', '', '표 만들기 표 넣기', 1], ['hwp', 'F5', '표 안에서 셀 블록 (누를수록 범위 넓힘)', 'F5 세 번 = 표 전체', '셀 선택 블록 표 칸 선택', 1], ['hwp', 'M', '셀 합치기 (셀 블록 상태에서)', '', '셀 합치기 병합 표 합치기 칸 합치기 셀 병합', 1],
+  ['hwp', 'S', '셀 나누기 (셀 블록 상태에서)', '', '셀 나누기 분할 표 나누기 칸 나누기'], ['hwp', 'Ctrl+방향키', '줄·칸 크기 조절 (셀 블록 상태에서)', '', '셀 크기 너비 높이 표 크기'], ['hwp', 'Ctrl+Enter', '쪽 나누기 (다음 쪽으로)', '', '쪽 나누기 페이지 다음장', 1],
+  ['hwp', 'Alt+C', '모양 복사 (글자·문단 모양 그대로 옮기기)', '', '모양 복사 서식 복사', 1], ['hwp', 'Ctrl+F10', '문자표 (특수문자 ※ ① ☞)', '', '문자표 특수문자 기호', 1], ['hwp', 'Ctrl+Shift+Z', '다시 실행', '되돌리기는 Ctrl+Z', '다시 실행 복구'],
+  ['hwp', 'Ctrl+Shift+C', '가운데 정렬', 'L 왼쪽 · R 오른쪽 · M 양쪽', '가운데 정렬 중앙', 1], ['hwp', 'Alt+Shift+E', '글자 크게', 'Alt+Shift+R 작게', '글자 크게 작게 크기'], ['hwp', 'Ctrl+N → P', '쪽 번호 매기기', '', '쪽번호 페이지 번호'],
+  ['hwp', 'Ctrl+N → H', '머리말·꼬리말', '', '머리말 꼬리말 머리글'], ['hwp', 'Ctrl+N → I', '그림 넣기', '', '그림 사진 넣기 이미지'], ['hwp', 'Alt+V', '다른 이름으로 저장', 'PDF로 저장도 여기서', '다른이름 저장 PDF'],
+  ['hwp', 'F8', '맞춤법 검사', '', '맞춤법 검사 오타'], ['hwp', 'Tab', '표에서 다음 칸으로', 'Shift+Tab 앞 칸', '다음 칸 이동 표'],
+
+  ['web', 'Ctrl+Shift+T', '방금 닫은 탭 다시 열기', '', '닫은 탭 다시 실수 복구', 1], ['web', 'Ctrl+T', '새 탭', '', '새 탭'], ['web', 'Ctrl+W', '지금 탭 닫기', '', '탭 닫기'],
+  ['web', 'Ctrl+Tab', '다음 탭으로', 'Ctrl+Shift+Tab 앞 탭', '탭 이동'], ['web', 'Ctrl+L', '주소창으로 (주소 복사할 때)', '', '주소창 주소 복사 URL', 1], ['web', 'Ctrl+D', '즐겨찾기 추가', '', '즐겨찾기 북마크', 1],
+  ['web', 'Ctrl+J', '내려받은 파일 목록', '', '다운로드 받은 파일', 1], ['web', 'Ctrl+H', '방문 기록', '', '방문기록 히스토리'], ['web', 'Ctrl+Shift+N', '시크릿·InPrivate 창 (기록 안 남김)', '공용 PC에서 로그인할 때', '시크릿 인프라이빗 개인 창'],
+  ['web', 'F5', '새로 고침', 'Ctrl+F5 강력 새로 고침', '새로고침 리프레시'], ['web', 'Ctrl+0', '확대·축소를 원래 크기로', 'Ctrl++ / Ctrl+- 확대·축소', '원래 크기 확대 축소'], ['web', 'Alt+←', '뒤로 가기', '', '뒤로 이전'],
+  ['web', 'Ctrl+Shift+Delete', '인터넷 사용 기록 삭제', '', '기록 삭제 캐시 쿠키']
+];
+const KEY = 'jahwal.shortcuts.star.v1';
+let star = {}; try { star = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+const idOf = s => s[0] + '|' + s[1];
+let cat = 'top', q = '';
+function keysHTML(k){
+  return k.split(' → ').map(step => step.split(' / ').map(alt => alt.split('+').map((p, i, arr) => (p === '' && arr[i + 1] === '' ? '' : '<kbd>' + esc(p || '+') + '</kbd>')).filter(Boolean).join('<span class="plus">+</span>')).join('<span class="plus"> / </span>')).join('<span class="then">→</span>');
+}
+const norm = s => String(s).toLowerCase().replace(/\s+/g, '');
+function visible(){
+  let list = SC;
+  if (q) list = list.filter(s => { const hay = norm(s[1] + s[2] + s[3] + s[4] + CATS.find(c => c[0] === s[0])[1]); return norm(q).split(/(?=)/).length && q.split(/\s+/).every(w => hay.includes(norm(w))); });
+  else if (cat === 'top') list = list.filter(s => s[5]);
+  else if (cat === 'mine') list = list.filter(s => star[idOf(s)]);
+  else list = list.filter(s => s[0] === cat);
+  return list;
+}
+function render(){
+  const nTop = SC.filter(s => s[5]).length, nMine = SC.filter(s => star[idOf(s)]).length;
+  $('cats').innerHTML = [['top', '자주 쓰는 것', nTop], ['mine', '☆ 내 목록', nMine]].concat(CATS.map(c => [c[0], c[1], SC.filter(s => s[0] === c[0]).length]))
+    .map(([k, n, c]) => '<button type="button" data-c="' + k + '" class="' + (!q && cat === k ? 'on' : '') + '">' + esc(n) + '<span class="n">' + c + '</span></button>').join('');
+  const list = visible();
+  $('count').textContent = q ? '「' + q + '」 찾은 단축키 ' + list.length + '개' : cat === 'mine' ? (nMine ? '내 목록 ' + nMine + '개' : '') : '단축키 ' + list.length + '개';
+  if (cat === 'mine' && !q && !nMine) { $('out').innerHTML = '<p class="empty">아직 별표한 단축키가 없습니다. 단축키 오른쪽 ☆를 누르면 여기에 모입니다.</p>'; return; }
+  if (!list.length) { $('out').innerHTML = '<p class="empty">맞는 단축키가 없습니다. 다른 낱말로 찾아보세요 (예: 캡처, 복사, 표).</p>'; return; }
+  const groups = CATS.map(c => [c, list.filter(s => s[0] === c[0])]).filter(g => g[1].length);
+  $('out').innerHTML = groups.map(([c, items]) => (groups.length > 1 || cat === 'top' || q ? '<h2 class="sec">' + esc(c[1]) + '<small>' + items.length + '</small></h2>' : '')
+    + (c[0] === 'hwp' && !q ? '<div class="tip">셀 블록(F5) 상태란: 표 안에서 F5를 눌러 칸이 검게 칠해진 상태. 이때 M·S·Ctrl+방향키가 동작합니다.</div>' : '')
+    + (c[0] === 'win' && !q && cat === 'win' ? '<div class="tip">Win+V 클립보드 기록은 처음 한 번 Win+V를 눌러 「켜기」를 해야 합니다.</div>' : '')
+    + '<div class="grid">' + items.map(s => '<div class="sc"><div class="keys">' + keysHTML(s[1]) + '</div><div class="what"><b>' + esc(s[2]) + '</b>' + (s[3] ? '<span>' + esc(s[3]) + '</span>' : '') + '</div><button type="button" class="star' + (star[idOf(s)] ? ' on' : '') + '" data-star="' + esc(idOf(s)) + '" aria-label="내 목록에 ' + (star[idOf(s)] ? '빼기' : '넣기') + '">' + (star[idOf(s)] ? '★' : '☆') + '</button></div>').join('') + '</div>').join('');
+}
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-c]'); if (c) { cat = c.dataset.c; q = ''; $('q').value = ''; render(); return; }
+  const st = e.target.closest('[data-star]'); if (st) { const k = st.dataset.star; if (star[k]) delete star[k]; else star[k] = 1; try { localStorage.setItem(KEY, JSON.stringify(star)); } catch (x) {} render(); toast(star[k] ? '내 목록에 넣었습니다' : '내 목록에서 뺐습니다'); }
+});
+$('q').addEventListener('input', e => { q = e.target.value.trim(); render(); });
+function printList(list, title){
+  if (!list.length) { toast('인쇄할 단축키가 없습니다'); return; }
+  const groups = CATS.map(c => [c, list.filter(s => s[0] === c[0])]).filter(g => g[1].length);
+  const plain = k => esc(k.replace(/ → /g, ' → '));
+  $('printArea').innerHTML = '<h1>' + esc(title) + '</h1><div class="pcols">' + groups.map(([c, items]) => '<h2>' + esc(c[1]) + '</h2><table>' + items.map(s => '<tr><td class="k">' + plain(s[1]) + '</td><td>' + esc(s[2]) + (s[3] ? ' <span style="color:#666">(' + esc(s[3]) + ')</span>' : '') + '</td></tr>').join('') + '</table>').join('') + '</div><p class="pf">사회복지사 업무 도구 · jahwalktg.github.io/welfare-tools · 「+」 함께 누르기, 「→」 차례로 누르기</p>';
+  setTimeout(() => window.print(), 50);
+}
+$('btnPrint').addEventListener('click', () => printList(visible(), q ? '단축키 — ' + q : cat === 'top' ? '자주 쓰는 단축키' : cat === 'mine' ? '내 단축키' : (CATS.find(c => c[0] === cat) || ['', '단축키'])[1] + ' 단축키'));
+$('btnPrintMine').addEventListener('click', () => printList(SC.filter(s => star[idOf(s)]), '내 단축키'));
+window.addEventListener('afterprint', () => { $('printArea').innerHTML = ''; });
+render();
+window._sc = { SC };
+})();
+</script>
+<script src="../videos.js?v=5"></script>
+</body>
+</html>

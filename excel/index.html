@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>엑셀 함수 도우미 | 사회복지사 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="함수 이름을 몰라도 「이름으로 찾아오기·나이·천 원 버림」처럼 하고 싶은 일로 찾습니다. 예시 표로 설명하고, 칸 위치만 넣으면 수식을 만들어 줍니다. #N/A 같은 오류 고치는 법도 있습니다.">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/excel/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="엑셀 함수 도우미 | 사회복지사 업무 도구">
+<meta property="og:description" content="함수 이름을 몰라도 「이름으로 찾아오기·나이·천 원 버림」처럼 하고 싶은 일로 찾습니다. 예시 표로 설명하고, 칸 위치만 넣으면 수식을 만들어 줍니다. #N/A 같은 오류 고치는 법도 있습니다.">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/excel/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --red:#E63946; --green:#1F8A4C;
+  --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC;
+  --text:#1A2B50; --muted:#5B6885;
+  --blue-bg:#E8F0FF; --amber:#8A5A00; --amber-bg:#FFF1CC; --green-bg:#E3F5EA; --red-bg:#FDECEE; --btn-text:#FFFFFF;
+  --xl:#1D6F42; --xl-bg:#E6F2EA;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  --mono:"Consolas","D2Coding","Malgun Gothic",monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#27407A; --red:#FF6B76; --green:#5FD08E;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+    --xl:#5FD08E; --xl-bg:#143A26;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1300px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
+.lead{margin:0 0 14px;color:var(--muted)}
+.tabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+.tab{min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:700}
+.tab.on{background:var(--xl);border-color:var(--xl);color:#fff}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.search{width:100%;min-height:52px;padding:8px 14px;border:2px solid var(--line);border-radius:12px;background:var(--bg);font-size:17px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chips button{min-height:36px;padding:0 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:600;font-size:14px}
+.chips button.on{background:var(--xl);border-color:var(--xl);color:#fff}
+.chips .lab{align-self:center;font-size:13px;color:var(--muted);font-weight:700}
+.layout{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:980px){.layout{grid-template-columns:380px minmax(0,1fr);align-items:start}.detail{position:sticky;top:10px;max-height:calc(100vh - 20px);overflow:auto}}
+.list{display:grid;gap:6px}
+.item{display:block;width:100%;text-align:left;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface)}
+.item:hover{border-color:var(--xl)}
+.item.on{border-color:var(--xl);background:var(--xl-bg)}
+.item b{font-family:var(--mono);color:var(--xl);font-size:15px}
+.item span{display:block;font-size:14px;color:var(--text);margin-top:1px}
+.item .new{font-size:11px;font-weight:700;color:var(--amber);background:var(--amber-bg);border-radius:6px;padding:0 5px;margin-left:6px;font-family:var(--font)}
+.count{font-size:14px;color:var(--muted);margin:0 0 6px}
+.detail h2{margin:0;font-size:24px;font-family:var(--mono);color:var(--xl)}
+.detail .task{font-size:18px;font-weight:700;margin:2px 0 8px}
+.detail p{margin:6px 0}
+.syntax{font-family:var(--mono);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;font-size:15px}
+.args{margin:8px 0;padding-left:20px;font-size:15px}
+.args li{margin:2px 0}
+.args code{font-family:var(--mono);color:var(--xl);font-weight:700}
+.sheet{border-collapse:collapse;font-size:14px;margin:8px 0;max-width:100%}
+.sheet th,.sheet td{border:1px solid #C7CED9;padding:4px 8px;white-space:nowrap}
+.sheet thead th,.sheet .rn{background:#EEF1F5;color:#5B6885;font-weight:600;text-align:center;font-size:12px}
+.sheet td{background:#fff;color:#1B1B1B}
+.sheet td.hd{background:#F6F8FA;font-weight:700}
+.sheet td.res{background:#E6F2EA;outline:2px solid #1D6F42;outline-offset:-2px;font-weight:700}
+.sheetwrap{overflow:auto;max-width:100%}
+.fbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0 4px}
+.fbar .fx{font-family:var(--mono);font-style:italic;color:var(--muted);font-weight:700}
+.fbar code{flex:1 1 240px;font-family:var(--mono);background:var(--surface);border:1.5px solid var(--xl);border-radius:8px;padding:6px 10px;font-size:15px;word-break:break-all}
+.btn{min-height:38px;padding:0 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.btn-main{background:var(--xl);border-color:var(--xl);color:#fff}
+.tip{background:var(--amber-bg);color:var(--text);border-radius:10px;padding:8px 12px;font-size:14px;margin:8px 0}
+.tip b{color:var(--amber)}
+.compat{font-size:13px;font-weight:700;border-radius:999px;padding:2px 10px;display:inline-block;margin:4px 0}
+.compat.all{background:var(--green-bg);color:var(--green)}
+.compat.new{background:var(--amber-bg);color:var(--amber)}
+.builder{border:1.5px dashed var(--xl);border-radius:12px;padding:12px;margin-top:12px;background:var(--xl-bg)}
+.builder h3{margin:0 0 6px;font-size:16px}
+.bfields{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.bfields label{font-size:13px;color:var(--muted)}
+.bfields input,.bfields select{width:100%;min-height:38px;padding:4px 8px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);font-family:var(--mono)}
+.rel{font-size:14px;margin-top:10px}
+.rel button{border:0;background:none;color:var(--blue);font-weight:700;font-family:var(--mono);padding:2px 4px}
+.errs{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.err{border:1.5px solid var(--line);border-radius:14px;padding:12px;background:var(--surface)}
+.err h3{margin:0 0 4px;font-family:var(--mono);color:var(--red);font-size:18px}
+.err p{margin:4px 0;font-size:14px}
+.err .fix{color:var(--green);font-weight:600}
+.empty{color:var(--muted);padding:20px 0;text-align:center}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.toast.on{opacity:1}
+.hidden{display:none !important}
+.foot{margin-top:24px;padding-top:14px;border-top:1.5px solid var(--line);font-size:14px;color:var(--muted)}
+.foot p{margin:2px 0}
+</style>
+</head>
+<body>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › 사무 도우미</p>
+  <h1>엑셀 함수 도우미</h1>
+  <p class="lead">함수 이름을 몰라도 「하고 싶은 일」로 찾습니다. 복지 현장 예시 표로 설명하고, 칸 위치만 넣으면 수식을 만들어 복사해 줍니다. 자주 나는 오류(#N/A 등) 고치는 법도 있습니다.</p>
+
+  <div class="tabs"><button type="button" class="tab on" data-tab="fn">함수 찾기</button><button type="button" class="tab" data-tab="err">오류·문제 해결</button></div>
+
+  <div id="pFn">
+    <section class="card">
+      <input class="search" id="q" type="search" placeholder="하고 싶은 일이나 함수 이름 (예: 이름으로 찾아오기, 나이, 천 원 버림, 중복, VLOOKUP)" autocomplete="off">
+      <div class="chips" id="quick"></div>
+      <div class="chips" id="cats"></div>
+    </section>
+    <div class="layout">
+      <div><p class="count" id="count"></p><div class="list" id="list"></div></div>
+      <section class="card detail" id="detail"></section>
+    </div>
+  </div>
+
+  <div id="pErr" class="hidden">
+    <section class="card"><p style="margin:0">칸에 이런 표시가 나오거나 계산이 이상할 때 원인과 고치는 법입니다.</p></section>
+    <div class="errs" id="errs"></div>
+  </div>
+
+  <div class="foot">
+    <p>예시는 엑셀 기준이며 한셀·구글 시트도 대부분 같습니다. 「엑셀 2019 이상」 표시가 있는 함수는 옛 엑셀·한셀에서 안 될 수 있습니다.</p>
+    <p>주민등록번호가 든 파일은 개인정보이니 함수로 생년월일·성별을 뽑은 뒤 원래 번호 칸은 지우거나 가리세요.</p>
+    <p>만든 사람: 서울강남지역자활센터 김태균</p>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+'use strict';
+(() => {
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function toast(m){ const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('on'), 2200); }
+
+const CATS = [['find', '찾기·가져오기'], ['sum', '합계·개수'], ['date', '날짜·나이'], ['money', '반올림·금액'], ['text', '글자 정리'], ['logic', '조건·오류'], ['list', '목록·중복']];
+/* 함수 목록: n 이름, c 분류, t 하고 싶은 일, k 찾기 낱말, d 설명, s 문법, a 인자, ex 예시 표, f 예시 수식, r 결과, tip, nw(엑셀 2019+), b 수식 만들기, rel 함께 */
+const FN = [
+  { n: 'VLOOKUP', c: 'find', top: 1, t: '다른 명단에서 이름으로 값 가져오기', k: '찾아오기 가져오기 조회 대조 브이룩업 명단 연락처',
+    d: '명단 표의 맨 왼쪽 열에서 값을 찾아, 같은 줄의 다른 칸 값을 가져옵니다.',
+    s: '=VLOOKUP(찾을 값, 명단 범위, 가져올 열 번호, FALSE)',
+    a: [['찾을 값', '이름이 든 칸 (예: A2)'], ['명단 범위', '찾을 값이 맨 왼쪽에 있는 범위 (예: 명단!A:C)'], ['열 번호', '범위에서 몇 번째 열을 가져올지 (A=1, B=2, C=3)'], ['FALSE', '정확히 같은 것만 찾기 — 꼭 넣으세요']],
+    ex: { h: ['이름', '부서', '연락처'], rows: [['김○○', '사례관리팀', '010-1111-2222'], ['이○○', '재가복지팀', '010-3333-4444'], ['박○○', '총무팀', '010-5555-6666']], show: [['찾을 이름', '이○○'], ['연락처', '']], cell: 'B6' },
+    f: '=VLOOKUP(B5,A2:C4,3,FALSE)', r: '010-3333-4444',
+    tip: '찾는 값은 범위의 <b>맨 왼쪽 열</b>에 있어야 합니다. 왼쪽 칸 값을 가져와야 하면 XLOOKUP 또는 INDEX+MATCH를 쓰세요. #N/A가 나오면 이름 앞뒤 빈칸(TRIM)부터 확인하세요.',
+    b: { f: [['look', '찾을 값 칸', 'A2'], ['rng', '명단 범위', '명단!A:C'], ['col', '가져올 열 번호', '3']], t: v => `=VLOOKUP(${v.look},${v.rng},${v.col},FALSE)` }, rel: ['XLOOKUP', 'INDEX·MATCH', 'IFERROR', 'TRIM'] },
+  { n: 'XLOOKUP', c: 'find', nw: 1, t: '방향 상관없이 찾아오기 (VLOOKUP 다음 세대)', k: '찾아오기 가져오기 조회 엑스룩업',
+    d: '찾을 열과 가져올 열을 따로 지정해서, 왼쪽 값도 가져오고 못 찾을 때 표시할 글자도 정할 수 있습니다.',
+    s: '=XLOOKUP(찾을 값, 찾을 열, 가져올 열, "못 찾을 때")',
+    a: [['찾을 값', '예: A2'], ['찾을 열', '예: 명단!B:B'], ['가져올 열', '예: 명단!A:A (왼쪽도 됨)'], ['못 찾을 때', '예: "없음"']],
+    f: '=XLOOKUP(A2,명단!B:B,명단!A:A,"없음")', r: '찾은 값 또는 「없음」',
+    b: { f: [['look', '찾을 값 칸', 'A2'], ['col', '찾을 열', '명단!B:B'], ['ret', '가져올 열', '명단!A:A'], ['nf', '못 찾을 때 글자', '없음']], t: v => `=XLOOKUP(${v.look},${v.col},${v.ret},"${v.nf}")` }, rel: ['VLOOKUP', 'INDEX·MATCH'] },
+  { n: 'INDEX·MATCH', c: 'find', t: '옛 엑셀에서도 왼쪽 값까지 찾아오기', k: '인덱스 매치 찾아오기 가져오기',
+    d: 'MATCH로 몇 번째 줄인지 찾고, INDEX로 그 줄의 값을 가져옵니다. XLOOKUP이 없는 엑셀·한셀에서도 됩니다.',
+    s: '=INDEX(가져올 열, MATCH(찾을 값, 찾을 열, 0))',
+    f: '=INDEX(명단!A:A,MATCH(A2,명단!B:B,0))', r: '찾은 줄의 A열 값',
+    b: { f: [['ret', '가져올 열', '명단!A:A'], ['look', '찾을 값 칸', 'A2'], ['col', '찾을 열', '명단!B:B']], t: v => `=INDEX(${v.ret},MATCH(${v.look},${v.col},0))` }, rel: ['VLOOKUP', 'XLOOKUP'] },
+  { n: 'SUMIF', c: 'sum', top: 1, t: '부서별 합계 (조건 하나)', k: '조건 합계 더하기 부서별 썸이프',
+    d: '조건에 맞는 줄의 금액만 더합니다.',
+    s: '=SUMIF(조건 범위, 조건, 더할 범위)',
+    ex: { h: ['날짜', '부서', '금액'], rows: [['9/1', '사례관리팀', '120,000'], ['9/2', '재가복지팀', '80,000'], ['9/3', '사례관리팀', '50,000'], ['9/4', '총무팀', '40,000']], cell: 'C6', show: [['사례관리팀 합계', '']] },
+    f: '=SUMIF(B2:B5,"사례관리팀",C2:C5)', r: '170,000',
+    tip: '조건을 칸으로 줄 수도 있습니다: <b>=SUMIF(B:B,E2,C:C)</b> — E2에 부서 이름. 조건이 둘 이상이면 SUMIFS.',
+    b: { f: [['crng', '조건 범위', 'B:B'], ['cond', '조건 (칸 또는 "글자")', '"사례관리팀"'], ['srng', '더할 범위', 'C:C']], t: v => `=SUMIF(${v.crng},${v.cond},${v.srng})` }, rel: ['SUMIFS', 'COUNTIF', 'SUBTOTAL'] },
+  { n: 'SUMIFS', c: 'sum', top: 1, t: '부서 + 월처럼 조건 여러 개로 합계', k: '조건 여러개 합계 기간 월별 썸이프스',
+    d: '여러 조건을 모두 만족하는 줄만 더합니다. 기간 합계에 많이 씁니다.',
+    s: '=SUMIFS(더할 범위, 조건 범위1, 조건1, 조건 범위2, 조건2, …)',
+    f: '=SUMIFS(C:C,B:B,"사례관리팀",A:A,">=2026-09-01",A:A,"<=2026-09-30")', r: '사례관리팀 9월 합계',
+    tip: 'SUMIF와 달리 <b>더할 범위가 맨 앞</b>입니다. 날짜 조건은 ">=날짜"처럼 따옴표 안에 부등호와 함께 씁니다.',
+    b: { f: [['srng', '더할 범위', 'C:C'], ['c1', '조건 범위1', 'B:B'], ['v1', '조건1', '"사례관리팀"'], ['c2', '조건 범위2 (날짜)', 'A:A'], ['from', '시작일', '2026-09-01'], ['to', '끝날', '2026-09-30']], t: v => `=SUMIFS(${v.srng},${v.c1},${v.v1},${v.c2},">=${v.from}",${v.c2},"<=${v.to}")` }, rel: ['SUMIF', 'COUNTIFS'] },
+  { n: 'COUNTIF', c: 'sum', top: 1, t: '조건에 맞는 사람 수 세기', k: '인원 세기 개수 몇 명 카운트이프',
+    d: '조건에 맞는 칸이 몇 개인지 셉니다.',
+    s: '=COUNTIF(범위, 조건)',
+    ex: { h: ['이름', '부서'], rows: [['김○○', '사례관리팀'], ['이○○', '재가복지팀'], ['박○○', '사례관리팀'], ['최○○', '총무팀']], cell: 'B6', show: [['사례관리팀 인원', '']] },
+    f: '=COUNTIF(B2:B5,"사례관리팀")', r: '2',
+    b: { f: [['rng', '범위', 'B:B'], ['cond', '조건', '"사례관리팀"']], t: v => `=COUNTIF(${v.rng},${v.cond})` }, rel: ['COUNTIFS', 'COUNTA', '중복 찾기'] },
+  { n: 'COUNTIFS', c: 'sum', t: '조건 여러 개로 사람 수 세기', k: '인원 여러조건 남녀 부서별 카운트이프스',
+    d: '여러 조건을 모두 만족하는 칸 수를 셉니다. 예: 사례관리팀 부서의 여성 인원.',
+    s: '=COUNTIFS(범위1, 조건1, 범위2, 조건2, …)',
+    f: '=COUNTIFS(B:B,"사례관리팀",C:C,"여")', r: '사례관리팀 여성 인원',
+    b: { f: [['r1', '범위1', 'B:B'], ['c1', '조건1', '"사례관리팀"'], ['r2', '범위2', 'C:C'], ['c2', '조건2', '"여"']], t: v => `=COUNTIFS(${v.r1},${v.c1},${v.r2},${v.c2})` }, rel: ['COUNTIF', 'SUMIFS'] },
+  { n: 'COUNTA', c: 'sum', t: '명단 인원 세기 (빈칸 아닌 칸 수)', k: '인원 몇명 개수 빈칸 아닌',
+    d: '비어 있지 않은 칸의 개수를 셉니다. 숫자만 세려면 COUNT.',
+    s: '=COUNTA(범위)', f: '=COUNTA(A2:A200)', r: '이름이 적힌 사람 수', tip: '빈칸 개수는 <b>=COUNTBLANK(범위)</b>.', rel: ['COUNTIF'] },
+  { n: 'SUBTOTAL', c: 'sum', t: '필터로 걸러 보이는 줄만 합계', k: '필터 보이는 것만 합계 부분합 서브토탈',
+    d: '필터를 걸었을 때 화면에 보이는 줄만 더하거나 셉니다. 9 = 합계, 3 = 개수(COUNTA).',
+    s: '=SUBTOTAL(9, 범위)', f: '=SUBTOTAL(9,C2:C500)', r: '보이는 줄만 합계',
+    tip: 'SUM은 숨겨진 줄까지 더합니다. 필터로 부서을 골라 볼 때는 SUBTOTAL을 쓰세요.', rel: ['SUMIF'] },
+  { n: 'ROUNDDOWN', c: 'money', top: 1, t: '천 원 미만 버리기 · 소수점 버리기', k: '버림 절사 천원 단위 반올림 내림 라운드다운',
+    d: '정해진 자리 아래를 버립니다. 자릿수에 -3을 주면 천 원 미만을 버립니다.',
+    s: '=ROUNDDOWN(숫자, 자릿수)',
+    a: [['자릿수 0', '소수점 아래 버림 (1234.7 → 1234)'], ['자릿수 -1', '일 원 단위 버림 (1,234 → 1,230)'], ['자릿수 -3', '천 원 미만 버림 (1,234,567 → 1,234,000)']],
+    ex: { h: ['금액', '천 원 미만 버림', '천원 단위'], rows: [['1,234,567', '1,234,000', '1,234']], cell: 'B2' },
+    f: '=ROUNDDOWN(A2,-3)', r: '1,234,000',
+    tip: '운영보고처럼 「천원 단위」로 적을 때는 <b>=ROUNDDOWN(A2/1000,0)</b> → 1,234. 반올림은 ROUND, 올림은 ROUNDUP (사용법 같음).',
+    b: { f: [['num', '숫자 칸', 'A2'], ['dig', '자릿수', '-3']], t: v => `=ROUNDDOWN(${v.num},${v.dig})` }, rel: ['ROUND', '부가세 나누기'] },
+  { n: 'ROUND', c: 'money', t: '반올림하기', k: '반올림 사사오입 라운드',
+    d: '정해진 자리에서 반올림합니다. 자릿수 규칙은 ROUNDDOWN과 같습니다.',
+    s: '=ROUND(숫자, 자릿수)', f: '=ROUND(A2,0)', r: '1234.5 → 1235', tip: '올림은 <b>ROUNDUP</b>, 버림은 <b>ROUNDDOWN</b>.', rel: ['ROUNDDOWN'] },
+  { n: '부가세 나누기', c: 'money', top: 1, t: '부가세 포함 금액을 공급가액·부가세로 나누기', k: '부가세 공급가액 역산 10% 세금 매출',
+    d: '입금액(부가세 포함)에서 공급가액은 10/11을 곱해 원 미만을 버리고, 부가세는 나머지로 구합니다.',
+    s: '공급가액 =ROUNDDOWN(금액*10/11,0)   부가세 =금액-공급가액',
+    ex: { h: ['입금액', '공급가액', '부가세'], rows: [['110,000', '100,000', '10,000'], ['55,500', '50,454', '5,046']], cell: 'B2' },
+    f: '=ROUNDDOWN(A2*10/11,0)', r: '100,000',
+    tip: '부가세 칸은 <b>=A2-B2</b>. 세금계산서가 반올림인 거래처는 ROUND로 바꾸세요. 공용판 「부가세 역산기」로도 계산할 수 있습니다.',
+    b: { f: [['amt', '부가세 포함 금액 칸', 'A2']], t: v => `=ROUNDDOWN(${v.amt}*10/11,0)` }, rel: ['ROUNDDOWN'] },
+  { n: 'DATEDIF', c: 'date', top: 1, t: '만 나이 · 근속 개월 구하기', k: '나이 만나이 근속 기간 개월 연수 데이트디프',
+    d: '두 날짜 사이의 햇수·개월·일수를 셉니다. 생년월일과 오늘 날짜로 만 나이를 구합니다.',
+    s: '=DATEDIF(시작일, 끝날, "Y")',
+    a: [['"Y"', '꽉 찬 햇수 (만 나이)'], ['"M"', '꽉 찬 개월 수'], ['"D"', '날수']],
+    ex: { h: ['이름', '생년월일', '만 나이'], rows: [['김○○', '1970-03-15', '56']], cell: 'C2' },
+    f: '=DATEDIF(B2,TODAY(),"Y")', r: '56 (2026년 10월 기준)',
+    tip: '함수 목록에 안 보이는 숨은 함수지만 직접 치면 됩니다. 시작일이 끝날보다 늦으면 #NUM! 오류.',
+    b: { f: [['from', '시작일(생년월일) 칸', 'B2'], ['to', '끝날', 'TODAY()'], ['u', '단위 (Y·M·D)', 'Y']], t: v => `=DATEDIF(${v.from},${v.to},"${v.u}")` }, rel: ['주민번호 → 생년월일', 'TODAY', 'EDATE'] },
+  { n: '주민번호 → 생년월일', c: 'date', top: 1, t: '주민등록번호로 생년월일 · 성별 구하기', k: '주민번호 생년월일 성별 나이 MID DATE',
+    d: '「801010-1234567」에서 앞 6자리와 뒷자리 첫 숫자(1·2·5·6 = 1900년대, 3·4·7·8 = 2000년대)로 날짜를 만듭니다.',
+    s: '=DATE(IF(OR(MID(칸,8,1)="1",MID(칸,8,1)="2",MID(칸,8,1)="5",MID(칸,8,1)="6"),1900,2000)+LEFT(칸,2), MID(칸,3,2), MID(칸,5,2))',
+    ex: { h: ['주민등록번호', '생년월일', '성별'], rows: [['801010-1******', '1980-10-10', '남'], ['050203-4******', '2005-02-03', '여']], cell: 'B2' },
+    f: '=DATE(IF(OR(MID(A2,8,1)="1",MID(A2,8,1)="2",MID(A2,8,1)="5",MID(A2,8,1)="6"),1900,2000)+LEFT(A2,2),MID(A2,3,2),MID(A2,5,2))', r: '1980-10-10',
+    tip: '성별: <b>=IF(ISODD(MID(A2,8,1)),"남","여")</b>. 하이픈 없이 13자리면 8 → 7로 바꾸세요. 결과가 숫자(29504)로 보이면 셀 서식을 「날짜」로.',
+    b: { f: [['c', '주민번호 칸', 'A2'], ['p', '성별 숫자 위치 (하이픈 있으면 8, 없으면 7)', '8']], t: v => `=DATE(IF(OR(MID(${v.c},${v.p},1)="1",MID(${v.c},${v.p},1)="2",MID(${v.c},${v.p},1)="5",MID(${v.c},${v.p},1)="6"),1900,2000)+LEFT(${v.c},2),MID(${v.c},3,2),MID(${v.c},5,2))` }, rel: ['DATEDIF', 'MID·LEFT·RIGHT'] },
+  { n: 'NETWORKDAYS', c: 'date', top: 1, t: '토·일·공휴일 빼고 근무일수 세기', k: '근무일수 평일 영업일 공휴일 빼고 네트워크데이즈',
+    d: '시작일부터 끝날까지 토·일과 공휴일 목록을 뺀 날수를 셉니다.',
+    s: '=NETWORKDAYS(시작일, 끝날, 공휴일 범위)',
+    f: '=NETWORKDAYS("2026-09-01","2026-09-30",공휴일!A:A)', r: '9월 평일 수 (공휴일 빼고)',
+    tip: '일·월 휴무처럼 쉬는 요일이 다르면 <b>NETWORKDAYS.INTL</b>: =NETWORKDAYS.INTL(시작,끝,"1000001",공휴일) — 월요일부터 7자리, 1 = 쉬는 날(이 예는 월·일 휴무).',
+    b: { f: [['s', '시작일 (칸 또는 날짜)', 'B2'], ['e', '끝날', 'C2'], ['h', '공휴일 범위 (없으면 비움)', '공휴일!A:A']], t: v => `=NETWORKDAYS(${v.s},${v.e}${v.h ? ',' + v.h : ''})` }, rel: ['EOMONTH', 'WEEKDAY'] },
+  { n: 'EOMONTH', c: 'date', t: '그달 말일 구하기', k: '말일 월말 마지막날 이오먼스',
+    d: '기준 날짜에서 몇 달 뒤(0 = 그달) 말일을 구합니다.', s: '=EOMONTH(날짜, 개월)', f: '=EOMONTH(A2,0)', r: '2026-09-15 → 2026-09-30',
+    tip: '그달 1일은 <b>=EOMONTH(A2,-1)+1</b>.', rel: ['EDATE', 'NETWORKDAYS'] },
+  { n: 'EDATE', c: 'date', t: '몇 개월 뒤 날짜 (만료일·종료일)', k: '개월 뒤 만료일 종료일 계약 이데이트',
+    d: '날짜에서 정한 개월 수만큼 뒤(또는 앞)의 같은 날을 구합니다.', s: '=EDATE(날짜, 개월)', f: '=EDATE(A2,6)', r: '2026-03-02 → 2026-09-02',
+    tip: '「6개월 뒤 하루 전」은 <b>=EDATE(A2,6)-1</b>.', rel: ['EOMONTH', 'DATEDIF'] },
+  { n: 'TODAY', c: 'date', t: '오늘 날짜 넣기', k: '오늘 날짜 현재 투데이',
+    d: '파일을 열 때마다 오늘 날짜로 바뀝니다. 고정된 날짜가 필요하면 Ctrl + ; 로 입력하세요.', s: '=TODAY()', f: '=TODAY()', r: '2026-10-21', rel: ['DATEDIF', 'TEXT'] },
+  { n: 'TEXT', c: 'date', t: '날짜를 「9월 24일(수)」처럼 · 숫자 모양 바꾸기', k: '날짜 형식 요일 표시 모양 전화번호 하이픈 텍스트',
+    d: '날짜나 숫자를 원하는 모양의 글자로 바꿉니다.',
+    s: '=TEXT(값, "모양")',
+    a: [['"m월 d일"', '9월 24일'], ['"aaa"', '요일 한 글자 (수) — 구글 시트는 "ddd"'], ['"yyyy. m. d."', '2026. 9. 24.'], ['"#,##0"', '1,234,567'], ['"000-0000-0000"', '1012345678 → 010-1234-5678 (앞 0이 사라진 전화번호)']],
+    f: '=TEXT(A2,"m월 d일(aaa)")', r: '9월 24일(수)', b: { f: [['v', '값 칸', 'A2'], ['fm', '모양', 'm월 d일(aaa)']], t: v => `=TEXT(${v.v},"${v.fm}")` }, rel: ['TODAY', '&·TEXTJOIN'] },
+  { n: 'WEEKDAY', c: 'date', t: '요일 번호 구하기 (주말 표시)', k: '요일 주말 토요일 일요일 위크데이',
+    d: '날짜의 요일을 숫자로 줍니다. 2를 넣으면 월=1 … 일=7.', s: '=WEEKDAY(날짜, 2)', f: '=IF(WEEKDAY(A2,2)>5,"주말","평일")', r: '주말 / 평일', rel: ['TEXT', 'NETWORKDAYS'] },
+  { n: 'TRIM', c: 'text', top: 1, t: '앞뒤 빈칸 없애기 (이름 대조가 안 될 때)', k: '공백 빈칸 제거 띄어쓰기 정리 트림',
+    d: '글자 앞뒤 빈칸과 사이의 겹친 빈칸을 없앱니다. 「김○○ 」처럼 끝에 빈칸이 있으면 VLOOKUP이 못 찾습니다.',
+    s: '=TRIM(칸)', f: '=TRIM(A2)', r: '" 김○○ " → "김○○"',
+    tip: '모든 빈칸을 없애려면 <b>=SUBSTITUTE(A2," ","")</b>.', rel: ['SUBSTITUTE', 'VLOOKUP'] },
+  { n: 'SUBSTITUTE', c: 'text', t: '하이픈·글자 바꾸거나 빼기', k: '바꾸기 치환 하이픈 빼기 제거 서브스티튜트',
+    d: '칸 안의 특정 글자를 다른 글자로 바꿉니다. 빈 글자("")로 바꾸면 지워집니다.', s: '=SUBSTITUTE(칸, "찾을 글자", "바꿀 글자")',
+    f: '=SUBSTITUTE(A2,"-","")', r: '010-1234-5678 → 01012345678',
+    b: { f: [['c', '칸', 'A2'], ['o', '찾을 글자', '-'], ['n', '바꿀 글자 (지우려면 비움)', '']], t: v => `=SUBSTITUTE(${v.c},"${v.o}","${v.n}")` }, rel: ['TRIM'] },
+  { n: 'MID·LEFT·RIGHT', c: 'text', t: '글자 일부만 떼어 오기', k: '자르기 앞자리 뒷자리 일부 미드 레프트 라이트',
+    d: 'LEFT는 앞에서, RIGHT는 뒤에서, MID는 가운데에서 정한 글자 수만큼 떼어 옵니다.', s: '=LEFT(칸, 글자 수)   =MID(칸, 시작 위치, 글자 수)   =RIGHT(칸, 글자 수)',
+    f: '=LEFT(A2,6)', r: '801010-1234567 → 801010', tip: '글자 수는 <b>=LEN(A2)</b>.', rel: ['주민번호 → 생년월일'] },
+  { n: '&·TEXTJOIN', c: 'text', t: '여러 칸 글자 합치기 (이름 나열)', k: '합치기 연결 붙이기 나열 쉼표 텍스트조인',
+    d: '& 로 칸을 이어 붙입니다. TEXTJOIN은 범위를 쉼표 등으로 한 번에 이어 줍니다.', s: '=A2&" "&B2   =TEXTJOIN(", ",TRUE,범위)',
+    f: '=TEXTJOIN(", ",TRUE,A2:A10)', r: '김○○, 이○○, 박○○', nw: 1, tip: 'TEXTJOIN은 엑셀 2019 이상. 옛 엑셀은 & 로 이어 붙이세요.', rel: ['TEXT'] },
+  { n: 'VALUE', c: 'text', t: '글자로 저장된 숫자를 숫자로', k: '숫자 변환 글자 숫자 합계 안됨 초록 삼각형 밸류',
+    d: '칸 왼쪽 위에 초록 삼각형이 있고 합계가 안 되면 숫자가 글자로 저장된 것입니다. VALUE로 숫자로 바꿉니다.', s: '=VALUE(칸)',
+    f: '=VALUE(A2)', r: '"120,000" → 120000', tip: '여러 칸이면 칸들을 고르고 초록 삼각형 → 「숫자로 변환」이 더 빠릅니다.', rel: ['SUBSTITUTE'] },
+  { n: 'IF', c: 'logic', top: 1, t: '조건에 따라 다르게 표시하기', k: '조건 만약 이면 아니면 이프 판정',
+    d: '조건이 맞으면 첫 번째 값, 아니면 두 번째 값을 보여 줍니다.', s: '=IF(조건, 맞을 때, 아닐 때)',
+    ex: { h: ['이름', '출석일', '판정'], rows: [['김○○', '20', '개근'], ['이○○', '17', '확인']], cell: 'C2' },
+    f: '=IF(B2>=20,"개근","확인")', r: '개근',
+    tip: '조건이 여러 단계면 <b>IFS</b>(엑셀 2019+) 또는 IF 안에 IF. 둘 다 맞아야 하면 AND, 하나만 맞아도 되면 OR.',
+    b: { f: [['cond', '조건', 'B2>=20'], ['y', '맞을 때', '"개근"'], ['n', '아닐 때', '"확인"']], t: v => `=IF(${v.cond},${v.y},${v.n})` }, rel: ['IFERROR', 'AND·OR'] },
+  { n: 'IFERROR', c: 'logic', top: 1, t: '#N/A 같은 오류 대신 빈칸·글자 보이기', k: '오류 숨기기 에러 없음 #N/A 빈칸 이프에러',
+    d: '수식에서 오류가 나면 대신 보여 줄 값을 정합니다. VLOOKUP을 감싸서 많이 씁니다.', s: '=IFERROR(수식, 오류일 때)',
+    f: '=IFERROR(VLOOKUP(A2,명단!A:C,3,FALSE),"명단에 없음")', r: '찾으면 값, 못 찾으면 「명단에 없음」',
+    tip: '오류를 숨기기만 하면 실수를 놓칠 수 있습니다. 「명단에 없음」처럼 눈에 띄는 글자를 쓰세요.',
+    b: { f: [['x', '감쌀 수식 (= 빼고)', 'VLOOKUP(A2,명단!A:C,3,FALSE)'], ['e', '오류일 때 글자', '명단에 없음']], t: v => `=IFERROR(${v.x.replace(/^=/, '')},"${v.e}")` }, rel: ['VLOOKUP', 'IF'] },
+  { n: 'AND·OR', c: 'logic', t: '조건 두 개를 함께 따지기', k: '그리고 또는 둘다 하나라도 앤드 오어',
+    d: 'AND는 모두 맞을 때, OR는 하나라도 맞을 때 TRUE입니다. IF 안에 넣어 씁니다.', s: '=IF(AND(조건1, 조건2), 맞을 때, 아닐 때)',
+    f: '=IF(AND(B2="조건부",C2>=60),"확인 대상","")', r: '조건부이면서 60세 이상이면 「확인 대상」', rel: ['IF'] },
+  { n: '중복 찾기', c: 'list', top: 1, t: '명단에서 중복된 이름 찾기', k: '중복 겹치는 두번 같은 이름 확인 카운트이프',
+    d: 'COUNTIF로 같은 값이 몇 번 나오는지 세어 2 이상이면 중복입니다.', s: '=IF(COUNTIF($A$2:$A$500,A2)>1,"중복","")',
+    ex: { h: ['이름', '중복'], rows: [['김○○', '중복'], ['이○○', ''], ['김○○', '중복']], cell: 'B2' },
+    f: '=IF(COUNTIF($A$2:$A$4,A2)>1,"중복","")', r: '중복',
+    tip: '범위에 <b>$</b>를 붙여야(F4 키) 아래로 끌어 복사해도 범위가 고정됩니다. 색으로 보려면 「조건부 서식 › 셀 강조 규칙 › 중복 값」.',
+    b: { f: [['rng', '명단 범위 ($ 고정)', '$A$2:$A$500'], ['c', '첫 칸', 'A2']], t: v => `=IF(COUNTIF(${v.rng},${v.c})>1,"중복","")` }, rel: ['COUNTIF', 'UNIQUE'] },
+  { n: 'UNIQUE', c: 'list', nw: 1, t: '겹치지 않는 목록 뽑기 (부서 목록)', k: '고유 목록 중복 제거 유니크',
+    d: '범위에서 같은 값은 한 번씩만 남긴 목록을 만들어 줍니다.', s: '=UNIQUE(범위)', f: '=UNIQUE(B2:B500)', r: '부서 이름 목록',
+    tip: '엑셀 2021/365·구글 시트. 옛 엑셀은 「데이터 › 중복된 항목 제거」를 쓰세요.', rel: ['SORT', 'FILTER', '중복 찾기'] },
+  { n: 'FILTER', c: 'list', nw: 1, t: '조건에 맞는 줄만 뽑아 오기', k: '거르기 필터 조건 뽑기 추출',
+    d: '조건에 맞는 줄만 다른 곳에 모아 보여 줍니다. 원본이 바뀌면 같이 바뀝니다.', s: '=FILTER(범위, 조건)',
+    f: '=FILTER(A2:C500,B2:B500="사례관리팀")', r: '사례관리팀 사람만', tip: '엑셀 2021/365·구글 시트.', rel: ['UNIQUE', 'SORT'] },
+  { n: 'SORT', c: 'list', nw: 1, t: '수식으로 정렬된 목록 만들기', k: '정렬 순서 가나다 소트',
+    d: '범위를 정렬한 결과를 다른 곳에 보여 줍니다.', s: '=SORT(범위, 기준 열 번호, 1 또는 -1)', f: '=SORT(A2:C500,1,1)', r: '1열 가나다순', tip: '엑셀 2021/365·구글 시트.', rel: ['FILTER'] },
+  { n: 'RANK.EQ', c: 'list', t: '순위 매기기', k: '순위 등수 랭크',
+    d: '범위 안에서 몇 번째로 큰지(0) 또는 작은지(1) 순위를 매깁니다.', s: '=RANK.EQ(값, $범위$, 0)', f: '=RANK.EQ(C2,$C$2:$C$20,0)', r: '매출 순위', rel: ['SORT'] },
+  { n: 'SUM·AVERAGE·MAX·MIN', c: 'sum', t: '합계·평균·가장 큰/작은 값', k: '합계 평균 최대 최소 썸 에버리지',
+    d: '가장 기본 함수입니다. Alt + = 를 누르면 SUM이 자동으로 들어갑니다.', s: '=SUM(범위)  =AVERAGE(범위)  =MAX(범위)  =MIN(범위)', f: '=SUM(C2:C20)', r: '합계', rel: ['SUMIF', 'SUBTOTAL'] }
+];
+const ERRS = [
+  ['#N/A', '찾는 값이 없음', 'VLOOKUP·MATCH가 값을 못 찾았습니다. 이름 앞뒤 빈칸, 숫자/글자 형식 차이(1 vs "1"), 맨 끝 FALSE 빠짐을 확인하세요.', 'TRIM으로 빈칸 정리 → 다시 찾기. 없는 게 맞으면 IFERROR로 「명단에 없음」 표시.'],
+  ['#VALUE!', '계산할 수 없는 값', '숫자 자리에 글자가 들어갔습니다(예: "12만원", 빈칸처럼 보이는 공백).', '숫자만 남기거나 VALUE로 바꾸세요. 칸에 보이지 않는 공백이 있는지 확인.'],
+  ['#DIV/0!', '0으로 나눔', '나누는 칸이 0이거나 비어 있습니다.', '=IFERROR(A2/B2,0) 또는 =IF(B2=0,"",A2/B2)'],
+  ['#REF!', '참조한 칸이 사라짐', '수식이 가리키던 줄·열·시트를 지웠습니다.', 'Ctrl + Z로 되돌리거나 수식의 범위를 다시 지정하세요.'],
+  ['#NAME?', '함수 이름을 모름', '함수 이름 오타, 따옴표 빠진 글자, 이 엑셀에 없는 새 함수(XLOOKUP 등)입니다.', '이름을 확인하고 글자는 "따옴표"로. 새 함수가 안 되면 INDEX·MATCH 등 옛 함수로.'],
+  ['#NUM!', '숫자가 맞지 않음', 'DATEDIF의 시작일이 끝날보다 늦은 경우 등.', '날짜 순서를 확인하세요.'],
+  ['#####', '칸이 좁음', '숫자·날짜가 칸 폭보다 깁니다(오류 아님).', '열 머리 경계를 두 번 눌러 폭 자동 맞춤.'],
+  ['초록 삼각형 · 합계 안 됨', '숫자가 글자로 저장됨', '다른 프로그램에서 붙여 넣은 숫자가 글자로 들어갔습니다. 칸 왼쪽 정렬이면 의심.', '칸들 선택 → 초록 느낌표 → 「숫자로 변환」, 또는 =VALUE(A2).'],
+  ['날짜가 45930처럼 보임', '날짜 서식이 아님', '엑셀은 날짜를 숫자로 저장합니다. 서식이 「일반」이면 숫자로 보입니다.', 'Ctrl + 1 → 표시 형식 「날짜」.'],
+  ['수식이 글자 그대로 보임', '칸 서식이 텍스트', '칸이 「텍스트」 서식이라 =로 시작해도 계산하지 않습니다.', '서식을 「일반」으로 바꾼 뒤 칸에서 F2 → Enter.'],
+  ['앞자리 0이 사라짐 (010, 06000)', '숫자로 바뀜', '전화번호·우편번호가 숫자로 저장돼 앞 0이 빠졌습니다.', '=TEXT(A2,"000-0000-0000") / =TEXT(A2,"00000"). 처음부터 칸 서식을 「텍스트」로.'],
+  ['아래로 끌었더니 범위가 밀림', '참조 고정 안 함', '복사하면 A2:A10이 A3:A11로 따라 움직입니다.', '범위를 고르고 F4 → $A$2:$A$10처럼 고정.']
+];
+
+/* ── 화면 ── */
+let cat = '', q = '', cur = 'VLOOKUP';
+const norm = s => String(s).toLowerCase().replace(/[\s·.+→&()]/g, '');
+const QUICK = ['이름으로 찾아오기', '부서별 합계', '인원 세기', '나이', '천 원 버림', '부가세', '근무일수', '중복', '빈칸 정리', '오류 숨기기'];
+function match(f){
+  if (cat && f.c !== cat) return false;
+  if (!q) return true;
+  const hay = norm(f.n + f.t + f.k + f.d);
+  return norm(q).split(/\s+/).every(w => hay.includes(w)) || q.split(/\s+/).every(w => hay.includes(norm(w)));
+}
+function renderList(){
+  $('quick').innerHTML = '<span class="lab">자주 찾는 일</span>' + QUICK.map(t => '<button type="button" data-q="' + esc(t) + '">' + esc(t) + '</button>').join('');
+  $('cats').innerHTML = '<span class="lab">분류</span>' + [['', '전체']].concat(CATS).map(([k, n]) => '<button type="button" data-c="' + k + '" class="' + (k === cat ? 'on' : '') + '">' + n + '</button>').join('');
+  let list = FN.filter(match);
+  if (!q && !cat) list = list.slice().sort((a, b) => (b.top || 0) - (a.top || 0));
+  $('count').textContent = (q || cat) ? '찾은 함수 ' + list.length + '개' : '함수 ' + FN.length + '개 · 자주 쓰는 것부터';
+  $('list').innerHTML = list.length ? list.map(f => '<button type="button" class="item' + (f.n === cur ? ' on' : '') + '" data-n="' + esc(f.n) + '"><b>' + esc(f.n) + '</b>' + (f.nw ? '<span class="new" style="display:inline">2019+</span>' : '') + '<span>' + esc(f.t) + '</span></button>').join('')
+    : '<p class="empty">맞는 함수가 없습니다. 다른 낱말로 찾아보세요 (예: 합계, 날짜, 찾기).</p>';
+  if (list.length && !list.some(f => f.n === cur) && q) { cur = list[0].n; }
+  renderDetail();
+}
+function sheetHTML(f){
+  const e = f.ex; if (!e) return '';
+  const cols = Math.max(e.h.length, ...(e.rows.map(r => r.length)));
+  const letters = 'ABCDEFGH'.slice(0, cols).split('');
+  const rows = [e.h].concat(e.rows);
+  let extra = [];
+  if (e.show) extra = e.show;
+  const resRC = e.cell ? [parseInt(e.cell.slice(1), 10), e.cell.charCodeAt(0) - 64] : null;
+  let h = '<div class="sheetwrap"><table class="sheet"><thead><tr><th></th>' + letters.map(l => '<th>' + l + '</th>').join('') + '</tr></thead><tbody>';
+  rows.forEach((r, i) => {
+    h += '<tr><td class="rn">' + (i + 1) + '</td>' + letters.map((_, c) => {
+      const isRes = resRC && resRC[0] === i + 1 && resRC[1] === c + 1;
+      return '<td class="' + (i === 0 ? 'hd' : '') + (isRes ? ' res' : '') + '">' + esc(r[c] || '') + '</td>';
+    }).join('') + '</tr>';
+  });
+  extra.forEach((x, k) => {
+    const rn = rows.length + 1 + k;
+    h += '<tr><td class="rn">' + rn + '</td>' + letters.map((_, c) => {
+      const isRes = resRC && resRC[0] === rn && resRC[1] === c + 1;
+      const val = c === 0 ? x[0] : isRes ? f.r : (c === 1 && x[1] ? x[1] : '');
+      return '<td class="' + (c === 0 ? 'hd' : '') + (isRes ? ' res' : '') + '">' + esc(val) + '</td>';
+    }).join('') + '</tr>';
+  });
+  return h + '</tbody></table></div>';
+}
+function renderDetail(){
+  const f = FN.find(x => x.n === cur) || FN[0];
+  let h = '<h2>' + esc(f.n) + '</h2><div class="task">' + esc(f.t) + '</div>'
+    + '<span class="compat ' + (f.nw ? 'new' : 'all') + '">' + (f.nw ? '엑셀 2019 이상·구글 시트 (옛 엑셀·한셀은 안 될 수 있음)' : '엑셀·한셀·구글 시트 모두') + '</span>'
+    + '<p>' + esc(f.d) + '</p><div class="syntax">' + esc(f.s) + '</div>';
+  if (f.a) h += '<ul class="args">' + f.a.map(a => '<li><code>' + esc(a[0]) + '</code> — ' + esc(a[1]) + '</li>').join('') + '</ul>';
+  h += sheetHTML(f);
+  h += '<div class="fbar"><span class="fx">fx</span><code id="exF">' + esc(f.f) + '</code><button type="button" class="btn" data-copy="exF">복사</button></div>';
+  if (f.r) h += '<p style="font-size:14px;color:var(--muted)">결과: <b style="color:var(--text)">' + esc(f.r) + '</b></p>';
+  if (f.tip) h += '<div class="tip">💡 ' + f.tip + '</div>';
+  if (f.b) {
+    h += '<div class="builder"><h3>수식 만들어 주기 — 칸 위치만 바꾸세요</h3><div class="bfields">' + f.b.f.map(([k, lab, def]) => '<label>' + esc(lab) + '<input data-b="' + k + '" value="' + esc(def) + '" autocomplete="off"></label>').join('') + '</div>'
+      + '<div class="fbar"><span class="fx">fx</span><code id="bF"></code><button type="button" class="btn btn-main" data-copy="bF">수식 복사</button></div></div>';
+  }
+  if (f.rel) h += '<div class="rel">함께 쓰는 것: ' + f.rel.map(r => '<button type="button" data-n="' + esc(r) + '">' + esc(r) + '</button>').join(' · ') + '</div>';
+  $('detail').innerHTML = h;
+  if (f.b) buildNow(f);
+}
+function buildNow(f){
+  const v = {}; $('detail').querySelectorAll('[data-b]').forEach(el => { v[el.dataset.b] = el.value.trim(); });
+  $('bF').textContent = f.b.t(v);
+}
+$('detail').addEventListener('input', e => { if (e.target.dataset.b != null) buildNow(FN.find(x => x.n === cur)); });
+function copy(text){
+  const done = () => toast('복사했습니다 — 엑셀 칸에 붙여 넣으세요');
+  const fb = () => { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) { toast('복사가 막혔습니다'); } ta.remove(); };
+  try { if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fb); else fb(); } catch (e) { fb(); }
+}
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-copy]'); if (c) { copy($(c.dataset.copy).textContent); return; }
+  const n = e.target.closest('[data-n]'); if (n) { cur = n.dataset.n; renderList(); if (window.innerWidth < 980) $('detail').scrollIntoView({ block: 'start' }); return; }
+  const qq = e.target.closest('[data-q]'); if (qq) { q = qq.dataset.q; $('q').value = q; cat = ''; const l = FN.filter(match); if (l.length) cur = l[0].n; renderList(); return; }
+  const cc = e.target.closest('[data-c]'); if (cc) { cat = cc.dataset.c; renderList(); return; }
+});
+$('q').addEventListener('input', e => { q = e.target.value.trim(); const l = FN.filter(match); if (l.length) cur = l[0].n; renderList(); });
+/* 「자주 찾는 일」 낱말 → 함수 연결 보강 */
+const SYN = { '이름으로 찾아오기': 'VLOOKUP', '부서별 합계': 'SUMIF', '인원 세기': 'COUNTIF', '나이': 'DATEDIF', '천 원 버림': 'ROUNDDOWN', '부가세': '부가세 나누기', '근무일수': 'NETWORKDAYS', '중복': '중복 찾기', '빈칸 정리': 'TRIM', '오류 숨기기': 'IFERROR' };
+FN.forEach(f => { Object.entries(SYN).forEach(([w, n]) => { if (f.n === n) f.k += ' ' + w; }); });
+/* 탭 */
+document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === b));
+  $('pFn').classList.toggle('hidden', b.dataset.tab !== 'fn'); $('pErr').classList.toggle('hidden', b.dataset.tab !== 'err');
+}));
+$('errs').innerHTML = ERRS.map(e => '<div class="err"><h3>' + esc(e[0]) + '</h3><p><b>' + esc(e[1]) + '</b></p><p>' + esc(e[2]) + '</p><p class="fix">→ ' + esc(e[3]) + '</p></div>').join('');
+if (location.hash === '#err') document.querySelector('.tab[data-tab=err]').click();
+renderList();
+window._xl = { FN };
+})();
+</script>
+<script src="../videos.js?v=5"></script>
+</body>
+</html>

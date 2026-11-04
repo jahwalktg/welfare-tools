@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>전체 도구 지도 | 사회복지사 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="설치·로그인 없이 주소만 열면 바로 쓰는 사회복지 현장 실무 도구 모음. 신입 안내서(쉬운 말 사전·절차·한 해 달력), 명단 대조·개인정보 가리기·수료증 인쇄·주소 라벨·PDF 나누기·출석부, 보도자료·소식지·카드뉴스·인사장·약도·얼굴 가리기, 날짜·만 나이 계산·엑…">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/toolmap/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="전체 도구 지도 | 사회복지사 업무 도구">
+<meta property="og:description" content="설치·로그인 없이 주소만 열면 바로 쓰는 사회복지 현장 실무 도구 모음. 신입 안내서(쉬운 말 사전·절차·한 해 달력), 명단 대조·개인정보 가리기·수료증 인쇄·주소 라벨·PDF 나누기·출석부, 보도자료·소식지·카드뉴스·인사장·약도·얼굴 가리기, 날짜·만 나이 계산·엑…">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/toolmap/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC; --text:#1A2B50; --muted:#5B6885; --btn-text:#FFFFFF; --conn:#9AA9C4;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){ --blue:#6BA1FF; --navy:#27407A; --bg:#0E1630; --surface:#17224A; --line:#2F3F73; --text:#EAF0FF; --muted:#A9B6DA; --btn-text:#0E1630; --conn:#4A5E8E; }
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1400px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 16px}
+.bar .grow{flex:1}
+.btn{min-height:42px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--text);font-weight:600;text-decoration:none;display:inline-flex;align-items:center}
+.btn-main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.sheet{position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:24px 20px 20px}
+.head{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.head h1{margin:0;font-size:28px;line-height:1.25}
+.head p{margin:4px 0 0;color:var(--muted);font-size:15px}
+.qr{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--muted)}
+.qr canvas{width:84px;height:84px;background:#fff;border-radius:8px;border:1px solid var(--line)}
+.root{position:relative;z-index:1;margin:22px auto 34px;width:max-content;max-width:100%;padding:12px 26px;border-radius:999px;background:var(--navy);color:#fff;font-weight:800;font-size:19px;text-align:center}
+.root small{display:block;font-weight:600;font-size:13px;opacity:.85}
+.groups{position:relative;z-index:1;display:grid;gap:34px 16px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.g{border:1.5px solid var(--line);border-radius:14px;background:var(--bg);overflow:hidden}
+.g h2{margin:0;padding:9px 12px;font-size:16px;color:#fff;display:flex;justify-content:space-between;gap:6px}
+.g h2 a{color:inherit;text-decoration:none}
+.g h2 span{font-size:13px;font-weight:600;opacity:.9}
+.g ul{list-style:none;margin:0;padding:8px 10px 10px;display:grid;gap:3px}
+.g li a{display:block;padding:3px 8px;border-radius:7px;color:var(--text);text-decoration:none;font-size:14px;line-height:1.35;background:var(--surface);border:1px solid var(--line)}
+.g li a:hover{border-color:var(--blue);color:var(--blue)}
+#conn{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.note{font-size:13px;color:var(--muted);margin:14px 0 0}
+.loading{color:var(--muted);text-align:center;padding:40px 0}
+@media print{
+  @page{size:A4 landscape;margin:8mm}
+  body{background:#fff;font-size:11px}
+  .wrapall{max-width:none;padding:0}
+  .crumb,.bar,.note.screen{display:none}
+  .sheet{border:0;padding:0}
+  .head h1{font-size:20px}
+  .root{margin:8px auto 22px;padding:6px 18px;font-size:14px}
+  .groups{grid-template-columns:repeat(4,1fr);gap:20px 8px}
+  .g{break-inside:avoid}
+  .g h2{padding:5px 8px;font-size:12px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .g ul{padding:5px 6px 6px;gap:2px}
+  .g li a{font-size:10px;padding:1px 5px}
+  .qr canvas{width:64px;height:64px}
+  #conn{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › 전체 도구 지도</p>
+  <div class="bar"><span class="grow"></span><a class="btn" href="../index.html">첫 화면으로</a><button class="btn btn-main" type="button" id="btnPrint">인쇄 (A4 가로)</button></div>
+  <div class="sheet" id="sheet">
+    <div class="head">
+      <div><h1>사회복지사 업무 도구 — 전체 지도</h1><p id="stat">불러오는 중…</p></div>
+      <div class="qr"><canvas id="qr" width="168" height="168" aria-label="사이트 QR"></canvas><span>휴대폰으로 찍으면<br>바로 열립니다</span></div>
+    </div>
+    <div class="root" id="root">사회복지사 업무 도구<small>jahwalktg.github.io/welfare-tools</small></div>
+    <div class="groups" id="groups"><p class="loading">첫 화면에서 도구 목록을 읽는 중…</p></div>
+    <svg id="conn" aria-hidden="true"></svg>
+  </div>
+  <p class="note screen">이 지도는 첫 화면의 도구 카드를 읽어 자동으로 그립니다. 도구 이름을 누르면 그 도구가 열립니다.</p>
+</div>
+<script>
+'use strict';
+(() => {
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const COLORS = ['#1A6EFF', '#1F8A4C', '#8E44AD', '#D9480F', '#C2255C', '#0B7285', '#5F3DC4', '#495057', '#2B8A3E', '#B7791F'];
+const SITE = 'https://jahwalktg.github.io/welfare-tools/';
+function qr(){
+  try { const q = qrcode(0, 'M'); q.addData(SITE); q.make(); const c = $('qr'), x = c.getContext('2d'), n = q.getModuleCount(), cell = Math.floor(c.width / (n + 6)), off = Math.floor((c.width - cell * n) / 2);
+    x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.fillStyle = '#1A2B50';
+    for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (q.isDark(r, k)) x.fillRect(off + k * cell, off + r * cell, cell, cell); } catch (e) { $('qr').style.display = 'none'; }
+}
+const fix = h => !h ? '#' : /^\.\//.test(h) ? '../' + h.slice(2) : h;
+async function load(){
+  const html = await (await fetch('../index.html', { cache: 'no-cache' })).text();
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const groups = [...doc.querySelectorAll('section.group')].map((g, i) => ({
+    id: g.id, name: (g.querySelector('h2') || {}).textContent || g.id, color: COLORS[i % COLORS.length],
+    tools: [...g.querySelectorAll('.card')].map(c => ({ title: c.getAttribute('data-title') || ((c.querySelector('h3') || {}).textContent || ''), desc: (c.querySelector('p') || {}).textContent || '', href: fix((c.querySelector('a.open') || { getAttribute: () => '' }).getAttribute('href')) }))
+  }));
+  const n = groups.reduce((s, g) => s + g.tools.length, 0);
+  $('stat').textContent = '묶음 ' + groups.length + '개 · 도구 ' + n + '개 · 설치·로그인 없이 주소만 열면 바로 쓰는 실무 도구';
+  $('groups').innerHTML = groups.map(g => '<section class="g" style="border-color:' + g.color + '55"><h2 style="background:' + g.color + '"><a href="../index.html#' + g.id + '">' + esc(g.name) + '</a><span>' + g.tools.length + '</span></h2><ul>'
+    + g.tools.map(t => '<li><a href="' + esc(t.href) + '" title="' + esc(t.desc) + '">' + esc(t.title) + '</a></li>').join('') + '</ul></section>').join('');
+  requestAnimationFrame(draw);
+}
+/* 가운데 이름표에서 각 묶음으로 잇는 선: 첫 줄은 바로 아래로, 다음 줄들은 왼쪽 여백을 따라 내려감 */
+function draw(){
+  const sheet = $('sheet'), svg = $('conn'), sr = sheet.getBoundingClientRect(), rr = $('root').getBoundingClientRect(), gr = $('groups').getBoundingClientRect();
+  const rx = rr.left + rr.width / 2 - sr.left, ry = rr.bottom - sr.top, sideX = Math.max(4, gr.left - sr.left - 10);
+  const rows = {};
+  document.querySelectorAll('.g').forEach(b => { const r = b.getBoundingClientRect(), top = Math.round(r.top - sr.top); (rows[top] = rows[top] || []).push({ x: r.left + r.width / 2 - sr.left, color: b.querySelector('h2').style.background }); });
+  const tops = Object.keys(rows).map(Number).sort((x, y) => x - y);
+  if (!tops.length) return;
+  let d = '', dots = '';
+  const bus0 = tops[0] - 16;
+  d += 'M' + rx + ' ' + ry + 'V' + bus0;
+  tops.forEach((top, i) => {
+    const items = rows[top], bus = top - 16, xs = items.map(o => o.x);
+    if (i === 0) d += 'M' + Math.min(...xs, rx) + ' ' + bus + 'H' + Math.max(...xs, rx);
+    else d += 'M' + sideX + ' ' + bus + 'H' + Math.max(...xs);
+    items.forEach(o => { d += 'M' + o.x + ' ' + bus + 'V' + top; dots += '<circle cx="' + o.x + '" cy="' + bus + '" r="3.5" fill="' + o.color + '"/>'; });
+  });
+  if (tops.length > 1) d += 'M' + Math.min(...rows[tops[0]].map(o => o.x), rx) + ' ' + bus0 + 'H' + sideX + 'V' + (tops[tops.length - 1] - 16);
+  svg.setAttribute('viewBox', '0 0 ' + sr.width + ' ' + sr.height);
+  svg.innerHTML = '<path d="' + d + '" fill="none" stroke="var(--conn)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' + dots;
+}
+let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 120); });
+window.addEventListener('beforeprint', () => setTimeout(draw, 0)); window.addEventListener('afterprint', () => setTimeout(draw, 0));
+if (window.matchMedia) window.matchMedia('print').addEventListener && window.matchMedia('print').addEventListener('change', () => setTimeout(draw, 0));
+$('btnPrint').addEventListener('click', () => window.print());
+qr(); load().catch(() => { $('groups').innerHTML = '<p class="loading">도구 목록을 읽지 못했습니다. 첫 화면에서 다시 열어 주세요.</p>'; });
+})();
+</script>
+</body>
+</html>

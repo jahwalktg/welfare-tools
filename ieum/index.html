@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>강남복지 이음도구</title>
+<!--meta:start-->
+<meta name="description" content="설치·로그인 없이 주소만 열면 바로 쓰는 사회복지 현장 실무 도구 모음. 신입 안내서(쉬운 말 사전·절차·한 해 달력), 명단 대조·개인정보 가리기·수료증 인쇄·주소 라벨·PDF 나누기·출석부, 보도자료·소식지·카드뉴스·인사장·약도·얼굴 가리기, 날짜·만 나이 계산·엑…">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/ieum/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="강남복지 이음도구 | 사회복지사 업무 도구">
+<meta property="og:description" content="설치·로그인 없이 주소만 열면 바로 쓰는 사회복지 현장 실무 도구 모음. 신입 안내서(쉬운 말 사전·절차·한 해 달력), 명단 대조·개인정보 가리기·수료증 인쇄·주소 라벨·PDF 나누기·출석부, 보도자료·소식지·카드뉴스·인사장·약도·얼굴 가리기, 날짜·만 나이 계산·엑…">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/ieum/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<style>
+:root{box-sizing:border-box;--blue:#1A6EFF;--navy:#1A2B50;--green:#2F9E6B;--green-bg:#E7F6EE;--orange:#D97706;--orange-bg:#FFF3DF;--red:#E63946;--red-bg:#FDECEE;--bg:#F3F6FC;--surface:#FFFFFF;--line:#D5DDEC;--text:#1A2B50;--muted:#5B6885;--blue-bg:#E8F0FF;--amber:#8A5A00;--amber-bg:#FFF1CC;--amber-line:#E5B93C;--btn-text:#FFFFFF;--font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root{--blue:#6BA1FF;--navy:#27407A;--green:#5FC590;--green-bg:#14352A;--orange:#F5B35C;--orange-bg:#3A2A10;--red:#FF6B76;--red-bg:#3D1620;--bg:#0E1630;--surface:#17224A;--line:#2F3F73;--text:#EAF0FF;--muted:#A9B6DA;--blue-bg:#1C2D5E;--amber:#FFD166;--amber-bg:#3A2F10;--amber-line:#8F7420;--btn-text:#0E1630}}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:17px;line-height:1.5;word-break:keep-all;overflow-wrap:anywhere}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+[hidden]{display:none!important}
+.wrap{max-width:900px;margin:0 auto;padding:14px 14px 90px}
+.demo{margin:0 0 10px;padding:8px 12px;border-radius:10px;background:var(--amber-bg);border:1.5px solid var(--amber-line);font-size:14px;color:var(--amber)}
+/* 입장 */
+.gate{max-width:420px;margin:12vh auto 0;padding:24px 20px;border:1.5px solid var(--line);border-radius:18px;background:var(--surface);text-align:center}
+.gate h1{margin:0 0 4px;font-size:26px}.gate p{margin:0 0 14px;color:var(--muted);font-size:15px}
+.gate input{width:100%;min-height:50px;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--bg);font-size:18px;text-align:center;letter-spacing:.15em}
+.gate .err{color:var(--red);font-size:14px;min-height:1.4em;margin:8px 0 0}
+.btn{min-height:46px;padding:0 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;color:var(--text)}
+.btn.main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.btn.small{min-height:36px;padding:0 12px;font-size:14px;border-radius:999px}
+.btn:disabled{opacity:.5;cursor:default}
+/* 머리 */
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 10px}
+.top h1{margin:0;font-size:24px;flex:1 1 auto}
+.top h1 small{display:block;font-size:13px;font-weight:500;color:var(--muted)}
+.q{width:100%;min-height:50px;padding:10px 14px;border-radius:14px;border:2px solid var(--blue);background:var(--surface);font-size:17px}
+.tabs{display:flex;gap:6px;margin:10px 0;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+.tabs button{flex:none;min-height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:15px;white-space:nowrap}
+.tabs button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.tabs button .n{margin-left:5px;font-size:12px;opacity:.75}
+.hint{margin:0 0 10px;font-size:14px;color:var(--muted)}
+/* 카드 */
+.list{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));list-style:none;margin:0;padding:0}
+.card{position:relative;padding:12px 14px;border:1.5px solid var(--line);border-radius:14px;background:var(--surface);display:flex;flex-direction:column;gap:6px}
+.card.past,.card.closed,.card.old{opacity:.6}
+.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:800;background:var(--blue-bg);color:var(--blue)}
+.badge.k일정{background:var(--green-bg);color:var(--green)}.badge.k나눔{background:var(--orange-bg);color:var(--orange)}.badge.k찾습니다{background:var(--red-bg);color:var(--red)}
+.badge.st{background:var(--bg);color:var(--muted)}
+.card h3{margin:0;font-size:18px;line-height:1.3}
+.card .org{font-size:14px;font-weight:700;color:var(--muted)}
+.card .body{margin:0;font-size:15px;white-space:pre-line}
+.card .meta{margin:0;font-size:14px;color:var(--muted)}
+.card .meta b{color:var(--text);font-weight:700}
+.kw{display:flex;flex-wrap:wrap;gap:5px}
+.kw span{padding:3px 9px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-size:13px}
+.kw span.hit{background:var(--amber-bg);border-color:var(--amber-line)}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:4px}
+.tel{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border-radius:999px;background:var(--navy);color:#fff;text-decoration:none;font-size:14px;font-weight:700}
+.ans{font-size:13px;color:var(--green);font-weight:700}
+.none{padding:20px;text-align:center;color:var(--muted);border:1.5px dashed var(--line);border-radius:14px}
+/* 입력 단추 */
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;min-height:54px;padding:0 20px;border-radius:999px;border:0;background:var(--blue);color:var(--btn-text);font-weight:800;font-size:17px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+/* 대화창 */
+.chat-back{position:fixed;inset:0;background:rgba(10,20,45,.5);z-index:40}
+.chat{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(640px,100%);height:min(92vh,760px);background:var(--surface);border-radius:18px 18px 0 0;z-index:41;display:flex;flex-direction:column;box-shadow:0 -8px 30px rgba(0,0,0,.3)}
+@media (min-width:700px){.chat{bottom:3vh;border-radius:18px}}
+.chat header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1.5px solid var(--line)}
+.chat header h2{margin:0;font-size:18px}.chat header small{display:block;font-size:12px;color:var(--muted);font-weight:500}
+.chat header button{width:40px;height:40px;border:0;background:none;font-size:22px;color:var(--muted)}
+.msgs{flex:1;overflow:auto;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.m{max-width:88%;padding:10px 14px;border-radius:16px;font-size:15px;line-height:1.5;white-space:pre-line}
+.m.bot{align-self:flex-start;background:var(--bg);border:1px solid var(--line);border-bottom-left-radius:4px}
+.m.me{align-self:flex-end;background:var(--blue);color:var(--btn-text);border-bottom-right-radius:4px}
+.m.warn{align-self:flex-start;background:var(--amber-bg);border:1px solid var(--amber-line);color:var(--amber)}
+.m.ok{align-self:flex-start;background:var(--green-bg);border:1px solid var(--green)}
+.m.err{align-self:flex-start;background:var(--red-bg);border:1px solid var(--red)}
+.m .sum{margin:6px 0 0;padding:8px 10px;border-radius:10px;background:var(--surface);border:1px dashed var(--line);font-size:14px}
+.in{padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));border-top:1.5px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{min-height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg);font-weight:700;font-size:15px}
+.chips button.on{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.chips button.ghost{border-style:dashed;color:var(--muted);font-weight:500}
+.row{display:flex;gap:8px;align-items:flex-end}
+.row textarea,.row input{flex:1;min-height:46px;max-height:160px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);font-size:16px;resize:none}
+.row .send{min-height:46px;padding:0 16px;border-radius:12px;border:0;background:var(--blue);color:var(--btn-text);font-weight:800}
+.note{font-size:12px;color:var(--muted);margin:0}
+.foot{margin-top:24px;font-size:13px;color:var(--muted);line-height:1.5}
+.foot a{color:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="demo" id="demo" hidden><b>시연 모드</b> — 저장되지 않는 가상 자료입니다. 보기·입력 비밀번호는 모두 <b>1234</b>. 기관 이름과 내용은 모두 가상입니다.</div>
+
+  <section class="gate" id="gate" hidden>
+    <h1>강남복지 이음도구</h1>
+    <p>강남구 사회복지시설 종사자가 함께 쓰는 공간입니다.<br>보기 비밀번호를 넣어 주세요.</p>
+    <input id="gatePw" type="password" inputmode="numeric" autocomplete="off" aria-label="보기 비밀번호">
+    <p class="err" id="gateErr" role="alert"></p>
+    <button class="btn main" type="button" id="gateGo" style="width:100%">들어가기</button>
+    <p style="margin:12px 0 0;font-size:13px">비밀번호를 모르면 운영 기관 담당자에게 물어보세요.</p>
+  </section>
+
+  <div id="app" hidden>
+    <div class="top">
+      <h1>강남복지 이음도구 <small>지금 하는 프로그램 · 일정과 나눔 · 찾습니다 · 기관 키워드 — 찾고, 전화로 묻기</small></h1>
+      <button class="btn small" type="button" id="btnReload">새로 고침</button>
+    </div>
+    <input class="q" id="q" type="search" placeholder="낱말로 찾기 — 예: 알코올, 어르신 도시락, 강의실, 정신건강" aria-label="찾기" autocomplete="off">
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <p class="hint" id="hint"></p>
+    <ul class="list" id="list"></ul>
+    <p class="foot">기관 정보만 올립니다. 이용자 정보·후원자 정보·개인 휴대폰은 넣지 않습니다. 세부 사항은 <b>전화해서 묻는 것</b>이 이 도구의 쓰임입니다. 「전화했어요」는 연결된 횟수를 세어 다음 운영에 씁니다(누가 눌렀는지는 남지 않음). 글을 올리거나 기관 소개를 고치려면 오른쪽 아래 「입력하기」.</p>
+  </div>
+</div>
+<button class="fab" type="button" id="fab" hidden>✎ 입력하기</button>
+
+<div class="chat-back" id="chatBack" hidden></div>
+<section class="chat" id="chat" role="dialog" aria-modal="true" aria-labelledby="chatTitle" hidden>
+  <header><div><h2 id="chatTitle">입력하기</h2><small id="chatSub">순서대로 물어볼게요. 마지막에 기관 비밀번호를 확인합니다.</small></div><button type="button" id="chatClose" aria-label="닫기">×</button></header>
+  <div class="msgs" id="msgs"></div>
+  <div class="in" id="inBox"></div>
+</section>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var IS_GAS = !!(window.google && google.script && google.script.run);
+  var KINDS = ['프로그램', '일정', '나눔', '찾습니다'];
+  var TABS = [['프로그램', ['프로그램']], ['일정·나눔', ['일정', '나눔']], ['찾습니다', ['찾습니다']], ['기관', null]];
+  var TARGETS = ['누구나', '어르신', '장애인', '아동·청소년', '청년', '가족', '1인가구', '종사자'];
+  var KW_SUGGEST = ['어르신', '장애인', '아동·청소년', '청년', '가족', '1인가구', '다문화', '노숙', '알코올', '정신건강', '치매', '돌봄', '주거', '일자리', '금융·빚', '학대', '고립', '식사·도시락', '공간 대여', '차량', '강사', '물품 나눔', '자원봉사', '사례관리', '자활'];
+  var SYN = { '알콜': '알코올', '음주': '알코올', '술': '알코올', '중독': '알코올', '정신': '정신건강', '마음': '정신건강', '우울': '정신건강', '노인': '어르신', '고령': '어르신', '어르신': '어르신', '독거': '1인가구', '혼자': '1인가구', '아이': '아동·청소년', '아동': '아동·청소년', '청소년': '아동·청소년', '취업': '일자리', '구직': '일자리', '집': '주거', '주택': '주거', '월세': '주거', '빚': '금융·빚', '부채': '금융·빚', '채무': '금융·빚', '도시락': '식사·도시락', '밥': '식사·도시락', '급식': '식사·도시락', '강의실': '공간 대여', '강당': '공간 대여', '공간': '공간 대여', '봉사': '자원봉사', '후원품': '물품 나눔', '물품': '물품 나눔' };
+  var PII = [[/\d{6}\s*-?\s*[1-4]\d{6}/, '주민등록번호로 보이는 숫자가 있어요. 이용자 정보는 넣지 않습니다.'], [/01[016789]\s*-?\s*\d{3,4}\s*-?\s*\d{4}/, '휴대폰 번호로 보이는 숫자가 있어요. 개인 휴대폰 대신 부서 대표 전화를 적어 주세요.'], [/\d{11,16}/, '계좌번호나 카드번호로 보이는 긴 숫자가 있어요.']];
+  function pii(t) { t = String(t || ''); for (var i = 0; i < PII.length; i++) if (PII[i][0].test(i === 2 ? t.replace(/[-\s]/g, '') : t)) return PII[i][1]; return ''; }
+
+  /* ---------- 시연 모드 자료 (저장 안 됨, 전부 가상) ---------- */
+  var DEMO = (function () {
+    var orgs = [
+      { '기관명': '가온종합사회복지관', '유형': '종합사회복지관', '동': '역삼동', '문의처': '사례관리팀', '대표전화': '02-000-0001', '키워드': '사례관리, 어르신, 1인가구, 식사·도시락, 정신건강, 공간 대여, 자원봉사', '한줄소개': '전 세대 통합 복지관. 사례관리 의뢰와 강당 대여 문의가 많습니다.', '자주묻는것': '위기가구 사례관리 의뢰 절차\n강당·교육실 빌리기(평일 저녁 가능)', '상태': '사용', '수정일': '2026-10-20', '전화했어요': 7 },
+      { '기관명': '해맑은노인복지관', '유형': '노인복지관', '동': '대치동', '문의처': '재가복지팀', '대표전화': '02-000-0002', '키워드': '어르신, 치매, 돌봄, 식사·도시락, 고립, 디지털 교육', '한줄소개': '어르신 돌봄과 식사 지원, 스마트폰 교실.', '자주묻는것': '홀로 사는 어르신 도시락 의뢰(동 주민센터 거쳐도 됨)\n치매 의심 어르신 상담 연결', '상태': '사용', '수정일': '2026-09-02', '전화했어요': 12 },
+      { '기관명': '두리장애인복지관', '유형': '장애인복지관', '동': '일원동', '문의처': '사례지원팀', '대표전화': '02-000-0003', '키워드': '장애인, 활동지원, 일자리, 가족, 차량, 강사', '한줄소개': '장애인 활동지원·직업재활·가족 지원.', '자주묻는것': '휠체어 차량 빌리기(월 2회까지)\n장애 인식개선 강사 연결', '상태': '사용', '수정일': '2026-03-11', '전화했어요': 3 },
+      { '기관명': '푸른지역자활센터', '유형': '지역자활센터', '동': '수서동', '문의처': '자활사업팀', '대표전화': '02-000-0004', '키워드': '자활, 일자리, 청년, 알코올, 금융·빚, 물품 나눔', '한줄소개': '조건부 수급자·차상위 일자리, 자활기업.', '자주묻는것': '알코올 문제가 있는 분의 자활 참여 가능 여부\n청소·세차 사업단 용역 문의', '상태': '사용', '수정일': '2026-10-28', '전화했어요': 5 },
+      { '기관명': '새싹지역아동센터', '유형': '아동·청소년 시설', '동': '세곡동', '문의처': '센터장', '대표전화': '02-000-0005', '키워드': '아동·청소년, 학습, 급식, 가족, 자원봉사', '한줄소개': '초등 돌봄과 학습, 저녁 급식.', '자주묻는것': '방과 후 돌봄 입소 가능 여부\n학습 자원봉사자 연결', '상태': '사용', '수정일': '2026-10-05', '전화했어요': 2 }
+    ];
+    var posts = [
+      { '글번호': '1', '종류': '프로그램', '기관명': '해맑은노인복지관', '제목': '어르신 스마트폰 교실 2기', '내용': '매주 화 10~12시. 영상통화·사진 보내기·키오스크. 정원 20명, 지금 4자리 남음.', '대상': '어르신', '시작일': '2026-11-10', '끝일': '2027-01-26', '문의': '재가복지팀 02-000-0002', '상태': '게시', '등록시각': '2026-10-30 10:12', '수정시각': '', '전화했어요': 4 },
+      { '글번호': '2', '종류': '프로그램', '기관명': '가온종합사회복지관', '제목': '마음 돌봄 상담실 (가족·양육·마음 건강)', '내용': '상시 운영. 예약은 전화로. 상담 내용은 비밀이 지켜집니다.', '대상': '누구나', '시작일': '', '끝일': '', '문의': '사례관리팀 02-000-0001', '상태': '게시', '등록시각': '2026-10-02 14:00', '수정시각': '', '전화했어요': 9 },
+      { '글번호': '3', '종류': '일정', '기관명': '두리장애인복지관', '제목': '장애 인식개선 종사자 공동 교육', '내용': '강남구 시설 종사자 누구나. 법정의무교육 이수증 발급. 선착순 60명.', '대상': '종사자', '시작일': '2026-11-20', '끝일': '2026-11-20', '문의': '사례지원팀 02-000-0003', '상태': '게시', '등록시각': '2026-11-01 09:30', '수정시각': '', '전화했어요': 11 },
+      { '글번호': '4', '종류': '일정', '기관명': '푸른지역자활센터', '제목': '자활기업 제품 나눔 장터', '내용': '수세미·비누·가방. 시설 단위 구매 상담도 받습니다.', '대상': '누구나', '시작일': '2026-10-24', '끝일': '2026-10-24', '문의': '자활사업팀 02-000-0004', '상태': '게시', '등록시각': '2026-10-10 11:00', '수정시각': '', '전화했어요': 2 },
+      { '글번호': '5', '종류': '나눔', '기관명': '새싹지역아동센터', '제목': '초등 학습 교재 40권 드립니다', '내용': '후원받은 새 교재(3~4학년). 비지정 후원 확인함. 11월 말까지.', '대상': '아동·청소년', '시작일': '', '끝일': '2026-11-30', '문의': '센터장 02-000-0005', '상태': '게시', '등록시각': '2026-11-02 16:40', '수정시각': '', '전화했어요': 1 },
+      { '글번호': '6', '종류': '나눔', '기관명': '가온종합사회복지관', '제목': '강당(120석) 평일 저녁 빈 시간 있어요', '내용': '월·수·금 18~21시. 시설끼리는 무료. 2주 전 신청.', '대상': '종사자', '시작일': '', '끝일': '', '문의': '총무팀 02-000-0001', '상태': '게시', '등록시각': '2026-10-15 09:00', '수정시각': '', '전화했어요': 6 },
+      { '글번호': '7', '종류': '찾습니다', '기관명': '해맑은노인복지관', '제목': '알코올 문제 있는 어르신 상담 연계할 곳', '내용': '본인이 상담을 원하는데 어디로 연결하면 좋을지. 경험 있는 기관 알려 주세요.', '대상': '어르신', '시작일': '', '끝일': '', '문의': '재가복지팀 02-000-0002', '상태': '게시', '등록시각': '2026-11-03 13:20', '수정시각': '', '전화했어요': 0 },
+      { '글번호': '8', '종류': '찾습니다', '기관명': '새싹지역아동센터', '제목': '12월 송년 행사에 올 마술 공연 강사', '내용': '30분 정도, 소정의 강사비. 아는 분 있으면 알려 주세요.', '대상': '아동·청소년', '시작일': '', '끝일': '2026-12-10', '문의': '센터장 02-000-0005', '상태': '게시', '등록시각': '2026-11-04 08:50', '수정시각': '', '전화했어요': 0 }
+    ];
+    var answers = { '7': ['푸른지역자활센터'] }, nextId = 9;
+    function find(id) { return posts.filter(function (p) { return p['글번호'] === String(id); })[0]; }
+    return {
+      api: function (a, p) {
+        if (a === 'enter') { if (p.pw !== '1234') throw new Error('보기 비밀번호가 맞지 않아요. (시연: 1234)'); return { token: 'demo' }; }
+        if (a === 'list') return { orgs: JSON.parse(JSON.stringify(orgs)), posts: JSON.parse(JSON.stringify(posts.filter(function (x) { return x['상태'] !== '삭제'; }))), answers: JSON.parse(JSON.stringify(answers)), kinds: KINDS, today: todayStr() };
+        if (a === 'called') { if (p.post) { var x = find(p.post); if (x) x['전화했어요'] = (+x['전화했어요'] || 0) + 1; } else { var o = orgs.filter(function (y) { return y['기관명'] === p.org; })[0]; if (o) o['전화했어요'] = (+o['전화했어요'] || 0) + 1; } return true; }
+        if (a === 'submit') {
+          if (!orgs.some(function (o) { return o['기관명'] === p.org; })) throw new Error('등록되지 않은 기관이에요.');
+          if (p.pw !== '1234') throw new Error('비밀번호가 맞지 않아요. (시연: 1234)');
+          var d = p.data || {}, k, w;
+          for (k in d) { w = pii(d[k]); if (w) throw new Error('「' + k + '」 칸: ' + w); }
+          if (p.action === 'post.add') { var np = { '글번호': String(nextId++), '종류': d['종류'], '기관명': p.org, '제목': d['제목'] || '', '내용': d['내용'] || '', '대상': d['대상'] || '', '시작일': d['시작일'] || '', '끝일': d['끝일'] || '', '문의': d['문의'] || '', '상태': '게시', '등록시각': nowStr(), '수정시각': '', '전화했어요': 0 }; posts.unshift(np); return { id: np['글번호'] }; }
+          var t = find(d.id); if (!t) throw new Error('그 글을 찾을 수 없어요.'); if (t['기관명'] !== p.org) throw new Error('우리 기관이 올린 글만 고칠 수 있어요.');
+          if (p.action === 'post.edit') { ['제목', '내용', '대상', '시작일', '끝일', '문의'].forEach(function (f) { if (d[f] !== undefined) t[f] = d[f]; }); t['수정시각'] = nowStr(); return { id: t['글번호'] }; }
+          if (p.action === 'post.close') { t['상태'] = '마침'; return { id: d.id }; }
+          if (p.action === 'post.reopen') { t['상태'] = '게시'; return { id: d.id }; }
+          if (p.action === 'post.delete') { t['상태'] = '삭제'; return { id: d.id }; }
+          if (p.action === 'know') { (answers[d.id] = answers[d.id] || []); if (answers[d.id].indexOf(p.org) < 0) answers[d.id].push(p.org); return true; }
+          if (p.action === 'org.update') { var og = orgs.filter(function (y) { return y['기관명'] === p.org; })[0]; for (k in d) og[k] = d[k]; og['수정일'] = todayStr(); return true; }
+        }
+        throw new Error('모르는 요청');
+      }
+    };
+  })();
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function todayStr() { var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function nowStr() { var d = new Date(); return todayStr() + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+  function call(action, p) {
+    return new Promise(function (res, rej) {
+      if (IS_GAS) google.script.run.withSuccessHandler(function (r) { r && r.ok ? res(r.data) : rej(new Error(r ? r.error : '응답이 없어요.')); }).withFailureHandler(function (e) { rej(new Error(e && e.message || '연결에 실패했어요.')); }).api(action, p || {});
+      else setTimeout(function () { try { res(DEMO.api(action, p || {})); } catch (e) { rej(e); } }, 200);
+    });
+  }
+
+  /* ---------- 상태 ---------- */
+  var S = { token: '', data: null, tab: 0, q: '', org: '' };
+  var TKEY = 'ieum.token', OKEY = 'ieum.org', CKEY = 'ieum.called';
+  try { S.token = localStorage.getItem(TKEY) || ''; S.org = localStorage.getItem(OKEY) || ''; } catch (e) { }
+  var called = {}; try { called = JSON.parse(localStorage.getItem(CKEY) || '{}') || {}; } catch (e) { }
+  function saveCalled() { try { localStorage.setItem(CKEY, JSON.stringify(called)); } catch (e) { } }
+  if (!IS_GAS) $('demo').hidden = false;
+
+  /* ---------- 입장 ---------- */
+  function showGate(msg) { $('app').hidden = true; $('fab').hidden = true; $('gate').hidden = false; $('gateErr').textContent = msg || ''; setTimeout(function () { $('gatePw').focus(); }, 50); }
+  function enter() {
+    var pw = $('gatePw').value.trim(); if (!pw) return;
+    $('gateGo').disabled = true; $('gateErr').textContent = '';
+    call('enter', { pw: pw }).then(function (d) { S.token = d.token; try { localStorage.setItem(TKEY, d.token); } catch (e) { } $('gatePw').value = ''; load(); }).catch(function (e) { $('gateErr').textContent = e.message; }).then(function () { $('gateGo').disabled = false; });
+  }
+  $('gateGo').addEventListener('click', enter);
+  $('gatePw').addEventListener('keydown', function (e) { if (e.key === 'Enter') enter(); });
+  function load() {
+    call('list', { token: S.token }).then(function (d) { S.data = d; $('gate').hidden = true; $('app').hidden = false; $('fab').hidden = false; render(); if (location.hash === '#입력' || location.hash === '#%EC%9E%85%EB%A0%A5') { history.replaceState(null, '', location.pathname); openChat(); } })
+      .catch(function (e) { S.token = ''; try { localStorage.removeItem(TKEY); } catch (x) { } showGate(S.token === '' && S.data ? e.message : (e.message.indexOf('보기 비밀번호') >= 0 && !S.data ? '' : e.message)); });
+  }
+  $('btnReload').addEventListener('click', load);
+
+  /* ---------- 찾기·그리기 ---------- */
+  function norm(s) { return String(s || '').toLowerCase().replace(/[\s·,.()「」\-_/]+/g, ''); }
+  function expand(q) {
+    var toks = q.split(/[\s,]+/).filter(Boolean), out = [];
+    toks.forEach(function (t) { out.push(t); var c = SYN[t] || SYN[t.replace(/(문제|상담|지원|서비스)$/, '')]; if (c) out.push(c); });
+    return out.map(norm).filter(function (t, i, a) { return t && a.indexOf(t) === i; });
+  }
+  function matchText(text, toks) { var n = norm(text); return toks.some(function (t) { return n.indexOf(t) >= 0; }); }
+  function dateCmp(a, b) { return a < b ? -1 : a > b ? 1 : 0; }
+  function render() {
+    var d = S.data, toks = expand(S.q);
+    var tabsEl = $('tabs'); tabsEl.innerHTML = '';
+    var counts = TABS.map(function (t) { return t[1] ? d.posts.filter(function (p) { return t[1].indexOf(p['종류']) >= 0 && (!toks.length || hitPost(p, toks)); }).length : d.orgs.filter(function (o) { return !toks.length || hitOrg(o, toks); }).length; });
+    TABS.forEach(function (t, i) { var b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.className = i === S.tab ? 'on' : ''; b.innerHTML = esc(t[0]) + '<span class="n">' + counts[i] + '</span>'; b.addEventListener('click', function () { S.tab = i; render(); }); tabsEl.appendChild(b); });
+    var list = $('list'); list.innerHTML = '';
+    var tab = TABS[S.tab];
+    if (tab[1]) {
+      var posts = d.posts.filter(function (p) { return tab[1].indexOf(p['종류']) >= 0 && (!toks.length || hitPost(p, toks)); });
+      posts.sort(function (a, b) { var pa = isPast(a) || a['상태'] === '마침', pb = isPast(b) || b['상태'] === '마침'; if (pa !== pb) return pa ? 1 : -1; if (tab[0] === '일정·나눔' && a['시작일'] && b['시작일']) return dateCmp(a['시작일'], b['시작일']); return dateCmp(b['등록시각'], a['등록시각']); });
+      $('hint').textContent = tab[0] === '찾습니다' ? '연계할 곳을 못 찾았을 때 올립니다. 아는 기관은 「저희가 알아요」를 눌러 기관명만 남기고, 전화는 그다음에.' : tab[0] === '프로그램' ? '지금 하는 프로그램. 내용·대상·일정·문의만 간단히. 자세한 것은 문의 전화로.' : '교육·행사·채용 일정과 남는 물품·공간·강사 나눔. 지난 것은 흐리게.';
+      if (!posts.length) list.innerHTML = '<li class="none">' + (toks.length ? '맞는 글이 없어요. 「기관」 탭에서 키워드로 찾거나, 「찾습니다」에 올려 보세요.' : '아직 글이 없어요. 오른쪽 아래 「입력하기」로 첫 글을 올려 주세요.') + '</li>';
+      posts.forEach(function (p) { list.appendChild(postCard(p, toks)); });
+    } else {
+      var orgs = d.orgs.filter(function (o) { return !toks.length || hitOrg(o, toks); });
+      orgs.sort(function (a, b) { return (hitScore(b, toks) - hitScore(a, toks)) || a['기관명'].localeCompare(b['기관명'], 'ko'); });
+      $('hint').textContent = '기관마다 키워드와 문의처만 있습니다. 키워드가 맞으면 전화해서 물어보세요. 반년 넘게 안 고친 기관은 흐리게 보입니다.';
+      if (!orgs.length) list.innerHTML = '<li class="none">맞는 기관이 없어요. 다른 말로 찾아보거나 「찾습니다」에 올려 보세요.</li>';
+      orgs.forEach(function (o) { list.appendChild(orgCard(o, toks)); });
+    }
+  }
+  function hitPost(p, toks) { return matchText([p['제목'], p['내용'], p['대상'], p['문의'], p['기관명'], p['종류']].join(' '), toks); }
+  function hitOrg(o, toks) { return matchText([o['기관명'], o['유형'], o['동'], o['키워드'], o['한줄소개'], o['자주묻는것']].join(' '), toks); }
+  function hitScore(o, toks) { if (!toks.length) return 0; var n = 0; kwList(o).forEach(function (k) { if (matchText(k, toks)) n += 2; }); if (matchText(o['기관명'], toks)) n += 3; return n; }
+  function kwList(o) { return String(o['키워드'] || '').split(/[,，\n·]+/).map(function (s) { return s.trim(); }).filter(Boolean); }
+  function isPast(p) { var end = p['끝일'] || (p['종류'] === '일정' ? p['시작일'] : ''); return !!end && end < S.data.today; }
+  function daysOld(s) { if (!s) return 9999; var d = new Date(String(s).slice(0, 10) + 'T00:00:00'); return Math.floor((Date.now() - d.getTime()) / 86400000); }
+  function telLink(s) { var m = /(0\d{1,2}-?\d{3,4}-?\d{4})/.exec(String(s || '')); return m ? '<a class="tel" href="tel:' + m[1].replace(/-/g, '') + '">☎ ' + esc(m[1]) + '</a>' : ''; }
+  function calledBtn(key, label, n) { var done = called[key]; var b = document.createElement('button'); b.type = 'button'; b.className = 'btn small'; b.textContent = (done ? '✓ ' : '') + (label || '전화했어요') + (n ? ' ' + n : ''); b.disabled = !!done; b.title = '전화해서 물어봤으면 한 번 눌러 주세요. 연결된 횟수만 셉니다.'; return b; }
+  function postCard(p, toks) {
+    var li = document.createElement('li'); li.className = 'card' + (isPast(p) ? ' past' : '') + (p['상태'] === '마침' ? ' closed' : '');
+    var when = p['시작일'] ? p['시작일'] + (p['끝일'] && p['끝일'] !== p['시작일'] ? ' ~ ' + p['끝일'] : '') : (p['끝일'] ? p['끝일'] + '까지' : '');
+    var ans = (S.data.answers[p['글번호']] || []);
+    li.innerHTML = '<div><span class="badge k' + esc(p['종류']) + '">' + esc(p['종류']) + '</span> ' + (p['상태'] === '마침' ? '<span class="badge st">마침</span> ' : isPast(p) ? '<span class="badge st">지남</span> ' : '') + '<span class="org">' + esc(p['기관명']) + '</span></div>' +
+      '<h3>' + esc(p['제목']) + '</h3>' + (p['내용'] ? '<p class="body">' + esc(p['내용']) + '</p>' : '') +
+      '<p class="meta">' + (p['대상'] ? '<b>대상</b> ' + esc(p['대상']) + ' · ' : '') + (when ? '<b>일정</b> ' + esc(when) + ' · ' : '') + '<b>문의</b> ' + esc(p['문의'] || '기관 대표 전화') + '</p>' +
+      (p['종류'] === '찾습니다' && ans.length ? '<p class="ans">저희가 알아요: ' + esc(ans.join(', ')) + ' → 전화해 보세요</p>' : '');
+    var acts = document.createElement('div'); acts.className = 'acts';
+    acts.innerHTML = telLink(p['문의']);
+    var cb = calledBtn('p' + p['글번호'], '전화했어요', +p['전화했어요'] || 0);
+    cb.addEventListener('click', function () { called['p' + p['글번호']] = 1; saveCalled(); cb.disabled = true; cb.textContent = '✓ 전화했어요 ' + ((+p['전화했어요'] || 0) + 1); call('called', { token: S.token, post: p['글번호'] }).catch(function () { }); });
+    acts.appendChild(cb);
+    if (p['종류'] === '찾습니다' && p['상태'] !== '마침') { var kb = document.createElement('button'); kb.type = 'button'; kb.className = 'btn small'; kb.textContent = '저희가 알아요'; kb.addEventListener('click', function () { openChat('know', p); }); acts.appendChild(kb); }
+    if (S.org && S.org === p['기관명']) { var eb = document.createElement('button'); eb.type = 'button'; eb.className = 'btn small'; eb.textContent = '고치기·마침'; eb.addEventListener('click', function () { openChat('edit', p); }); acts.appendChild(eb); }
+    li.appendChild(acts); return li;
+  }
+  function orgCard(o, toks) {
+    var li = document.createElement('li'); li.className = 'card' + (daysOld(o['수정일']) > 180 ? ' old' : '');
+    li.innerHTML = '<div><span class="badge">' + esc(o['유형'] || '기관') + '</span> <span class="org">' + esc(o['동'] || '') + '</span></div><h3>' + esc(o['기관명']) + '</h3>' +
+      (o['한줄소개'] ? '<p class="body">' + esc(o['한줄소개']) + '</p>' : '') +
+      '<div class="kw">' + kwList(o).map(function (k) { return '<span class="' + (toks.length && matchText(k, toks) ? 'hit' : '') + '">' + esc(k) + '</span>'; }).join('') + (kwList(o).length ? '' : '<span>키워드가 아직 없어요</span>') + '</div>' +
+      (o['자주묻는것'] ? '<p class="meta"><b>이런 걸 물어보세요</b><br>' + esc(o['자주묻는것']).replace(/\n/g, '<br>') + '</p>' : '') +
+      '<p class="meta"><b>문의</b> ' + esc(o['문의처'] || '') + ' ' + esc(o['대표전화'] || '') + ' · 마지막 수정 ' + esc(o['수정일'] || '-') + (daysOld(o['수정일']) > 180 ? ' (반년 넘음)' : '') + '</p>';
+    var acts = document.createElement('div'); acts.className = 'acts'; acts.innerHTML = telLink(o['대표전화']);
+    var cb = calledBtn('o' + o['기관명'], '전화했어요', +o['전화했어요'] || 0);
+    cb.addEventListener('click', function () { called['o' + o['기관명']] = 1; saveCalled(); cb.disabled = true; cb.textContent = '✓ 전화했어요 ' + ((+o['전화했어요'] || 0) + 1); call('called', { token: S.token, org: o['기관명'] }).catch(function () { }); });
+    acts.appendChild(cb);
+    if (S.org && S.org === o['기관명']) { var eb = document.createElement('button'); eb.type = 'button'; eb.className = 'btn small'; eb.textContent = '소개 고치기'; eb.addEventListener('click', function () { openChat('org'); }); acts.appendChild(eb); }
+    li.appendChild(acts); return li;
+  }
+  var qt; $('q').addEventListener('input', function () { clearTimeout(qt); qt = setTimeout(function () { S.q = $('q').value.trim(); render(); }, 150); });
+
+  /* ---------- 대화형 입력 ---------- */
+  var msgs = $('msgs'), inBox = $('inBox'), chatOpen = false, cancelFlow = null;
+  function say(text, cls) { var m = document.createElement('div'); m.className = 'm ' + (cls || 'bot'); m.textContent = text; msgs.appendChild(m); msgs.scrollTop = msgs.scrollHeight; return m; }
+  function sayHtml(html, cls) { var m = document.createElement('div'); m.className = 'm ' + (cls || 'bot'); m.innerHTML = html; msgs.appendChild(m); msgs.scrollTop = msgs.scrollHeight; return m; }
+  function openChat(mode, post) { chatOpen = true; $('chat').hidden = false; $('chatBack').hidden = false; document.body.style.overflow = 'hidden'; msgs.innerHTML = ''; inBox.innerHTML = ''; runFlow(mode, post); }
+  function closeChat() { chatOpen = false; if (cancelFlow) { var c = cancelFlow; cancelFlow = null; c(); } $('chat').hidden = true; $('chatBack').hidden = true; document.body.style.overflow = ''; }
+  $('fab').addEventListener('click', function () { openChat(); }); $('chatClose').addEventListener('click', closeChat); $('chatBack').addEventListener('click', closeChat);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && chatOpen) closeChat(); });
+  /* 질문 하나: {type:'choice'|'text'|'multi'|'date'|'pw'|'tags', options, current, optional, placeholder} → 답을 돌려주는 약속 */
+  function ask(o) {
+    return new Promise(function (res, rej) {
+      cancelFlow = function () { rej(new Error('cancel')); };
+      inBox.innerHTML = '';
+      var done = function (v, label) { if (label !== null) say(label == null ? String(v) : label, 'me'); cancelFlow = null; inBox.innerHTML = ''; res(v); };
+      if (o.type === 'choice') {
+        var ch = document.createElement('div'); ch.className = 'chips';
+        o.options.forEach(function (op) { var b = document.createElement('button'); b.type = 'button'; b.textContent = op; b.addEventListener('click', function () { done(op); }); ch.appendChild(b); });
+        inBox.appendChild(ch); return;
+      }
+      if (o.type === 'tags') {
+        var sel = (o.current || []).slice(), ch2 = document.createElement('div'); ch2.className = 'chips';
+        var all = o.current.concat(o.options.filter(function (x) { return o.current.indexOf(x) < 0; }));
+        function drawTags() { ch2.innerHTML = ''; all.forEach(function (k) { var b = document.createElement('button'); b.type = 'button'; b.textContent = k; b.className = sel.indexOf(k) >= 0 ? 'on' : ''; b.addEventListener('click', function () { var i = sel.indexOf(k); if (i >= 0) sel.splice(i, 1); else sel.push(k); drawTags(); }); ch2.appendChild(b); }); }
+        drawTags(); inBox.appendChild(ch2);
+        var row = document.createElement('div'); row.className = 'row'; var inp = document.createElement('input'); inp.placeholder = '다른 키워드는 여기에 (쉼표로 여러 개)'; var ok = document.createElement('button'); ok.type = 'button'; ok.className = 'send'; ok.textContent = '이걸로';
+        ok.addEventListener('click', function () { inp.value.split(/[,，]+/).map(function (s) { return s.trim(); }).filter(Boolean).forEach(function (k) { if (sel.indexOf(k) < 0) sel.push(k); }); done(sel, sel.join(', ') || '(없음)'); });
+        row.appendChild(inp); row.appendChild(ok); inBox.appendChild(row);
+        var n = document.createElement('p'); n.className = 'note'; n.textContent = '눌러서 켜고 끕니다. 파란 것이 우리 기관 키워드.'; inBox.appendChild(n); return;
+      }
+      var row2 = document.createElement('div'); row2.className = 'row';
+      var field = document.createElement(o.type === 'multi' ? 'textarea' : 'input');
+      if (o.type === 'date') { field.type = 'date'; } else if (o.type === 'pw') { field.type = 'password'; field.autocomplete = 'off'; } else if (o.type === 'text') { field.type = 'text'; }
+      field.placeholder = o.placeholder || ''; if (o.current) field.value = o.current; if (o.type === 'multi') field.rows = 3;
+      var send = document.createElement('button'); send.type = 'button'; send.className = 'send'; send.textContent = o.type === 'pw' ? '확인' : '보내기';
+      function go() { var v = field.value.trim(); if (!v && !o.optional) { field.focus(); return; } done(v, o.type === 'pw' ? '••••' : (v || '(비움)')); }
+      send.addEventListener('click', go);
+      field.addEventListener('keydown', function (e) { if (e.key === 'Enter' && (o.type !== 'multi' || e.ctrlKey)) { e.preventDefault(); go(); } });
+      row2.appendChild(field); row2.appendChild(send); inBox.appendChild(row2);
+      var ch3 = document.createElement('div'); ch3.className = 'chips';
+      if (o.current !== undefined && o.keep) { var kb = document.createElement('button'); kb.type = 'button'; kb.className = 'ghost'; kb.textContent = '그대로'; kb.addEventListener('click', function () { done(o.current, '그대로'); }); ch3.appendChild(kb); }
+      if (o.optional) { var sb = document.createElement('button'); sb.type = 'button'; sb.className = 'ghost'; sb.textContent = '비우기·건너뛰기'; sb.addEventListener('click', function () { done('', '(비움)'); }); ch3.appendChild(sb); }
+      (o.chips || []).forEach(function (c) { var b = document.createElement('button'); b.type = 'button'; b.textContent = c; b.addEventListener('click', function () { done(c); }); ch3.appendChild(b); });
+      if (ch3.children.length) inBox.appendChild(ch3);
+      if (o.type === 'multi') { var n2 = document.createElement('p'); n2.className = 'note'; n2.textContent = '여러 줄도 됩니다. Ctrl+Enter로 보내기.'; inBox.appendChild(n2); }
+      setTimeout(function () { field.focus(); }, 50);
+    });
+  }
+  function orgOf(name) { return S.data.orgs.filter(function (o) { return o['기관명'] === name; })[0]; }
+  function askOrg() {
+    var names = S.data.orgs.map(function (o) { return o['기관명']; });
+    if (S.org && names.indexOf(S.org) >= 0) { say('우리 기관은 「' + S.org + '」 맞나요?'); return ask({ type: 'choice', options: ['네, ' + S.org, '다른 기관이에요'] }).then(function (a) { if (a.indexOf('네') === 0) return S.org; return pickOrg(names); }); }
+    return pickOrg(names);
+  }
+  function pickOrg(names) { say('어느 기관인가요? 목록에서 골라 주세요.' + (names.length > 12 ? ' (이름 일부를 적어 좁힐 수도 있어요)' : '')); if (names.length <= 12) return ask({ type: 'choice', options: names }); return ask({ type: 'text', placeholder: '기관명 일부' }).then(function (t) { var hit = names.filter(function (n) { return n.indexOf(t) >= 0; }); if (!hit.length) { say('그 이름을 가진 기관이 없어요. 관리자에게 등록을 부탁하세요.', 'warn'); return pickOrg(names); } if (hit.length === 1) return hit[0]; say('이 중에서 골라 주세요.'); return ask({ type: 'choice', options: hit.slice(0, 12) }); }); }
+  function checkPii(label, v) { var w = pii(v); if (w) { say('「' + label + '」에 ' + w + ' 다시 적어 주세요.', 'warn'); return false; } return true; }
+  function askClean(label, o) { return ask(o).then(function (v) { return checkPii(label, v) ? v : askClean(label, o); }); }
+  function summary(lines) { sayHtml('이렇게 올릴게요. 맞으면 기관 비밀번호를 넣어 주세요.<div class="sum">' + lines.filter(function (l) { return l[1]; }).map(function (l) { return '<b>' + esc(l[0]) + '</b> ' + esc(l[1]).replace(/\n/g, '<br>'); }).join('<br>') + '</div>'); }
+  function askPw(org) { say('「' + org + '」의 입력 비밀번호를 넣어 주세요. (비밀번호는 저장하지 않고, 이번 한 번만 씁니다)'); return ask({ type: 'pw', placeholder: '기관 입력 비밀번호' }); }
+  function finish(ok, msg) { say(msg, ok ? 'ok' : 'err'); return ask({ type: 'choice', options: ok ? ['닫기', '하나 더 하기'] : ['다시 하기', '닫기'] }).then(function (a) { if (a === '닫기') { closeChat(); } else { msgs.innerHTML = ''; runFlow(); } }); }
+  function submit(org, pw, action, data) { return call('submit', { token: S.token, org: org, pw: pw, action: action, data: data }); }
+  function afterSave(org) { S.org = org; try { localStorage.setItem(OKEY, org); } catch (e) { } return call('list', { token: S.token }).then(function (d) { S.data = d; render(); }); }
+
+  function runFlow(mode, post) {
+    var flow = (function () {
+      if (mode === 'know') return flowKnow(post);
+      if (mode === 'edit') return flowEdit(post);
+      if (mode === 'org') return flowOrg();
+      say('무엇을 할까요?');
+      return ask({ type: 'choice', options: ['새 글 올리기', '내 글 고치기·마침·삭제', '우리 기관 소개 고치기'] }).then(function (a) { if (a === '새 글 올리기') return flowNew(); if (a.indexOf('내 글') === 0) return flowEdit(); return flowOrg(); });
+    })();
+    flow.catch(function (e) { if (e && e.message === 'cancel') return; say('문제가 생겼어요: ' + e.message, 'err'); return ask({ type: 'choice', options: ['다시 하기', '닫기'] }).then(function (a) { if (a === '닫기') closeChat(); else { msgs.innerHTML = ''; runFlow(mode, post); } }).catch(function () { }); });
+  }
+  function flowNew() {
+    var org, d = {};
+    return askOrg().then(function (o) { org = o; var info = orgOf(org); say('어떤 글인가요?'); return ask({ type: 'choice', options: KINDS.map(function (k) { return k === '프로그램' ? '프로그램 (지금 하는 것)' : k === '일정' ? '일정 (교육·행사·채용)' : k === '나눔' ? '나눔 (물품·공간·차량·강사)' : '찾습니다 (연계할 곳 묻기)'; }) }).then(function (a) { d['종류'] = a.split(' ')[0]; });
+    }).then(function () { say('제목을 한 줄로 적어 주세요. 예: ' + ({ '프로그램': '어르신 스마트폰 교실 2기', '일정': '장애 인식개선 종사자 공동 교육', '나눔': '강당(120석) 평일 저녁 빈 시간', '찾습니다': '알코올 문제 어르신 상담 연계할 곳' })[d['종류']]); return askClean('제목', { type: 'text', placeholder: '제목' }).then(function (v) { d['제목'] = v; });
+    }).then(function () { say('내용을 간단히. 세부는 전화로 물어보게 하면 되니 서너 줄이면 충분해요.'); return askClean('내용', { type: 'multi', placeholder: '내용 (선택)', optional: true }).then(function (v) { d['내용'] = v; });
+    }).then(function () { say('대상은요?'); return askClean('대상', { type: 'text', placeholder: '대상 (선택)', optional: true, chips: TARGETS }).then(function (v) { d['대상'] = v; });
+    }).then(function () { if (d['종류'] === '프로그램' && false) return; say(d['종류'] === '일정' ? '날짜를 골라 주세요.' : '시작일이나 날짜가 있으면 골라 주세요. 상시면 건너뛰기.'); return ask({ type: 'date', optional: d['종류'] !== '일정' }).then(function (v) { d['시작일'] = v; });
+    }).then(function () { say('끝나는 날(마감)이 있으면 골라 주세요. 없으면 건너뛰기.'); return ask({ type: 'date', optional: true }).then(function (v) { d['끝일'] = v; });
+    }).then(function () { var info = orgOf(org); var def = info ? [info['문의처'], info['대표전화']].filter(Boolean).join(' ') : ''; say('문의처(부서와 대표 전화). 개인 휴대폰은 적지 않아요.'); return askClean('문의', { type: 'text', placeholder: '예: 사례관리팀 02-000-0000', current: def, keep: !!def }).then(function (v) { d['문의'] = v; });
+    }).then(function () { summary([['종류', d['종류']], ['기관', org], ['제목', d['제목']], ['내용', d['내용']], ['대상', d['대상']], ['일정', d['시작일'] + (d['끝일'] ? ' ~ ' + d['끝일'] : '')], ['문의', d['문의']]]); return askPw(org);
+    }).then(function (pw) { return submit(org, pw, 'post.add', d); }).then(function () { return afterSave(org); }).then(function () { return finish(true, '올렸어요. 「' + d['종류'] + '」 탭에서 볼 수 있어요. 고치거나 마치려면 글의 「고치기·마침」을 누르세요.'); });
+  }
+  function flowEdit(post) {
+    var org, p = post, d = {};
+    return (post ? Promise.resolve(post['기관명']) : askOrg()).then(function (o) {
+      org = o; if (p) return;
+      var mine = S.data.posts.filter(function (x) { return x['기관명'] === org; }).slice(0, 12);
+      if (!mine.length) { say('「' + org + '」이 올린 글이 없어요.', 'warn'); throw new Error('cancel'); }
+      say('어느 글인가요?'); return ask({ type: 'choice', options: mine.map(function (x) { return x['글번호'] + '. ' + x['제목'] + (x['상태'] === '마침' ? ' (마침)' : ''); }) }).then(function (a) { p = mine.filter(function (x) { return x['글번호'] === a.split('.')[0]; })[0]; });
+    }).then(function () { say('「' + p['제목'] + '」 — 무엇을 할까요?'); return ask({ type: 'choice', options: ['내용 고치기', p['상태'] === '마침' ? '다시 게시' : '마침으로 바꾸기', '삭제'] }); })
+    .then(function (a) {
+      if (a === '내용 고치기') {
+        return askClean('제목', { type: 'text', current: p['제목'], keep: true, placeholder: '제목' }).then(function (v) { d['제목'] = v; say('내용은요?'); return askClean('내용', { type: 'multi', current: p['내용'], keep: true, optional: true }); })
+          .then(function (v) { d['내용'] = v; say('대상은요?'); return askClean('대상', { type: 'text', current: p['대상'], keep: true, optional: true, chips: TARGETS }); })
+          .then(function (v) { d['대상'] = v; say('시작일·날짜는요? (그대로 두려면 「그대로」)'); return ask({ type: 'date', current: p['시작일'], keep: true, optional: true }); })
+          .then(function (v) { d['시작일'] = v; say('끝나는 날은요?'); return ask({ type: 'date', current: p['끝일'], keep: true, optional: true }); })
+          .then(function (v) { d['끝일'] = v; say('문의처는요?'); return askClean('문의', { type: 'text', current: p['문의'], keep: true }); })
+          .then(function (v) { d['문의'] = v; d.id = p['글번호']; summary([['제목', d['제목']], ['내용', d['내용']], ['대상', d['대상']], ['일정', d['시작일'] + (d['끝일'] ? ' ~ ' + d['끝일'] : '')], ['문의', d['문의']]]); return askPw(org); })
+          .then(function (pw) { return submit(org, pw, 'post.edit', d); }).then(function () { return afterSave(org); }).then(function () { return finish(true, '고쳤어요.'); });
+      }
+      var act = a === '삭제' ? 'post.delete' : a === '다시 게시' ? 'post.reopen' : 'post.close';
+      say('「' + p['제목'] + '」을(를) ' + a + ' 합니다. 맞으면 비밀번호를 넣어 주세요.' + (act === 'post.delete' ? ' (목록에서 사라지고 기록에만 남아요)' : ''));
+      return askPw(org).then(function (pw) { return submit(org, pw, act, { id: p['글번호'] }); }).then(function () { return afterSave(org); }).then(function () { return finish(true, a + ' 했어요.'); });
+    });
+  }
+  function flowOrg() {
+    var org, d = {};
+    return askOrg().then(function (o) {
+      org = o; var info = orgOf(org) || {};
+      sayHtml('지금 「' + esc(org) + '」 소개예요.<div class="sum"><b>유형</b> ' + esc(info['유형'] || '-') + ' · <b>동</b> ' + esc(info['동'] || '-') + '<br><b>문의처</b> ' + esc(info['문의처'] || '-') + ' ' + esc(info['대표전화'] || '') + '<br><b>키워드</b> ' + esc(info['키워드'] || '-') + '<br><b>한 줄 소개</b> ' + esc(info['한줄소개'] || '-') + '<br><b>이런 걸 물어보세요</b> ' + esc(info['자주묻는것'] || '-').replace(/\n/g, '<br>') + '</div>하나씩 물어볼게요. 그대로 둘 것은 「그대로」.');
+      say('시설 유형은요?'); return askClean('유형', { type: 'text', current: info['유형'], keep: !!info['유형'], placeholder: '예: 종합사회복지관', chips: info['유형'] ? [] : ['종합사회복지관', '노인복지관', '장애인복지관', '아동·청소년 시설', '지역자활센터', '정신건강 관련', '그 밖'] }).then(function (v) { d['유형'] = v; say('어느 동인가요?'); return askClean('동', { type: 'text', current: info['동'], keep: !!info['동'], placeholder: '예: 역삼동' }); })
+        .then(function (v) { d['동'] = v; say('문의처 부서는요? (이름은 적지 않아요)'); return askClean('문의처', { type: 'text', current: info['문의처'], keep: !!info['문의처'], placeholder: '예: 사례관리팀' }); })
+        .then(function (v) { d['문의처'] = v; say('대표 전화는요? (개인 휴대폰 말고)'); return askClean('대표전화', { type: 'text', current: info['대표전화'], keep: !!info['대표전화'], placeholder: '예: 02-000-0000' }); })
+        .then(function (v) { d['대표전화'] = v; say('키워드를 골라 주세요. 「이런 일을 한다·이런 것을 물어보면 된다」는 말들이에요.'); return ask({ type: 'tags', current: kwList(info), options: KW_SUGGEST }); })
+        .then(function (v) { d['키워드'] = v.join(', '); say('한 줄 소개는요?'); return askClean('한줄소개', { type: 'text', current: info['한줄소개'], keep: !!info['한줄소개'], optional: true, placeholder: '한 줄' }); })
+        .then(function (v) { d['한줄소개'] = v; say('「이런 걸 물어보세요」 — 다른 기관이 전화해서 물으면 좋은 것 두세 줄.'); return askClean('자주묻는것', { type: 'multi', current: info['자주묻는것'], keep: !!info['자주묻는것'], optional: true, placeholder: '한 줄에 하나' }); })
+        .then(function (v) { d['자주묻는것'] = v; summary([['유형', d['유형']], ['동', d['동']], ['문의처', d['문의처'] + ' ' + d['대표전화']], ['키워드', d['키워드']], ['한 줄 소개', d['한줄소개']], ['이런 걸 물어보세요', d['자주묻는것']]]); return askPw(org); })
+        .then(function (pw) { return submit(org, pw, 'org.update', d); }).then(function () { return afterSave(org); }).then(function () { S.tab = 3; render(); return finish(true, '기관 소개를 고쳤어요. 「기관」 탭에서 확인하세요.'); });
+    });
+  }
+  function flowKnow(post) {
+    var org;
+    say('「' + post['제목'] + '」(' + post['기관명'] + ')에 「저희가 알아요」로 기관명을 남깁니다. 그러면 그쪽에서 전화해 물어볼 거예요.');
+    return askOrg().then(function (o) { org = o; return askPw(org); }).then(function (pw) { return submit(org, pw, 'know', { id: post['글번호'] }); }).then(function () { return afterSave(org); }).then(function () { return finish(true, '남겼어요. 고맙습니다.'); });
+  }
+
+  /* ---------- 시작 ---------- */
+  if (S.token) load(); else showGate('');
+})();
+</script>
+</body>
+</html>

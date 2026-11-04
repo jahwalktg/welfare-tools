@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>얼굴 가리기 | 사회복지사 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="활동 사진 여러 장을 넣으면 얼굴을 자동으로 찾아 모두 가립니다. 촬영에 동의한 분만 눌러서 보이게 하고 한 번에 내려받기. 소식지·보도자료에 쓰기 전에, 사진은 PC 밖으로 나가지 않습니다.">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/face-mask/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="얼굴 가리기 | 사회복지사 업무 도구">
+<meta property="og:description" content="활동 사진 여러 장을 넣으면 얼굴을 자동으로 찾아 모두 가립니다. 촬영에 동의한 분만 눌러서 보이게 하고 한 번에 내려받기. 소식지·보도자료에 쓰기 전에, 사진은 PC 밖으로 나가지 않습니다.">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/face-mask/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --red:#E63946; --green:#1F8A4C;
+  --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC;
+  --text:#1A2B50; --muted:#5B6885;
+  --blue-bg:#E8F0FF; --amber:#8A5A00; --amber-bg:#FFF1CC; --amber-line:#E5B93C; --green-bg:#E3F5EA; --red-bg:#FDECEE; --btn-text:#FFFFFF;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#27407A; --red:#FF6B76; --green:#5FD08E;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+  }
+}
+:root[data-theme="dark"]{
+  --blue:#6BA1FF; --navy:#27407A; --red:#FF6B76; --green:#5FD08E;
+  --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+  --text:#EAF0FF; --muted:#A9B6DA;
+  --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1180px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
+.lead{margin:0 0 14px;color:var(--muted)}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 8px;font-size:19px;display:flex;align-items:center;gap:8px}
+.card h2 .no{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--blue);color:var(--btn-text);font-size:14px;flex:none}
+.sub{margin:0 0 10px;color:var(--muted);font-size:14px}
+.privacy{margin:0 0 12px;padding:8px 12px;border-radius:10px;background:var(--blue-bg);border:1.5px solid var(--blue);font-size:15px}
+.btn{min-height:44px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.btn-main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.btn:disabled{opacity:.45;cursor:default}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.drop{margin:10px 0;padding:18px;border:2px dashed var(--line);border-radius:14px;background:var(--bg);text-align:center;cursor:pointer}
+.drop b{font-size:18px}
+.drop .note{color:var(--muted);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{min-height:40px;padding:0 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:600;font-size:15px}
+.chips button.on{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.lbl{margin:10px 0 4px;font-size:14px;color:var(--muted)}
+.opts{display:grid;gap:4px 16px;grid-template-columns:1fr}
+@media (min-width:760px){.opts{grid-template-columns:1fr 1fr 1fr}}
+.stat{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.stat span{padding:5px 12px;border-radius:999px;background:var(--bg);border:1.5px solid var(--line);font-size:14px;font-weight:600}
+.stat span.warn{background:var(--amber-bg);border-color:var(--amber-line);color:var(--amber)}
+.photos{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:860px){.photos{grid-template-columns:1fr 1fr}}
+.ph{border:1.5px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.ph.warn{border-color:var(--amber-line)}
+.ph .top{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;justify-content:space-between;padding:8px 12px;font-size:14px}
+.ph .top b{overflow-wrap:anywhere}
+.ph .top .cnt{color:var(--muted)}
+.ph.warn .top .cnt{color:var(--amber);font-weight:700}
+.ph canvas{display:block;width:100%;height:auto;background:#222;touch-action:pan-y pinch-zoom;cursor:crosshair}
+body.draw .ph canvas{touch-action:none}
+#btnDraw{display:none}
+@media (pointer:coarse){#btnDraw{display:inline-block}}
+#btnDraw.on{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.ph .foot{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px;border-top:1.5px solid var(--line)}
+.ph .foot button{min-height:36px;font-size:14px;padding:0 10px}
+.howto{display:grid;gap:4px;margin:0 0 10px;padding:10px 14px;border:1.5px dashed var(--line);border-radius:12px;background:var(--bg);font-size:15px}
+.note{margin:8px 0 0;font-size:14px;color:var(--muted)}
+.bar{height:10px;border-radius:5px;background:var(--line);overflow:hidden;margin:8px 0 0}
+.bar i{display:block;height:100%;width:0;background:var(--blue);transition:width .2s}
+.uses{margin-top:20px}
+.uses ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.uses li{padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);font-size:15px}
+.foot{margin-top:24px;padding:14px 4px 0;border-top:1.5px solid var(--line);font-size:15px;color:var(--muted)}
+.help a{color:inherit}
+</style>
+</head>
+<body>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › <a href="../index.html#promo">홍보 도구</a></p>
+  <h1>얼굴 가리기</h1>
+  <p class="lead">활동 사진 여러 장을 넣으면 얼굴을 자동으로 찾아 전부 가립니다. 촬영·게시에 동의한 분만 눌러서 보이게 하고, 가린 사진을 한 번에 내려받습니다. 소식지·보도자료·카드뉴스에 넣기 전 거치는 문입니다.</p>
+
+  <p class="privacy"><strong>사진은 이 PC 밖으로 나가지 않습니다.</strong> 얼굴 찾기는 브라우저 안에서 합니다(처음 한 번 얼굴 찾기 모델 파일 약 200KB를 내려받을 뿐, 사진은 보내지 않습니다). 가린 사진은 새로 그려서 저장하므로 촬영 위치(GPS)·기기 정보도 함께 빠집니다. 사진·얼굴 위치는 저장하지 않고, 가리는 방식만 이 브라우저에 기억합니다.</p>
+
+  <section class="card">
+    <h2><span class="no">1</span>사진 넣기</h2>
+    <div class="drop" id="drop" tabindex="0" role="button"><div><b>사진을 끌어다 놓거나 눌러서 고르기</b><br><span class="note">JPG · PNG · WEBP, 여러 장 한 번에 (폴더째도 됩니다)</span></div></div>
+    <input type="file" id="fileIn" accept="image/*" multiple hidden>
+    <input type="file" id="dirIn" accept="image/*" webkitdirectory multiple hidden>
+    <div class="acts"><button class="btn" id="btnFiles" type="button">사진 고르기</button><button class="btn" id="btnDir" type="button">폴더 고르기</button><button class="btn" id="btnClear" type="button">모두 비우기</button></div>
+    <div class="opts">
+      <div><p class="lbl">가리는 방법</p><div class="chips" id="styleRow"></div></div>
+      <div><p class="lbl">세기</p><div class="chips" id="strengthRow"></div></div>
+      <div><p class="lbl">저장 크기 (긴 쪽)</p><div class="chips" id="sizeRow"></div></div>
+    </div>
+    <div class="bar" id="bar" hidden><i id="barIn"></i></div>
+    <p class="note" id="loadNote" role="status"></p>
+  </section>
+
+  <section class="card" id="step2" hidden>
+    <h2><span class="no">2</span>얼굴 확인 — 동의한 분만 눌러서 보이기</h2>
+    <div class="howto">
+      <span><b>파란 네모</b> = 가림 · <b>회색 점선</b> = 보임(동의한 분). 얼굴을 누르면 바뀝니다.</span>
+      <span>못 찾은 얼굴은 사진 위에서 <b>드래그해 네모</b>를 그리세요(휴대폰은 「손가락으로 네모 그리기」를 켠 뒤). 잘못 잡힌 네모는 <b>길게 누르면</b>(또는 더블클릭) 지워집니다.</span>
+      <span>자동 찾기는 옆모습·작은 얼굴·마스크 쓴 얼굴을 놓칠 수 있습니다. 내려받기 전에 사진을 한 번씩 보세요.</span>
+    </div>
+    <div class="stat" id="stat"></div>
+    <div class="acts" style="margin:10px 0"><button class="btn" id="btnAllOn" type="button">모든 얼굴 가리기</button><button class="btn" id="btnAllOff" type="button">모든 얼굴 보이기</button><button class="btn" id="btnRedetect" type="button">얼굴 다시 찾기 (더 꼼꼼히)</button><button class="btn" id="btnDraw" type="button" aria-pressed="false">손가락으로 네모 그리기</button></div>
+    <div class="photos" id="photos"></div>
+  </section>
+
+  <section class="card" id="step3" hidden>
+    <h2><span class="no">3</span>내려받기</h2>
+    <p class="sub">사진마다 「원래이름_가림.jpg」로 저장됩니다. 원본은 그대로 남습니다.</p>
+    <div class="acts"><button class="btn btn-main" id="btnZip" type="button">가린 사진 전부 내려받기 (zip)</button><button class="btn" id="btnEach" type="button">한 장씩 내려받기</button></div>
+    <p class="note" id="outNote" role="status"></p>
+  </section>
+
+  <section class="uses">
+    <h2 style="font-size:19px;margin:0">이럴 때 좋아요</h2>
+    <ul>
+      <li><strong>소식지·카드뉴스·보도자료 사진</strong> 교육·행사 사진에 동의하지 않은 이용자나 지나가는 분이 찍혔을 때, 그 얼굴만 가리고 씁니다.</li>
+      <li><strong>단체 사진의 일부만 동의</strong> 동의서를 받은 분은 눌러서 보이게 두고 나머지만 가립니다.</li>
+      <li><strong>사진 수십 장 한 번에</strong> 폴더째 넣고 확인만 하면 zip으로 받습니다. 문서·캡처 한 장은 <a href="../mask-privacy/index.html">개인정보 가리기 › 그림 가리기</a>가 더 간단합니다.</li>
+    </ul>
+  </section>
+
+  <footer class="foot">
+    <p><strong>사진은 저장하지도, 인터넷으로 보내지도 않습니다.</strong> 저장되는 것은 가리는 방법·세기·크기 설정뿐입니다. 얼굴 찾기: face-api.js(MIT) 모델을 브라우저 안에서 실행.</p>
+    <p>만든 사람: 서울강남지역자활센터 김태균</p>
+  </footer>
+</div>
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id);};
+  var KEY='welfare-tools.face-mask.v1';
+  var STYLES=[['mosaic','모자이크'],['blur','흐리게'],['black','검게']];
+  var STRENGTH=[['1','약'],['2','중'],['3','강']];
+  var SIZES=[['0','원본 그대로'],['2000','2000px'],['1200','1200px']];
+  var MODEL_URL='https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/weights';
+  var S=(function(){try{var o=JSON.parse(localStorage.getItem(KEY)||'{}');return {style:STYLES.some(function(s){return s[0]===o.style;})?o.style:'mosaic',strength:STRENGTH.some(function(s){return s[0]===o.strength;})?o.strength:'2',size:SIZES.some(function(s){return s[0]===o.size;})?o.size:'2000'};}catch(e){return {style:'mosaic',strength:'2',size:'2000'};}})();
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+  var PHOTOS=[]; /* {name, bmp, w, h, faces:[{x,y,w,h,on,manual}], cv} */
+  var modelReady=false,loading=null,BUSY=false;
+
+  function chips(el,list,cur,fn){el.textContent='';list.forEach(function(it){var b=document.createElement('button');b.type='button';b.textContent=it[1];if(cur===it[0])b.className='on';b.addEventListener('click',function(){fn(it[0]);});el.appendChild(b);});}
+  function renderOpts(){chips($('styleRow'),STYLES,S.style,function(v){S.style=v;save();renderOpts();drawAll();});chips($('strengthRow'),STRENGTH,S.strength,function(v){S.strength=v;save();renderOpts();drawAll();});chips($('sizeRow'),SIZES,S.size,function(v){S.size=v;save();renderOpts();});}
+
+  /* ---------- 모델 ---------- */
+  function loadModel(){
+    if(modelReady)return Promise.resolve();
+    if(loading)return loading;
+    if(typeof faceapi==='undefined'){return Promise.reject(new Error('얼굴 찾기 라이브러리를 불러오지 못했습니다. 인터넷 연결을 확인한 뒤 새로 고침해 주세요.'));}
+    $('loadNote').textContent='얼굴 찾기 모델을 내려받는 중… (처음 한 번, 약 200KB)';
+    loading=faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL).then(function(){var w=document.createElement('canvas');w.width=64;w.height=64;return Promise.resolve(faceapi.detectAllFaces(w,new faceapi.TinyFaceDetectorOptions({inputSize:608,scoreThreshold:0.5}))).catch(function(){});}).then(function(){modelReady=true;$('loadNote').textContent='';}).catch(function(e){loading=null;throw new Error('얼굴 찾기 모델을 내려받지 못했습니다. 인터넷 연결을 확인해 주세요.');});
+    return loading;
+  }
+  /* 사진에서 얼굴 찾기: 크기·입력을 달리해 두 번(꼼꼼히는 세 번) 돌리고 합침. 좌표는 원본 기준 */
+  var PASSES=[[1280,608,0.35],[640,416,0.35]],PASSES_T=[[1600,608,0.25],[900,416,0.25],[640,320,0.25]];
+  function detectPass(p,maxW,inp,th){
+    var k=Math.min(1,maxW/Math.max(p.w,p.h));
+    var c=document.createElement('canvas');c.width=Math.round(p.w*k);c.height=Math.round(p.h*k);c.getContext('2d').drawImage(p.bmp,0,0,c.width,c.height);
+    return Promise.resolve(faceapi.detectAllFaces(c,new faceapi.TinyFaceDetectorOptions({inputSize:inp,scoreThreshold:th}))).then(function(res){
+      var out=[];res.forEach(function(d){var b=d.box;var x=b.x/k,y=b.y/k,w=b.width/k,h=b.height/k;
+        if(!(w>0&&h>0)||x+w<0||y+h<0||x>p.w||y>p.h)return; /* 그림 밖 엉뚱한 값은 버림 */
+        out.push({x:x,y:y,w:w,h:h,score:d.score});});
+      return out;});
+  }
+  function detect(p,thorough){
+    var passes=thorough?PASSES_T:PASSES;
+    return passes.reduce(function(ch,ps){return ch.then(function(acc){return detectPass(p,ps[0],ps[1],ps[2]).then(function(r){return acc.concat(r);});});},Promise.resolve([]))
+      .then(function(all){
+        all.sort(function(a,b){return b.score-a.score;});
+        var res=[];all.forEach(function(f){if(!res.some(function(r){return overlap(r,f)>0.45;}))res.push(f);});
+        return res.map(function(f){ /* 머리카락·턱까지 덮게 넓힘 */
+          var px=f.w*0.25,py=f.h*0.3,x=Math.max(0,f.x-px),y=Math.max(0,f.y-py);
+          return {x:x,y:y,w:Math.min(p.w-x,f.w+px*2),h:Math.min(p.h-y,f.h+py*2),on:true,manual:false,score:f.score};});
+      });
+  }
+  function mergeFaces(old,found){
+    /* 손으로 그린 것·끈 것은 유지, 새로 찾은 것 중 기존과 많이 겹치면 건너뜀 */
+    var keep=old.filter(function(f){return f.manual||!f.on;});
+    found.forEach(function(f){var dup=old.some(function(o){return overlap(o,f)>0.4;});if(!dup||!old.some(function(o){return overlap(o,f)>0.4&&(o.manual||!o.on);}))keep.push(f);});
+    /* 중복 제거 */
+    var res=[];keep.forEach(function(f){if(!res.some(function(r){return overlap(r,f)>0.6;}))res.push(f);});return res;
+  }
+  function overlap(a,b){var x=Math.max(0,Math.min(a.x+a.w,b.x+b.w)-Math.max(a.x,b.x)),y=Math.max(0,Math.min(a.y+a.h,b.y+b.h)-Math.max(a.y,b.y));var i=x*y;return i/Math.min(a.w*a.h,b.w*b.h);}
+
+  /* ---------- 가리기 그리기 ---------- */
+  function paint(cv,p,preview){
+    var g=cv.getContext('2d'),W=cv.width,H=cv.height,k=W/p.w;
+    g.clearRect(0,0,W,H);g.drawImage(p.bmp,0,0,W,H);
+    var st=+S.strength;
+    p.faces.forEach(function(f){
+      var x=f.x*k,y=f.y*k,w=f.w*k,h=f.h*k;
+      if(f.on){
+        g.save();g.beginPath();g.ellipse(x+w/2,y+h/2,w/2,h/2,0,0,Math.PI*2);g.clip();
+        if(S.style==='black'){g.fillStyle='#111';g.fillRect(x,y,w,h);}
+        else if(S.style==='blur'){var r=Math.max(4,w*(st===1?0.08:st===2?0.14:0.22));var pad=r*2;
+          if('filter' in g){g.filter='blur('+r+'px)';g.drawImage(p.bmp,(x-pad)/k,(y-pad)/k,(w+pad*2)/k,(h+pad*2)/k,x-pad,y-pad,w+pad*2,h+pad*2);g.filter='none';}
+          else mosaic(g,p,x,y,w,h,k,Math.max(3,w/8));}
+        else{mosaic(g,p,x,y,w,h,k,Math.max(3,w/(st===1?16:st===2?10:6)));}
+        g.restore();
+      }
+      if(preview){g.save();g.lineWidth=Math.max(2,W/300);g.setLineDash(f.on?[]:[8,6]);g.strokeStyle=f.on?'#1A6EFF':'#C8CFDD';g.beginPath();g.ellipse(x+w/2,y+h/2,w/2,h/2,0,0,Math.PI*2);g.stroke();
+        if(f.manual){g.setLineDash([]);g.strokeStyle='#fff';g.lineWidth=1;g.stroke();}g.restore();}
+    });
+  }
+  function mosaic(g,p,x,y,w,h,k,cell){
+    var cols=Math.max(1,Math.round(w/cell)),rows=Math.max(1,Math.round(h/cell));
+    var tmp=document.createElement('canvas');tmp.width=cols;tmp.height=rows;var tg=tmp.getContext('2d');
+    tg.drawImage(p.bmp,x/k,y/k,w/k,h/k,0,0,cols,rows);
+    g.imageSmoothingEnabled=false;g.drawImage(tmp,0,0,cols,rows,x,y,w,h);g.imageSmoothingEnabled=true;
+  }
+  function drawAll(){PHOTOS.forEach(function(p){if(p.cv)paint(p.cv,p,true);});renderStat();}
+
+  /* ---------- 화면 ---------- */
+  function renderStat(){
+    var faces=0,on=0,zero=0;PHOTOS.forEach(function(p){faces+=p.faces.length;on+=p.faces.filter(function(f){return f.on;}).length;if(!p.faces.filter(function(f){return f.on;}).length)zero++;});
+    var el=$('stat');el.textContent='';[['사진 '+PHOTOS.length+'장',''],['찾은 얼굴 '+faces,''],['가림 '+on,''],['보임 '+(faces-on),''],zero?['가린 얼굴이 없는 사진 '+zero+'장 — 확인하세요','warn']:null].forEach(function(s){if(!s)return;var sp=document.createElement('span');sp.className=s[1];sp.textContent=s[0];el.appendChild(sp);});
+    PHOTOS.forEach(function(p){if(!p.el)return;var n=p.faces.filter(function(f){return f.on;}).length;p.el.className='ph'+(n?'':' warn');p.el.querySelector('.cnt').textContent='얼굴 '+p.faces.length+' · 가림 '+n+' · 보임 '+(p.faces.length-n);});
+    $('step2').hidden=!PHOTOS.length;$('step3').hidden=!PHOTOS.length;
+  }
+  function addPhotoEl(p){
+    var el=document.createElement('div');el.className='ph';p.el=el;
+    var top=document.createElement('div');top.className='top';var b=document.createElement('b');b.textContent=p.name;var c=document.createElement('span');c.className='cnt';top.appendChild(b);top.appendChild(c);el.appendChild(top);
+    var cv=document.createElement('canvas');var W=Math.min(p.w,900);cv.width=W;cv.height=Math.round(p.h*W/p.w);p.cv=cv;el.appendChild(cv);
+    var foot=document.createElement('div');foot.className='foot';
+    [['모두 가리기',function(){p.faces.forEach(function(f){f.on=true;});paint(cv,p,true);renderStat();}],['모두 보이기',function(){p.faces.forEach(function(f){f.on=false;});paint(cv,p,true);renderStat();}],['이 사진 빼기',function(){PHOTOS=PHOTOS.filter(function(x){return x!==p;});el.remove();renderStat();}]].forEach(function(it){var bt=document.createElement('button');bt.type='button';bt.className='btn';bt.textContent=it[0];bt.addEventListener('click',it[1]);foot.appendChild(bt);});
+    el.appendChild(foot);$('photos').appendChild(el);
+    /* 누르기·드래그·길게 누르기 */
+    var down=null,moved=false,timer=null;
+    function pt(e){var r=cv.getBoundingClientRect();return {x:(e.clientX-r.left)/r.width*p.w,y:(e.clientY-r.top)/r.height*p.h};}
+    function hit(q){for(var i=p.faces.length-1;i>=0;i--){var f=p.faces[i];if(q.x>=f.x&&q.x<=f.x+f.w&&q.y>=f.y&&q.y<=f.y+f.h)return f;}return null;}
+    cv.addEventListener('pointerdown',function(e){e.preventDefault();var q=pt(e);down={q:q,f:hit(q),box:null};moved=false;try{cv.setPointerCapture(e.pointerId);}catch(x){}
+      clearTimeout(timer);if(down.f){timer=setTimeout(function(){if(!moved&&down&&down.f){p.faces=p.faces.filter(function(x){return x!==down.f;});down=null;paint(cv,p,true);renderStat();}},650);}});
+    cv.addEventListener('pointermove',function(e){if(!down)return;var q=pt(e);if(Math.abs(q.x-down.q.x)>p.w*0.01||Math.abs(q.y-down.q.y)>p.h*0.01)moved=true;
+      if(moved&&!down.f&&(e.pointerType!=='touch'||document.body.classList.contains('draw'))){down.box={x:Math.min(q.x,down.q.x),y:Math.min(q.y,down.q.y),w:Math.abs(q.x-down.q.x),h:Math.abs(q.y-down.q.y),on:true,manual:true};paint(cv,p,true);var g=cv.getContext('2d'),k=cv.width/p.w;g.save();g.strokeStyle='#1A6EFF';g.lineWidth=2;g.setLineDash([6,4]);g.strokeRect(down.box.x*k,down.box.y*k,down.box.w*k,down.box.h*k);g.restore();}});
+    function up(){if(!down)return;clearTimeout(timer);if(down.box&&down.box.w>p.w*0.015&&down.box.h>p.h*0.015)p.faces.push(down.box);else if(!moved&&down.f)down.f.on=!down.f.on;down=null;paint(cv,p,true);renderStat();}
+    cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',function(){down=null;clearTimeout(timer);paint(cv,p,true);});
+    cv.addEventListener('dblclick',function(e){var f=hit(pt(e));if(f){p.faces=p.faces.filter(function(x){return x!==f;});paint(cv,p,true);renderStat();}});
+    paint(cv,p,true);
+  }
+
+  /* ---------- 파일 ---------- */
+  function readImage(file){
+    var opt={imageOrientation:'from-image'};
+    var pr=window.createImageBitmap?createImageBitmap(file,opt).catch(function(){return createImageBitmap(file);}):Promise.reject();
+    return pr.then(function(bmp){return {bmp:bmp,w:bmp.width,h:bmp.height};}).catch(function(){return new Promise(function(res,rej){var im=new Image();var u=URL.createObjectURL(file);im.onload=function(){res({bmp:im,w:im.naturalWidth,h:im.naturalHeight});};im.onerror=rej;im.src=u;});});
+  }
+  function addFiles(files){
+    var list=Array.prototype.slice.call(files).filter(function(f){return /^image\//.test(f.type)||/\.(jpe?g|png|webp|bmp|gif)$/i.test(f.name);});
+    if(!list.length){$('loadNote').textContent='사진 파일(JPG·PNG)을 넣어 주세요.';return;}
+    if(/\.heic$/i.test(list.map(function(f){return f.name;}).join(' ')))$('loadNote').textContent='HEIC(아이폰 원본)는 읽지 못합니다. 휴대폰에서 「호환성 우선」으로 보내거나 JPG로 바꿔 주세요.';
+    BUSY=true;$('bar').hidden=false;var done=0,total=list.length;
+    loadModel().then(function(){
+      return list.reduce(function(chain,f){return chain.then(function(){
+        return readImage(f).then(function(im){var p={name:f.name,bmp:im.bmp,w:im.w,h:im.h,faces:[]};return detect(p,false).then(function(faces){p.faces=faces;PHOTOS.push(p);addPhotoEl(p);});})
+          .catch(function(){$('loadNote').textContent=f.name+' — 읽지 못해 건너뜀';})
+          .then(function(){done++;$('barIn').style.width=Math.round(done/total*100)+'%';renderStat();});});},Promise.resolve());
+    }).then(function(){BUSY=false;$('bar').hidden=true;$('barIn').style.width='0';if(PHOTOS.length)$('loadNote').textContent=list.length+'장을 넣었습니다. 아래에서 얼굴을 확인하세요.';})
+    .catch(function(e){BUSY=false;$('bar').hidden=true;$('loadNote').textContent=e.message||'얼굴을 찾지 못했습니다.';});
+  }
+  $('btnFiles').addEventListener('click',function(){$('fileIn').click();});
+  $('btnDir').addEventListener('click',function(){$('dirIn').click();});
+  $('drop').addEventListener('click',function(){$('fileIn').click();});
+  $('drop').addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();$('fileIn').click();}});
+  $('fileIn').addEventListener('change',function(){addFiles($('fileIn').files);$('fileIn').value='';});
+  $('dirIn').addEventListener('change',function(){addFiles($('dirIn').files);$('dirIn').value='';});
+  $('btnClear').addEventListener('click',function(){PHOTOS=[];$('photos').textContent='';$('loadNote').textContent='';$('outNote').textContent='';renderStat();});
+  $('btnAllOn').addEventListener('click',function(){PHOTOS.forEach(function(p){p.faces.forEach(function(f){f.on=true;});});drawAll();});
+  $('btnAllOff').addEventListener('click',function(){PHOTOS.forEach(function(p){p.faces.forEach(function(f){f.on=false;});});drawAll();});
+  $('btnRedetect').addEventListener('click',function(){if(BUSY||!PHOTOS.length)return;BUSY=true;$('loadNote').textContent='더 꼼꼼히 찾는 중…';
+    PHOTOS.reduce(function(ch,p){return ch.then(function(){return detect(p,true).then(function(found){p.faces=mergeFaces(p.faces,found);paint(p.cv,p,true);});});},loadModel()).then(function(){BUSY=false;renderStat();$('loadNote').textContent='다시 찾았습니다. 손으로 그린 네모와 끈 얼굴은 그대로 두었습니다.';}).catch(function(e){BUSY=false;$('loadNote').textContent=e.message||'다시 찾지 못했습니다.';});});
+
+  /* ---------- 내려받기 ---------- */
+  function outName(n){return n.replace(/\.[^.]+$/,'')+'_가림.jpg';}
+  function render(p){
+    var max=+S.size,k=max&&Math.max(p.w,p.h)>max?max/Math.max(p.w,p.h):1;
+    var cv=document.createElement('canvas');cv.width=Math.round(p.w*k);cv.height=Math.round(p.h*k);paint(cv,p,false);
+    return new Promise(function(res){cv.toBlob(function(b){res(b);},'image/jpeg',0.9);});
+  }
+  function dl(blob,name){var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},3000);}
+  /* 압축 없는 zip */
+  var CRC=(function(){var t=new Uint32Array(256);for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}return t;})();
+  function crc32(b){var c=0xFFFFFFFF;for(var i=0;i<b.length;i++)c=CRC[(c^b[i])&0xFF]^(c>>>8);return (c^0xFFFFFFFF)>>>0;}
+  function zip(files){
+    var enc=new TextEncoder(),parts=[],cent=[],off=0;
+    function le(n,k){var a=new Uint8Array(k);for(var i=0;i<k;i++)a[i]=(n>>>(8*i))&0xFF;return a;}
+    function cat(arr){var n=arr.reduce(function(a,b){return a+b.length;},0),o=new Uint8Array(n),p=0;arr.forEach(function(b){o.set(b,p);p+=b.length;});return o;}
+    files.forEach(function(f){var name=enc.encode(f[0]),data=f[1],crc=crc32(data);
+      var local=cat([le(0x04034b50,4),le(20,2),le(0x0800,2),le(0,2),le(0,2),le(0x21,2),le(crc,4),le(data.length,4),le(data.length,4),le(name.length,2),le(0,2),name]);
+      parts.push(local,data);
+      cent.push(cat([le(0x02014b50,4),le(20,2),le(20,2),le(0x0800,2),le(0,2),le(0,2),le(0x21,2),le(crc,4),le(data.length,4),le(data.length,4),le(name.length,2),le(0,2),le(0,2),le(0,2),le(0,2),le(0,4),le(off,4),name]));
+      off+=local.length+data.length;});
+    var cd=cat(cent);return cat(parts.concat([cd,le(0x06054b50,4),le(0,2),le(0,2),le(files.length,2),le(files.length,2),le(cd.length,4),le(off,4),le(0,2)]));
+  }
+  $('btnZip').addEventListener('click',function(){if(!PHOTOS.length)return;$('outNote').textContent='만드는 중…';
+    PHOTOS.reduce(function(ch,p){return ch.then(function(arr){return render(p).then(function(b){return b.arrayBuffer();}).then(function(buf){arr.push([outName(p.name),new Uint8Array(buf)]);return arr;});});},Promise.resolve([]))
+      .then(function(arr){var d=new Date(),ymd=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');dl(new Blob([zip(arr)],{type:'application/zip'}),'얼굴가린사진_'+ymd+'.zip');$('outNote').textContent=arr.length+'장을 zip으로 내려받았습니다. 촬영 위치·기기 정보는 들어 있지 않습니다.';})
+      .catch(function(){$('outNote').textContent='만들지 못했습니다. 사진이 너무 크면 저장 크기를 2000px로 줄여 보세요.';});});
+  $('btnEach').addEventListener('click',function(){if(!PHOTOS.length)return;if(PHOTOS.length>20&&!confirm(PHOTOS.length+'장을 한 장씩 내려받습니다. 계속할까요?'))return;
+    PHOTOS.reduce(function(ch,p,i){return ch.then(function(){return render(p).then(function(b){dl(b,outName(p.name));return new Promise(function(r){setTimeout(r,400);});});});},Promise.resolve()).then(function(){$('outNote').textContent=PHOTOS.length+'장을 내려받았습니다.';});});
+
+  $('btnDraw').addEventListener('click',function(){var on=document.body.classList.toggle('draw');this.classList.toggle('on',on);this.setAttribute('aria-pressed',on?'true':'false');this.textContent=on?'네모 그리기 끄기 (화면 움직이기)':'손가락으로 네모 그리기';});
+  renderOpts();renderStat();
+  if(!window.createImageBitmap||!document.createElement('canvas').getContext)$('loadNote').textContent='이 브라우저는 지원하지 않습니다. 크롬·엣지를 써 주세요.';
+  window._fm={addFiles:addFiles,photos:function(){return PHOTOS;}};
+})();
+</script>
+<script src="../drop.js"></script>
+<script src="../videos.js?v=5"></script>
+</body>
+</html>

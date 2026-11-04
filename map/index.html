@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>약도 그리기 | 사회복지사 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="틀을 고르고 역·출구·버스정류장·건물·우리 기관을 끌어다 놓으면 초대장·안내문용 약도 그림이 됩니다. 주소로 네이버·카카오 지도 QR과 오시는 길 글까지.">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/map/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="약도 그리기 | 사회복지사 업무 도구">
+<meta property="og:description" content="틀을 고르고 역·출구·버스정류장·건물·우리 기관을 끌어다 놓으면 초대장·안내문용 약도 그림이 됩니다. 주소로 네이버·카카오 지도 QR과 오시는 길 글까지.">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/map/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --red:#E63946; --green:#1F8A4C;
+  --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC;
+  --text:#1A2B50; --muted:#5B6885;
+  --blue-bg:#E8F0FF; --amber:#8A5A00; --amber-bg:#FFF1CC; --green-bg:#E3F5EA; --btn-text:#FFFFFF;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#27407A; --red:#FF6B76; --green:#5FD08E;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --green-bg:#123524; --btn-text:#0E1630;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1400px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
+.lead{margin:0 0 14px;color:var(--muted)}
+.layout{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:1050px){.layout{grid-template-columns:400px minmax(0,1fr);align-items:start}.right{position:sticky;top:10px}}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 8px;font-size:19px;display:flex;align-items:center;gap:8px}
+.card h2 .no{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--blue);color:var(--btn-text);font-size:14px;flex:none}
+.sub{margin:0 0 10px;color:var(--muted);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{min-height:38px;padding:0 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:600;font-size:14px}
+.chips button.on{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.tools{display:grid;gap:6px;grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}
+.tools button{min-height:44px;padding:4px 8px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:600;font-size:14px;display:flex;align-items:center;gap:6px;text-align:left}
+.tools button i{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:6px;color:#fff;font-style:normal;font-size:12px;font-weight:800;flex:none}
+.tools button.on{border-color:var(--red);background:#FDECEE;color:var(--red)}
+.grp{margin:12px 0 6px;font-size:13px;font-weight:800;color:var(--muted)}
+.field{display:block;margin-bottom:8px}
+.field>span{display:block;font-size:13px;color:var(--muted);margin-bottom:2px}
+.in,select.in,textarea.in{width:100%;min-height:40px;padding:6px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg)}
+textarea.in{min-height:80px;resize:vertical;line-height:1.5}
+.row2{display:grid;gap:8px;grid-template-columns:1fr 1fr}
+.btn{min-height:40px;padding:0 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.btn-main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.btn-del{color:var(--red)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.note{font-size:14px;color:var(--muted);margin:6px 0 0}
+.hint{font-size:14px;color:var(--amber);background:var(--amber-bg);border-radius:10px;padding:6px 10px;margin:0 0 8px}
+.stage{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px}
+#svg{display:block;width:100%;height:auto;background:#F7F6F1;border-radius:10px;touch-action:none;user-select:none;-webkit-user-select:none}
+#svg.routing{cursor:crosshair}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.bar .grow{flex:1}
+.out{white-space:pre-wrap;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px;font-size:14px;margin:6px 0 0}
+.qrrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.qrrow canvas{width:110px;height:110px;border-radius:8px;background:#fff;border:1px solid var(--line)}
+.links a{display:block;font-size:14px;color:var(--blue);word-break:break-all}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20;max-width:calc(100% - 32px)}
+.toast.on{opacity:1}
+.hidden{display:none !important}
+.foot{margin-top:24px;padding-top:14px;border-top:1.5px solid var(--line);font-size:14px;color:var(--muted)}
+.foot p{margin:2px 0}
+</style>
+</head>
+<body>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › 홍보 도구</p>
+  <h1>약도 그리기</h1>
+  <p class="lead">틀을 고르고 역·출구·버스정류장·건물·우리 기관를 끌어다 놓으면 초대장·안내문에 넣을 약도 그림이 됩니다. 주소를 넣으면 네이버지도·카카오맵 링크와 QR, 오시는 길 안내 글까지 만들어 줍니다. 인터넷 지도 없이 이 PC에서만 그립니다.</p>
+
+  <div class="layout">
+    <div>
+      <section class="card">
+        <h2><span class="no">1</span>틀 고르기</h2>
+        <div class="chips" id="tpls"></div>
+        <p class="note">틀을 바꾸면 지금 그림은 지워집니다. 틀은 출발점일 뿐, 길·건물을 옮겨 우리 동네에 맞추세요.</p>
+      </section>
+
+      <section class="card">
+        <h2><span class="no">2</span>넣기</h2>
+        <div class="grp">길</div>
+        <div class="tools" id="roadTools"></div>
+        <div class="grp">장소 (누르면 가운데에 생깁니다)</div>
+        <div class="tools" id="placeTools"></div>
+        <div class="grp">경로·글자</div>
+        <div class="tools"><button type="button" id="btnRoute"><i style="background:#E63946">→</i>걷는 길 그리기</button><button type="button" id="btnText"><i style="background:#5B6885">가</i>글자</button></div>
+        <p class="hint hidden" id="routeHint">약도 위를 차례로 눌러 걷는 길을 찍으세요. 다 찍었으면 「다 그림」을 누르거나 마지막 점을 한 번 더 누르세요. <button class="btn" type="button" id="btnRouteDone" style="min-height:32px;margin-left:4px">다 그림</button></p>
+      </section>
+
+      <section class="card" id="editCard">
+        <h2><span class="no">3</span>고친 것</h2>
+        <div id="edit"><p class="note">약도에서 길·장소·글자를 누르면 여기서 이름을 고치고 지울 수 있습니다. 끌어서 옮기고, 길은 끝점(파란 동그라미)을 끌어 늘이거나 돌립니다. 키보드 Delete로도 지웁니다.</p></div>
+      </section>
+
+      <section class="card" id="infoCard">
+        <h2><span class="no">4</span>오시는 길 글·지도 QR</h2>
+        <div class="row2">
+          <label class="field"><span>기관 이름</span><input class="in" data-i="org" placeholder="○○복지관"></label>
+          <label class="field"><span>전화</span><input class="in" data-i="tel" placeholder="02-000-0000"></label>
+        </div>
+        <label class="field"><span>주소 (도로명)</span><input class="in" data-i="addr" placeholder="예: ○○시 ○○구 ○○로 123"></label>
+        <label class="field"><span>건물·층</span><input class="in" data-i="bld" placeholder="예: ○○빌딩 3층"></label>
+        <div class="row2">
+          <label class="field"><span>지하철</span><input class="in" data-i="subway" placeholder="예: ○○역 2번 출구"></label>
+          <label class="field"><span>걸어서</span><input class="in" data-i="walk" placeholder="예: 5분 (약 300m)"></label>
+        </div>
+        <div class="row2">
+          <label class="field"><span>버스 정류장</span><input class="in" data-i="busStop" placeholder="예: ○○사거리"></label>
+          <label class="field"><span>버스 번호</span><input class="in" data-i="busNo" placeholder="예: 간선 000, 지선 0000"></label>
+        </div>
+        <label class="field"><span>주차</span><input class="in" data-i="parking" placeholder="예: 건물 주차장 2시간 무료 / 주차 어려움, 대중교통 이용"></label>
+        <label class="field"><span>걸어오는 길 (순서대로, 줄마다)</span><textarea class="in" data-i="steps" placeholder="예:&#10;2번 출구로 나와 직진 200m&#10;○○편의점에서 오른쪽 골목&#10;파란 간판 ○○빌딩 3층"></textarea></label>
+        <div class="out" id="dirText"></div>
+        <div class="btns"><button class="btn" type="button" id="btnCopyDir">안내 글 복사</button><button class="btn" type="button" id="btnCopyAi">AI 주문서 복사</button></div>
+        <p class="note">AI 주문서: 위 사실만 써서 친절한 안내문으로 다듬어 달라는 주문입니다. AI는 실제 길을 모르므로 약도 그림은 맡기지 말고, 글만 다듬게 하세요.</p>
+        <div class="qrrow"><canvas id="qr" width="220" height="220" aria-label="지도 QR"></canvas><div class="links" id="links"><span class="note">주소를 넣으면 지도 링크와 QR이 생깁니다.</span></div></div>
+        <label class="field" style="margin-top:8px"><span>QR이 여는 지도</span><select class="in" id="qrMap"><option value="naver">네이버지도</option><option value="kakao">카카오맵</option></select></label>
+      </section>
+    </div>
+
+    <div class="right">
+      <div class="stage">
+        <svg id="svg" viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg" aria-label="약도"></svg>
+        <div class="bar">
+          <label style="display:flex;gap:6px;align-items:center;font-size:14px"><input type="checkbox" id="north" checked> 북쪽 표시</label>
+          <label style="display:flex;gap:6px;align-items:center;font-size:14px"><input type="checkbox" id="snap" checked> 칸에 맞추기</label>
+          <span class="grow"></span>
+          <button class="btn" type="button" id="btnUndo">되돌리기</button>
+          <button class="btn" type="button" id="btnPng">약도만 받기</button>
+          <button class="btn btn-main" type="button" id="btnCard">약도 + 안내·QR 받기</button>
+        </div>
+        <p class="note">받은 PNG는 인사장·초대장 도구의 「사진」 칸이나 한글 문서에 넣어 쓰세요. 정확한 위치는 함께 넣은 QR로 안내됩니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <p>약도는 이 PC 안에서만 그리고 어디에도 올리지 않습니다. 지도 링크는 누를 때만 네이버·카카오 지도가 열립니다. QR 만드는 작은 프로그램만 인터넷(cdnjs)에서 받습니다.</p>
+    <p>약도는 실제 거리·방향과 다를 수 있는 안내용 그림입니다. 정확한 위치는 지도 QR로 확인하도록 함께 넣어 주세요.</p>
+    <p>만든 사람: 서울강남지역자활센터 김태균</p>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+'use strict';
+(() => {
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function toast(m){ const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('on'), 2600); }
+const FONT = 'Pretendard, Malgun Gothic, Apple SD Gothic Neo, sans-serif';
+
+/* ── 장소 종류 ── */
+const KINDS = {
+  center:   { name: '우리 기관', color: '#E63946', sym: '★' },
+  subway:   { name: '지하철역', color: '#2E9E4F', sym: '역' },
+  exit:     { name: '출구', color: '#33415C', sym: '2' },
+  bus:      { name: '버스정류장', color: '#1F8A4C', sym: 'B' },
+  parking:  { name: '주차장', color: '#1A6EFF', sym: 'P' },
+  building: { name: '건물', color: '#8A94A6', sym: '■' },
+  store:    { name: '편의점·가게', color: '#F08C00', sym: '편' },
+  bank:     { name: '은행', color: '#5F3DC4', sym: '₩' },
+  hospital: { name: '병원·약국', color: '#C92A2A', sym: '+' },
+  school:   { name: '학교', color: '#0B7285', sym: '학' },
+  park:     { name: '공원', color: '#2B8A3E', sym: '♣' },
+  office:   { name: '관공서', color: '#364FC7', sym: '관' },
+  cross:    { name: '횡단보도', color: '#495057', sym: '≡' }
+};
+const LINES = [['#2E9E4F', '2호선'], ['#0052A4', '1호선'], ['#EF7C1C', '3호선'], ['#00A5DE', '4호선'], ['#996CAC', '5호선'], ['#CD7C2F', '6호선'], ['#747F00', '7호선'], ['#E6186C', '8호선'], ['#BDB092', '9호선'], ['#D31145', '신분당선'], ['#F5A200', '수인분당선'], ['#77C4A3', '경의중앙선'], ['#33415C', '기타']];
+const ROADS = { big: { name: '큰길', w: 46 }, small: { name: '골목', w: 20 }, rail: { name: '철길', w: 10 } };
+
+/* ── 상태 ── */
+const KEY = 'jahwal.map.v1';
+let uid = 1;
+const nid = () => 'e' + (uid++);
+let S = { els: [], info: {}, north: true, snap: true, qrMap: 'naver', tpl: 'station' };
+let sel = null, routing = null, undo = [];
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+function push(){ undo.push(JSON.stringify(S.els)); if (undo.length > 40) undo.shift(); }
+
+/* ── 틀 ── */
+const R = (kind, x1, y1, x2, y2, name) => ({ id: nid(), t: 'road', w: kind, x1, y1, x2, y2, name: name || '' });
+const P = (k, x, y, label, extra) => Object.assign({ id: nid(), t: 'place', k, x, y, label: label || '' }, extra || {});
+const TPLS = {
+  station: { name: '역에서 걸어오기', make: () => [
+    R('big', 0, 430, 1000, 430, '○○대로'), R('big', 560, 0, 560, 700, '○○로'), R('small', 560, 220, 1000, 220, ''),
+    P('subway', 300, 470, '○○역', { line: '#2E9E4F' }), P('exit', 430, 395, '2번 출구'), P('store', 630, 290, '○○편의점'),
+    P('building', 800, 160, '○○빌딩'), P('center', 800, 110, '○○복지관 3층'),
+    { id: nid(), t: 'route', pts: [[455, 395], [520, 395], [520, 255], [800, 255], [800, 205]], label: '도보 5분' } ] },
+  cross: { name: '큰길 사거리', make: () => [
+    R('big', 0, 350, 1000, 350, '○○로'), R('big', 500, 0, 500, 700, '○○길'),
+    P('cross', 500, 300, ''), P('bank', 380, 250, '○○은행'), P('hospital', 640, 460, '○○약국'), P('bus', 350, 400, '○○사거리 정류장'),
+    P('building', 690, 220, '○○빌딩'), P('center', 690, 170, '○○복지관 2층'),
+    { id: nid(), t: 'route', pts: [[375, 400], [460, 400], [460, 300], [690, 300], [690, 262]], label: '도보 3분' } ] },
+  bus: { name: '버스정류장 앞', make: () => [
+    R('big', 0, 380, 1000, 380, '○○로'), R('small', 620, 0, 620, 380, ''),
+    P('bus', 300, 430, '○○ 정류장'), P('school', 160, 240, '○○초등학교'), P('park', 840, 520, '○○공원'),
+    P('building', 760, 200, '○○빌딩'), P('center', 760, 150, '○○복지관'),
+    { id: nid(), t: 'route', pts: [[325, 430], [340, 340], [590, 340], [590, 200], [688, 200]], label: '도보 4분' } ] },
+  blank: { name: '빈 판', make: () => [P('center', 500, 330, '○○복지관')] }
+};
+
+/* ── 그리기 ── */
+const svg = $('svg');
+function roadSvg(e, selOn){
+  const R0 = ROADS[e.w] || ROADS.big, w = R0.w;
+  let s = '';
+  if (e.w === 'rail') {
+    s += `<line x1="${e.x1}" y1="${e.y1}" x2="${e.x2}" y2="${e.y2}" stroke="#495057" stroke-width="${w}" stroke-linecap="butt"/>`;
+    s += `<line x1="${e.x1}" y1="${e.y1}" x2="${e.x2}" y2="${e.y2}" stroke="#fff" stroke-width="${w - 4}" stroke-dasharray="16 16"/>`;
+  } else {
+    s += `<line x1="${e.x1}" y1="${e.y1}" x2="${e.x2}" y2="${e.y2}" stroke="#C3C9D3" stroke-width="${w + 6}" stroke-linecap="square"/>`;
+    s += `<line x1="${e.x1}" y1="${e.y1}" x2="${e.x2}" y2="${e.y2}" stroke="#FFFFFF" stroke-width="${w}" stroke-linecap="square"/>`;
+    if (e.w === 'big') s += `<line x1="${e.x1}" y1="${e.y1}" x2="${e.x2}" y2="${e.y2}" stroke="#E2C044" stroke-width="2.5" stroke-dasharray="22 14"/>`;
+  }
+  if (e.name) {
+    let a = Math.atan2(e.y2 - e.y1, e.x2 - e.x1) * 180 / Math.PI; if (a > 90) a -= 180; if (a < -90) a += 180;
+    const len = Math.hypot(e.x2 - e.x1, e.y2 - e.y1), mx = e.x1 + (e.x2 - e.x1) * 0.18 + 0, my = e.y1 + (e.y2 - e.y1) * 0.18;
+    const px = len > 400 ? mx : (e.x1 + e.x2) / 2, py = len > 400 ? my : (e.y1 + e.y2) / 2;
+    s += `<text x="${px}" y="${py}" transform="rotate(${a} ${px} ${py})" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-size="${e.w === 'big' ? 20 : 15}" font-weight="700" fill="#6B7280">${esc(e.name)}</text>`;
+  }
+  const hit = `<line x1="${e.x1}" y1="${e.y1}" x2="${e.x2}" y2="${e.y2}" stroke="transparent" stroke-width="${Math.max(w, 24)}" data-id="${e.id}" style="cursor:move"/>`;
+  let h = '';
+  if (selOn) h = `<line x1="${e.x1}" y1="${e.y1}" x2="${e.x2}" y2="${e.y2}" stroke="#1A6EFF" stroke-width="2" stroke-dasharray="6 5"/>`
+    + `<circle cx="${e.x1}" cy="${e.y1}" r="11" fill="#1A6EFF" stroke="#fff" stroke-width="3" data-id="${e.id}" data-h="1" style="cursor:grab"/>`
+    + `<circle cx="${e.x2}" cy="${e.y2}" r="11" fill="#1A6EFF" stroke="#fff" stroke-width="3" data-id="${e.id}" data-h="2" style="cursor:grab"/>`;
+  return { base: s + hit, sel: h };
+}
+function textW(t, size){ let w = 0; for (const ch of String(t)) w += /[\u0000-ÿ]/.test(ch) ? size * 0.58 : size * 0.98; return w; }
+function placeSvg(e, selOn){
+  const K = KINDS[e.k] || KINDS.building; let s = '';
+  const lab = e.label || '';
+  if (e.k === 'building') {
+    const fs = 18, w = Math.max(120, textW(lab, fs) + 30), h = 64;
+    s += `<rect x="${e.x - w / 2}" y="${e.y - h / 2}" width="${w}" height="${h}" rx="6" fill="#E9ECEF" stroke="#ADB5BD" stroke-width="2"/>`;
+    if (lab) s += `<text x="${e.x}" y="${e.y}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-size="${fs}" font-weight="700" fill="#495057">${esc(lab)}</text>`;
+  } else if (e.k === 'center') {
+    const fs = 21, w = textW(lab, fs) + 64, h = 50;
+    s += `<rect x="${e.x - w / 2 + 3}" y="${e.y - h / 2 + 4}" width="${w}" height="${h}" rx="25" fill="rgba(0,0,0,.18)"/>`;
+    s += `<rect x="${e.x - w / 2}" y="${e.y - h / 2}" width="${w}" height="${h}" rx="25" fill="#E63946"/>`;
+    s += `<text x="${e.x - w / 2 + 28}" y="${e.y + 1}" text-anchor="middle" dominant-baseline="central" font-size="26" fill="#FFE066">★</text>`;
+    s += `<text x="${e.x + 14}" y="${e.y + 1}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-size="${fs}" font-weight="800" fill="#fff">${esc(lab)}</text>`;
+    s += `<path d="M ${e.x - 10} ${e.y + h / 2 - 1} L ${e.x} ${e.y + h / 2 + 16} L ${e.x + 10} ${e.y + h / 2 - 1} Z" fill="#E63946"/>`;
+  } else if (e.k === 'subway') {
+    const c = e.line || K.color, fs = 20;
+    s += `<circle cx="${e.x}" cy="${e.y}" r="24" fill="#fff" stroke="${c}" stroke-width="7"/>`;
+    s += `<text x="${e.x}" y="${e.y + 1}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-size="17" font-weight="800" fill="${c}">역</text>`;
+    if (lab) { const w = textW(lab, fs) + 22; s += `<rect x="${e.x + 30}" y="${e.y - 17}" width="${w}" height="34" rx="17" fill="${c}"/><text x="${e.x + 30 + w / 2}" y="${e.y + 1}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-size="${fs}" font-weight="800" fill="#fff">${esc(lab)}</text>`; }
+  } else if (e.k === 'exit') {
+    const num = (lab.match(/\d+/) || ['?'])[0];
+    s += `<rect x="${e.x - 17}" y="${e.y - 17}" width="34" height="34" rx="6" fill="#FFD43B" stroke="#33415C" stroke-width="2.5"/>`;
+    s += `<text x="${e.x}" y="${e.y + 1}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-size="19" font-weight="900" fill="#33415C">${esc(num)}</text>`;
+    if (lab) s += `<text x="${e.x}" y="${e.y - 30}" text-anchor="middle" font-family="${FONT}" font-size="16" font-weight="700" fill="#33415C">${esc(lab)}</text>`;
+  } else if (e.k === 'cross') {
+    for (let i = -2; i <= 2; i++) s += `<rect x="${e.x - 26}" y="${e.y + i * 9 - 3}" width="52" height="5" fill="#fff" stroke="#868E96" stroke-width="1"/>`;
+    if (lab) s += `<text x="${e.x}" y="${e.y - 32}" text-anchor="middle" font-family="${FONT}" font-size="15" font-weight="700" fill="#495057">${esc(lab)}</text>`;
+  } else {
+    s += `<circle cx="${e.x}" cy="${e.y}" r="19" fill="${K.color}" stroke="#fff" stroke-width="3"/>`;
+    s += `<text x="${e.x}" y="${e.y + 1}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-size="${K.sym.length > 1 ? 13 : 18}" font-weight="900" fill="#fff">${esc(K.sym)}</text>`;
+    if (lab) { const fs = 17, w = textW(lab, fs) + 16; s += `<rect x="${e.x - w / 2}" y="${e.y + 24}" width="${w}" height="28" rx="6" fill="rgba(255,255,255,.92)" stroke="#DEE2E6"/><text x="${e.x}" y="${e.y + 38}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-size="${fs}" font-weight="700" fill="#212529">${esc(lab)}</text>`; }
+  }
+  const bb = placeBox(e);
+  const hit = `<rect x="${bb.x}" y="${bb.y}" width="${bb.w}" height="${bb.h}" fill="transparent" data-id="${e.id}" style="cursor:move"/>`;
+  const h = selOn ? `<rect x="${bb.x - 4}" y="${bb.y - 4}" width="${bb.w + 8}" height="${bb.h + 8}" rx="8" fill="none" stroke="#1A6EFF" stroke-width="2" stroke-dasharray="6 5"/>` : '';
+  return { base: s + hit, sel: h };
+}
+function placeBox(e){
+  const lab = e.label || '';
+  if (e.k === 'building') { const w = Math.max(120, textW(lab, 18) + 30); return { x: e.x - w / 2, y: e.y - 32, w, h: 64 }; }
+  if (e.k === 'center') { const w = textW(lab, 21) + 64; return { x: e.x - w / 2, y: e.y - 25, w, h: 66 }; }
+  if (e.k === 'subway') { const w = lab ? textW(lab, 20) + 22 + 56 : 52; return { x: e.x - 26, y: e.y - 26, w, h: 52 }; }
+  if (e.k === 'exit') { const w = Math.max(40, textW(lab, 16)); return { x: e.x - w / 2, y: e.y - 46, w, h: 66 }; }
+  if (e.k === 'cross') return { x: e.x - 30, y: e.y - (lab ? 48 : 24), w: 60, h: lab ? 72 : 48 };
+  const w = Math.max(42, lab ? textW(lab, 17) + 16 : 42); return { x: e.x - w / 2, y: e.y - 22, w, h: lab ? 78 : 44 };
+}
+function routeSvg(e, selOn){
+  if (!e.pts || e.pts.length < 2) {
+    return { base: e.pts && e.pts[0] ? `<circle cx="${e.pts[0][0]}" cy="${e.pts[0][1]}" r="7" fill="#E63946"/>` : '', sel: '' };
+  }
+  const d = 'M ' + e.pts.map(p => p.join(' ')).join(' L ');
+  let s = `<path d="${d}" fill="none" stroke="#fff" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" opacity=".9"/>`;
+  s += `<path d="${d}" fill="none" stroke="#E63946" stroke-width="6" stroke-dasharray="14 9" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>`;
+  s += `<circle cx="${e.pts[0][0]}" cy="${e.pts[0][1]}" r="8" fill="#E63946" stroke="#fff" stroke-width="3"/>`;
+  if (e.label) {
+    let best = 0, bi = 0; for (let i = 1; i < e.pts.length; i++) { const L = Math.hypot(e.pts[i][0] - e.pts[i - 1][0], e.pts[i][1] - e.pts[i - 1][1]); if (L > best) { best = L; bi = i; } }
+    const mx = (e.pts[bi][0] + e.pts[bi - 1][0]) / 2, my = (e.pts[bi][1] + e.pts[bi - 1][1]) / 2, fs = 17, w = textW(e.label, fs) + 20;
+    s += `<rect x="${mx - w / 2}" y="${my - 30}" width="${w}" height="30" rx="15" fill="#E63946"/><text x="${mx}" y="${my - 14}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-size="${fs}" font-weight="800" fill="#fff">${esc(e.label)}</text>`;
+  }
+  const hit = `<path d="${d}" fill="none" stroke="transparent" stroke-width="24" data-id="${e.id}" style="cursor:move"/>`;
+  let h = '';
+  if (selOn) h = e.pts.map((p, i) => `<circle cx="${p[0]}" cy="${p[1]}" r="9" fill="#1A6EFF" stroke="#fff" stroke-width="3" data-id="${e.id}" data-p="${i}" style="cursor:grab"/>`).join('');
+  return { base: s + hit, sel: h };
+}
+function textSvg(e, selOn){
+  const fs = e.size || 20, w = textW(e.label || '글자', fs);
+  const s = `<text x="${e.x}" y="${e.y}" text-anchor="middle" dominant-baseline="central" font-family="${FONT}" font-size="${fs}" font-weight="700" fill="${e.color || '#212529'}" stroke="#F7F6F1" stroke-width="5" paint-order="stroke">${esc(e.label || '글자')}</text>`;
+  const hit = `<rect x="${e.x - w / 2 - 6}" y="${e.y - fs / 2 - 6}" width="${w + 12}" height="${fs + 12}" fill="transparent" data-id="${e.id}" style="cursor:move"/>`;
+  const h = selOn ? `<rect x="${e.x - w / 2 - 8}" y="${e.y - fs / 2 - 8}" width="${w + 16}" height="${fs + 16}" rx="6" fill="none" stroke="#1A6EFF" stroke-width="2" stroke-dasharray="6 5"/>` : '';
+  return { base: s + hit, sel: h };
+}
+function mapSvg(forExport){
+  const order = { road: 0, route: 2, place: 1, text: 3 };
+  const els = [...S.els].sort((a, b) => order[a.t] - order[b.t]);
+  let body = '', top = '';
+  els.forEach(e => {
+    const on = !forExport && sel === e.id;
+    const r = e.t === 'road' ? roadSvg(e, on) : e.t === 'place' ? placeSvg(e, on) : e.t === 'route' ? routeSvg(e, on) : textSvg(e, on);
+    body += r.base; top += r.sel;
+  });
+  const north = S.north ? `<g transform="translate(940 70)"><circle r="30" fill="#fff" stroke="#ADB5BD" stroke-width="2"/><path d="M 0 -22 L 10 6 L 0 0 L -10 6 Z" fill="#E63946"/><path d="M 0 22 L 10 6 L 0 0 L -10 6 Z" fill="#ADB5BD"/><text y="-35" text-anchor="middle" font-family="${FONT}" font-size="15" font-weight="800" fill="#495057">N</text></g>` : '';
+  const defs = `<defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#E63946"/></marker></defs>`;
+  const bg = `<rect x="0" y="0" width="1000" height="700" fill="#F7F6F1"/>`;
+  return defs + bg + body + top + north;
+}
+function render(){ svg.innerHTML = mapSvg(false); renderEdit(); save(); }
+
+/* ── 끌기 ── */
+function pt(ev){ const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY; const q = p.matrixTransform(svg.getScreenCTM().inverse()); return [q.x, q.y]; }
+const sn = v => S.snap ? Math.round(v / 10) * 10 : Math.round(v);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+let drag = null;
+svg.addEventListener('pointerdown', ev => {
+  const [x, y] = pt(ev);
+  if (routing) {
+    const r = S.els.find(e => e.id === routing); const last = r.pts[r.pts.length - 1];
+    if (last && Math.hypot(last[0] - x, last[1] - y) < 14 && r.pts.length > 1) { endRoute(); return; }
+    r.pts.push([sn(clamp(x, 0, 1000)), sn(clamp(y, 0, 700))]); render(); return;
+  }
+  const t = ev.target.closest('[data-id]');
+  if (!t) { if (sel) { sel = null; render(); } return; }
+  const e = S.els.find(x => x.id === t.dataset.id); if (!e) return;
+  push();
+  sel = e.id;
+  drag = { e, h: t.dataset.h, p: t.dataset.p, x0: x, y0: y, orig: JSON.parse(JSON.stringify(e)) };
+  svg.setPointerCapture(ev.pointerId); render(); ev.preventDefault();
+});
+svg.addEventListener('pointermove', ev => {
+  if (!drag) return;
+  const [x, y] = pt(ev), dx = x - drag.x0, dy = y - drag.y0, e = drag.e, o = drag.orig;
+  if (e.t === 'road') {
+    if (drag.h === '1') { e.x1 = sn(clamp(o.x1 + dx, 0, 1000)); e.y1 = sn(clamp(o.y1 + dy, 0, 700)); }
+    else if (drag.h === '2') { e.x2 = sn(clamp(o.x2 + dx, 0, 1000)); e.y2 = sn(clamp(o.y2 + dy, 0, 700)); }
+    else { e.x1 = sn(o.x1 + dx); e.y1 = sn(o.y1 + dy); e.x2 = sn(o.x2 + dx); e.y2 = sn(o.y2 + dy); }
+  } else if (e.t === 'route') {
+    if (drag.p != null) { e.pts[+drag.p] = [sn(clamp(o.pts[+drag.p][0] + dx, 0, 1000)), sn(clamp(o.pts[+drag.p][1] + dy, 0, 700))]; }
+    else e.pts = o.pts.map(p => [sn(p[0] + dx), sn(p[1] + dy)]);
+  } else { e.x = sn(clamp(o.x + dx, 10, 990)); e.y = sn(clamp(o.y + dy, 10, 690)); }
+  svg.innerHTML = mapSvg(false);
+});
+const stopDrag = () => { if (drag) { drag = null; render(); } };
+svg.addEventListener('pointerup', stopDrag); svg.addEventListener('pointercancel', stopDrag);
+document.addEventListener('keydown', ev => {
+  if (!sel || /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
+  const e = S.els.find(x => x.id === sel); if (!e) return;
+  if (ev.key === 'Delete' || ev.key === 'Backspace') { push(); S.els = S.els.filter(x => x.id !== sel); sel = null; render(); ev.preventDefault(); return; }
+  const mv = { ArrowLeft: [-10, 0], ArrowRight: [10, 0], ArrowUp: [0, -10], ArrowDown: [0, 10] }[ev.key]; if (!mv) return;
+  push(); if (e.t === 'road') { e.x1 += mv[0]; e.x2 += mv[0]; e.y1 += mv[1]; e.y2 += mv[1]; } else if (e.t === 'route') e.pts = e.pts.map(p => [p[0] + mv[0], p[1] + mv[1]]); else { e.x += mv[0]; e.y += mv[1]; }
+  render(); ev.preventDefault();
+});
+
+/* ── 넣기 ── */
+$('roadTools').innerHTML = Object.entries(ROADS).map(([k, r]) => `<button type="button" data-road="${k}"><i style="background:${k === 'rail' ? '#495057' : '#ADB5BD'}">${k === 'big' ? '━' : k === 'small' ? '─' : '╪'}</i>${r.name} (가로)</button>`).join('')
+  + `<button type="button" data-road="big" data-v="1"><i style="background:#ADB5BD">┃</i>큰길 (세로)</button><button type="button" data-road="small" data-v="1"><i style="background:#ADB5BD">│</i>골목 (세로)</button>`;
+$('placeTools').innerHTML = Object.entries(KINDS).map(([k, K]) => `<button type="button" data-place="${k}"><i style="background:${K.color}">${K.sym}</i>${K.name}</button>`).join('');
+$('roadTools').addEventListener('click', ev => {
+  const b = ev.target.closest('[data-road]'); if (!b) return; push();
+  const e = b.dataset.v ? R(b.dataset.road, 500, 80, 500, 620, '') : R(b.dataset.road, 120, 350, 880, 350, '');
+  S.els.push(e); sel = e.id; render(); toast('길을 넣었습니다. 끝점을 끌어 길이·방향을 맞추세요');
+});
+$('placeTools').addEventListener('click', ev => {
+  const b = ev.target.closest('[data-place]'); if (!b) return; push();
+  const k = b.dataset.place, def = { center: '○○복지관', subway: '○○역', exit: '1번 출구', bus: '○○ 정류장', building: '○○빌딩', cross: '' }[k];
+  const e = P(k, 500 + (Math.random() * 60 - 30) | 0, 350 + (Math.random() * 60 - 30) | 0, def != null ? def : KINDS[k].name, k === 'subway' ? { line: '#2E9E4F' } : null);
+  S.els.push(e); sel = e.id; render();
+  const inp = document.querySelector('#edit [data-e="label"]'); if (inp) { inp.focus(); inp.select(); }
+});
+$('btnText').addEventListener('click', () => { push(); const e = { id: nid(), t: 'text', x: 500, y: 200, label: '여기에 글자', size: 20 }; S.els.push(e); sel = e.id; render(); const inp = document.querySelector('#edit [data-e="label"]'); if (inp) { inp.focus(); inp.select(); } });
+$('btnRoute').addEventListener('click', () => {
+  if (routing) { endRoute(); return; }
+  push(); const e = { id: nid(), t: 'route', pts: [], label: '도보 5분' }; S.els.push(e); routing = e.id; sel = e.id;
+  svg.classList.add('routing'); $('routeHint').classList.remove('hidden'); $('btnRoute').classList.add('on'); render();
+});
+function endRoute(){
+  const r = S.els.find(e => e.id === routing);
+  if (r && r.pts.length < 2) { S.els = S.els.filter(e => e.id !== routing); sel = null; toast('점이 두 개 이상이어야 길이 됩니다'); }
+  routing = null; svg.classList.remove('routing'); $('routeHint').classList.add('hidden'); $('btnRoute').classList.remove('on'); render();
+}
+$('btnRouteDone').addEventListener('click', endRoute);
+
+/* ── 고치기 ── */
+function renderEdit(){
+  const e = S.els.find(x => x.id === sel), box = $('edit');
+  if (!e) { box.innerHTML = '<p class="note">약도에서 길·장소·글자를 누르면 여기서 이름을 고치고 지울 수 있습니다. 끌어서 옮기고, 길은 끝점(파란 동그라미)을 끌어 늘이거나 돌립니다. 키보드 Delete로도 지웁니다.</p>'; return; }
+  if (document.activeElement && box.contains(document.activeElement)) return;
+  let h = '';
+  if (e.t === 'road') {
+    h += `<label class="field"><span>길 이름</span><input class="in" data-e="name" value="${esc(e.name)}" placeholder="예: ○○대로"></label>`;
+    h += `<label class="field"><span>종류</span><select class="in" data-e="w">${Object.entries(ROADS).map(([k, r]) => `<option value="${k}"${k === e.w ? ' selected' : ''}>${r.name}</option>`).join('')}</select></label>`;
+  } else if (e.t === 'place') {
+    h += `<label class="field"><span>${KINDS[e.k].name} 이름</span><input class="in" data-e="label" value="${esc(e.label)}"></label>`;
+    if (e.k === 'subway') h += `<label class="field"><span>노선 색</span><select class="in" data-e="line">${LINES.map(([c, n]) => `<option value="${c}"${c === e.line ? ' selected' : ''}>${n}</option>`).join('')}</select></label>`;
+  } else if (e.t === 'route') {
+    h += `<label class="field"><span>경로 글자</span><input class="in" data-e="label" value="${esc(e.label)}" placeholder="예: 도보 5분"></label><p class="note">파란 점을 끌어 꺾이는 곳을 옮깁니다.</p>`;
+  } else {
+    h += `<label class="field"><span>글자</span><input class="in" data-e="label" value="${esc(e.label)}"></label>`;
+    h += `<label class="field"><span>크기</span><select class="in" data-e="size">${[16, 20, 26, 34].map(n => `<option value="${n}"${n === (e.size || 20) ? ' selected' : ''}>${n}</option>`).join('')}</select></label>`;
+  }
+  h += '<div class="btns"><button class="btn btn-del" type="button" id="btnDel">지우기</button><button class="btn" type="button" id="btnDup">하나 더</button><button class="btn" type="button" id="btnDesel">고르기 끝</button></div>';
+  box.innerHTML = h;
+  $('btnDel').onclick = () => { push(); S.els = S.els.filter(x => x.id !== sel); sel = null; render(); };
+  $('btnDup').onclick = () => { push(); const c = JSON.parse(JSON.stringify(e)); c.id = nid(); if (c.t === 'road') { c.y1 += 60; c.y2 += 60; } else if (c.t === 'route') c.pts = c.pts.map(p => [p[0] + 30, p[1] + 30]); else { c.x += 40; c.y += 40; } S.els.push(c); sel = c.id; render(); };
+  $('btnDesel').onclick = () => { sel = null; render(); };
+}
+$('edit').addEventListener('input', ev => {
+  const k = ev.target.dataset.e; if (!k) return; const e = S.els.find(x => x.id === sel); if (!e) return;
+  e[k] = k === 'size' ? +ev.target.value : ev.target.value; svg.innerHTML = mapSvg(false); save();
+});
+$('edit').addEventListener('change', ev => { const k = ev.target.dataset.e; if (k === 'w' || k === 'line' || k === 'size') { push(); render(); } });
+$('btnUndo').addEventListener('click', () => { if (!undo.length) { toast('되돌릴 것이 없습니다'); return; } S.els = JSON.parse(undo.pop()); sel = null; render(); });
+
+/* ── 틀 ── */
+function renderTpls(){
+  $('tpls').innerHTML = Object.entries(TPLS).map(([k, t]) => `<button type="button" data-t="${k}" class="${S.tpl === k ? 'on' : ''}">${t.name}</button>`).join('');
+}
+$('tpls').addEventListener('click', ev => {
+  const b = ev.target.closest('[data-t]'); if (!b) return;
+  if (S.els.length > 1 && !confirm('지금 그림을 지우고 「' + TPLS[b.dataset.t].name + '」 틀로 바꿀까요?')) return;
+  push(); S.tpl = b.dataset.t; S.els = TPLS[S.tpl].make(); sel = null; renderTpls(); render();
+});
+$('north').addEventListener('change', e => { S.north = e.target.checked; render(); });
+$('snap').addEventListener('change', e => { S.snap = e.target.checked; save(); });
+
+/* ── 오시는 길 글 ── */
+const I = () => S.info;
+function dirText(){
+  const i = I(), L = [];
+  if (i.org) L.push('[' + i.org + ' 오시는 길]');
+  if (i.addr) L.push('■ 주소: ' + i.addr + (i.bld ? ' (' + i.bld + ')' : ''));
+  else if (i.bld) L.push('■ 건물: ' + i.bld);
+  if (i.subway) L.push('■ 지하철: ' + i.subway + (i.walk ? '에서 걸어서 ' + i.walk : ''));
+  if (i.busStop || i.busNo) L.push('■ 버스: ' + (i.busStop ? i.busStop + ' 정류장 하차' : '') + (i.busNo ? (i.busStop ? ' (' : '') + i.busNo + (i.busStop ? ')' : '') : ''));
+  if (i.parking) L.push('■ 주차: ' + i.parking);
+  const st = String(i.steps || '').split('\n').map(s => s.trim()).filter(Boolean);
+  if (st.length) { L.push('■ 걸어오는 길'); st.forEach((s, k) => L.push('  ' + (k + 1) + ') ' + s)); }
+  if (i.tel) L.push('■ 문의: ' + i.tel);
+  if (i.addr) L.push('■ 지도: ' + mapUrl(S.qrMap));
+  return L.join('\n');
+}
+function aiPrompt(){
+  return '아래 [사실]만 써서 행사 초대장·안내문에 넣을 「오시는 길」 안내 글을 써 주세요.\n\n[지킬 것]\n'
+    + '1. [사실]에 없는 길·건물·출구·버스 번호·거리·시간은 지어내지 마세요. 꼭 필요한데 없으면 [확인 필요]라고 쓰세요.\n'
+    + '2. 주소·역 이름·출구 번호·버스 번호·전화번호는 글자 그대로 쓰세요.\n'
+    + '3. 처음 오는 어르신도 따라올 수 있게 짧은 문장으로, 순서대로 써 주세요.\n'
+    + '4. 대중교통(지하철·버스) → 걸어오는 길 → 주차 → 문의 순서로, 10줄 안팎으로.\n'
+    + '5. 끝에 「더 알려 주면 좋은 것」을 질문 2개로 적어 주세요(예: 눈에 띄는 간판, 엘리베이터 여부).\n\n[사실]\n' + dirText();
+}
+function mapUrl(kind){ const q = encodeURIComponent((I().addr || '').trim()); return kind === 'kakao' ? 'https://map.kakao.com/link/search/' + q : 'https://map.naver.com/p/search/' + q; }
+function drawQR(canvas, text, px){
+  const ctx = canvas.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  if (!text || typeof qrcode !== 'function') return false;
+  const q = qrcode(0, 'M'); q.addData(text); q.make();
+  const n = q.getModuleCount(), size = px || canvas.width, cell = Math.floor(size / (n + 8)), off = Math.floor((size - cell * n) / 2);
+  ctx.fillStyle = '#1A2B50';
+  for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) ctx.fillRect(off + c * cell, off + r * cell, cell, cell);
+  return true;
+}
+function renderInfo(){
+  $('dirText').textContent = dirText() || '위 칸을 채우면 여기에 안내 글이 만들어집니다.';
+  const addr = (I().addr || '').trim();
+  $('links').innerHTML = addr ? `<a href="${mapUrl('naver')}" target="_blank" rel="noopener">네이버지도에서 보기 ↗</a><a href="${mapUrl('kakao')}" target="_blank" rel="noopener">카카오맵에서 보기 ↗</a><span class="note">링크를 눌러 위치가 맞는지 꼭 확인하세요.</span>` : '<span class="note">주소를 넣으면 지도 링크와 QR이 생깁니다.</span>';
+  if (!drawQR($('qr'), addr ? mapUrl(S.qrMap) : '', 220) && addr) $('links').insertAdjacentHTML('beforeend', '<span class="note">QR 프로그램을 불러오지 못했습니다(인터넷 연결 확인).</span>');
+  save();
+}
+document.querySelectorAll('[data-i]').forEach(el => el.addEventListener('input', () => { S.info[el.dataset.i] = el.value; renderInfo(); }));
+$('qrMap').addEventListener('change', e => { S.qrMap = e.target.value; renderInfo(); });
+function copy(text, msg){
+  const fb = () => { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); toast(msg); } catch (e) { toast('복사가 막혔습니다'); } ta.remove(); };
+  try { if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(() => toast(msg), fb); else fb(); } catch (e) { fb(); }
+}
+$('btnCopyDir').addEventListener('click', () => { const t = dirText(); if (!t) { toast('먼저 칸을 채우세요'); return; } copy(t, '안내 글을 복사했습니다'); });
+$('btnCopyAi').addEventListener('click', () => { if (!dirText()) { toast('먼저 칸을 채우세요'); return; } copy(aiPrompt(), 'AI 주문서를 복사했습니다. AI 대화창에 붙여 넣으세요'); });
+
+/* ── 내보내기 ── */
+function dl(blob, name){ const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
+function mapImage(scale){
+  return new Promise((res, rej) => {
+    const xml = `<svg xmlns="http://www.w3.org/2000/svg" width="${1000 * scale}" height="${700 * scale}" viewBox="0 0 1000 700">${mapSvg(true)}</svg>`;
+    const url = URL.createObjectURL(new Blob([xml], { type: 'image/svg+xml;charset=utf-8' }));
+    const im = new Image(); im.onload = () => { URL.revokeObjectURL(url); res(im); }; im.onerror = rej; im.src = url;
+  });
+}
+const fname = s => (I().org ? I().org.replace(/[\\/:*?"<>|]/g, '') + '_' : '') + s + '.png';
+$('btnPng').addEventListener('click', async () => {
+  const sc = 1.6, im = await mapImage(sc), c = document.createElement('canvas'); c.width = 1000 * sc; c.height = 700 * sc;
+  c.getContext('2d').drawImage(im, 0, 0); c.toBlob(b => { dl(b, fname('약도')); toast('약도 그림을 받았습니다'); }, 'image/png');
+});
+function wrapLines(ctx, text, maxW){
+  const out = [];
+  String(text).split('\n').forEach(para => { let line = ''; for (const w of para.split(/(\s+)/)) { if (!w) continue; const t = line + w; if (ctx.measureText(t).width <= maxW || !line.trim()) { line = t; continue; } out.push(line.trimEnd()); line = w.trimStart(); } out.push(line.trimEnd()); });
+  return out;
+}
+$('btnCard').addEventListener('click', async () => {
+  const i = I(), sc = 1.6, W = 1000 * sc, mapH = 700 * sc, pad = 56, qrS = 300;
+  const lines = dirText().split('\n').filter(l => !/^■ 지도:/.test(l) && !/^\[/.test(l));
+  const c = document.createElement('canvas'), ctx = c.getContext('2d');
+  ctx.font = '30px ' + FONT;
+  const textW0 = W - pad * 3 - (i.addr ? qrS : 0);
+  const wrapped = lines.flatMap(l => wrapLines(ctx, l, textW0));
+  const infoH = Math.max(i.addr ? qrS + 90 : 0, 110 + wrapped.length * 46) + pad;
+  c.width = W; c.height = mapH + infoH;
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+  ctx.drawImage(await mapImage(sc), 0, 0);
+  ctx.fillStyle = '#1A2B50'; ctx.font = '800 40px ' + FONT; ctx.textBaseline = 'top';
+  ctx.fillText((i.org ? i.org + ' ' : '') + '오시는 길', pad, mapH + pad);
+  ctx.font = '30px ' + FONT; ctx.fillStyle = '#212529';
+  wrapped.forEach((l, k) => ctx.fillText(l, pad, mapH + pad + 66 + k * 46));
+  if (i.addr) {
+    const qc = document.createElement('canvas'); qc.width = qc.height = qrS; drawQR(qc, mapUrl(S.qrMap), qrS);
+    const qx = W - pad - qrS, qy = mapH + pad;
+    ctx.drawImage(qc, qx, qy); ctx.font = '600 24px ' + FONT; ctx.fillStyle = '#5B6885'; ctx.textAlign = 'center';
+    ctx.fillText('휴대폰으로 찍으면 ' + (S.qrMap === 'kakao' ? '카카오맵' : '네이버지도'), qx + qrS / 2, qy + qrS + 10); ctx.textAlign = 'left';
+  }
+  ctx.strokeStyle = '#DEE2E6'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(0, mapH); ctx.lineTo(W, mapH); ctx.stroke();
+  c.toBlob(b => { dl(b, fname('오시는길')); toast('약도 + 안내 그림을 받았습니다'); }, 'image/png');
+});
+
+/* ── 시작 ── */
+try { const v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v && Array.isArray(v.els)) { S = Object.assign(S, v); uid = 1 + Math.max(0, ...S.els.map(e => +String(e.id).slice(1) || 0)); } } catch (e) {}
+if (!S.els.length) S.els = TPLS[S.tpl].make();
+document.querySelectorAll('[data-i]').forEach(el => { el.value = S.info[el.dataset.i] || ''; });
+$('north').checked = S.north; $('snap').checked = S.snap; $('qrMap').value = S.qrMap;
+renderTpls(); render(); renderInfo();
+if (location.hash === '#ai') { const c = $('infoCard'); if (c) setTimeout(() => c.scrollIntoView({ block: 'start' }), 100); }
+window._map = { S, render, renderInfo, dirText, mapSvg };
+})();
+</script>
+<script src="../videos.js?v=5"></script>
+</body>
+</html>
