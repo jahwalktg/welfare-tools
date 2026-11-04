@@ -3,6 +3,7 @@
    업무별 묶음은 ROLES. ☆·최근은 이 브라우저에만 저장(welfare-tools.mybox.v1). 아무것도 보내지 않는다. */
 (function () {
   var KW = {
+    'basic': '국기초 가늠표 국민기초생활보장 수급 가늠 소득인정액 생계급여 의료급여 주거급여 교육급여 기준중위소득 선정기준 부양의무자 근로소득공제 기본재산액 차상위 제도 복지제도 모의계산',
     'guide': '신입 안내서 처음 입사 신입 용어 사전 쉬운말 보조금 후원금 결산 예산 추경 이월금 품의 지출결의 4대보험 연차 취업규칙 인건비가이드라인 호봉 법정의무교육 운영위원회 시설평가 안전점검 희망이음 사례관리 한해달력 체크리스트 인수인계',
     'date-calc': '나이 만나이 생년월일 연령 기간 일수 개월수 평일수 공휴일 디데이 몇일 몇개월 계약기간 이용기간 18세 65세 청년 노인 아동 기한계산',
     'repeat-checklist': '할일 반복업무 체크리스트 매일 매주 매달 업무목록 루틴 보고기한',
@@ -43,14 +44,14 @@
     'gangnam': '강남구 강남 이음도구 공동도구 게시판 키워드 찾습니다 나눔 일정 프로그램 제안 시연 협의 시설네트워크 연계 의뢰'
   };
   var ROLES = [
-    ['case', '사례관리·상담', ['guide', 'mask-privacy', 'date-calc', 'list-compare', 'prompt-notice', 'prompt-guide', 'repeat-checklist', 'gangnam']],
+    ['case', '사례관리·상담', ['basic', 'guide', 'mask-privacy', 'date-calc', 'list-compare', 'prompt-notice', 'prompt-guide', 'repeat-checklist', 'gangnam']],
     ['prog', '프로그램·교육', ['attendance', 'cert-print', 'group-maker', 'random-pick', 'survey-tally', 'prompt-survey', 'break-timer', 'qr', 'file-tools', 'face-mask']],
     ['acct', '행정·회계', ['guide', 'repeat-checklist', 'leave-tracker', 'date-calc', 'excel', 'form-overlay', 'form-prompt', 'prompt-minutes', 'show-vote', 'shortcuts']],
     ['fund', '후원·홍보', ['newsletter', 'press', 'greeting', 'labels', 'face-mask', 'map', 'qr', 'prompt-directions']],
     ['fac', '총무·시설·안전', ['safety', 'safety-post', 'safety-links', 'repeat-checklist', 'leave-tracker', 'meeting-timer', 'labels']],
     ['new', '처음 왔어요', ['guide', 'ai-howto', 'repeat-checklist', 'mask-privacy', 'shortcuts', 'excel']]
   ];
-  var QUICK = ['신입 안내서', '만 나이', '명단 대조', '개인정보 가리기', '수료증 나누기', '주소 라벨', '소식지', '안내문 쉬운 말', '안전표지', '회의록'];
+  var QUICK = ['신입 안내서', '국기초 가늠', '만 나이', '명단 대조', '개인정보 가리기', '수료증 나누기', '주소 라벨', '소식지', '안내문 쉬운 말', '안전표지', '회의록'];
   var KEY = 'welfare-tools.mybox.v1';
 
   var root = document.getElementById('finder'); if (!root) return;
