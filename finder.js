@@ -41,7 +41,7 @@
     'break-timer': '쉬는시간 휴식 교육재개 타이머',
     'focus-timer': '집중 뽀모도로 타이머',
     'break-reminder': '스트레칭 휴식알림 눈쉬기',
-    'gangnam': '강남구 강남 이음도구 공동도구 게시판 키워드 찾습니다 나눔 일정 프로그램 제안 시연 협의 시설네트워크 연계 의뢰'
+    'gangnam': '지역공동도구 다른지역 틀나눔 강남구 강남 이음도구 공동도구 게시판 키워드 찾습니다 나눔 일정 프로그램 제안 시연 협의 시설네트워크 연계 의뢰'
   };
   var ROLES = [
     ['case', '사례관리·상담', ['basic', 'guide', 'mask-privacy', 'date-calc', 'list-compare', 'prompt-notice', 'prompt-guide', 'repeat-checklist', 'gangnam']],
