@@ -5,8 +5,9 @@
   var KW = {
     'search': '지침 찾기 지침찾기 관리안내 사회복지시설 관리안내 사회복지관 업무처리 안내 서울시 처우개선 인건비 가이드라인 호봉 경력인정 수당 후원금 운영위원회 재무회계규칙 예산 결산 안전점검 책임보험 시설평가 쪽수 근거 작년 비교 개정 바뀐점 원문',
     'basic': '국기초 가늠표 국민기초생활보장 수급 가늠 소득인정액 생계급여 의료급여 주거급여 교육급여 기준중위소득 선정기준 부양의무자 근로소득공제 기본재산액 차상위 제도 복지제도 모의계산',
-    'guide': '신입 안내서 처음 입사 신입 용어 사전 쉬운말 보조금 후원금 결산 예산 추경 이월금 품의 지출결의 4대보험 연차 취업규칙 인건비가이드라인 호봉 법정의무교육 운영위원회 시설평가 안전점검 희망이음 사례관리 한해달력 체크리스트 인수인계',
+    'guide': '신입 안내서 처음 입사 신입 용어 사전 쉬운말 보조금 후원금 결산 예산 추경 이월금 품의 지출결의 4대보험 연차 취업규칙 인건비가이드라인 호봉 법정의무교육 운영위원회 시설평가 안전점검 희망이음 사례관리 한해달력 체크리스트 인수인계 품의서 견적서 지출결의서 결재 기안 수입결의 전월이월금',
     'date-calc': '나이 만나이 생년월일 연령 기간 일수 개월수 평일수 공휴일 디데이 몇일 몇개월 계약기간 이용기간 18세 65세 청년 노인 아동 기한계산',
+    'work-board': '인수인계 인수인계서 업무분장 업무분장표 업무매뉴얼 매뉴얼 업무목록 업무정리 담당 부담당 한해달력 연간일정 후임 전임 퇴사 이직 인계 소규모시설',
     'repeat-checklist': '할일 반복업무 체크리스트 매일 매주 매달 업무목록 루틴 보고기한',
     'leave-tracker': '연차 휴가 직원휴가 잔여연차 휴가관리 입사일',
     'list-compare': '명단대조 명단비교 중복찾기 빠진사람 누락 두명단 비교 대상자확인',
@@ -25,14 +26,14 @@
     'greeting': '연하장 송년 새해인사 초대장 추석 설 감사카드 인사장 후원감사',
     'map': '약도 오시는길 지도 위치안내 찾아오는길',
     'face-mask': '얼굴가리기 모자이크 초상권 사진동의 블러 홍보사진 이용자사진',
-    'excel': '엑셀 함수 vlookup 수식 sumif countif 나이계산 오류 #n/a',
+    'excel': '엑셀 함수 vlookup 수식 sumif countif 나이계산 오류 #n/a 복지관엑셀 엑셀양식 사무처리',
     'shortcuts': '단축키 캡처 복사 붙여넣기 한글단축키 엑셀단축키 키보드',
     'qr': 'qr 큐알 설문링크 와이파이 명함 신청서링크 프로그램신청',
     'safety': '안전표지 경고표지 금지표지 미끄럼주의 안전보건표지 표지판 급식실 비상연락망 경영방침 대피안내 msds 아차사고 안전게시물 점검대비 안전포스터 안전교육자료',
     'safety-post': '비상연락망 경영방침 대피안내 msds 아차사고 안전게시물 점검대비',
     'safety-links': '안전포스터 안전교육자료 산업안전 공단자료',
     'style-card': '스타일 카드 우리기관 기관스타일 말투 문체 틀 견본 양식 맞춤 hwpx 한글파일 챗gpt 제미나이 ai 프롬프트 주문서',
-    'doc-remake': '문서 바꾸기 문서만들기 공모 신청서 양식채우기 작년문서 올해 계획서 결과보고 평가서 공문 기안 회의록 운영위원회 가정통신문 후원편지 감사편지 소식지 홍보글 채용공고 인수인계 업무매뉴얼 전화응대 대본 메모 초안 hwpx pdf 개인정보가리기 ai 챗gpt 제미나이 주문서 프롬프트',
+    'doc-remake': '문서 바꾸기 문서만들기 공모 신청서 양식채우기 작년문서 올해 계획서 결과보고 평가서 공문 기안 회의록 운영위원회 가정통신문 후원편지 감사편지 소식지 홍보글 채용공고 인수인계 업무매뉴얼 전화응대 대본 메모 초안 hwpx pdf 개인정보가리기 ai 챗gpt 제미나이 주문서 프롬프트 일지 홍보글 기사 영상대본 결과보고서재활용 기안문',
     'easy-notice': '쉬운 안내문 쉬운말 안내문 점검 어려운말 긴문장 순화 공공언어 가정통신문 공지 게시문 어르신 큰글자 인쇄 낙인 표현 다듬기 문장 고치기',
     'ai-howto': 'ai 인공지능 챗gpt 클로드 제미나이 주문서 프롬프트 사용법',
     'prompt-minutes': '회의록 회의정리 ai회의록 운영위원회회의록',
@@ -50,12 +51,12 @@
   var ROLES = [
     ['case', '사례관리·상담', ['search', 'basic', 'guide', 'mask-privacy', 'date-calc', 'list-compare', 'doc-remake', 'easy-notice', 'prompt-notice', 'prompt-guide', 'repeat-checklist', 'gangnam']],
     ['prog', '프로그램·교육', ['attendance', 'cert-print', 'group-maker', 'random-pick', 'survey-tally', 'doc-remake', 'prompt-survey', 'break-timer', 'qr', 'file-tools', 'face-mask']],
-    ['acct', '행정·회계', ['search', 'guide', 'repeat-checklist', 'leave-tracker', 'date-calc', 'excel', 'form-overlay', 'form-prompt', 'doc-remake', 'style-card', 'prompt-minutes', 'show-vote', 'shortcuts']],
+    ['acct', '행정·회계', ['search', 'guide', 'work-board', 'repeat-checklist', 'leave-tracker', 'date-calc', 'excel', 'form-overlay', 'form-prompt', 'doc-remake', 'style-card', 'prompt-minutes', 'show-vote', 'shortcuts']],
     ['fund', '후원·홍보', ['newsletter', 'press', 'greeting', 'easy-notice', 'doc-remake', 'labels', 'face-mask', 'map', 'qr', 'prompt-directions']],
-    ['fac', '총무·시설·안전', ['safety', 'safety-post', 'safety-links', 'repeat-checklist', 'leave-tracker', 'meeting-timer', 'labels']],
-    ['new', '처음 왔어요', ['search', 'guide', 'style-card', 'ai-howto', 'repeat-checklist', 'mask-privacy', 'shortcuts', 'excel']]
+    ['fac', '총무·시설·안전', ['work-board', 'safety', 'safety-post', 'safety-links', 'repeat-checklist', 'leave-tracker', 'meeting-timer', 'labels']],
+    ['new', '처음 왔어요', ['search', 'guide', 'work-board', 'style-card', 'ai-howto', 'repeat-checklist', 'mask-privacy', 'shortcuts', 'excel']]
   ];
-  var QUICK = ['우리 기관 스타일', '문서 바꾸기', '지침 찾기', '신입 안내서', '국기초 가늠', '만 나이', '명단 대조', '개인정보 가리기', '수료증 나누기', '주소 라벨', '소식지', '안내문 쉬운 말', '안전표지', '회의록'];
+  var QUICK = ['우리 기관 스타일', '문서 바꾸기', '지침 찾기', '인수인계', '신입 안내서', '국기초 가늠', '만 나이', '명단 대조', '개인정보 가리기', '수료증 나누기', '주소 라벨', '소식지', '안내문 쉬운 말', '안전표지', '회의록'];
   var KEY = 'welfare-tools.mybox.v1';
 
   var root = document.getElementById('finder'); if (!root) return;

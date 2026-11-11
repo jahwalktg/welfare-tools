@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>업무 정리판 — 인수인계서·업무분장표 | 사회복지사 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="맡은 업무를 한 번만 적으면 인수인계서, 업무분장표, 한 해 달력이 함께 나옵니다. 하는 일·주기·파일 위치·관련 기관·주의할 점·진행 중인 일을 업무마다 한 칸씩. 인쇄하거나 한글에 붙이고, 파일로 후임에게 넘겨 이어서 씁니다. 업무 매뉴얼로 풀어 쓰는 AI 주문서도…">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/work-board/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="업무 정리판 — 인수인계서·업무분장표 | 사회복지사 업무 도구">
+<meta property="og:description" content="맡은 업무를 한 번만 적으면 인수인계서, 업무분장표, 한 해 달력이 함께 나옵니다. 하는 일·주기·파일 위치·관련 기관·주의할 점·진행 중인 일을 업무마다 한 칸씩. 인쇄하거나 한글에 붙이고, 파일로 후임에게 넘겨 이어서 씁니다. 업무 매뉴얼로 풀어 쓰는 AI 주문서도…">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/work-board/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --red:#C62E3A; --green:#1F8A4C;
+  --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC;
+  --text:#1A2B50; --muted:#5B6885;
+  --blue-bg:#E8F0FF; --amber:#8A5A00; --amber-bg:#FFF1CC; --amber-line:#E5B93C; --green-bg:#E3F5EA; --red-bg:#FDECEE; --btn-text:#FFFFFF;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#27407A; --red:#FF7A84; --green:#5FD08E;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+  }
+}
+:root[data-theme="dark"]{
+  --blue:#6BA1FF; --navy:#27407A; --red:#FF7A84; --green:#5FD08E;
+  --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+  --text:#EAF0FF; --muted:#A9B6DA;
+  --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
+.lead{margin:0 0 6px;color:var(--muted)}
+.now{margin:0 0 14px;font-size:14px;color:var(--muted)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.tabs button{min-height:46px;padding:0 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:16px}
+.tabs button.on{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:19px}
+.row{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end}
+.fld{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fld label,.fld .lbl{font-size:14px;color:var(--muted);font-weight:600}
+input[type=text],input[type=date],input[type=number],select,textarea{min-height:46px;padding:8px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-size:17px;max-width:100%}
+input[type=text].wide{width:240px}
+input[type=number]{width:110px}
+textarea{width:100%;min-height:140px;font-size:15px;font-family:inherit}
+.btn{min-height:44px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.btn-main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.btn-small{min-height:36px;font-size:14px;padding:0 10px}
+.chk{display:inline-flex;align-items:center;gap:6px;min-height:40px;font-size:15px}
+.chk input{width:20px;height:20px}
+.hint{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.err{color:var(--red);font-weight:700}
+.big{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:14px 0 0}
+.big .box{padding:12px 14px;border-radius:12px;background:var(--bg);border:1.5px solid var(--line)}
+.big .box .k{font-size:14px;color:var(--muted)}
+.big .box .v{font-size:26px;font-weight:800;line-height:1.3}
+.big .box .s{font-size:14px;color:var(--muted)}
+.big .box.main{background:var(--blue-bg);border-color:var(--blue)}
+.big .box button{margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1.5px solid var(--line);font-size:15px;font-weight:600;background:var(--surface)}
+.chip.yes{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.chip.no{color:var(--muted)}
+.chip small{font-weight:400}
+details{margin-top:12px}
+details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;align-items:center}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--bg);font-size:14px}
+.tblwrap{overflow-x:auto;max-width:100%;margin-top:10px}
+.rules td input{width:100%;min-height:38px;font-size:15px;padding:4px 8px}
+.rules td input[type=number]{width:72px}
+.note{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:var(--amber-bg);border:1.5px solid var(--amber-line);font-size:14px}
+.tag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:13px;font-weight:700;margin:1px 2px}
+.tag.y{background:var(--green-bg);color:var(--green)}
+.tag.h{background:var(--red-bg);color:var(--red)}
+.listres td.age{font-weight:800;white-space:nowrap}
+.listres tr.bad td{background:var(--amber-bg)}
+.uses{margin-top:20px}
+.uses ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.uses li{padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);font-size:15px}
+.foot{margin-top:24px;padding:14px 4px 0;border-top:1.5px solid var(--line);font-size:15px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:999px;font-size:15px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+.toast.show{opacity:1}
+[hidden]{display:none!important}
+
+/* ── AI 주문서 화면 공통 ── */
+.notice{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:10px 0 18px;padding:0;list-style:none}
+.notice li{padding:12px 14px;border-radius:12px;border:1.5px solid var(--amber-line);background:var(--amber-bg);font-size:15px;line-height:1.5}
+.notice li b{display:block;color:var(--amber)}
+.card h2{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.card h2 small,.card h3 small,label small{font-weight:400;font-size:14px;color:var(--muted)}
+.card h3{margin:18px 0 6px;font-size:16px}
+.no{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--blue);color:var(--btn-text);font-size:15px;flex:none}
+.grid2{display:grid;gap:10px 14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid2 input,.fld input.full,.fld textarea{width:100%}
+input.full{width:100%}
+.chips.sm{margin:6px 0 0;gap:6px}
+.chips.sm .chip{font-size:14px;padding:4px 10px;cursor:pointer;min-height:32px;text-align:left;overflow-wrap:anywhere}
+.chips.sm .chip.no{text-decoration:line-through}
+.plainlist{margin:6px 0;padding-left:20px;font-size:15px}
+.plainlist li{margin:4px 0}
+.linkbtn{border:0;background:none;padding:0;color:var(--blue);text-decoration:underline;font:inherit;cursor:pointer}
+.lbl{display:block;margin:12px 0 4px;font-size:14px;color:var(--muted);font-weight:600}
+.drop{display:flex;flex-direction:column;align-items:center;gap:2px;padding:16px 12px;margin:8px 0 4px;border:2px dashed var(--line);border-radius:12px;background:var(--bg);text-align:center;cursor:pointer}
+.drop small{color:var(--muted);font-size:14px}
+.drop.over{border-color:var(--blue);background:var(--blue-bg)}
+textarea.prompt{min-height:260px;font-size:14px;line-height:1.55;background:var(--bg)}
+.pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:14px;padding:12px;border-radius:10px;background:var(--bg);border:1.5px solid var(--line);margin:8px 0 0}
+.scard{padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;margin:8px 0;background:var(--bg)}
+.scard .snip{margin:4px 0 8px;font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+.modes{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.mode{display:flex;flex-direction:column;gap:2px;text-align:left;padding:12px 14px;min-height:64px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface)}
+.mode strong{font-size:17px}
+.mode small{font-size:14px;color:var(--muted)}
+.mode.on{border-color:var(--blue);background:var(--blue-bg);box-shadow:inset 0 0 0 1px var(--blue)}
+.src{padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;margin:0 0 12px}
+.src h3{margin:0 0 4px}
+.src select{min-width:200px;max-width:100%}
+.chk.big{display:flex;align-items:flex-start;gap:8px;margin-top:12px;padding:12px;border-radius:12px;border:1.5px solid var(--line);font-weight:600;min-height:0}
+.chk.big input{flex:none;margin-top:2px}
+.chk.big.need{border-color:var(--red);background:var(--red-bg)}
+.big .box.warn{background:var(--amber-bg);border-color:var(--amber-line)}
+.big .box .v{font-size:22px}
+.big .box .s{overflow-wrap:anywhere}
+.uses a,.hint a{color:var(--blue)}
+</style>
+</head>
+<body>
+<style>
+.item{border:1.5px solid var(--line);border-radius:12px;margin:8px 0;background:var(--bg)}
+.item>summary{padding:10px 14px;margin:0;min-height:48px;gap:8px;flex-wrap:wrap}
+.item>summary b{font-size:16px}
+.item>summary .meta{font-size:14px;color:var(--muted);font-weight:400}
+.item .in{padding:0 14px 14px}
+.item textarea{min-height:60px}
+.grid3{display:grid;gap:10px 14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.grid3 input,.grid3 select{width:100%}
+.out{margin-top:12px;padding:16px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:#111;overflow-x:auto}
+.out h3{margin:0 0 10px;font-size:20px;text-align:center}
+.out h4{margin:16px 0 6px;font-size:16px}
+.out table{font-size:14px;margin:0 0 8px}
+.out th,.out td{border:1px solid #777;padding:5px 7px}
+.out th{background:#eef1f6;color:#111;white-space:nowrap}
+.out .sign td{height:46px}
+.out .cal{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.out .cal div{border:1px solid #777;padding:6px 8px;min-height:80px}
+.out .cal b{display:block;border-bottom:1px solid #bbb;margin-bottom:4px}
+.out .cal span{display:block;font-size:13px}
+.out p{margin:4px 0;font-size:14px}
+@media print{
+  body{background:#fff}
+  .wrapall>*:not(#printWrap){display:none!important}
+  #printWrap{border:0;padding:0;margin:0}
+  #printWrap>*:not(#out){display:none!important}
+  .out{border:0;padding:0;overflow:visible}
+  .out .blk{break-inside:avoid}
+}
+</style>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › <a href="../index.html#todo">할 일 관리기</a></p>
+  <h1>업무 정리판 — 인수인계서·업무분장표</h1>
+  <p class="lead">맡은 업무를 한 번만 적으면 <strong>인수인계서</strong>, <strong>업무분장표</strong>, <strong>한 해 달력</strong>이 함께 나옵니다. 자리를 옮길 때, 새 사람이 올 때, 해마다 업무를 나눌 때 씁니다. 「인수인계 받은 게 없어요」가 줄어들도록.</p>
+  <ul class="notice">
+    <li><b>참고사항입니다</b> 한 현장의 개인 경험으로 만든 틀입니다. 기관 인수인계 서식이나 규정이 있으면 그것이 먼저입니다. 여기서 만든 표를 복사해 기관 서식에 붙여 쓰세요. 쓴 결과의 책임은 쓰는 분에게 있습니다.</li>
+    <li><b>이용자 정보와 비밀번호는 적지 않습니다</b> 이용자 이름·사례 내용, 시스템 비밀번호·계좌 비밀번호는 넣지 마세요. 사람은 이름 대신 직함으로 적으면 넉넉합니다. 적은 내용은 이 브라우저에만 저장됩니다.</li>
+    <li><b>줄인 시간은 동료와 클라이언트에게</b> 한 번 정리해 두면 다음 사람이 헤매는 시간이 줄어듭니다. 「파일로 내보내기」로 후임에게 넘기면 이어서 고쳐 쓸 수 있습니다.</li>
+  </ul>
+
+  <section class="card">
+    <h2><span class="no">1</span>기본</h2>
+    <div class="grid3">
+      <div class="fld"><label for="fOrg">기관·부서</label><input type="text" id="fOrg" maxlength="60" placeholder="예: ○○복지관 지역조직팀"></div>
+      <div class="fld"><label for="fFrom">넘기는 사람 <small>직함</small></label><input type="text" id="fFrom" maxlength="40" placeholder="예: 지역조직팀 사회복지사"></div>
+      <div class="fld"><label for="fTo">받는 사람 <small>직함, 비워도 됨</small></label><input type="text" id="fTo" maxlength="40" placeholder="예: 신규 사회복지사"></div>
+      <div class="fld"><label for="fDate">날짜</label><input type="date" id="fDate"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="no">2</span>업무 적기 <small id="cnt"></small></h2>
+    <p class="hint">업무 하나에 한 칸씩. 이름만 적어도 되고, 아는 만큼 채웁니다. 「담당」을 여러 사람으로 나눠 적으면 업무분장표가 됩니다.</p>
+    <div class="row">
+      <button class="btn btn-main" id="btnAdd" type="button">업무 더하기</button>
+      <button class="btn btn-small" id="btnEx" type="button">예시 넣기</button>
+      <button class="btn btn-small" id="btnPasteOpen" type="button">엑셀에서 붙여 넣기</button>
+    </div>
+    <div id="pasteBox" hidden>
+      <label class="lbl" for="paste">엑셀 표를 복사해 붙여 넣기 <small>열 순서: 업무 · 주기 · 시기 · 담당 · 부담당 · 하는 일 · 파일 위치 · 관련 기관 · 주의할 점 · 진행 중인 일 (앞의 몇 열만 있어도 됨)</small></label>
+      <textarea id="paste" style="min-height:90px" placeholder="업무	주기	시기	담당 …"></textarea>
+      <div class="row" style="margin-top:6px"><button class="btn btn-small" id="btnPaste" type="button">목록에 더하기</button><span class="hint" id="pasteNote" role="status" style="margin:0"></span></div>
+    </div>
+    <div id="list"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn btn-small" id="btnExport" type="button">파일로 내보내기</button>
+      <label class="btn btn-small" style="display:inline-flex;align-items:center;cursor:pointer">파일에서 불러오기<input type="file" id="importFile" accept=".json" hidden></label>
+      <button class="btn btn-small" id="btnWipe" type="button">모두 지우기</button>
+      <span class="hint" id="ioNote" role="status" style="margin:0"></span>
+    </div>
+  </section>
+
+  <section class="card" id="printWrap">
+    <h2><span class="no">3</span>만들기</h2>
+    <div class="tabs" id="tabs" role="tablist">
+      <button type="button" data-t="hand" class="on">인수인계서</button>
+      <button type="button" data-t="duty">업무분장표</button>
+      <button type="button" data-t="cal">한 해 달력</button>
+      <button type="button" data-t="ai">AI 주문서</button>
+    </div>
+    <p class="hint" id="tabHint"></p>
+    <div class="row" id="outBtns">
+      <button class="btn btn-main" id="btnPrint" type="button">인쇄</button>
+      <button class="btn" id="btnCopy" type="button">표 복사 (한글·워드·엑셀에 붙이기)</button>
+      <span class="hint" id="copyNote" role="status" style="margin:0"></span>
+    </div>
+    <div class="out" id="out"></div>
+    <div id="aiBox" hidden>
+      <textarea class="prompt" id="prompt" readonly aria-label="AI 주문서"></textarea>
+      <div class="row" style="margin-top:8px"><button class="btn btn-main" id="btnAi" type="button">주문서 복사</button><span class="hint" id="aiNote" role="status" style="margin:0"></span></div>
+      <p class="hint">챗GPT·제미나이에 붙이면 업무 목록을 풀어 쓴 「업무 매뉴얼」 초안이 나옵니다. 받은 글은 꼭 읽고 고치세요. 다른 문서로 바꾸려면 <a href="../doc-remake/index.html#handover">문서 만들기·바꾸기</a>.</p>
+    </div>
+  </section>
+
+  <section class="uses">
+    <h2>이럴 때 좋아요</h2>
+    <ul>
+      <li><strong>자리를 옮기거나 그만둘 때</strong> 마지막 주에 몰아 쓰지 말고, 평소에 업무를 하나씩 적어 두면 그날 인쇄만 하면 됩니다.</li>
+      <li><strong>새 사람이 왔을 때</strong> 인수인계서와 한 해 달력을 함께 주면 「이번 달에 뭘 해야 하는지」부터 보입니다.</li>
+      <li><strong>업무를 나눌 때</strong> 담당을 바꿔 가며 업무분장표를 다시 뽑아 봅니다. 부담당이 비어 있는 업무가 몇 개인지도 보여 줍니다.</li>
+      <li><strong>작은 시설</strong> 한두 사람이 여러 일을 맡는 곳일수록, 맡은 일을 한 장으로 보이게 해 두면 나누어 달라고 말하기 쉽습니다.</li>
+    </ul>
+  </section>
+  <footer class="foot">
+    <p><strong>적은 내용은 이 PC의 이 브라우저에만 저장됩니다.</strong> 인터넷으로 보내지 않습니다. 공용 PC에서는 끝나고 「모두 지우기」를 누르세요.</p>
+    <p>만든 사람: 서울강남지역자활센터 김태균</p>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="../ai-kit.js"></script>
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id);};
+  var KEY='welfare-tools.work-board.v1';
+  var CYC=['매일','매주','매월','분기','반기','연 1회','수시'];
+  var FIELDS=['name','cycle','when','owner','sub','what','where','partner','caution','now'];
+  var LABEL={name:'업무',cycle:'주기',when:'시기·기한',owner:'담당',sub:'부담당',what:'하는 일',where:'파일·시스템 위치',partner:'관련 기관·부서',caution:'주의할 점·자주 틀리는 것',now:'지금 진행 중인 일·남은 일'};
+  function blank(){return {org:'',from:'',to:'',date:'',rows:[]};}
+  function row(o){o=o||{};var r={};FIELDS.forEach(function(k){r[k]=String(o[k]||'').slice(0,k==='name'?60:600);});if(CYC.indexOf(r.cycle)<0)r.cycle='매월';r.months=String(o.months||'').slice(0,40);return r;}
+  function load(){try{var o=JSON.parse(localStorage.getItem(KEY)||'null');if(!o||!Array.isArray(o.rows))return blank();var b=blank();['org','from','to','date'].forEach(function(k){b[k]=String(o[k]||'').slice(0,80);});b.rows=o.rows.slice(0,200).map(row);return b;}catch(e){return blank();}}
+  var S=load(),tab='hand',openIdx=-1;
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function br(s){return esc(s).replace(/\n/g,'<br>');}
+  function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('show');},2200);}
+
+  /* 하는 달: months 칸(예 「3, 9」)이 있으면 그것, 없으면 주기로 어림 */
+  function monthsOf(r){
+    var m=(r.months.match(/\d+/g)||[]).map(Number).filter(function(n){return n>=1&&n<=12;});
+    if(m.length)return m;
+    /* 시기 칸의 달: 「4월」「3·6·9·12월」「3, 9월」「3~5월」 */
+    var w=[],mm,re=/((?:\d{1,2}\s*[·,\/~\-]\s*)*\d{1,2})\s*월/g;
+    while((mm=re.exec(r.when))){
+      var rg=mm[1].match(/^(\d{1,2})\s*[~\-]\s*(\d{1,2})$/);
+      if(rg&&+rg[1]<=+rg[2]){for(var q=+rg[1];q<=+rg[2];q++)w.push(q);}
+      else (mm[1].match(/\d+/g)||[]).forEach(function(x){w.push(+x);});
+    }
+    w=w.filter(function(n,i){return n>=1&&n<=12&&w.indexOf(n)===i;});
+    if(w.length&&r.cycle!=='매월'&&r.cycle!=='매주'&&r.cycle!=='매일')return w;
+    if(r.cycle==='매월')return [1,2,3,4,5,6,7,8,9,10,11,12];
+    if(r.cycle==='분기')return [3,6,9,12];
+    if(r.cycle==='반기')return [6,12];
+    return [];
+  }
+
+  /* 1. 기본 */
+  [['fOrg','org'],['fFrom','from'],['fTo','to'],['fDate','date']].forEach(function(k){$(k[0]).value=S[k[1]];$(k[0]).addEventListener('input',function(){S[k[1]]=$(k[0]).value;save();renderOut();});});
+
+  /* 2. 업무 목록 */
+  function field(r,k,i){
+    var d=document.createElement('div');d.className='fld';var l=document.createElement('label');l.textContent=LABEL[k];d.appendChild(l);var el;
+    if(k==='cycle'){el=document.createElement('select');CYC.forEach(function(c){var o=document.createElement('option');o.textContent=c;el.appendChild(o);});el.value=r.cycle;}
+    else if(['what','where','partner','caution','now'].indexOf(k)>=0){el=document.createElement('textarea');el.value=r[k];el.maxLength=600;}
+    else{el=document.createElement('input');el.type='text';el.value=r[k];el.maxLength=k==='name'?60:120;}
+    el.placeholder={name:'예: 프로그램 실적 보고',when:'예: 매월 5일까지 / 3월 둘째 주',owner:'예: 사례관리팀 사회복지사',sub:'자리를 비울 때 맡는 사람',what:'무엇을 어떻게 하는지 한두 줄',where:'예: 공유 폴더 > 2026 > 실적 / 희망이음 실적 메뉴 (비밀번호는 적지 않기)',partner:'예: 구청 복지정책과 (담당 부서만)',caution:'예: 마감 전날 16시 이후에는 시스템 입력이 느림',now:'예: 10월분 입력 끝, 11월분은 20일에 자료 받을 예정'}[k]||'';
+    el.id='f_'+k+'_'+i;l.htmlFor=el.id;
+    el.addEventListener('input',function(){r[k]=el.value;save();head(i);renderOut();});el.addEventListener('change',function(){r[k]=el.value;save();head(i);renderOut();});
+    d.appendChild(el);return d;
+  }
+  function head(i){var s=document.querySelector('#it'+i+' > summary');if(!s)return;var r=S.rows[i];s.querySelector('b').textContent=r.name||'(업무 이름을 적어 주세요)';s.querySelector('.meta').textContent=[r.cycle,r.when,r.owner].filter(Boolean).join(' · ');}
+  function renderList(){
+    var box=$('list');box.textContent='';
+    $('cnt').textContent=S.rows.length?S.rows.length+'개':'';
+    if(!S.rows.length){var p=document.createElement('p');p.className='hint';p.textContent='아직 업무가 없습니다. 「업무 더하기」나 「예시 넣기」로 시작하세요.';box.appendChild(p);}
+    S.rows.forEach(function(r,i){
+      var d=document.createElement('details');d.className='item';d.id='it'+i;if(i===openIdx)d.open=true;
+      var s=document.createElement('summary'),b=document.createElement('b'),m=document.createElement('span');m.className='meta';s.appendChild(b);s.appendChild(m);d.appendChild(s);
+      var inn=document.createElement('div');inn.className='in';
+      var g=document.createElement('div');g.className='grid3';['name','cycle','when','owner','sub'].forEach(function(k){g.appendChild(field(r,k,i));});
+      var mf=document.createElement('div');mf.className='fld';var ml=document.createElement('label');ml.textContent='하는 달 (연 1회·분기 업무)';var mi=document.createElement('input');mi.type='text';mi.value=r.months;mi.placeholder='예: 3, 9';mi.id='f_m_'+i;ml.htmlFor=mi.id;mi.addEventListener('input',function(){r.months=mi.value;save();renderOut();});mf.appendChild(ml);mf.appendChild(mi);g.appendChild(mf);
+      inn.appendChild(g);
+      ['what','where','partner','caution','now'].forEach(function(k){var f=field(r,k,i);f.style.marginTop='8px';inn.appendChild(f);});
+      var rowb=document.createElement('div');rowb.className='row';rowb.style.marginTop='10px';
+      [['위로',function(){if(i<1)return;var t=S.rows[i-1];S.rows[i-1]=r;S.rows[i]=t;openIdx=i-1;save();renderList();renderOut();}],
+       ['아래로',function(){if(i>=S.rows.length-1)return;var t=S.rows[i+1];S.rows[i+1]=r;S.rows[i]=t;openIdx=i+1;save();renderList();renderOut();}],
+       ['복제',function(){S.rows.splice(i+1,0,row(r));openIdx=i+1;save();renderList();renderOut();}],
+       ['지우기',function(){if(!confirm('「'+(r.name||'이 업무')+'」를 지울까요?'))return;S.rows.splice(i,1);openIdx=-1;save();renderList();renderOut();}]
+      ].forEach(function(a){var bt=document.createElement('button');bt.type='button';bt.className='btn btn-small';bt.textContent=a[0];bt.addEventListener('click',a[1]);rowb.appendChild(bt);});
+      inn.appendChild(rowb);d.appendChild(inn);box.appendChild(d);head(i);
+      d.addEventListener('toggle',function(){if(d.open)openIdx=i;else if(openIdx===i)openIdx=-1;});
+    });
+  }
+  $('btnAdd').addEventListener('click',function(){S.rows.push(row({}));openIdx=S.rows.length-1;save();renderList();renderOut();var el=$('f_name_'+openIdx);if(el){el.focus();el.scrollIntoView({block:'center'});}});
+  $('btnEx').addEventListener('click',function(){
+    if(S.rows.length&&!confirm('지금 목록 뒤에 예시 업무 6개를 더할까요?'))return;
+    [{name:'프로그램 실적 보고',cycle:'매월',when:'매월 5일까지',owner:'지역조직팀 사회복지사',sub:'지역조직팀 팀장',what:'지난달 프로그램별 참여 인원과 횟수를 모아 보고서 양식에 넣고 결재를 올린다.',where:'공유 폴더 > 2026 > 실적보고 / 실적 집계 엑셀',partner:'구청 담당 부서',caution:'출석부 원본과 숫자가 맞는지 먼저 본다.',now:'10월분 제출 끝. 11월분은 12월 5일.'},
+     {name:'자원봉사자 관리',cycle:'매주',when:'매주 금요일',owner:'지역조직팀 사회복지사',sub:'',what:'봉사 일정 확인, 활동 일지 정리, 봉사 시간 입력.',where:'봉사 관리 시스템 / 공유 폴더 > 자원봉사',partner:'자원봉사센터',caution:'봉사 시간 입력은 활동한 달 안에.',now:''},
+     {name:'어르신 나들이 행사',cycle:'연 1회',when:'4월',months:'3, 4',owner:'지역조직팀 사회복지사',sub:'사례관리팀 사회복지사',what:'계획서 → 장소·차량 예약 → 참가 신청 → 보험 → 진행 → 결과보고.',where:'공유 폴더 > 2026 > 행사 > 나들이',partner:'버스 업체, 식당(계약 부서 통해)',caution:'보험 가입 명단 마감일 확인.',now:'내년 계획서는 2월에 작성.'},
+     {name:'후원금 결과보고',cycle:'연 1회',when:'결산 때',months:'1, 2',owner:'총무팀 사무원',sub:'총무팀 팀장',what:'후원금 수입·사용 내역을 정리해 보고서를 만든다.',where:'회계 프로그램 / 공유 폴더 > 후원',partner:'구청 담당 부서',caution:'지정·비지정 구분을 통장과 맞춘다.',now:''},
+     {name:'운영위원회',cycle:'분기',when:'3·6·9·12월',owner:'총무팀 팀장',sub:'총무팀 사무원',what:'안건 모으기 → 소집 통지 → 회의 → 회의록 → 보고.',where:'공유 폴더 > 운영위원회',partner:'운영위원',caution:'소집 통지 기한은 기관 규정을 본다.',now:'12월 회의 안건 모으는 중.'},
+     {name:'민원·문의 전화',cycle:'수시',when:'',owner:'전 직원',sub:'',what:'전화 메모를 남기고 담당자에게 전한다.',where:'전화 메모지',partner:'',caution:'개인정보는 메모에 적지 않는다.',now:''}
+    ].forEach(function(o){S.rows.push(row(o));});
+    if(!S.org)S.org='○○복지관 지역조직팀';$('fOrg').value=S.org;save();renderList();renderOut();toast('예시 업무를 넣었습니다. 우리 업무로 고쳐 쓰세요.');
+  });
+  $('btnPasteOpen').addEventListener('click',function(){$('pasteBox').hidden=!$('pasteBox').hidden;});
+  $('btnPaste').addEventListener('click',function(){
+    var lines=$('paste').value.split(/\r?\n/).filter(function(l){return l.trim();}),n=0;
+    lines.forEach(function(l,idx){var c=l.split('\t');if(idx===0&&/업무/.test(c[0])&&/주기/.test(c[1]||''))return;var o={};FIELDS.forEach(function(k,j){o[k]=(c[j]||'').trim();});if(!o.name)return;if(CYC.indexOf(o.cycle)<0){var hit=CYC.filter(function(x){return o.cycle&&(x.indexOf(o.cycle)>=0||o.cycle.indexOf(x.replace(' 1회',''))>=0);})[0];if(!hit&&o.cycle&&!o.when)o.when=o.cycle;o.cycle=hit||'수시';}S.rows.push(row(o));n++;});
+    $('pasteNote').textContent=n?n+'개를 더했습니다.':'더할 줄이 없습니다. 첫 열에 업무 이름이 있어야 합니다.';if(n){$('paste').value='';save();renderList();renderOut();}
+  });
+  $('btnExport').addEventListener('click',function(){
+    var blob=new Blob([JSON.stringify({app:'welfare-tools.work-board',v:1,org:S.org,from:S.from,to:S.to,date:S.date,rows:S.rows},null,2)],{type:'application/json'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='업무정리판_'+(S.org||'우리기관').replace(/[\\/:*?"<>|\s]+/g,'_')+'.json';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+    $('ioNote').textContent='파일로 받았습니다. 후임에게 주면 「파일에서 불러오기」로 이어서 씁니다.';
+  });
+  $('importFile').addEventListener('change',function(){
+    var f=this.files[0];this.value='';if(!f)return;var fr=new FileReader();
+    fr.onload=function(){try{var o=JSON.parse(fr.result);if(!o||o.app!=='welfare-tools.work-board'||!Array.isArray(o.rows))throw 0;
+      if(S.rows.length&&!confirm('지금 목록('+S.rows.length+'개)을 불러온 파일('+o.rows.length+'개)로 바꿀까요? 「취소」를 누르면 뒤에 더합니다.')){o.rows.forEach(function(r){S.rows.push(row(r));});}
+      else{S=blank();['org','from','to','date'].forEach(function(k){S[k]=String(o[k]||'').slice(0,80);});S.rows=o.rows.slice(0,200).map(row);[['fOrg','org'],['fFrom','from'],['fTo','to'],['fDate','date']].forEach(function(k){$(k[0]).value=S[k[1]];});}
+      save();renderList();renderOut();$('ioNote').textContent='불러왔습니다.';}catch(e){$('ioNote').textContent='업무 정리판 파일이 아닙니다.';}};
+    fr.readAsText(f);
+  });
+  $('btnWipe').addEventListener('click',function(){if(!confirm('기본 정보와 업무 '+S.rows.length+'개를 이 브라우저에서 모두 지울까요?'))return;try{localStorage.removeItem(KEY);}catch(e){}S=blank();[['fOrg','org'],['fFrom','from'],['fTo','to'],['fDate','date']].forEach(function(k){$(k[0]).value='';});openIdx=-1;renderList();renderOut();$('ioNote').textContent='모두 지웠습니다.';});
+
+  /* 3. 만들기 */
+  function rows(){return S.rows.filter(function(r){return r.name.trim();});}
+  function kdate(){if(!S.date)return '';var p=S.date.split('-');return p[0]+'. '+(+p[1])+'. '+(+p[2])+'.';}
+  function cw(r){return [r.cycle,r.when].filter(Boolean).join(' · ');}
+  function handHtml(){
+    var R=rows(),h='<h3>업무 인수인계서</h3>';
+    h+='<table><tr><th>기관·부서</th><td>'+esc(S.org)+'</td><th>날짜</th><td>'+esc(kdate())+'</td></tr><tr><th>넘기는 사람</th><td>'+esc(S.from)+'</td><th>받는 사람</th><td>'+esc(S.to)+'</td></tr></table>';
+    h+='<h4>1. 맡은 업무 한눈에 ('+R.length+'개)</h4><table><tr><th>번호</th><th>업무</th><th>주기·시기</th><th>관련 기관·부서</th><th>파일·시스템 위치</th></tr>';
+    R.forEach(function(r,i){h+='<tr><td>'+(i+1)+'</td><td>'+esc(r.name)+'</td><td>'+esc(cw(r))+'</td><td>'+br(r.partner)+'</td><td>'+br(r.where)+'</td></tr>';});
+    h+='</table><h4>2. 업무별 자세히</h4>';
+    R.forEach(function(r,i){
+      h+='<table class="blk"><tr><th colspan="2">'+(i+1)+'. '+esc(r.name)+(cw(r)?' <span style="font-weight:400">('+esc(cw(r))+')</span>':'')+'</th></tr>';
+      [['what','하는 일'],['where','파일·시스템 위치'],['partner','관련 기관·부서'],['caution','주의할 점'],['now','진행 중인 일·남은 일'],['sub','자리를 비울 때']].forEach(function(k){if(r[k[0]].trim())h+='<tr><th style="width:9em">'+k[1]+'</th><td>'+br(r[k[0]])+'</td></tr>';});
+      if(!['what','where','partner','caution','now','sub'].some(function(k){return r[k].trim();}))h+='<tr><td colspan="2" style="color:#777">(적은 내용 없음)</td></tr>';
+      h+='</table>';
+    });
+    var N=R.filter(function(r){return r.now.trim();});
+    h+='<h4>3. 지금 진행 중인 일 ('+N.length+'건)</h4>';
+    if(N.length){h+='<table><tr><th>업무</th><th>진행 중인 일·남은 일</th></tr>';N.forEach(function(r){h+='<tr><td>'+esc(r.name)+'</td><td>'+br(r.now)+'</td></tr>';});h+='</table>';}else h+='<p>(적은 내용 없음)</p>';
+    h+='<h4>4. 확인</h4><table class="sign"><tr><th>넘기는 사람</th><th>받는 사람</th><th>확인(부서장)</th></tr><tr><td></td><td></td><td></td></tr></table>';
+    return h;
+  }
+  function dutyHtml(){
+    var R=rows(),by={},order=[];
+    R.forEach(function(r){var o=r.owner.trim()||'(담당 없음)';if(!by[o]){by[o]=[];order.push(o);}by[o].push(r);});
+    var h='<h3>업무분장표</h3><p>'+esc(S.org)+(S.date?' · '+esc(kdate()):'')+'</p><table><tr><th>담당</th><th>업무</th><th>주기·시기</th><th>부담당</th></tr>';
+    order.forEach(function(o){by[o].forEach(function(r,i){h+='<tr>'+(i===0?'<td rowspan="'+by[o].length+'"><b>'+esc(o)+'</b><br>'+by[o].length+'개</td>':'')+'<td>'+esc(r.name)+'</td><td>'+esc(cw(r))+'</td><td>'+esc(r.sub)+'</td></tr>';});});
+    h+='</table>';
+    var noSub=R.filter(function(r){return !r.sub.trim();}).length,noOwner=R.filter(function(r){return !r.owner.trim();}).length;
+    h+='<p>담당 '+order.filter(function(o){return o!=='(담당 없음)';}).length+'명 · 업무 '+R.length+'개 · 부담당이 비어 있는 업무 '+noSub+'개'+(noOwner?' · 담당이 비어 있는 업무 '+noOwner+'개':'')+'</p>';
+    return h;
+  }
+  function calHtml(){
+    var R=rows(),h='<h3>한 해 달력</h3><p>'+esc(S.org)+'</p><div class="cal">';
+    for(var m=1;m<=12;m++){h+='<div><b>'+m+'월</b>';var any=false;R.forEach(function(r){if(r.cycle==='매월'||r.cycle==='매주'||r.cycle==='매일')return;if(monthsOf(r).indexOf(m)>=0){any=true;h+='<span>· '+esc(r.name)+(r.owner?' <small>('+esc(r.owner)+')</small>':'')+'</span>';}});if(!any)h+='<span style="color:#999">—</span>';h+='</div>';}
+    h+='</div>';
+    [['매월','매달 하는 일'],['매주','매주 하는 일'],['매일','매일 하는 일'],['수시','그때그때 하는 일']].forEach(function(c){var L=R.filter(function(r){return r.cycle===c[0];});if(L.length){h+='<h4>'+c[1]+'</h4><p>'+L.map(function(r){return esc(r.name)+(r.when?' ('+esc(r.when)+')':'');}).join(' · ')+'</p>';}});
+    var lost=R.filter(function(r){return (r.cycle==='연 1회')&&!monthsOf(r).length;});
+    if(lost.length)h+='<p style="color:#a00">「하는 달」을 적지 않아 달력에 못 넣은 업무: '+lost.map(function(r){return esc(r.name);}).join(' · ')+'</p>';
+    return h;
+  }
+  function plain(){
+    var R=rows(),L=['기관·부서: '+(S.org||'(비움)'),''];
+    R.forEach(function(r,i){L.push((i+1)+'. '+r.name+(cw(r)?' ['+cw(r)+']':''));[['owner','담당'],['sub','부담당'],['what','하는 일'],['where','위치'],['partner','관련 기관·부서'],['caution','주의할 점'],['now','진행 중']].forEach(function(k){if(r[k[0]].trim())L.push('   - '+k[1]+': '+r[k[0]].trim().replace(/\n/g,' / '));});});
+    return L.join('\n');
+  }
+  function aiPrompt(){
+    var p='당신은 사회복지기관의 업무 매뉴얼을 정리하는 편집자입니다. 아래 [업무 목록]으로 새로 온 사람이 읽고 바로 따라 할 수 있는 「업무 매뉴얼」을 써 주세요.\n\n할 일:\n'
+      +'1. 업무마다 ① 하는 일 ② 언제(주기·기한) ③ 순서(1, 2, 3 단계로) ④ 쓰는 파일·시스템 ⑤ 연락할 곳 ⑥ 자주 틀리는 것 순서로 정리합니다.\n'
+      +'2. [업무 목록]에 있는 내용만 씁니다. 순서나 기한이 적혀 있지 않으면 지어내지 말고 「[확인 필요: 무엇]」이라고 적습니다.\n'
+      +'3. 맨 앞에 「한 해 흐름」을 달마다 한 줄씩 붙입니다.\n'
+      +'4. 끝에 인계하는 사람에게 물어볼 질문을 다섯 개 이내로 적습니다.\n\n지켜 주세요:\n'
+      +'- 쉬운 말로, 한 문장은 짧게.\n- 사람 이름·비밀번호·이용자 정보는 쓰지 않습니다(목록에 있어도 옮기지 않습니다).\n- 한글·워드에 붙일 수 있게 제목과 번호를 붙여 한 덩어리로 주세요.';
+    var b=AIK.read().use?AIK.block(null):'';if(b)p+='\n\n'+b;
+    return p+'\n\n[업무 목록]\n'+(rows().length?plain():'(위에서 업무를 적으면 여기에 들어갑니다)');
+  }
+  var HINT={hand:'넘기는 사람이 맡은 업무 전체를 한 문서로. 「담당」 칸과 상관없이 목록의 모든 업무가 들어갑니다.',duty:'「담당」이 같은 업무끼리 묶습니다. 부담당이 비어 있는 업무 수는 살펴보라는 숫자일 뿐 판정이 아닙니다.',cal:'연 1회·분기·반기 업무를 달마다 놓습니다. 「하는 달」이나 「시기」에 적은 달을 읽습니다.',ai:'업무 목록을 풀어 쓴 매뉴얼 초안을 AI에게 맡기는 주문서입니다.'};
+  function renderOut(){
+    $('tabHint').textContent=HINT[tab];
+    var ai=tab==='ai';$('out').hidden=ai;$('outBtns').hidden=ai;$('aiBox').hidden=!ai;
+    if(ai){$('prompt').value=aiPrompt();return;}
+    if(!rows().length){$('out').innerHTML='<p style="color:#777">위에서 업무를 적으면 여기에 표가 만들어집니다.</p>';return;}
+    $('out').innerHTML=tab==='hand'?handHtml():tab==='duty'?dutyHtml():calHtml();
+  }
+  $('tabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;tab=b.dataset.t;[].forEach.call($('tabs').children,function(x){x.classList.toggle('on',x===b);});$('copyNote').textContent='';renderOut();});
+  $('btnPrint').addEventListener('click',function(){if(!rows().length){$('copyNote').textContent='업무를 먼저 적어 주세요.';return;}window.print();});
+  $('btnCopy').addEventListener('click',function(){
+    if(!rows().length){$('copyNote').textContent='업무를 먼저 적어 주세요.';return;}
+    var html=$('out').innerHTML,text=$('out').innerText,done=function(){$('copyNote').textContent='복사했습니다. 한글·워드·엑셀에 붙여 넣으세요.';};
+    try{if(navigator.clipboard&&window.ClipboardItem){navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(done,function(){AIK.copy(text,$('copyNote'),'글자로 복사했습니다(표 모양은 빠집니다).');});return;}}catch(e){}
+    AIK.copy(text,$('copyNote'),'글자로 복사했습니다(표 모양은 빠집니다).');
+  });
+  $('btnAi').addEventListener('click',function(){if(!rows().length){$('aiNote').textContent='업무를 먼저 적어 주세요.';return;}AIK.copy(aiPrompt(),$('aiNote'),'주문서를 복사했습니다. AI 대화창에 붙여 넣으세요.');});
+  var h=decodeURIComponent(location.hash.replace('#',''));
+  var HT={'인수인계':'hand','hand':'hand','업무분장':'duty','duty':'duty','달력':'cal','cal':'cal','ai':'ai'};
+  if(HT[h]){tab=HT[h];[].forEach.call($('tabs').children,function(x){x.classList.toggle('on',x.dataset.t===tab);});}
+  window._wb={state:function(){return S;},monthsOf:monthsOf};
+  renderList();renderOut();
+})();
+</script>
+<script src="../videos.js?v=5"></script>
+<script src="../remake.js"></script>
+</body>
+</html>
