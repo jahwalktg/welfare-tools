@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>전화 응대판 | 사회복지사 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="전화기 옆에 붙이는 우리 기관 응대 대본 한 장과 전화 메모지를 만듭니다. 기관 이름을 넣으면 첫 인사·담당자가 없을 때·돌려 드릴 때·메모 받을 때 멘트가 만들어지고, 우리 기관 말로 고쳐 A4로 인쇄합니다. 어려운 전화의 대응은 기관 매뉴얼 칸에 직접 적습니다.">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/phone/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="전화 응대판 | 사회복지사 업무 도구">
+<meta property="og:description" content="전화기 옆에 붙이는 우리 기관 응대 대본 한 장과 전화 메모지를 만듭니다. 기관 이름을 넣으면 첫 인사·담당자가 없을 때·돌려 드릴 때·메모 받을 때 멘트가 만들어지고, 우리 기관 말로 고쳐 A4로 인쇄합니다. 어려운 전화의 대응은 기관 매뉴얼 칸에 직접 적습니다.">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/phone/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --red:#C62E3A; --green:#1F8A4C;
+  --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC;
+  --text:#1A2B50; --muted:#5B6885;
+  --blue-bg:#E8F0FF; --amber:#8A5A00; --amber-bg:#FFF1CC; --amber-line:#E5B93C; --green-bg:#E3F5EA; --red-bg:#FDECEE; --btn-text:#FFFFFF;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#27407A; --red:#FF7A84; --green:#5FD08E;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+  }
+}
+:root[data-theme="dark"]{
+  --blue:#6BA1FF; --navy:#27407A; --red:#FF7A84; --green:#5FD08E;
+  --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+  --text:#EAF0FF; --muted:#A9B6DA;
+  --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
+.lead{margin:0 0 6px;color:var(--muted)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.tabs button{min-height:46px;padding:0 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:16px}
+.tabs button.on{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:19px}
+.row{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end}
+.fld{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fld label,.fld .lbl{font-size:14px;color:var(--muted);font-weight:600}
+input[type=text],select,textarea{min-height:46px;padding:8px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-size:17px;max-width:100%}
+textarea{width:100%;min-height:140px;font-size:15px;font-family:inherit}
+.btn{min-height:44px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.btn-main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.btn-small{min-height:36px;font-size:14px;padding:0 10px}
+.hint{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.err{color:var(--red);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1.5px solid var(--line);font-size:15px;font-weight:600;background:var(--surface)}
+details{margin-top:12px}
+details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;align-items:center}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--bg);font-size:14px}
+.note{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:var(--amber-bg);border:1.5px solid var(--amber-line);font-size:14px}
+.tag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:13px;font-weight:700;margin:1px 2px}
+.tag.e{background:var(--blue-bg);color:var(--blue)}
+.uses{margin-top:20px}
+.uses ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.uses li{padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);font-size:15px}
+.foot{margin-top:24px;padding:14px 4px 0;border-top:1.5px solid var(--line);font-size:15px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:999px;font-size:15px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+.toast.show{opacity:1}
+[hidden]{display:none!important}
+
+.notice{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:10px 0 18px;padding:0;list-style:none}
+.notice li{padding:12px 14px;border-radius:12px;border:1.5px solid var(--amber-line);background:var(--amber-bg);font-size:15px;line-height:1.5}
+.notice li b{display:block;color:var(--amber)}
+.card h2{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.card h2 small,.card h3 small,label small{font-weight:400;font-size:14px;color:var(--muted)}
+.card h3{margin:18px 0 6px;font-size:16px}
+.no{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--blue);color:var(--btn-text);font-size:15px;flex:none}
+.grid2{display:grid;gap:10px 14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid2 input,.fld input.full,.fld textarea{width:100%}
+.chips.sm{margin:6px 0 0;gap:6px}
+.chips.sm .chip{font-size:14px;padding:4px 10px;cursor:pointer;min-height:32px;text-align:left;overflow-wrap:anywhere}
+.plainlist{margin:6px 0;padding-left:20px;font-size:15px}
+.plainlist li{margin:4px 0}
+.uses a,.hint a,.plainlist a{color:var(--blue)}
+
+/* ── 전화 응대판 ── */
+.tabs.sm{margin:4px 0 0}
+.tabs.sm button{min-height:40px;padding:0 12px;font-size:15px;border-radius:10px}
+.say{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:var(--blue-bg);border:1.5px solid var(--line);font-size:16px}
+.say b{font-weight:800}
+.mgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:10px}
+.mcard{padding:12px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);min-width:0}
+.mcard h3{margin:0 0 6px;font-size:16px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.mcard textarea{min-height:104px;font-size:16px;line-height:1.5}
+.mcard .tip{margin:4px 0 0;font-size:14px;color:var(--muted)}
+.mcard .btn-small{margin-top:6px}
+.ext{display:grid;gap:6px;margin-top:8px;max-width:520px}
+.ext .er{display:flex;gap:6px;align-items:center}
+.ext .er input{flex:1 1 0;min-width:0;width:0}
+.ext .er input.num{flex:0 1 110px}
+.ext .er .btn{flex:none}
+.prac{margin-top:10px;padding:14px;border-radius:12px;border:1.5px dashed var(--line);background:var(--bg)}
+.prac .q{margin:0;font-size:18px;font-weight:700}
+.prac .a{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:var(--surface);border:1.5px solid var(--blue);white-space:pre-wrap;font-size:17px}
+
+/* 종이(미리 보기와 인쇄가 같이 씀) — 테마와 상관없이 흰 종이에 검은 글씨 */
+.paper{background:#fff;color:#111;border:1.5px solid #9aa3b5;border-radius:8px;padding:14px;margin-top:8px;font-size:14px;line-height:1.45;overflow:hidden}
+.paper.sz-s{font-size:13px}
+.paper.sz-l{font-size:15.5px}
+.paper .p-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;border-bottom:2px solid #111;padding-bottom:3px;margin-bottom:4px}
+.paper .p-title{font-size:1.5em;font-weight:800}
+.paper .p-org{font-weight:700}
+.paper .p-sub{font-size:.9em;color:#333;margin-left:auto}
+.paper .p-sec{margin:7px 0 3px;font-weight:800;font-size:1.05em}
+.paper .p-sec small{font-weight:400;font-size:.82em;color:#333}
+.paper .p-grid{display:grid;gap:5px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.paper .p-two{display:grid;gap:0 14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.paper .p-box{border:1px solid #555;border-radius:4px;padding:3px 7px 4px;min-width:0;break-inside:avoid}
+.paper .p-box b{display:block;font-size:.9em;color:#333}
+.paper .p-box p{margin:0;white-space:pre-wrap}
+.paper .p-box p.blank{color:#666;min-height:3.6em;font-size:.9em}
+.paper .p-ext{display:grid;gap:5px;grid-template-columns:1fr;align-items:start}
+.paper .p-ext.two{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.paper table{font-size:1em;margin:0}
+.paper th,.paper td{border:1px solid #555;padding:1px 6px;height:1.7em;background:#fff;color:#111}
+.paper th{background:#eee;font-size:.9em}
+.paper ol{margin:0;padding-left:1.5em}
+.paper .p-foot{margin:6px 0 0;font-size:.8em;color:#333}
+.paper.memo{display:grid;gap:0;grid-template-columns:1fr;padding:0;border:0;max-width:380px;overflow:visible}
+.memo .slip{border:1.5px dashed #777;padding:10px 12px;display:flex;flex-direction:column;gap:4px;min-width:0;background:#fff}
+.memo .s-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-bottom:2px solid #111;padding-bottom:1px}
+.memo .s-head b{font-size:1.25em}
+.memo .s-head span{font-size:.85em;color:#333;text-align:right}
+.memo .s-row{display:flex;gap:8px;align-items:flex-end;min-height:1.9em}
+.memo .s-row>span{flex:none;width:7.2em;font-weight:700;font-size:.92em;line-height:1.2}
+.memo .s-row>span small{display:block;font-weight:400;font-size:.85em;color:#333}
+.memo .s-row>i{flex:1;min-width:0;border-bottom:1px solid #555;font-style:normal;font-size:.88em;color:#333;white-space:pre-wrap}
+.memo .s-row.tall{flex:1;align-items:stretch;min-height:4.2em}
+.memo .s-row.tall>i{border:1px solid #555;border-radius:3px}
+.memo .s-chk{display:flex;flex-wrap:wrap;gap:0 12px;font-size:.92em;margin-top:2px}
+#print{display:none}
+
+@page{size:A4 portrait;margin:10mm}
+@media print{
+  html,body{background:#fff!important;color:#000!important}
+  body>*:not(#print){display:none!important}
+  #print{display:block!important}
+  #print .paper{border:0;border-radius:0;padding:0;margin:0;max-width:none;font-size:11.5pt;overflow:visible}
+  #print .paper.sz-s{font-size:10.5pt}
+  #print .paper.sz-l{font-size:12.5pt}
+  #print .paper .p-grid{grid-template-columns:1fr 1fr}
+  #print .paper .p-two{grid-template-columns:3fr 2fr}
+  #print .paper .p-ext.two{grid-template-columns:1fr 1fr}
+  #print .paper.memo{grid-template-columns:1fr 1fr;height:270mm}
+  #print .paper.memo.n4{grid-template-rows:repeat(2,1fr);font-size:12pt}
+  #print .paper.memo.n6{grid-template-rows:repeat(3,1fr);font-size:10pt}
+  #print .memo .slip{padding:6mm 7mm;overflow:hidden}
+  #print .memo.n6 .slip{padding:4mm 6mm}
+}
+</style>
+</head>
+<body>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › <a href="../index.html#office">사무 도우미</a></p>
+  <h1>전화 응대판</h1>
+  <p class="lead">전화기 옆에 붙여 두는 <strong>우리 기관 응대 대본 한 장</strong>과, 통화 내용을 받아 적는 <strong>전화 메모지</strong>를 만듭니다. 기관 이름을 넣으면 기본 멘트가 만들어지고, 우리 기관 말로 고쳐서 인쇄합니다.</p>
+  <ul class="notice">
+    <li><b>참고사항입니다</b> 한 현장의 개인 경험으로 만든 틀입니다. 멘트는 우리 기관 말로 고쳐 쓰세요. 폭언·반복 민원의 대응 절차는 이 도구가 정해 주지 않습니다. <strong>기관 매뉴얼과 관리자 확인</strong>이 먼저입니다.</li>
+    <li><b>이 PC 안에서만</b> 기관 정보와 고친 멘트만 이 브라우저에 저장됩니다. 전화하신 분의 이름·번호는 저장하지 않습니다.</li>
+    <li><b>줄인 시간은 동료와 클라이언트에게</b> 전화가 조금 덜 무서워지면, 그만큼 사람에게 마음을 더 쓸 수 있습니다.</li>
+  </ul>
+
+  <section class="card">
+    <h2><span class="no">1</span>우리 기관 기본 정보</h2>
+    <p class="hint">아는 것만 적으세요. 비우면 「○○복지관」처럼 빈 이름으로 만들어집니다. 적는 대로 이 브라우저에 저장됩니다.</p>
+    <div class="grid2">
+      <div class="fld"><label for="oName">기관 이름</label><input type="text" id="oName" maxlength="40" placeholder="예: ○○복지관" autocomplete="off"></div>
+      <div class="fld"><label for="oDept">부서 이름 <small>없으면 비움</small></label><input type="text" id="oDept" maxlength="30" placeholder="예: 재가복지팀" autocomplete="off"></div>
+    </div>
+    <div class="fld" style="margin-top:12px">
+      <span class="lbl">전화를 받은 나를 어떻게 밝히나요</span>
+      <div class="tabs sm" id="whoTabs"></div>
+    </div>
+    <div class="grid2" style="margin-top:8px">
+      <div class="fld" id="wTitle" hidden><label for="oTitle">직함</label><input type="text" id="oTitle" maxlength="20" placeholder="예: 사회복지사" autocomplete="off"></div>
+      <div class="fld" id="wMe" hidden><label for="oMe">내 이름 <small>함께 쓰는 판이면 비워 두세요. 「○○○」로 나옵니다</small></label><input type="text" id="oMe" maxlength="20" placeholder="예: 김하늘" autocomplete="off"></div>
+    </div>
+    <p class="say" id="say"></p>
+    <div class="grid2" style="margin-top:12px">
+      <div class="fld"><label for="oCall">전화하신 분을 부르는 말 <small>선택</small></label><input type="text" id="oCall" maxlength="20" placeholder="예: 어르신 / 선생님 / 회원님" autocomplete="off"><div class="chips sm" id="callChips"></div><p class="hint" id="callHint"></p></div>
+      <div class="fld"><label for="oTel">대표 전화 <small>선택 — 기관 번호만</small></label><input type="text" id="oTel" maxlength="20" placeholder="예: 02-000-0000" autocomplete="off" inputmode="tel"></div>
+      <div class="fld"><label for="oHours">전화 받는 시간 <small>선택</small></label><input type="text" id="oHours" maxlength="40" placeholder="예: 평일 9시~18시" autocomplete="off"></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn btn-small" id="btnWipe" type="button">저장한 것 모두 지우기</button>
+      <span class="hint" id="saveNote" role="status" style="margin:0"></span>
+    </div>
+    <p class="note" id="piiNote" hidden></p>
+  </section>
+
+  <section class="card">
+    <h2><span class="no">2</span>기본 멘트 <small>여덟 가지 상황 — 칸 안에서 바로 고칩니다</small></h2>
+    <p class="hint">흔히 쓰는 예의 바른 말의 틀입니다. 우리 기관에서 실제로 쓰는 말로 고치세요. 말하기 쉽게 짧게, 한 카드에 두세 문장이 좋습니다. 고친 문장도 저장됩니다.</p>
+    <div class="mgrid" id="mentBox"></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="no">3</span>우리 기관 매뉴얼 칸 <small>어려운 전화 — 기관이 채웁니다</small></h2>
+    <p class="hint">통화가 길어지거나 언성이 높아질 때 어떻게 할지는 <strong>이 도구가 정해 주지 않습니다.</strong> 법과 우리 기관 매뉴얼이 정할 일입니다. 아래 칸에는 우리 기관이 정한 것을 그대로 옮겨 적으세요.</p>
+    <ul class="plainlist">
+      <li>기관의 <strong>종사자 보호 매뉴얼·취업규칙·주무관청 안내</strong>를 따릅니다.</li>
+      <li>아직 정한 것이 없으면 <strong>기관장·관리자와 정해서</strong> 적어 둡니다.</li>
+      <li>지침 원문은 <a href="https://jahwalktg.github.io/welfare-search/" target="_blank" rel="noopener">「사회복지 지침 찾기」</a>에서 「폭력」 「권익」 「종사자 보호」로 찾아볼 수 있습니다.</li>
+      <li>비워 두면 인쇄물에 「기관에서 정해 적으세요」로 나옵니다. 정해진 뒤 손으로 적어도 됩니다.</li>
+    </ul>
+    <div class="mgrid" id="manBox"></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="no">4</span>전화기 옆 한 장 <small>A4 인쇄</small></h2>
+    <p class="hint">기본 멘트 + 우리 기관 매뉴얼 칸 + 내선 번호표 + 「메모할 것 5가지」가 한 장에 들어갑니다.</p>
+    <h3>내선 번호표 <small>부서와 내선 번호만. 비워 두고 인쇄해 손으로 적어도 됩니다</small></h3>
+    <div class="ext" id="extBox"></div>
+    <div class="row" style="margin-top:8px"><button class="btn btn-small" id="btnExtAdd" type="button">줄 더하기</button></div>
+    <h3>글자 크기</h3>
+    <div class="tabs sm" id="szTabs"></div>
+    <p class="hint">멘트나 매뉴얼 칸이 길어 한 장을 넘으면 글자를 작게 하거나 문장을 줄이세요. 인쇄 창에서 「머리글과 바닥글」은 끄는 것이 좋습니다.</p>
+    <div class="row" style="margin-top:10px"><button class="btn btn-main" id="btnPrintSheet" type="button">전화기 옆 한 장 인쇄</button></div>
+    <details open>
+      <summary>미리 보기</summary>
+      <div id="pvSheet"></div>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2><span class="no">5</span>전화 메모지 <small>A4 한 장에 여러 장</small></h2>
+    <p class="hint">화면에서는 채우지 않습니다. 인쇄해서 잘라 두고, 통화하면서 손으로 적습니다. 다 전한 메모지는 이름·번호가 적혀 있으니 기관에서 하는 방식대로 없애세요.</p>
+    <div class="tabs sm" id="memoTabs"></div>
+    <div class="row" style="margin-top:10px"><button class="btn btn-main" id="btnPrintMemo" type="button">전화 메모지 인쇄</button></div>
+    <details>
+      <summary>미리 보기 (한 장)</summary>
+      <div id="pvMemo"></div>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2><span class="no">6</span>연습하기 <small>소리 내어 말해 보기</small></h2>
+    <p class="hint">상황을 하나 뽑아, 내 멘트를 보지 않고 소리 내어 말해 본 뒤 펼쳐 봅니다. 녹음도 점수도 없습니다.</p>
+    <div class="row" style="margin-top:8px">
+      <button class="btn btn-main" id="btnDraw" type="button">상황 뽑기</button>
+      <button class="btn" id="btnShow" type="button" hidden>내 멘트 펼쳐 보기</button>
+    </div>
+    <div class="prac" id="pracBox" hidden>
+      <p class="hint" id="pracT" style="margin:0 0 4px"></p>
+      <p class="q" id="pracQ"></p>
+      <p class="a" id="pracA" hidden></p>
+    </div>
+  </section>
+
+  <section class="uses">
+    <h2>다음에는</h2>
+    <ul>
+      <li><strong><a href="../doc-remake/index.html#phone">AI로 우리 기관 대본 만들기</a></strong> 선배가 쓰던 메모나 지금 쓰는 응대 요령을 우리 기관 말투의 대본으로 다듬고 싶을 때. 전화하신 분의 이름·번호는 넣지 않습니다.</li>
+      <li><strong><a href="../style-card/index.html">우리 기관 스타일 카드</a></strong> 거기에 「이용자를 부르는 말」을 적어 두면 이 화면의 멘트에도 들어옵니다.</li>
+      <li><strong>동료와 함께</strong> 인쇄한 한 장을 팀 회의에서 같이 읽고, 우리 기관 말과 다른 곳을 고쳐 다시 인쇄하세요. 매뉴얼 칸은 관리자와 함께 채웁니다.</li>
+    </ul>
+  </section>
+  <footer class="foot">
+    <p><strong>이 PC 안에서만 처리합니다.</strong> 기관 정보와 고친 멘트는 인터넷으로 보내지 않습니다. 전화하신 분의 이름·번호는 이 화면에 적는 칸이 없습니다.</p>
+    <p>만든 사람: 서울강남지역자활센터 김태균</p>
+  </footer>
+</div>
+<div id="print" aria-hidden="true"></div>
+<div class="toast" id="toast" role="status"></div>
+<script src="../ai-kit.js"></script>
+<script>
+/* 전화 응대판 — 계산만 하는 부분(화면을 건드리지 않음). node 에서 따로 돌려 볼 수 있다. */
+var PHONE = (function () {
+  'use strict';
+  var KEY = 'welfare-tools.phone.v1';
+
+  /* 낱말 끝 글자의 받침. {jong:받침 있음, rieul:ㄹ받침} / 알 수 없으면 null */
+  function tail(word) {
+    var s = String(word == null ? '' : word).replace(/[\s"'」』)\]〉》.,!?~]+$/, '');
+    var ch = s.charAt(s.length - 1); if (!ch) return null;
+    var c = ch.charCodeAt(0);
+    if (c >= 0xAC00 && c <= 0xD7A3) { var j = (c - 0xAC00) % 28; return { jong: j !== 0, rieul: j === 8 }; }
+    if (ch >= '0' && ch <= '9') return { jong: '013678'.indexOf(ch) >= 0, rieul: '178'.indexOf(ch) >= 0 };   // 영·일·삼·육·칠·팔
+    return null;
+  }
+  /* josa('복지관','은/는') → '은'. pair = '받침 있을 때/없을 때'. 「으로/로」는 ㄹ받침이면 「로」.
+     끝 글자를 알 수 없으면(○, 영문 등) 「은(는)」처럼 둘 다 적는다. */
+  function josa(word, pair) {
+    var p = String(pair).split('/'), t = tail(word);
+    if (!t) return pair === '으로/로' ? '(으)로' : pair === '이었/였' ? '이었' : p[0] + '(' + p[1] + ')';
+    if (pair === '으로/로') return (t.jong && !t.rieul) ? '으로' : '로';
+    return t.jong ? p[0] : p[1];
+  }
+  function first(s) { return String(s || '').split(/[\/,，]/)[0].trim().slice(0, 20); }
+
+  var MAN = [['long', '통화가 길어질 때'], ['loud', '언성이 높아질 때'], ['repeat', '같은 전화가 반복될 때'], ['hard', '내가 감당하기 어려울 때']];
+  var MEMO5 = ['언제 (날짜·시간)', '누가 (기관·성함)', '누구에게 (찾으신 분)', '무슨 일로 (용건)', '다시 걸 번호 (읽어서 확인)'];
+
+  function blank() {
+    return { org: { name: '', dept: '', who: 'team', title: '', me: '', call: null, tel: '', hours: '' },
+      ment: {}, manual: { long: '', loud: '', repeat: '', hard: '' },
+      ext: [{ d: '', n: '' }, { d: '', n: '' }, { d: '', n: '' }, { d: '', n: '' }, { d: '', n: '' }], size: 'm', memo: 4 };
+  }
+  /* 저장된 것을 읽어 꼴을 맞춘다(모르는 값은 버림) */
+  function clean(o) {
+    var b = blank(); if (!o || typeof o !== 'object') return b;
+    var g = o.org || {};
+    [['name', 40], ['dept', 30], ['title', 20], ['me', 20], ['tel', 20], ['hours', 40]].forEach(function (k) { b.org[k[0]] = String(g[k[0]] || '').slice(0, k[1]); });
+    if (g.who === 'title' || g.who === 'name') b.org.who = g.who;
+    b.org.call = typeof g.call === 'string' ? g.call.slice(0, 20) : null;
+    ments(info(b, null)).forEach(function (m) { var v = (o.ment || {})[m.id]; if (typeof v === 'string') b.ment[m.id] = v.slice(0, 400); });
+    MAN.forEach(function (k) { b.manual[k[0]] = String((o.manual || {})[k[0]] || '').slice(0, 300); });
+    if (Array.isArray(o.ext)) b.ext = o.ext.slice(0, 12).map(function (r) { return { d: String((r && r.d) || '').slice(0, 30), n: String((r && r.n) || '').slice(0, 20) }; });
+    if (o.size === 's' || o.size === 'l') b.size = o.size;
+    if (o.memo === 6) b.memo = 6;
+    return b;
+  }
+
+  /* 기관 정보 → 멘트에 들어갈 낱말. style = AIK.read() (없어도 됨) */
+  function info(st, style) {
+    var o = st.org, so = (style && style.org) || {};
+    var type = first(so.type).replace(/^[○◯〇\s]+/, '');
+    var org = o.name.trim() || (type && type.length <= 20 ? '○○' + type : '○○복지관');
+    var dept = o.dept.trim();
+    var me = o.who === 'title' ? (o.title.trim() || '사회복지사') : o.who === 'name' ? (o.me.trim() || '○○○') : '담당자';
+    var fromStyle = o.call === null;
+    var call = fromStyle ? first(so.call) : o.call.trim();
+    return { org: org, dept: dept, me: me, self: (dept ? dept + ' ' : '') + me, call: call, fromStyle: fromStyle && !!call, tel: o.tel.trim(), hours: o.hours.trim() };
+  }
+
+  /* 기본 멘트 여덟 가지. ask = 연습하기에서 보여 줄 상황 */
+  function ments(i) {
+    var v = i.call ? ', ' + i.call : '';
+    var back = i.tel ? i.tel + josa(i.tel, '으로/로') : '대표 전화로';
+    return [
+      { id: 'hello', title: '전화를 받을 때 (첫 인사)',
+        text: '감사합니다. ' + i.org + ' ' + i.self + '입니다. 무엇을 도와드릴까요?',
+        tip: '기관 이름부터 또박또박, 조금 천천히 말합니다.',
+        ask: '전화벨이 울립니다. 수화기를 들고 첫 마디를 해 보세요.' },
+      { id: 'away', title: '담당자가 자리에 없을 때',
+        text: '죄송합니다. 담당자가 지금 자리에 없습니다. 메모를 남겨 주시면 돌아오는 대로 전해 드리겠습니다.',
+        tip: '언제 돌아오는지 모르면 시간을 약속하지 않습니다.',
+        ask: '「담당 선생님 좀 바꿔 주세요.」 그런데 담당자가 자리에 없습니다.' },
+      { id: 'pass', title: '다른 부서로 돌려 드릴 때',
+        text: '그 일은 담당자가 따로 있습니다. 지금 연결해 드리겠습니다. 혹시 끊기면 ' + back + ' 다시 걸어 주세요.',
+        tip: '돌리기 전에 어디로 연결하는지 먼저 말씀드립니다.',
+        ask: '우리 부서 일이 아닌 문의입니다. 담당 부서로 돌려 드려야 합니다.' },
+      { id: 'memo', title: '메모를 받을 때',
+        text: '네, 전해 드리겠습니다. 성함과 연락받으실 번호를 알려 주시겠어요? 적은 것을 제가 다시 읽어 드리겠습니다.',
+        tip: '번호는 한 자리씩 다시 읽어 확인합니다.',
+        ask: '「그럼 메모 좀 전해 주세요.」 받아 적을 준비를 합니다.' },
+      { id: 'again', title: '잘 못 들었을 때',
+        text: '죄송합니다' + v + '. 잘 못 들었습니다. 한 번만 더 천천히 말씀해 주시겠어요?',
+        tip: '두 번 물어도 괜찮습니다. 짐작으로 적지 않습니다.',
+        ask: '목소리가 작고 주변이 시끄러워서 잘 들리지 않았습니다.' },
+      { id: 'wait', title: '잠시 기다리시게 할 때',
+        text: '확인해 보겠습니다. 잠시만 기다려 주시겠어요?\n(돌아와서) 기다려 주셔서 감사합니다' + v + '.',
+        tip: '오래 걸릴 것 같으면 다시 전화드리겠다고 말씀드립니다.',
+        ask: '서류를 찾아봐야 답할 수 있습니다. 1분쯤 걸릴 것 같습니다.' },
+      { id: 'dunno', title: '답을 바로 모를 때',
+        text: '제가 바로 답을 드리기 어렵습니다. 정확히 확인하고 다시 전화드리겠습니다. 연락받으실 번호를 알려 주시겠어요?',
+        tip: '모르는 것은 모른다고 말합니다. 짐작으로 답하지 않습니다.',
+        ask: '처음 듣는 질문입니다. 지금은 답을 모릅니다.' },
+      { id: 'bye', title: '전화를 끊을 때 (끝 인사)',
+        text: '더 궁금하신 점은 없으신가요? 전화 주셔서 감사합니다. ' + i.self + josa(i.self, '이었/였') + '습니다.',
+        tip: '상대가 먼저 끊은 뒤에 수화기를 내려놓습니다.',
+        ask: '용건이 끝났습니다. 통화를 마무리해 보세요.' }
+    ];
+  }
+  /* 고친 문장이 있으면 그것, 없거나 비었으면 처음 문장 */
+  function text(st, m) { var e = st.ment[m.id]; return (typeof e === 'string' && e.trim()) ? e : m.text; }
+
+  /* 적어 둔 글에 휴대폰·주민번호 모양이 있는지(막지는 않고 알려 주기만) */
+  function pii(st) {
+    var all = [st.org.name, st.org.dept, st.org.title, st.org.me, st.org.call || '', st.org.tel, st.org.hours];
+    Object.keys(st.ment).forEach(function (k) { all.push(st.ment[k]); });
+    Object.keys(st.manual).forEach(function (k) { all.push(st.manual[k]); });
+    st.ext.forEach(function (r) { all.push(r.d); all.push(r.n); });
+    var s = all.join('\n');
+    return /\d{6}\s?-\s?[1-8]\d{6}/.test(s) || /01[016789][-.\s]?\d{3,4}[-.\s]?\d{4}/.test(s);
+  }
+
+  return { KEY: KEY, MAN: MAN, MEMO5: MEMO5, tail: tail, josa: josa, first: first, blank: blank, clean: clean, info: info, ments: ments, text: text, pii: pii };
+})();
+if (typeof module !== 'undefined' && module.exports) module.exports = PHONE;
+</script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var style = (typeof AIK !== 'undefined' && AIK && typeof AIK.read === 'function') ? AIK.read() : { org: {} };
+  var st = load(), M = {}, MANTA = {}, TABS = [], prac = null;
+
+  function load() { try { return PHONE.clean(JSON.parse(localStorage.getItem(PHONE.KEY) || 'null')); } catch (e) { return PHONE.blank(); } }
+  function save() {
+    try { localStorage.setItem(PHONE.KEY, JSON.stringify(st)); $('saveNote').textContent = '이 브라우저에 저장했습니다.'; }
+    catch (e) { $('saveNote').textContent = '이 브라우저는 저장이 막혀 있습니다. 인쇄는 그대로 됩니다.'; }
+  }
+  function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  function toast(m) { var t = $('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(function () { t.classList.remove('show'); }, 2200); }
+  function inf() { return PHONE.info(st, style); }
+
+  /* 고르는 단추 묶음 */
+  function tabs(box, list, get, set) {
+    var btns = list.map(function (it) {
+      var b = el('button', '', it[1]); b.type = 'button';
+      b.addEventListener('click', function () { set(it[0]); save(); render(); });
+      box.appendChild(b); return [it[0], b];
+    });
+    TABS.push(function () { btns.forEach(function (x) { x[1].classList.toggle('on', x[0] === get()); x[1].setAttribute('aria-pressed', x[0] === get() ? 'true' : 'false'); }); });
+  }
+
+  /* ── 1. 기관 기본 정보 ── */
+  var ORG = [['oName', 'name'], ['oDept', 'dept'], ['oTitle', 'title'], ['oMe', 'me'], ['oCall', 'call'], ['oTel', 'tel'], ['oHours', 'hours']];
+  function fillOrg() {
+    var i = inf();
+    ORG.forEach(function (k) { $(k[0]).value = k[1] === 'call' ? (st.org.call === null ? i.call : st.org.call) : st.org[k[1]]; });
+  }
+  ORG.forEach(function (k) {
+    $(k[0]).addEventListener('input', function () { st.org[k[1]] = $(k[0]).value; save(); render(); });
+  });
+  tabs($('whoTabs'), [['team', '「담당자」로'], ['title', '직함으로'], ['name', '이름으로']], function () { return st.org.who; }, function (v) { st.org.who = v; });
+  ['선생님', '어르신', '회원님', '보호자님', '부르지 않음'].forEach(function (c) {
+    var b = el('button', 'chip', c); b.type = 'button';
+    b.addEventListener('click', function () { st.org.call = c === '부르지 않음' ? '' : c; $('oCall').value = st.org.call; save(); render(); });
+    $('callChips').appendChild(b);
+  });
+  $('btnWipe').addEventListener('click', function () {
+    if (!confirm('이 브라우저에 저장한 기관 정보, 고친 멘트, 매뉴얼 칸, 내선 번호표를 모두 지울까요?')) return;
+    try { localStorage.removeItem(PHONE.KEY); } catch (e) { }
+    st = PHONE.blank(); prac = null; fillOrg(); fillMan(); renderExt(); render();
+    $('saveNote').textContent = ''; toast('모두 지웠습니다.');
+  });
+
+  /* ── 2. 기본 멘트 ── */
+  PHONE.ments(inf()).forEach(function (m, n) {
+    var c = el('div', 'mcard'), h = el('h3', '', (n + 1) + '. ' + m.title + ' ');
+    var tag = el('span', 'tag e', '고침'); tag.hidden = true; h.appendChild(tag); c.appendChild(h);
+    var ta = el('textarea'); ta.maxLength = 400; ta.rows = 3; ta.setAttribute('aria-label', m.title + ' 멘트');
+    c.appendChild(ta); c.appendChild(el('p', 'tip', m.tip));
+    var rs = el('button', 'btn btn-small', '처음 문장으로'); rs.type = 'button'; rs.hidden = true; c.appendChild(rs);
+    ta.addEventListener('input', function () {
+      var auto = autoOf(m.id);
+      if (ta.value === auto) delete st.ment[m.id]; else st.ment[m.id] = ta.value.slice(0, 400);
+      save(); render();
+    });
+    ta.addEventListener('change', function () { if (!ta.value.trim()) { delete st.ment[m.id]; save(); render(); } });
+    rs.addEventListener('click', function () { delete st.ment[m.id]; save(); render(); });
+    M[m.id] = { ta: ta, tag: tag, rs: rs };
+    $('mentBox').appendChild(c);
+  });
+  function autoOf(id) { var a = PHONE.ments(inf()); for (var k = 0; k < a.length; k++) if (a[k].id === id) return a[k].text; return ''; }
+  function has(id) { return Object.prototype.hasOwnProperty.call(st.ment, id); }
+
+  /* ── 3. 우리 기관 매뉴얼 칸 ── */
+  PHONE.MAN.forEach(function (k) {
+    var c = el('div', 'mcard'); c.appendChild(el('h3', '', k[1]));
+    var ta = el('textarea'); ta.maxLength = 300; ta.rows = 3; ta.placeholder = '우리 기관이 정한 대로 적으세요 (기관 매뉴얼에서 옮겨 적기)'; ta.setAttribute('aria-label', k[1] + ' — 우리 기관 매뉴얼');
+    ta.addEventListener('input', function () { st.manual[k[0]] = ta.value; save(); renderLight(); });
+    MANTA[k[0]] = ta; c.appendChild(ta); $('manBox').appendChild(c);
+  });
+  function fillMan() { PHONE.MAN.forEach(function (k) { MANTA[k[0]].value = st.manual[k[0]]; }); }
+
+  /* ── 4. 내선 번호표 ── */
+  function renderExt() {
+    var box = $('extBox'); box.textContent = '';
+    st.ext.forEach(function (r, n) {
+      var row = el('div', 'er');
+      var d = el('input'); d.type = 'text'; d.maxLength = 30; d.placeholder = '부서·담당 (예: 사례관리팀)'; d.value = r.d; d.setAttribute('aria-label', (n + 1) + '번째 줄 부서');
+      var x = el('input', 'num'); x.type = 'text'; x.maxLength = 20; x.placeholder = '내선'; x.value = r.n; x.setAttribute('aria-label', (n + 1) + '번째 줄 내선 번호');
+      var del = el('button', 'btn btn-small', '빼기'); del.type = 'button'; del.setAttribute('aria-label', (n + 1) + '번째 줄 빼기');
+      d.addEventListener('input', function () { r.d = d.value; save(); renderLight(); });
+      x.addEventListener('input', function () { r.n = x.value; save(); renderLight(); });
+      del.addEventListener('click', function () { st.ext.splice(st.ext.indexOf(r), 1); save(); renderExt(); renderLight(); });
+      row.appendChild(d); row.appendChild(x); row.appendChild(del); box.appendChild(row);
+    });
+    $('btnExtAdd').hidden = st.ext.length >= 12;
+  }
+  $('btnExtAdd').addEventListener('click', function () { if (st.ext.length < 12) { st.ext.push({ d: '', n: '' }); save(); renderExt(); renderLight(); } });
+  tabs($('szTabs'), [['s', '작게'], ['m', '보통'], ['l', '크게']], function () { return st.size; }, function (v) { st.size = v; });
+  tabs($('memoTabs'), [[4, '4장 (크게)'], [6, '6장 (작게)']], function () { return st.memo; }, function (v) { st.memo = v; });
+
+  /* ── 종이 만들기 ── */
+  function sheet(i) {
+    var p = el('div', 'paper sheet sz-' + st.size);
+    var h = el('div', 'p-head'); h.appendChild(el('span', 'p-title', '전화 응대판')); h.appendChild(el('span', 'p-org', i.org + (i.dept ? ' ' + i.dept : '')));
+    var sub = []; if (i.tel) sub.push('대표 전화 ' + i.tel); if (i.hours) sub.push('전화 받는 시간 ' + i.hours);
+    if (sub.length) h.appendChild(el('span', 'p-sub', sub.join(' · ')));
+    p.appendChild(h);
+    p.appendChild(el('div', 'p-sec', '기본 멘트'));
+    var g = el('div', 'p-grid');
+    PHONE.ments(i).forEach(function (m, n) { var b = el('div', 'p-box'); b.appendChild(el('b', '', (n + 1) + '. ' + m.title)); b.appendChild(el('p', '', PHONE.text(st, m))); g.appendChild(b); });
+    p.appendChild(g);
+    var s2 = el('div', 'p-sec', '우리 기관 매뉴얼 '); s2.appendChild(el('small', '', '기관이 정한 대로 · 관리자 확인')); p.appendChild(s2);
+    var g2 = el('div', 'p-grid');
+    PHONE.MAN.forEach(function (k) {
+      var b = el('div', 'p-box man'), v = st.manual[k[0]].trim(); b.appendChild(el('b', '', k[1]));
+      b.appendChild(v ? el('p', '', v) : el('p', 'blank', '기관에서 정해 적으세요')); g2.appendChild(b);
+    });
+    p.appendChild(g2);
+    var two = el('div', 'p-two'), L = el('div'), R = el('div');
+    L.appendChild(el('div', 'p-sec', '내선 번호'));
+    var rows = st.ext.slice(); while (rows.length < 4) rows.push({ d: '', n: '' });
+    var half = Math.ceil(rows.length / 2), parts = rows.length > 6 ? [rows.slice(0, half), rows.slice(half)] : [rows];   // 7줄부터는 두 표로 나란히
+    var ex = el('div', 'p-ext' + (parts.length > 1 ? ' two' : ''));
+    parts.forEach(function (part) {
+      var tb = el('table'), tr = el('tr'); tr.appendChild(el('th', '', '부서·담당')); tr.appendChild(el('th', '', '내선')); tb.appendChild(tr);
+      part.forEach(function (r) { var t = el('tr'); t.appendChild(el('td', '', r.d)); t.appendChild(el('td', '', r.n)); tb.appendChild(t); });
+      ex.appendChild(tb);
+    });
+    L.appendChild(ex);
+    R.appendChild(el('div', 'p-sec', '메모할 것 5가지'));
+    var ol = el('ol'); PHONE.MEMO5.forEach(function (x) { ol.appendChild(el('li', '', x)); }); R.appendChild(ol);
+    two.appendChild(L); two.appendChild(R); p.appendChild(two);
+    p.appendChild(el('p', 'p-foot', '참고용 틀입니다. 어려운 전화의 대응은 기관 매뉴얼과 관리자 확인이 먼저입니다.'));
+    return p;
+  }
+  function slip(i) {
+    var s = el('div', 'slip'), h = el('div', 's-head'); h.appendChild(el('b', '', '전화 메모')); h.appendChild(el('span', '', i.org)); s.appendChild(h);
+    function row(label, small, fill, tall) {
+      var r = el('div', 's-row' + (tall ? ' tall' : '')), l = el('span', '', label); if (small) l.appendChild(el('small', '', small));
+      r.appendChild(l); r.appendChild(el('i', '', fill || '')); s.appendChild(r);
+    }
+    row('받은 날짜·시간', '', '    월    일 (   )  오전·오후    시    분');
+    row('전화하신 분', '기관·성함');
+    row('찾으신 분');
+    row('용건', '', '', true);
+    row('연락처');
+    var c = el('div', 's-chk'); ['□ 다시 전화 주세요', '□ 다시 거신답니다', '□ 전해만 주세요'].forEach(function (x) { c.appendChild(el('span', '', x)); }); s.appendChild(c);
+    row('받은 사람');
+    return s;
+  }
+  function memo(i, n) { var p = el('div', 'paper memo n' + n); for (var k = 0; k < n; k++) p.appendChild(slip(i)); return p; }
+  function doPrint(node) { var p = $('print'); p.textContent = ''; p.appendChild(node); window.print(); }
+  $('btnPrintSheet').addEventListener('click', function () { doPrint(sheet(inf())); });
+  $('btnPrintMemo').addEventListener('click', function () { doPrint(memo(inf(), st.memo)); });
+
+  /* ── 6. 연습하기 ── */
+  $('btnDraw').addEventListener('click', function () {
+    var a = PHONE.ments(inf()), n;
+    do { n = Math.floor(Math.random() * a.length); } while (a.length > 1 && prac && a[n].id === prac.id);
+    prac = { id: a[n].id, open: false }; $('btnDraw').textContent = '다른 상황 뽑기'; renderPrac();
+  });
+  $('btnShow').addEventListener('click', function () { if (prac) { prac.open = !prac.open; renderPrac(); } });
+  function renderPrac() {
+    $('pracBox').hidden = !prac; $('btnShow').hidden = !prac; if (!prac) { $('btnDraw').textContent = '상황 뽑기'; return; }
+    var a = PHONE.ments(inf()), m = a[0], n = 0; a.forEach(function (x, k) { if (x.id === prac.id) { m = x; n = k; } });
+    $('pracT').textContent = (n + 1) + '. ' + m.title;
+    $('pracQ').textContent = m.ask;
+    $('pracA').textContent = PHONE.text(st, m); $('pracA').hidden = !prac.open;
+    $('btnShow').textContent = prac.open ? '내 멘트 가리기' : '내 멘트 펼쳐 보기';
+  }
+
+  /* ── 다시 그리기 ── */
+  function renderLight() {
+    var i = inf();
+    var a = $('pvSheet'); a.textContent = ''; a.appendChild(sheet(i));
+    var b = $('pvMemo'); b.textContent = ''; b.appendChild(memo(i, 1));
+    var bad = PHONE.pii(st); $('piiNote').hidden = !bad;
+    if (bad) $('piiNote').textContent = '휴대폰 번호나 주민번호 모양이 보입니다. 이 판은 여럿이 보는 곳에 붙습니다. 전화하신 분이나 직원 개인의 번호는 적지 마세요.';
+    return i;
+  }
+  function render() {
+    var i = renderLight();
+    TABS.forEach(function (f) { f(); });
+    $('wTitle').hidden = st.org.who !== 'title'; $('wMe').hidden = st.org.who !== 'name';
+    var say = $('say'); say.textContent = '전화에서는 이렇게 밝힙니다 → ';
+    say.appendChild(el('b', '', '「' + i.org + ' ' + i.self + '입니다」'));
+    $('callHint').textContent = i.fromStyle ? '스타일 카드에 적어 둔 말을 가져왔습니다. 전화에서 부르기 어색하면 고치세요.' : '비워 두면 부르는 말 없이 멘트를 만듭니다.';
+    PHONE.ments(i).forEach(function (m) {
+      var x = M[m.id], ed = has(m.id), v = ed ? st.ment[m.id] : m.text;
+      if (x.ta.value !== v) x.ta.value = v;
+      x.tag.hidden = !ed; x.rs.hidden = !ed;
+    });
+    renderPrac();
+  }
+
+  fillOrg(); fillMan(); renderExt(); render();
+})();
+</script>
+<script src="../videos.js?v=5"></script>
+<script src="../remake.js"></script>
+</body>
+</html>
