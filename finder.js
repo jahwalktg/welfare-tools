@@ -53,6 +53,7 @@
   var ROLES = [
     ['case', '사례관리·상담', ['search', 'basic', 'phone', 'guide', 'mask-privacy', 'date-calc', 'list-compare', 'doc-remake', 'easy-notice', 'prompt-notice', 'prompt-guide', 'repeat-checklist', 'gangnam']],
     ['prog', '프로그램·교육', ['attendance', 'cert-print', 'group-maker', 'random-pick', 'survey-tally', 'doc-remake', 'prompt-survey', 'break-timer', 'qr', 'file-tools', 'face-mask']],
+    ['org', '지역조직·자원봉사', ['attendance', 'group-maker', 'survey-tally', 'show-vote', 'newsletter', 'greeting', 'qr', 'map', 'labels', 'cert-print', 'doc-remake', 'easy-notice']],
     ['acct', '행정·회계', ['search', 'guide', 'work-board', 'eval-folders', 'repeat-checklist', 'leave-tracker', 'date-calc', 'excel', 'form-overlay', 'form-prompt', 'doc-remake', 'easy-notice', 'style-card', 'prompt-minutes', 'show-vote', 'shortcuts']],
     ['fund', '후원·홍보', ['newsletter', 'press', 'greeting', 'easy-notice', 'doc-remake', 'labels', 'face-mask', 'map', 'qr', 'prompt-directions']],
     ['fac', '총무·시설·안전', ['work-board', 'eval-folders', 'phone', 'safety', 'safety-post', 'safety-links', 'repeat-checklist', 'leave-tracker', 'meeting-timer', 'labels']],

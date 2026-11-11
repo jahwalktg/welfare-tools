@@ -29,7 +29,7 @@ var AIK = (function () {
   /* 주문서 끝에 붙는 글. cardId 를 주면 그 문서 카드도 함께 */
   function block(cardId, o) {
     o = o || read(); var out = [];
-    if (hasOrg(o)) {
+    if (o.use !== false && hasOrg(o)) {   // 스타일 카드 화면에서 「붙이기」를 끄면 기관 기본은 붙이지 않는다(고른 문서 카드는 붙음)
       out.push('[우리 기관 스타일]');
       if (o.org.type.trim()) out.push('- 기관 종류: ' + o.org.type.trim());
       if (o.org.call.trim()) out.push('- 이용자를 부르는 말: ' + o.org.call.trim());
@@ -61,7 +61,7 @@ var AIK = (function () {
       var o = read(), href = (opt.base || '../') + 'style-card/index.html';
       bar.textContent = '';
       var b = document.createElement('b'); bar.appendChild(b);
-      if (!hasOrg(o)) { b.textContent = '우리 기관 스타일 카드가 아직 없어요. '; bar.appendChild(document.createTextNode('한 번 만들어 두면 모든 주문서 끝에 우리 기관 말투가 자동으로 붙습니다. ')); }
+      if (!hasOrg(o)) { b.textContent = '우리 기관 스타일 카드가 아직 없어요. '; bar.appendChild(document.createTextNode('한 번 만들어 두면 이 주문서 끝에 우리 기관 말투가 자동으로 붙습니다. ')); }
       else if (o.use) { b.textContent = '우리 기관 스타일이 주문서 끝에 붙어 있어요. '; }
       else { b.textContent = '우리 기관 스타일을 붙이지 않는 중입니다. '; }
       var a = document.createElement('a'); a.href = href; a.textContent = hasOrg(o) ? '카드 고치기' : '스타일 카드 만들기'; bar.appendChild(a);
@@ -202,12 +202,28 @@ var AIK = (function () {
      find(text, names) → [{kind, raw, label}] (나온 순서, 같은 글자는 한 번)
      apply(text, items, keep) → {text, map}   keep = 그대로 둘 raw 의 Set
      restore(text, map) → 되돌린 글 */
+  /* 규칙은 위에서부터 차례로 본다. 앞 규칙이 잡은 자리는 뒤 규칙이 다시 잡지 않는다.
+     모든 규칙은 (앞 글자)(잡을 것) 두 묶음 — 숫자나 하이픈 바로 뒤에서 시작하지 않게 해서
+     계좌번호·문서번호의 가운데만 전화로 잘라 잡는 일을 막는다. (옛 아이폰도 읽게 뒤보기 문법은 쓰지 않음) */
   var PATS = [
-    ['주민번호', /\d{6}\s?-\s?[1-8]\d{6}/g],
-    ['전화', /0\d{1,2}[-.)\s]\s?\d{3,4}[-.\s]\d{4}|01[016789]\d{7,8}/g],
-    ['이메일', /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g],
-    ['계좌', /\d{2,6}-\d{2,6}-\d{2,8}(?:-\d{1,6})?/g]
+    ['주민번호', /(^|[^\d])(\d{6}\s?-\s?[1-8]\d{6})(?!\d)/g],
+    ['주민번호', /(^|[^\d-])(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[1-8]\d{6})(?![\d-])/g],   // 붙여 쓴 13자리
+    ['이메일', /(^|[^A-Za-z0-9._%+-])([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})/g],
+    ['전화', /(^|[^\d-])(0\d{1,2}\s?[-.)\s]\s?\d{3,4}\s?[-.\s]\s?\d{4})(?!\d|-\d)/g],
+    ['전화', /(^|[^\d-])(01[016789]\d{7,8}|0(?:2|[3-6][1-5]|70)\d{7,8})(?![\d-])/g],   // 붙여 쓴 전화
+    ['계좌', /(^|[^\d-])(\d{2,6}-\d{2,6}-\d{2,8}(?:-\d{1,6})?)(?![\d-])/g],
+    ['계좌', /(^|[^\d.,-])(\d{11,14})(?![\d.,-])/g],   // 하이픈 없는 긴 숫자
+    ['전화', /(^|[^\d-])(\d{3,4}-\d{4})(?![\d-])/g]   // 지역번호 없는 전화
   ];
+  function notPrivate(kind, s) {
+    if (kind === '계좌' && s.indexOf('-') >= 0) {
+      var p = s.split('-');
+      if (p.length === 3 && /^((19|20)\d{2}|\d{2})$/.test(p[0]) && +p[1] >= 1 && +p[1] <= 12 && +p[2] >= 1 && +p[2] <= 31) return true;   // 2026-03-05, 26-03-05 같은 날짜
+      if (s.replace(/\D/g, '').length < 9) return true;   // 10-20-30 처럼 짧은 것은 계좌가 아님
+    }
+    if (kind === '전화' && /^(19|20)\d{2}-(19|20)\d{2}$/.test(s)) return true;   // 2026-2027 같은 기간
+    return false;
+  }
   var ABC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   function find(text, names) {
     var seen = {}, items = [], cnt = {};
@@ -216,11 +232,14 @@ var AIK = (function () {
     var masked = text;
     PATS.forEach(function (p) {
       var m; p[1].lastIndex = 0;
+      var hits = [];
       while ((m = p[1].exec(masked))) {
-        if (p[0] === '계좌' && /^(19|20)\d{2}-\d{1,2}-\d{1,2}$/.test(m[0])) continue;   // 2026-03-05 같은 날짜는 계좌가 아님
-        add(p[0], m[0], m.index);
+        var at = m.index + m[1].length;
+        p[1].lastIndex = at + m[2].length;   // 앞 글자는 다음 찾기에서 다시 쓸 수 있게
+        if (notPrivate(p[0], m[2])) continue;
+        add(p[0], m[2], at); hits.push([at, m[2].length]);
       }
-      masked = masked.replace(p[1], function (x) { return new Array(x.length + 1).join('\u0000'); });   // 앞 규칙이 잡은 자리는 뒤 규칙이 다시 잡지 않게
+      hits.forEach(function (h) { masked = masked.slice(0, h[0]) + new Array(h[1] + 1).join('\u0000') + masked.slice(h[0] + h[1]); });   // 앞 규칙이 잡은 자리는 뒤 규칙이 다시 잡지 않게
     });
     items.sort(function (a, b) { return a.at - b.at; });
     items.forEach(function (it) {
@@ -246,19 +265,38 @@ var AIK = (function () {
 
   /* ───── 숫자 대조 (입력 글 ↔ AI 답) ─────
      날짜·시간·금액·그 밖의 숫자를 뽑아, 답에만 있는 것과 입력에만 있는 것을 돌려준다 */
-  function nums(text) {
-    var out = {}, m, re = /\d[\d,]*(?:[.:\/-]\d+)*(?:\.\d+)?/g;
-    while ((m = re.exec(text))) {
+  /* 글에서 날짜 → 시각 → 단위가 붙은 숫자 → 그 밖의 숫자 순서로 뽑는다.
+     같은 날짜·시각은 쓰는 모양이 달라도(2026. 3. 5. = 2026년 3월 5일, 14:00 = 오후 2시) 같은 것으로 본다.
+     「3월 5일」「2시」「5명」처럼 한 자리 숫자도 날짜·시각·단위가 붙어 있으면 뽑는다. */
+  function scanNums(text) {
+    var prim = {}, alias = {}, t = String(text || '');
+    function put(k, raw) { if (!prim[k]) prim[k] = raw.replace(/\s+/g, ' ').trim(); }
+    function take(re, fn) { t = t.replace(re, function (x) { fn.apply(null, arguments); return new Array(x.length + 1).join(' '); }); }
+    function ymd(x, y, mo, d) { put('D:' + y + '-' + (+mo) + '-' + (+d), x); alias['D:' + (+mo) + '-' + (+d)] = 1; }
+    function md(x, mo, d) { put('D:' + (+mo) + '-' + (+d), x); }
+    function clock(h, mi) { return 'T:' + (+h % 12) + ':' + (+mi || 0); }
+    take(/((?:19|20)\d{2})\s?[.\-\/]\s?(\d{1,2})\s?[.\-\/]\s?(\d{1,2})(?!\d)\.?/g, ymd);
+    take(/((?:19|20)\d{2})\s?년\s?(\d{1,2})\s?월\s?(\d{1,2})\s?일/g, ymd);
+    take(/(\d{1,2})\s?월\s?(\d{1,2})\s?일/g, md);
+    take(/(\d{1,2})\.\s?(\d{1,2})\.?\s?(?=\([월화수목금토일]\))/g, md);
+    take(/(\d{1,2}):(\d{2})(?!\d)/g, function (x, h, mi) { put(clock(h, mi), x); });
+    take(/(\d{1,2})\s?시(?!간)\s?(?:(\d{1,2})\s?분|(반))?/g, function (x, h, mi, half) { put(clock(h, half ? 30 : mi), x); });
+    take(/(\d[\d,]*)\s?만\s?(\d)\s?천(?:\s?원)?/g, function (x, n, k) { put('N:' + (parseInt(n.replace(/,/g, ''), 10) * 1e4 + k * 1e3), x); });   // 123만 4천원
+    take(/(\d[\d,]*(?:\.\d+)?)\s?(억|만|천)(?:\s?원)?/g, function (x, n, u) { put('N:' + Math.round(parseFloat(n.replace(/,/g, '')) * { '억': 1e8, '만': 1e4, '천': 1e3 }[u]), x); });
+    take(/(\d[\d,]*(?:\.\d+)?)\s?(?:명|인(?![가-힣])|회기|회|개월|개|원|%|퍼센트|세대|세|살|시간|분|일|주|월|년|차|건|장|쪽|가구|곳|팀)/g, function (x, n) { put('N:' + n.replace(/,/g, ''), x); });
+    var m, re = /\d[\d,]*(?:[.:\/-]\d+)*(?:\.\d+)?/g;
+    while ((m = re.exec(t))) {
       var raw = m[0].replace(/[.:\/-]+$/, ''), key = raw.replace(/,/g, '');
-      if (key.replace(/\D/g, '').length < 2 && !/[.:\/-]/.test(key)) continue;   // 한 자리 숫자(항목 번호 등)는 뺌
-      if (!out[key]) out[key] = raw;
+      if (key.replace(/\D/g, '').length < 2 && !/[.:\/-]/.test(key)) continue;   // 아무것도 안 붙은 한 자리 숫자(항목 번호 등)는 뺌
+      put('N:' + key, raw);
     }
-    return out;
+    return { prim: prim, alias: alias };
   }
+  function nums(text) { return scanNums(text).prim; }
   function compare(input, answer) {
-    var a = nums(input), b = nums(answer), added = [], missing = [];
-    Object.keys(b).forEach(function (k) { if (!a[k]) added.push(b[k]); });
-    Object.keys(a).forEach(function (k) { if (!b[k]) missing.push(a[k]); });
+    var A = scanNums(input), B = scanNums(answer), a = A.prim, b = B.prim, added = [], missing = [];
+    Object.keys(b).forEach(function (k) { if (!a[k] && !A.alias[k]) added.push(b[k]); });
+    Object.keys(a).forEach(function (k) { if (!b[k] && !B.alias[k]) missing.push(a[k]); });
     var todo = (answer.match(/\[확인 필요[^\]]*\]/g) || []);
     return { added: added, missing: missing, todo: todo };
   }

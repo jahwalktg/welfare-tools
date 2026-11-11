@@ -355,7 +355,7 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
       </div>
 
       <h3 class="sec-title">2. 붙일 것 <small>저장하지 않습니다</small></h3>
-      <textarea class="paste src" id="vSrc" spellcheck="false" placeholder="여기에 붙이세요:&#10;- 회의 타이머 '오늘 기록 복사' 글&#10;- 한 화면 투표 '결과 글 복사' 글&#10;- 내 메모 (누가 무슨 말을 했는지, 정한 것, 다음에 할 일)&#10;&#10;이용자 실명은 빼고 '부서 반장', '위원 A'처럼 적어 주세요."></textarea>
+      <textarea class="paste src" id="vSrc" spellcheck="false" placeholder="여기에 붙이세요:&#10;- 회의 타이머 '오늘 기록 복사' 글&#10;- 한 화면 투표 '결과 글 복사' 글&#10;- 내 메모 (누가 무슨 말을 했는지, 정한 것, 다음에 할 일)&#10;&#10;이용자 실명은 빼고 '위원 A', '이용자 대표'처럼 적어 주세요."></textarea>
       <p class="help" id="srcNote"></p>
 
       <h3 class="sec-title">3. 주문서</h3>
@@ -787,7 +787,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('pos').addEventListener('click',function(){$('vName').focus();});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
   $('vName').value=S.name;$('vWhen').value=S.when;$('vCols').value=S.cols;
-  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C'){$('vName').value='10월 직원회의';S.name='10월 직원회의';$('vSrc').value='[회의 타이머 기록]\n1. 사업계획 수정안 검토 — 18분\n2. 프로그램실 운영시간 — 12분 (3분 초과)\n3. 송년회 준비 — 7분\n\n[표결]\n1. 2026년 사업계획(안) 승인 — 찬성 7, 반대 1, 기권 1 → 가결\n\n[메모]\n- 사업계획은 기획팀이 10/20까지 수정안\n- 운영시간 11~19시 의견 다수, 이용자 의견 수렴 후 결정\n- 송년회 12/18(금) 후보, 장소는 총무팀 알아보기';}
+  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C'){$('vName').value='10월 직원회의';S.name='10월 직원회의';$('vSrc').value='[회의 타이머 기록]\n1. 사업계획 수정안 검토 — 18분\n2. 프로그램실 운영시간 — 12분 (3분 초과)\n3. 송년회 준비 — 7분\n\n[표결]\n1. 2026년 사업계획(안) 승인 — 찬성 7, 반대 1, 기권 1 → 가결\n\n[메모]\n- 사업계획은 지역조직화팀이 10/20까지 수정안\n- 운영시간 11~19시 의견 다수, 이용자 의견 수렴 후 결정\n- 송년회 12/18(금) 후보, 장소는 운영지원팀 알아보기';}
   function tick(){JT.showNow(new Date());}
   render();save();tick();setInterval(tick,1000);
 })();

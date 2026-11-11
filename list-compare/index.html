@@ -352,7 +352,7 @@ body.big .bar{margin-top:28px;height:24px}
 
       <p class="lbl" style="margin-top:12px">비교 방식</p>
       <div class="chips small" id="optRow"></div>
-      <p class="help">이름 앞뒤 공백과 괄호 안 글(예: "홍길동 (카페)")을 무시하면 표기가 조금 달라도 같은 사람으로 봅니다. "전화번호도 맞춰 보기"를 켜면 이름이 같아도 전화번호 뒷자리가 다르면 다른 사람으로 봅니다(동명이인 구분).</p>
+      <p class="help">이름 앞뒤 공백과 괄호 안 글(예: "홍길동 (경로식당)")을 무시하면 표기가 조금 달라도 같은 사람으로 봅니다. "전화번호도 맞춰 보기"를 켜면 이름이 같아도 전화번호 뒷자리가 다르면 다른 사람으로 봅니다(동명이인 구분).</p>
       <div class="controls-sub">
         <button class="btn btn-small" id="btnExample" type="button">예시 명단 넣어 보기</button>
         <button class="btn btn-small" id="btnClear" type="button">명단 지우기</button>
@@ -816,7 +816,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   ['listA','listB','listC'].forEach(function(id){$(id).addEventListener('input',render);});
   $('btnClear').addEventListener('click',function(){$('listA').value='';$('listB').value='';$('listC').value='';render();$('copyNote').textContent='명단을 지웠습니다.';});
   $('btnExample').addEventListener('click',function(){
-    $('listA').value='이름\t전화번호\n홍길동\t010-1111-2222\n김영희 (카페)\t010-3333-4444\n이철수\t010-5555-6666\n박민수\t010-7777-8888\n최지우\t010-9999-0000';
+    $('listA').value='이름\t전화번호\n홍길동\t010-1111-2222\n김영희 (한글교실)\t010-3333-4444\n이철수\t010-5555-6666\n박민수\t010-7777-8888\n최지우\t010-9999-0000';
     $('listB').value='홍길동\n김영희\n이철수\n정하나\n박민수\n박민수';
     $('listC').value='홍길동\n김영희\n이 철수\n홍길동\n박민수\n이철수\n최지우';
     render();$('copyNote').textContent='예시 명단(가상 이름)을 넣었습니다.';});

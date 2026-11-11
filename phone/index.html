@@ -186,7 +186,7 @@ th{background:var(--bg);font-size:14px}
   <p class="lead">전화기 옆에 붙여 두는 <strong>우리 기관 응대 대본 한 장</strong>과, 통화 내용을 받아 적는 <strong>전화 메모지</strong>를 만듭니다. 기관 이름을 넣으면 기본 멘트가 만들어지고, 우리 기관 말로 고쳐서 인쇄합니다.</p>
   <ul class="notice">
     <li><b>참고사항입니다</b> 한 현장의 개인 경험으로 만든 틀입니다. 멘트는 우리 기관 말로 고쳐 쓰세요. 폭언·반복 민원의 대응 절차는 이 도구가 정해 주지 않습니다. <strong>기관 매뉴얼과 관리자 확인</strong>이 먼저입니다.</li>
-    <li><b>이 PC 안에서만</b> 기관 정보와 고친 멘트만 이 브라우저에 저장됩니다. 전화하신 분의 이름·번호는 저장하지 않습니다.</li>
+    <li><b>이 기기 안에서만</b> 기관 정보와 고친 멘트만 이 브라우저에 저장됩니다. 전화하신 분의 이름·번호는 저장하지 않습니다.</li>
     <li><b>줄인 시간은 동료와 클라이언트에게</b> 전화가 조금 덜 무서워지면, 그만큼 사람에게 마음을 더 쓸 수 있습니다.</li>
   </ul>
 
@@ -195,7 +195,7 @@ th{background:var(--bg);font-size:14px}
     <p class="hint">아는 것만 적으세요. 비우면 「○○복지관」처럼 빈 이름으로 만들어집니다. 적는 대로 이 브라우저에 저장됩니다.</p>
     <div class="grid2">
       <div class="fld"><label for="oName">기관 이름</label><input type="text" id="oName" maxlength="40" placeholder="예: ○○복지관" autocomplete="off"></div>
-      <div class="fld"><label for="oDept">부서 이름 <small>없으면 비움</small></label><input type="text" id="oDept" maxlength="30" placeholder="예: 재가복지팀" autocomplete="off"></div>
+      <div class="fld"><label for="oDept">부서 이름 <small>없으면 비움</small></label><input type="text" id="oDept" maxlength="30" placeholder="예: 서비스제공팀" autocomplete="off"></div>
     </div>
     <div class="fld" style="margin-top:12px">
       <span class="lbl">전화를 받은 나를 어떻게 밝히나요</span>
@@ -286,7 +286,7 @@ th{background:var(--bg);font-size:14px}
     </ul>
   </section>
   <footer class="foot">
-    <p><strong>이 PC 안에서만 처리합니다.</strong> 기관 정보와 고친 멘트는 인터넷으로 보내지 않습니다. 전화하신 분의 이름·번호는 이 화면에 적는 칸이 없습니다.</p>
+    <p><strong>이 기기 안에서만 처리합니다.</strong> 기관 정보와 고친 멘트는 인터넷으로 보내지 않습니다. 전화하신 분의 이름·번호는 이 화면에 적는 칸이 없습니다.</p>
     <p>만든 사람: 서울강남지역자활센터 김태균</p>
   </footer>
 </div>
@@ -322,7 +322,7 @@ var PHONE = (function () {
   var MEMO5 = ['언제 (날짜·시간)', '누가 (기관·성함)', '누구에게 (찾으신 분)', '무슨 일로 (용건)', '다시 걸 번호 (읽어서 확인)'];
 
   function blank() {
-    return { org: { name: '', dept: '', who: 'team', title: '', me: '', call: null, tel: '', hours: '' },
+    return { org: { name: '', dept: '', who: 'name', title: '', me: '', call: null, tel: '', hours: '' },
       ment: {}, manual: { long: '', loud: '', repeat: '', hard: '' },
       ext: [{ d: '', n: '' }, { d: '', n: '' }, { d: '', n: '' }, { d: '', n: '' }, { d: '', n: '' }], size: 'm', memo: 4 };
   }
@@ -331,7 +331,7 @@ var PHONE = (function () {
     var b = blank(); if (!o || typeof o !== 'object') return b;
     var g = o.org || {};
     [['name', 40], ['dept', 30], ['title', 20], ['me', 20], ['tel', 20], ['hours', 40]].forEach(function (k) { b.org[k[0]] = String(g[k[0]] || '').slice(0, k[1]); });
-    if (g.who === 'title' || g.who === 'name') b.org.who = g.who;
+    if (g.who === 'team' || g.who === 'title' || g.who === 'name') b.org.who = g.who;
     b.org.call = typeof g.call === 'string' ? g.call.slice(0, 20) : null;
     ments(info(b, null)).forEach(function (m) { var v = (o.ment || {})[m.id]; if (typeof v === 'string') b.ment[m.id] = v.slice(0, 400); });
     MAN.forEach(function (k) { b.manual[k[0]] = String((o.manual || {})[k[0]] || '').slice(0, 300); });
@@ -346,7 +346,7 @@ var PHONE = (function () {
     var o = st.org, so = (style && style.org) || {};
     var type = first(so.type).replace(/^[○◯〇\s]+/, '');
     var org = o.name.trim() || (type && type.length <= 20 ? '○○' + type : '○○복지관');
-    var dept = o.dept.trim();
+    var dept = o.dept.trim() || (o.name.trim() ? '' : '○○팀');   // 기관·부서를 모두 비웠을 때만 빈 이름 「○○팀」
     var me = o.who === 'title' ? (o.title.trim() || '사회복지사') : o.who === 'name' ? (o.me.trim() || '○○○') : '담당자';
     var fromStyle = o.call === null;
     var call = fromStyle ? first(so.call) : o.call.trim();
@@ -444,7 +444,7 @@ if (typeof module !== 'undefined' && module.exports) module.exports = PHONE;
   ORG.forEach(function (k) {
     $(k[0]).addEventListener('input', function () { st.org[k[1]] = $(k[0]).value; save(); render(); });
   });
-  tabs($('whoTabs'), [['team', '「담당자」로'], ['title', '직함으로'], ['name', '이름으로']], function () { return st.org.who; }, function (v) { st.org.who = v; });
+  tabs($('whoTabs'), [['name', '이름으로'], ['title', '직함으로'], ['team', '「담당자」로']], function () { return st.org.who; }, function (v) { st.org.who = v; });
   ['선생님', '어르신', '회원님', '보호자님', '부르지 않음'].forEach(function (c) {
     var b = el('button', 'chip', c); b.type = 'button';
     b.addEventListener('click', function () { st.org.call = c === '부르지 않음' ? '' : c; $('oCall').value = st.org.call; save(); render(); });

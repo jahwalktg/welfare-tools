@@ -368,20 +368,22 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
         </ul>
       </div>
 
-      <h3 class="sec-title" id="p1">2. 1단계 주문서 — 대화로 채우기</h3>
+      <h3 class="sec-title" id="p1">2. 첫 번째 주문서 — 대화로 채우기 <small>1단계</small></h3>
       <div class="howto" id="how1"></div>
       <textarea class="prompt" id="prompt1" readonly aria-label="1단계 주문서"></textarea>
       <div class="controls-sub">
         <button class="btn btn-main" id="btnCopy1" type="button">1단계 주문서 복사</button>
       </div>
+      <p class="note" id="copyNote1" role="status"></p>
 
-      <h3 class="sec-title" id="p2">3. 2단계 주문서 — 내 입력창 만들기</h3>
+      <h3 class="sec-title" id="p2">3. 두 번째 주문서 — 내 입력창 만들기 <small>2단계</small></h3>
       <div class="howto" id="how2"></div>
       <textarea class="prompt" id="prompt2" readonly aria-label="2단계 주문서"></textarea>
       <div class="controls-sub">
         <button class="btn btn-main" id="btnCopy2" type="button">2단계 주문서 복사</button>
         <button class="btn btn-small" id="btnCopy3" type="button">점검 주문서 복사 (만든 뒤 한 번 더)</button>
       </div>
+      <p class="note" id="copyNote" role="status"></p>
       <p class="help">"점검 주문서"는 AI가 만든 파일이 조건을 지켰는지 AI에게 다시 확인시키는 짧은 글입니다. 같은 대화창에 이어서 붙이세요.</p>
 
       <details class="explain">
@@ -406,7 +408,6 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
           <li><strong>무료 사용량이 끝났어요</strong> — 다른 AI에 같은 주문서를 붙이면 됩니다. 결과 모양은 조금 다를 수 있습니다.</li>
         </ul>
       </details>
-      <p class="note" id="copyNote" role="status"></p>
 
       <div class="guide">
         <span class="guide-face"><img id="guideFace" alt="" width="56" height="56"></span>
@@ -856,7 +857,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('vName').addEventListener('input',function(){S.name=$('vName').value.slice(0,30);save();render();});
   $('vUse').addEventListener('input',function(){S.use=$('vUse').value.slice(0,80);save();render();});
   $('vFields').addEventListener('input',function(){S.fields=$('vFields').value.slice(0,200);save();render();});
-  $('btnCopy1').addEventListener('click',function(){JT.copyText(prompt1(),$('copyNote'),'1단계 주문서를 복사했습니다. AI 입력창에 붙여 넣으세요.');});
+  $('btnCopy1').addEventListener('click',function(){JT.copyText(prompt1(),$('copyNote1'),'1단계 주문서를 복사했습니다. AI 입력창에 붙여 넣으세요.');});
   $('btnCopy2').addEventListener('click',function(){JT.copyText(prompt2(),$('copyNote'),'2단계 주문서를 복사했습니다. 양식 파일을 올린 뒤 붙여 넣으세요.');});
   $('btnCopy3').addEventListener('click',function(){JT.copyText(prompt3(),$('copyNote'),'점검 주문서를 복사했습니다. 같은 대화창에 이어서 붙이세요.');});
   document.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){$(b.dataset.go).scrollIntoView({block:'start'});});});

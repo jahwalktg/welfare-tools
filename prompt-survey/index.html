@@ -346,8 +346,8 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
 
       <h3 class="sec-title">1. 조사</h3>
       <div class="frow">
-        <label class="field"><span>조사 이름</span><input class="text-in sm" id="vName" type="text" maxlength="40" placeholder="예: 2026 상반기 이용자 교육 만족도"></label>
-        <label class="field"><span>대상·기간 <small>한 줄</small></span><input class="text-in sm" id="vWho" type="text" maxlength="60" placeholder="예: 교육 이용자 32명, 2026-06-20"></label>
+        <label class="field"><span>조사 이름</span><input class="text-in sm" id="vName" type="text" maxlength="40" placeholder="예: 2026 하반기 어르신 스마트폰 교실 만족도"></label>
+        <label class="field"><span>대상·기간 <small>한 줄</small></span><input class="text-in sm" id="vWho" type="text" maxlength="60" placeholder="예: 참여자 32명, 2026-10-06"></label>
       </div>
       <div class="frow">
         <div><p class="lbl">누구에게 내는 보고서</p><div class="chips small" id="toRow"></div></div>
@@ -384,7 +384,7 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
   <section class="uses" aria-labelledby="usesTitle">
     <h2 id="usesTitle">이럴 때 좋아요</h2>
     <ul>
-      <li><strong>교육 결과 보고</strong> 만족도 집계를 붙이면 "긍정 응답 81.3%, 평균 4.13점" 같은 문장과 개선 제안이 함께 나옵니다.</li>
+      <li><strong>프로그램 결과 보고</strong> 만족도 집계를 붙이면 "긍정 응답 81.3%, 평균 4.13점" 같은 문장과 개선 제안이 함께 나옵니다.</li>
       <li><strong>운영위원회 자료</strong> 분량을 "짧게"로 두면 안건 요약에 넣을 다섯 줄이 나옵니다.</li>
       <li><strong>시군구 제출</strong> "공문체"로 받으면 실적 보고서 문단에 바로 옮깁니다.</li>
     </ul>
@@ -788,7 +788,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('pos').addEventListener('click',function(){$('vName').focus();});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
   $('vName').value=S.name;$('vWho').value=S.who;
-  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C'){S.name='2026 상반기 이용자 교육 만족도';$('vName').value=S.name;$('vSrc').value='[2026 상반기 이용자 교육 만족도 2026-10-6, 응답 32명]\n1. 교육 내용이 업무에 도움이 되었다 (32명, 평균 4.13점)\n  - 매우 만족: 12명 (37.5%)\n  - 만족: 14명 (43.8%)\n  - 보통: 4명 (12.5%)\n  - 불만족: 2명 (6.3%)\n  - 매우 불만족: 0명 (0.0%)\n  긍정 응답 81.3%\n2. 강사의 설명이 이해하기 쉬웠다 (32명, 평균 4.31점)\n  긍정 응답 84.4%\n3. 다음에 듣고 싶은 교육은? (32명)\n  - 회계·정산: 5명 (15.6%)\n  - 이용자 상담: 9명 (28.1%)\n  - 부서 운영: 7명 (21.9%)\n  - AI 활용: 11명 (34.4%)';}
+  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C'){S.name='2026 하반기 어르신 스마트폰 교실 만족도';$('vName').value=S.name;$('vSrc').value='[2026 하반기 어르신 스마트폰 교실 만족도 2026-10-6, 응답 32명]\n1. 배운 내용이 생활에 도움이 되었다 (32명, 평균 4.13점)\n  - 매우 만족: 12명 (37.5%)\n  - 만족: 14명 (43.8%)\n  - 보통: 4명 (12.5%)\n  - 불만족: 2명 (6.3%)\n  - 매우 불만족: 0명 (0.0%)\n  긍정 응답 81.3%\n2. 강사의 설명이 이해하기 쉬웠다 (32명, 평균 4.31점)\n  긍정 응답 84.4%\n3. 다음에 배우고 싶은 것은? (32명)\n  - 사진 찍어 보내기: 5명 (15.6%)\n  - 영상 통화: 9명 (28.1%)\n  - 병원·기차 예약: 7명 (21.9%)\n  - 무인 주문기 쓰기: 11명 (34.4%)';}
   function tick(){JT.showNow(new Date());}
   render();save();tick();setInterval(tick,1000);
 })();

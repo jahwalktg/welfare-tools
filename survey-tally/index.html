@@ -378,10 +378,10 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
         </span>
       </div>
 
-      <p class="ex-note" id="exNote"><strong>예시</strong> 교육 만족도 조사 3문항 예시입니다. 문항을 고치고 숫자를 눌러 세거나, 아래에 엑셀 응답 표를 붙여 넣으세요.</p>
+      <p class="ex-note" id="exNote"><strong>예시</strong> 프로그램 만족도 조사 5문항 예시입니다. 문항을 고치고 숫자를 눌러 세거나, 아래에 엑셀 응답 표를 붙여 넣으세요.</p>
 
       <div class="frow">
-        <label class="field"><span>조사 이름</span><input class="text-in sm" id="vTitle" type="text" maxlength="40" placeholder="예: 2026 상반기 이용자 교육 만족도"></label>
+        <label class="field"><span>조사 이름</span><input class="text-in sm" id="vTitle" type="text" maxlength="40" placeholder="예: 2026 상반기 어르신 스마트폰 교실 만족도"></label>
         <label class="field"><span>응답자 수 <small>명, 비율의 기준. 비우면 문항별 응답 수</small></span><input class="num-in" id="vN" type="text" inputmode="numeric" placeholder="자동"></label>
       </div>
 
@@ -791,9 +791,10 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   var setFace=JT.faceSetter(FACES);
   var SCALE=['매우 만족','만족','보통','불만족','매우 불만족']; /* 5점 척도: 앞이 5점 */
   function q5(text){return {id:'q'+Date.now()+Math.random().toString(36).slice(2,6),text:text,scale:true,opts:SCALE.map(function(s){return {label:s,n:0};})};}
-  function fresh(){var a=q5('교육 내용이 업무에 도움이 되었다'),b=q5('강사의 설명이 이해하기 쉬웠다'),c={id:'qc',text:'다음에 듣고 싶은 교육은?',scale:false,opts:[{label:'회계·정산',n:5},{label:'이용자 상담',n:9},{label:'부서 운영',n:7},{label:'AI 활용',n:11}]};
-    a.opts=[{label:'매우 만족',n:12},{label:'만족',n:14},{label:'보통',n:4},{label:'불만족',n:2},{label:'매우 불만족',n:0}];b.opts=[{label:'매우 만족',n:15},{label:'만족',n:12},{label:'보통',n:5},{label:'불만족',n:0},{label:'매우 불만족',n:0}];
-    return {title:'2026 상반기 이용자 교육 만족도 (예시)',n:32,qs:[a,b,c]};}
+  function fresh(){var a=q5('프로그램 내용이 생활에 도움이 되었다'),b=q5('강사의 설명이 알기 쉬웠다'),t=q5('수업 시간이 알맞았다'),p=q5('수업 장소가 오기 편했다'),c={id:'qc',text:'다음에 배우고 싶은 것은?',scale:false,opts:[{label:'사진 찍어 보내기',n:8},{label:'영상 통화',n:5},{label:'버스·길 찾기',n:6},{label:'병원 예약',n:5}]};
+    var sc=function(q,ns){q.opts=SCALE.map(function(s,i){return {label:s,n:ns[i]};});};
+    sc(a,[10,9,4,1,0]);sc(b,[12,8,3,1,0]);sc(t,[7,9,6,2,0]);sc(p,[9,10,4,1,0]);
+    return {title:'어르신 스마트폰 교실 만족도 (예시)',n:24,qs:[a,b,t,p,c]};}
   function norm(o){o=o||{};var n=function(v,d){v=+v;return isFinite(v)&&v>=0?Math.floor(v):d;};
     var qs=(Array.isArray(o.qs)?o.qs:[]).slice(0,40).map(function(q,i){q=q||{};return {id:String(q.id||'q'+i),text:String(q.text||'').slice(0,120),scale:!!q.scale,opts:(Array.isArray(q.opts)?q.opts:[]).slice(0,12).map(function(x){x=x||{};return {label:String(x.label||'').slice(0,40),n:n(x.n,0)};})};});
     return {title:String(o.title||'').slice(0,40),n:n(o.n,0),qs:qs};}
@@ -804,6 +805,9 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   function stats(q){var tot=q.opts.reduce(function(s,x){return s+x.n;},0),base=S.n||tot;var avg=null;
     if(q.scale&&tot){var k=q.opts.length,sum=0;q.opts.forEach(function(x,i){sum+=x.n*(k-i);});avg=sum/tot;}
     return {tot:tot,base:base,avg:avg};}
+  /* 문항에 적은 글이나 센 숫자가 있는지 (지우기 전에 물어볼지 정함) */
+  function qHas(q){return !!String(q.text||'').trim()||q.opts.some(function(x){return x.n>0;});}
+  function plain(qs){return JSON.stringify(qs.map(function(q){return [q.text,q.opts.map(function(x){return [x.label,x.n];})];}));}
 
   function renderQs(){
     var host=$('qs');host.textContent='';
@@ -811,7 +815,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
       var d=document.createElement('div');d.className='q';
       var head=document.createElement('div');head.className='q-head';var no=document.createElement('span');no.className='q-no';no.textContent=(qi+1)+'.';head.appendChild(no);
       var ti=document.createElement('input');ti.type='text';ti.className='text-in';ti.value=q.text;ti.placeholder='문항';ti.maxLength=120;ti.addEventListener('input',function(){q.text=ti.value;save();renderReport();});head.appendChild(ti);
-      var del=document.createElement('button');del.type='button';del.className='btn icon-btn';del.textContent='✕';del.setAttribute('aria-label','문항 지우기');del.addEventListener('click',function(){S.qs.splice(qi,1);save();renderQs();renderReport();});head.appendChild(del);d.appendChild(head);
+      var del=document.createElement('button');del.type='button';del.className='btn icon-btn';del.textContent='✕';del.setAttribute('aria-label','문항 지우기');del.addEventListener('click',function(){if(qHas(q)&&!window.confirm('이 문항을 지울까요? 적은 글과 센 숫자가 함께 지워집니다.'))return;S.qs.splice(qi,1);save();renderQs();renderReport();});head.appendChild(del);d.appendChild(head);
       var opts=document.createElement('div');opts.className='opts';
       q.opts.forEach(function(x,oi){
         var o=document.createElement('div');o.className='opt';
@@ -825,7 +829,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
       var tools=document.createElement('div');tools.className='q-tools';
       var addO=document.createElement('button');addO.type='button';addO.className='btn btn-small';addO.textContent='보기 더하기';addO.addEventListener('click',function(){if(q.opts.length>=12)return;q.opts.push({label:'',n:0});q.scale=false;save();renderQs();renderReport();});tools.appendChild(addO);
       if(q.opts.length>2){var delO=document.createElement('button');delO.type='button';delO.className='btn btn-small';delO.textContent='마지막 보기 빼기';delO.addEventListener('click',function(){q.opts.pop();q.scale=false;save();renderQs();renderReport();});tools.appendChild(delO);}
-      var sc=document.createElement('button');sc.type='button';sc.className='btn btn-small';sc.textContent=q.scale?'5점 척도 (평균 계산)':'5점 척도로 보기';sc.setAttribute('aria-pressed',String(q.scale));sc.addEventListener('click',function(){q.scale=!q.scale;save();renderQs();renderReport();});tools.appendChild(sc);
+      var sc=document.createElement('button');sc.type='button';sc.className='btn btn-small';sc.textContent=q.opts.length+(q.scale?'점 척도 (평균 계산)':'점 척도로 보기');sc.setAttribute('aria-pressed',String(q.scale));sc.addEventListener('click',function(){q.scale=!q.scale;save();renderQs();renderReport();});tools.appendChild(sc);
       d.appendChild(tools);host.appendChild(d);
     });
     $('vTitle').value=S.title;$('vN').value=S.n?String(S.n):'';
@@ -835,9 +839,11 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     var host=$('report');host.textContent='';lastRows=[];var lines=['['+(S.title||'설문 집계')+' '+today()+(S.n?', 응답 '+S.n+'명':'')+']'];var anyData=false;
     S.qs.forEach(function(q,qi){
       var st=stats(q);if(st.tot)anyData=true;
-      var d=document.createElement('div');d.className='rep';var h=document.createElement('h3');h.innerHTML='<span></span><span class="avg"></span>';h.firstChild.textContent=(qi+1)+'. '+(q.text||'(문항)')+' — '+st.tot+'명';h.lastChild.textContent=st.avg!=null?'평균 '+st.avg.toFixed(2)+'점 / 5':'';d.appendChild(h);
-      lines.push((qi+1)+'. '+q.text+' ('+st.tot+'명'+(st.avg!=null?', 평균 '+st.avg.toFixed(2)+'점':'')+')');
-      q.opts.forEach(function(x,oi){var pct=st.base?x.n/st.base*100:0;var b=document.createElement('div');b.className='bar';b.innerHTML='<span class="k"></span><i><b style="width:'+pct.toFixed(1)+'%"></b></i><span class="v"></span>';b.firstChild.textContent=x.label||'(보기)';b.lastChild.textContent=x.n+'명 ('+pct.toFixed(1)+'%)';d.appendChild(b);
+      var d=document.createElement('div');d.className='rep';var h=document.createElement('h3');h.innerHTML='<span></span><span class="avg"></span>';h.firstChild.textContent=(qi+1)+'. '+(q.text||'(문항)')+' — '+st.tot+'명';h.lastChild.textContent=st.avg!=null?'평균 '+st.avg.toFixed(2)+'점 / '+q.opts.length:'';d.appendChild(h);
+      lines.push((qi+1)+'. '+q.text+' ('+st.tot+'명'+(st.avg!=null?', 평균 '+st.avg.toFixed(2)+'점'+(q.opts.length!==5?'('+q.opts.length+'점 만점)':''):'')+')');
+      /* 응답자 수보다 많이 셌으면 표시만 (여러 개 고르는 문항일 수도 있어 판정하지 않음) */
+      if(S.n&&st.tot>S.n){var ov=document.createElement('p');ov.className='help';ov.style.cssText='color:var(--amber);font-weight:700';ov.textContent='응답자 수('+S.n+'명)보다 많이 셌어요('+st.tot+'명). 응답자 수를 확인해 주세요. 여러 개를 고르는 문항이면 그대로 두어도 됩니다.';d.appendChild(ov);}
+      q.opts.forEach(function(x,oi){var pct=st.base?x.n/st.base*100:0;var b=document.createElement('div');b.className='bar';b.innerHTML='<span class="k"></span><i><b style="width:'+Math.min(100,pct).toFixed(1)+'%"></b></i><span class="v"></span>';b.firstChild.textContent=x.label||'(보기)';b.lastChild.textContent=x.n+'명 ('+pct.toFixed(1)+'%)';d.appendChild(b);
         lines.push('  - '+x.label+': '+x.n+'명 ('+pct.toFixed(1)+'%)');lastRows.push([(qi+1)+'. '+q.text,x.label,x.n,pct.toFixed(1)+'%']);});
       if(q.scale&&q.opts.length>=2){var top2=q.opts[0].n+q.opts[1].n,tp=st.base?top2/st.base*100:0;var p=document.createElement('p');p.className='help';p.textContent='긍정('+q.opts[0].label+' + '+q.opts[1].label+') '+top2+'명, '+tp.toFixed(1)+'%';d.appendChild(p);lines.push('  긍정 응답 '+tp.toFixed(1)+'%');}
       host.appendChild(d);
@@ -874,6 +880,8 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
       qs.push(q);
     }
     if(!qs.length){$('pasteNote').textContent='문항으로 읽을 열이 없습니다. 응답 값이 든 열을 붙여 넣으세요.';return;}
+    /* 예시가 아닌 내 문항·숫자가 있으면 바꾸기 전에 한 번 묻기 */
+    if(S.qs.some(qHas)&&plain(S.qs)!==plain(fresh().qs)&&!window.confirm('지금 있는 문항과 숫자를 지우고, 붙여 넣은 표로 바꿀까요?')){$('pasteNote').textContent='바꾸지 않았습니다. 지금 문항은 그대로입니다.';return;}
     S.qs=qs;S.n=data.length;save();renderQs();renderReport();$('pasteNote').textContent=data.length+'명 응답, '+qs.length+'문항으로 집계했습니다.'+(skipped.length?' 건너뛴 열: '+skipped.join(', ')+'.':'')+' 붙여 넣은 표는 저장하지 않습니다.';
   }
   $('vTitle').addEventListener('input',function(){S.title=$('vTitle').value.slice(0,40);save();renderReport();});

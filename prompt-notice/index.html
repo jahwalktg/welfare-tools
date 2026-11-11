@@ -347,15 +347,15 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
       <h3 class="sec-title">1. 무엇을</h3>
       <div class="chips" id="kindRow"></div>
       <div class="frow" style="margin-top:12px">
-        <label class="field"><span>제목</span><input class="text-in sm" id="vTitle" type="text" maxlength="60" placeholder="예: 2026년 하반기 이용자 안전교육 실시 안내"></label>
-        <label class="field"><span>받는 곳 / 대상 <small>공문 수신, 안내문 대상</small></span><input class="text-in sm" id="vTo" type="text" maxlength="60" placeholder="예: 각 부서 / 전체 이용자"></label>
+        <label class="field"><span>제목</span><input class="text-in sm" id="vTitle" type="text" maxlength="60" placeholder="예: 2027년 상반기 어르신 스마트폰 교실 개강 안내"></label>
+        <label class="field"><span>받는 곳 / 대상 <small>공문 수신, 안내문 대상</small></span><input class="text-in sm" id="vTo" type="text" maxlength="60" placeholder="예: 동 주민센터·경로당 / 지역 어르신"></label>
       </div>
       <div class="frow">
-        <label class="field"><span>언제·어디서·무엇을 <small>날짜, 장소, 준비물 등</small></span><input class="text-in sm" id="vWhen" type="text" maxlength="100" placeholder="예: 2026-10-21(화) 14:00~16:00, 기관 강당, 필기구 지참"></label>
-        <label class="field"><span>문의 <small>부서·전화, 이름은 직책으로</small></span><input class="text-in sm" id="vContact" type="text" maxlength="60" placeholder="예: 사회복지팀 02-000-0000"></label>
+        <label class="field"><span>언제·어디서·무엇을 <small>날짜, 장소, 준비물 등</small></span><input class="text-in sm" id="vWhen" type="text" maxlength="100" placeholder="예: 2027-03-09(화) 10:00~11:30, 복지관 2층 교육실, 쓰시는 스마트폰 지참"></label>
+        <label class="field"><span>문의 <small>부서·전화, 이름은 직책으로</small></span><input class="text-in sm" id="vContact" type="text" maxlength="60" placeholder="예: 서비스제공팀 02-000-0000"></label>
       </div>
       <label class="lbl" for="vBody">요지 <small>세 줄쯤, 하고 싶은 말을 그냥 적으세요</small></label>
-      <textarea class="paste" id="vBody" spellcheck="false" placeholder="예: 하반기 안전교육을 합니다. 전원 참석이고, 불참하면 사전에 담당자에게 알려야 합니다. 교육 수료는 근무로 인정됩니다."></textarea>
+      <textarea class="paste" id="vBody" spellcheck="false" placeholder="예: 어르신 스마트폰 교실을 새로 엽니다. 처음 배우는 분도 올 수 있습니다. 신청은 복지관 안내 창구나 전화로 받습니다."></textarea>
       <div><p class="lbl">말투</p><div class="chips small" id="toneRow"></div></div>
 
       <h3 class="sec-title">2. 주문서</h3>
@@ -369,7 +369,7 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
       <div class="before">
         <h3>주의</h3>
         <ul>
-          <li>이용자 실명·개별 사정은 적지 않습니다. "○○ 부서 이용자"처럼.</li>
+          <li>이용자 실명·개별 사정은 적지 않습니다. "○○ 프로그램 이용자"처럼.</li>
           <li>공문 번호·결재선·직인은 한글 서식에서. AI는 본문만 씁니다.</li>
         </ul>
       </div>
@@ -384,7 +384,7 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
   <section class="uses" aria-labelledby="usesTitle">
     <h2 id="usesTitle">이럴 때 좋아요</h2>
     <ul>
-      <li><strong>교육·행사 안내</strong> 날짜와 요지만 적으면 부서에 보낼 공문 본문과 게시판에 붙일 큰 글씨 안내문이 같이 나옵니다.</li>
+      <li><strong>교육·행사 안내</strong> 날짜와 요지만 적으면 협력 기관에 보낼 공문 본문과 게시판에 붙일 큰 글씨 안내문이 같이 나옵니다.</li>
       <li><strong>휴무·운영 변경</strong> "다음 주 월요일 휴무" 같은 짧은 알림도 이용자 눈높이의 말로 다시 써 줍니다.</li>
       <li><strong>협조 요청 공문</strong> 거래처·기관에 보내는 요청 문장을 공문체로 다듬어 받습니다.</li>
     </ul>
@@ -783,7 +783,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('btnClear').addEventListener('click',function(){S=fresh();save();[['vTitle','title'],['vTo','to'],['vWhen','when'],['vContact','contact'],['vBody','body']].forEach(function(k){$(k[0]).value='';});render();});
   $('pos').addEventListener('click',function(){$('vTitle').focus();});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
-  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C'){S.title='2026년 하반기 이용자 안전교육 실시 안내';S.to='각 부서 / 전체 이용자';S.when='2026-10-21(화) 14:00~16:00, 기관 강당, 필기구 지참';S.contact='사회복지팀 02-000-0000';S.body='하반기 안전교육을 합니다. 전원 참석이고, 불참하면 사전에 담당자에게 알려야 합니다. 교육 시간은 근무로 인정됩니다.';['vTitle','vTo','vWhen','vContact','vBody'].forEach(function(id,i){$(id).value=S[['title','to','when','contact','body'][i]];});}
+  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C'){S.title='2027년 상반기 어르신 스마트폰 교실 개강 안내';S.to='동 주민센터·경로당 / 지역 어르신';S.when='2027-03-09(화) 10:00~11:30, 복지관 2층 교육실, 쓰시는 스마트폰 지참';S.contact='서비스제공팀 02-000-0000';S.body='어르신 스마트폰 교실을 새로 엽니다. 처음 배우는 분도 올 수 있습니다. 신청은 복지관 안내 창구나 전화로 받습니다.';['vTitle','vTo','vWhen','vContact','vBody'].forEach(function(id,i){$(id).value=S[['title','to','when','contact','body'][i]];});}
   function tick(){JT.showNow(new Date());}
   render();save();tick();setInterval(tick,1000);
 })();

@@ -188,7 +188,7 @@ details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;alig
 <body>
 <div class="wrapall">
   <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › <a href="../index.html#ai">AI 주문서</a></p>
-  <h1>쉬운 안내문 만들기</h1>
+  <h1 id="pageTitle">쉬운 안내문 만들기</h1>
   <div class="modes" id="modes" role="tablist" aria-label="무엇을 살펴볼지 고르기">
     <button type="button" role="tab" id="mode-easy" data-mode="easy" aria-selected="true">쉬운 안내문</button>
     <button type="button" role="tab" id="mode-doc" data-mode="doc" aria-selected="false">공문·기안 점검</button>
@@ -1269,7 +1269,7 @@ var EN=(function(){
   function buildPrompt(text,res,keep,on,y){
     var L=[],k=(keep||[]).map(function(s){return String(s).trim();}).filter(Boolean);
     on=on||{};
-    L.push('아래 안내문을 어르신이 읽기 쉽게 다시 써 주세요.');
+    L.push('아래 안내문을 읽는 분이 읽기 쉽게 다시 써 주세요.');
     L.push('');
     L.push('[지켜 주세요]');
     L.push('1. 사실(날짜·요일·시간·장소·금액·전화번호·기관 이름·사람 수)은 한 글자도 바꾸지 마세요. 없는 내용을 지어내지 마세요.');
@@ -1320,9 +1320,9 @@ if(typeof module!=='undefined'&&module.exports)module.exports=EN;
   function toast(t){var el=$('toast');el.textContent=t;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(function(){el.classList.remove('show');},2200);}
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function copyText(t,msg){
-    function fb(){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}ta.remove();}
-    if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).catch(fb);else fb();
-    toast(msg||'복사했습니다');
+    var ok=msg||'복사했습니다',bad='복사하지 못했어요. 글을 직접 골라 복사해 주세요.';
+    function fb(){var done=false,ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{done=document.execCommand('copy');}catch(e){done=false;}ta.remove();toast(done?ok:bad);}
+    if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(function(){toast(ok);},fb);else fb();
   }
 
   /* ---------- 예시 (지어낸 글) ---------- */
@@ -1474,6 +1474,7 @@ if(typeof module!=='undefined'&&module.exports)module.exports=EN;
     Array.prototype.forEach.call(document.querySelectorAll('#modes [data-mode]'),function(b){b.setAttribute('aria-selected',b.getAttribute('data-mode')===MODE?'true':'false');});
     src.setAttribute('placeholder',MODE==='doc'?'예) 1. 귀 기관의 무궁한 발전을 기원합니다.\n2. 아래와 같이 …':'예) ○○복지관에서는 어르신 스마트폰 교실 참여자를 모집하오니 …');
     view.setAttribute('aria-label',MODE==='doc'?'표시한 공문·기안 본문':'표시한 안내문');
+    var ttl=MODE==='doc'?'공문·기안 점검':'쉬운 안내문 만들기';$('pageTitle').textContent=ttl;document.title=ttl+' | 사회복지사 업무 도구';
     if(fromUser){lsSet(KEY_MODE,MODE);try{history.replaceState(null,'',MODE==='doc'?'#공문':location.pathname+location.search);}catch(e){}}
     closePop();buildCats();render();
   }

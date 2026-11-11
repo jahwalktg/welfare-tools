@@ -6,12 +6,12 @@
 <meta name="robots" content="index, follow">
 <title>우리 기관 스타일 카드 | 사회복지사 업무 도구</title>
 <!--meta:start-->
-<meta name="description" content="견본 문서(빈 양식이나 개인정보를 가린 문서)를 AI에 보여 주고 우리 기관의 틀·말투·낱말을 담은 카드를 만들어 둡니다. 한 번 만들면 모든 AI 주문서 끝에 자동으로 붙습니다. 한글 문서는 hwpx로. 파일로 내보내 동료와 함께 씁니다.">
+<meta name="description" content="견본 문서(빈 양식이나 개인정보를 가린 문서)를 AI에 보여 주고 우리 기관의 틀·말투·낱말을 담은 카드를 만들어 둡니다. 한 번 만들면 문서·회의록·설문·공문·안내문 주문서 끝에 붙습니다. 한글 문서는 hwpx로. 파일로 내보내 동료와 함께 씁니다.">
 <link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/style-card/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="사회복지사 업무 도구">
 <meta property="og:title" content="우리 기관 스타일 카드 | 사회복지사 업무 도구">
-<meta property="og:description" content="견본 문서(빈 양식이나 개인정보를 가린 문서)를 AI에 보여 주고 우리 기관의 틀·말투·낱말을 담은 카드를 만들어 둡니다. 한 번 만들면 모든 AI 주문서 끝에 자동으로 붙습니다. 한글 문서는 hwpx로. 파일로 내보내 동료와 함께 씁니다.">
+<meta property="og:description" content="견본 문서(빈 양식이나 개인정보를 가린 문서)를 AI에 보여 주고 우리 기관의 틀·말투·낱말을 담은 카드를 만들어 둡니다. 한 번 만들면 문서·회의록·설문·공문·안내문 주문서 끝에 붙습니다. 한글 문서는 hwpx로. 파일로 내보내 동료와 함께 씁니다.">
 <meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/style-card/">
 <meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
 <meta property="og:image:width" content="1200">
@@ -155,7 +155,7 @@ textarea.prompt{min-height:260px;font-size:14px;line-height:1.55;background:var(
 <div class="wrapall">
   <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › <a href="../index.html#ai">AI 주문서</a></p>
   <h1>우리 기관 스타일 카드</h1>
-  <p class="lead">AI에게 「우리 기관은 이렇게 씁니다」를 알려 주는 카드입니다. 한 번 만들어 두면 이 사이트의 <strong>모든 AI 주문서 끝에 자동으로 붙어</strong>, 챗GPT·제미나이가 우리 기관 틀과 말투로 써 줍니다. 견본 문서를 AI에 보여 주면 카드는 AI가 만들어 줍니다.</p>
+  <p class="lead">AI에게 「우리 기관은 이렇게 씁니다」를 알려 주는 카드입니다. 한 번 만들어 두면 이 사이트의 <strong>문서·회의록·설문·공문·안내문 주문서 끝에 붙어</strong>, 챗GPT·제미나이가 우리 기관 틀과 말투로 써 줍니다. 견본 문서를 AI에 보여 주면 카드는 AI가 만들어 줍니다.</p>
   <ul class="notice">
     <li><b>참고사항입니다</b> 한 현장의 개인 경험으로 만든 도구입니다. AI가 만든 카드와 글은 초안이니 꼭 읽고 고치세요. 쓴 결과의 책임은 쓰는 분에게 있습니다.</li>
     <li><b>견본은 빈 양식이나 가린 문서로</b> 이용자 이름·주민번호·연락처·사례 내용이 든 문서는 AI에 올리지 않습니다. 빈 양식, 또는 개인정보를 가린 문서를 견본으로 쓰세요.</li>
@@ -192,14 +192,14 @@ textarea.prompt{min-height:260px;font-size:14px;line-height:1.55;background:var(
 
     <h3>② 어떻게 보여 줄까요</h3>
     <div class="tabs" id="howTabs" role="tablist">
-      <button type="button" data-h="up" class="on">AI에 파일을 직접 올리기</button>
-      <button type="button" data-h="paste">여기서 글을 꺼내 붙이기</button>
+      <button type="button" data-h="paste" class="on">여기서 글을 꺼내 붙이기</button>
+      <button type="button" data-h="up">AI에 파일을 직접 올리기</button>
     </div>
-    <div id="howUp">
-      <p class="hint">챗GPT·제미나이 대화창의 <b>＋(파일 첨부)</b>로 견본 파일(hwpx·PDF)을 올리고, 아래 주문서를 붙여 보냅니다. 표가 많은 양식에 좋습니다.</p>
+    <div id="howUp" hidden>
+      <p class="hint">챗GPT·제미나이 대화창의 <b>＋(파일 첨부)</b>로 견본 파일(hwpx·PDF)을 올리고, 아래 주문서를 붙여 보냅니다. 표가 많은 양식에 좋습니다. AI나 요금제에 따라 한글 파일을 못 읽기도 합니다. 안 되면 옆의 「여기서 글을 꺼내 붙이기」로 하세요.</p>
     </div>
-    <div id="howPaste" hidden>
-      <p class="hint">파일 올리기가 안 되거나 사용량이 끝났을 때 씁니다. 파일은 이 PC 안에서만 읽고 어디에도 보내지 않습니다.</p>
+    <div id="howPaste">
+      <p class="hint">어느 AI에서나 되는 방법입니다. 파일은 이 기기 안에서만 읽고 어디에도 보내지 않습니다.</p>
       <label class="drop" id="drop"><input type="file" id="file" accept=".hwpx,.docx,.pdf,.txt,.md" hidden><b>견본 파일을 끌어다 놓거나 눌러서 고르기</b><small>hwpx · docx · pdf · txt</small></label>
       <p class="hint err" id="fileMsg" role="status"></p>
       <label class="lbl" for="sample">견본 글 <small>파일에서 꺼낸 글이 여기에 들어옵니다. 직접 붙여 넣어도 됩니다.</small></label>
@@ -250,7 +250,7 @@ textarea.prompt{min-height:260px;font-size:14px;line-height:1.55;background:var(
     </ul>
   </section>
   <footer class="foot">
-    <p><strong>이 PC 안에서만 처리합니다.</strong> 견본 글과 카드는 인터넷으로 보내지 않습니다. AI에 올린 내용은 그 AI 서비스의 약관을 따릅니다.</p>
+    <p><strong>이 기기(PC·휴대폰) 안에서만 처리합니다.</strong> 견본 글과 카드는 인터넷으로 보내지 않습니다. AI에 올린 내용은 그 AI 서비스의 약관을 따릅니다.</p>
     <p>만든 사람: 서울강남지역자활센터 김태균</p>
   </footer>
 </div>
@@ -260,7 +260,7 @@ textarea.prompt{min-height:260px;font-size:14px;line-height:1.55;background:var(
 (function(){
   'use strict';
   var $=function(id){return document.getElementById(id);};
-  var S=AIK.read(), editing=null, how='up', keep=new Set(), items=[];
+  var S=AIK.read(), editing=null, how='paste', keep=new Set(), items=[];
   var TYPES=['종합사회복지관','노인복지관','장애인복지관','지역아동센터','노인요양시설','장애인거주시설','주간보호센터','지역자활센터','정신건강복지센터','가족센터'];
   var TONES=['공문은 ~합니다','안내문은 ~해요','개조식(~함, ~임)','어르신께는 높임말 쉽게'];
   function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('show');},2200);}

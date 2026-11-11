@@ -323,7 +323,7 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
 .fo-field.fill.check{display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:800}
 .fo-field.fill input::placeholder,.fo-field.fill textarea::placeholder{color:rgba(26,110,255,.55);font-size:.8em}
 /* 배치 */
-.fo-field.edit{border:1.5px solid rgba(26,110,255,.8);background:rgba(26,110,255,.14);cursor:move;display:flex;align-items:center;padding:0 3px;font-size:1.4cqw;color:var(--blue);font-weight:700;white-space:nowrap}
+.fo-field.edit{border:1.5px solid rgba(26,110,255,.8);background:rgba(26,110,255,.14);cursor:move;display:flex;align-items:center;padding:0 3px;font-size:1.4cqw;color:var(--blue);font-weight:700;white-space:nowrap;touch-action:none} /* 폰에서 칸을 끌 때 화면이 따라 움직이지 않게 (칸 위에서만, 칸 밖은 그대로 스크롤) */
 .fo-field.edit.sel{border:2px solid var(--blue);background:rgba(26,110,255,.25);z-index:2}
 .fo-field.edit .hd{position:absolute;right:-6px;bottom:-6px;width:14px;height:14px;border-radius:3px;background:var(--blue);cursor:nwse-resize;touch-action:none}
 .fprops{margin-top:10px;padding:10px 12px;border:1.5px solid var(--blue);border-radius:12px;background:var(--blue-bg)}

@@ -6,12 +6,12 @@
 <meta name="robots" content="index, follow">
 <title>개인정보 가리기 | 사회복지사 업무 도구</title>
 <!--meta:start-->
-<meta name="description" content="엑셀·CSV 명단을 올리거나 붙여 넣으면 이름·생년월일·전화·주소 열을 찾아 어떻게 가릴지 확인한 뒤 가린 표를 엑셀·CSV로 내려받거나 복사합니다. 상담 기록·공문 같은 글은 전화·주민번호·계좌를 자동으로, 이름·주소는 눌러서 이용자A처럼 바꿉니다. 캡처·사진은 가릴…">
+<meta name="description" content="엑셀·CSV 명단을 올리거나 붙여 넣으면 이름·생년월일·전화·주소 열을 찾아 어떻게 가릴지 확인한 뒤 가린 표를 엑셀·CSV로 내려받거나 복사합니다. 상담 기록·공문 같은 글은 전화·주민번호·계좌를 자동으로, 이름·주소도 후보를 찾아 이용자A처럼 바꿉니다. 잘못 잡힌 …">
 <link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/mask-privacy/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="사회복지사 업무 도구">
 <meta property="og:title" content="개인정보 가리기 | 사회복지사 업무 도구">
-<meta property="og:description" content="엑셀·CSV 명단을 올리거나 붙여 넣으면 이름·생년월일·전화·주소 열을 찾아 어떻게 가릴지 확인한 뒤 가린 표를 엑셀·CSV로 내려받거나 복사합니다. 상담 기록·공문 같은 글은 전화·주민번호·계좌를 자동으로, 이름·주소는 눌러서 이용자A처럼 바꿉니다. 캡처·사진은 가릴…">
+<meta property="og:description" content="엑셀·CSV 명단을 올리거나 붙여 넣으면 이름·생년월일·전화·주소 열을 찾아 어떻게 가릴지 확인한 뒤 가린 표를 엑셀·CSV로 내려받거나 복사합니다. 상담 기록·공문 같은 글은 전화·주민번호·계좌를 자동으로, 이름·주소도 후보를 찾아 이용자A처럼 바꿉니다. 잘못 잡힌 …">
 <meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/mask-privacy/">
 <meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
 <meta property="og:image:width" content="1200">
@@ -481,7 +481,7 @@ code{padding:1px 5px;border-radius:5px;background:var(--bg);border:1px solid var
     <h2 id="usesTitle">이럴 때 좋아요</h2>
     <ul>
       <li><strong>AI에 명단 붙이기 전</strong> 이용자 명단으로 조 편성이나 안내문을 AI에 부탁하고 싶을 때, 가린 표를 복사해 붙이면 실명이 나가지 않습니다.</li>
-      <li><strong>상담 기록·공문을 AI에 다듬어 달라고 하기 전</strong> 「글 가리기」에 붙여 넣으면 전화·주민번호·계좌는 자동으로, 이름·주소는 후보를 눌러 가린 뒤 복사해 쓸 수 있습니다. 같은 사람은 「이용자A」처럼 역할명으로 바뀌어 글의 흐름은 그대로입니다.</li>
+      <li><strong>상담 기록·공문을 AI에 다듬어 달라고 하기 전</strong> 「글 가리기」에 붙여 넣으면 전화·주민번호·계좌를 찾아 가리고, 이름·주소도 후보를 찾아 처음부터 가려 둡니다. 잘못 잡힌 것은 눌러서 풀고, 빠진 것은 드래그해서 더한 뒤 복사해 쓰세요. 같은 사람은 「이용자A」처럼 역할명으로 바뀌어 글의 흐름은 그대로입니다.</li>
       <li><strong>외부 제출 자료</strong> 구청·협회에 보내는 이용자 통계 뒷받침 자료에서 이름·연락처를 가리고 보낼 때.</li>
       <li><strong>화면 캡처 공유</strong> 희망이음 화면을 캡처해 동료에게 설명할 때 이름 칸만 검게 칠해 보냅니다.</li>
     </ul>
@@ -985,11 +985,11 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     $('stage').dataset.tone=tone;setFace(face);$('guideMsg').textContent=g;$('status').textContent=st;document.title=st+' | 개인정보 가리기';$('pos').textContent='표 · '+bodyN+'줄';
   }
   function example(){
-    setRows([['연번','이름','생년월일','연락처','주소','부서','비고'],
-      [1,'가나다','1975-03-02','010-1234-5678','서울특별시 강남구 역삼동 123-4 행복아파트 101동','사례관리팀',''],
-      [2,'라마바','1982.11.15','010-9876-5432','서울 강남구 대치동 55 ○○빌라 302호','재가복지팀','반장'],
-      [3,'사아자','19690721','02-555-1234','경기도 성남시 분당구 정자동 7','급식지원팀',''],
-      [4,'남궁차카','1990-01-30','010-2222-3333','서울시 송파구 잠실본동 12-3','사례관리팀','']],'예시(가상)');
+    setRows([['연번','이름','생년월일','연락처','주소','프로그램','비고'],
+      [1,'가나다','1948-03-02','010-0000-0001','서울특별시 강남구 역삼동 123-4 행복아파트 101동','한글교실',''],
+      [2,'라마바','1952.11.15','010-0000-0002','서울 강남구 대치동 55 ○○빌라 302호','경로식당','신규'],
+      [3,'사아자','19450721','02-000-0003','경기도 성남시 분당구 정자동 7','스마트폰 교실',''],
+      [4,'남궁차카','1950-01-30','010-0000-0004','서울시 송파구 잠실본동 12-3','한글교실','']],'예시(가상)');
   }
 
   /* ---------- 그림 ---------- */
@@ -1048,9 +1048,13 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   function findAll(text){
     var out=[];
     function add(re,cat,group){re.lastIndex=0;var m;while((m=re.exec(text))){var s=m.index,t=m[0];if(group!=null){s=m.index+m[0].indexOf(m[group]);t=m[group];}if(!t)continue;out.push({s:s,e:s+t.length,cat:cat,text:t});if(!re.global)break;}}
-    add(/\d{6}\s*[-–]\s*[1-4](?:\d{6}|\*{6}|\d\*{5})/g,'rrn');
+    add(/\d{6}\s*[-–]\s*[1-8](?:\d{6}|\*{6}|\d\*{5})/g,'rrn'); /* 뒷자리 첫 숫자 1~8 (외국인 등록번호 5~8 포함) */
+    add(/(?<![\d-])\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[1-8]\d{6}(?![\d-])/g,'rrn'); /* 하이픈 없이 붙여 쓴 13자리 (앞 6자리가 날짜 모양일 때만) */
     add(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g,'email');
-    add(/(?:01[016789]|02|0[3-6][1-5]|070|080|050\d?|1[568]\d{2})[-.\s]?\d{3,4}[-.\s]?\d{4}(?!\d)/g,'phone');
+    /* 전화: (02) 459-2696 · 02)459-2696 처럼 지역번호 뒤 괄호·빈칸도 받음. 긴 숫자 가운데서는 시작하지 않음 */
+    var AREA='(?:01[016789]|02|0[3-6][1-5]|070|080|050\\d?)';
+    add(new RegExp('(?<!\\d)(?:\\('+AREA+'\\)\\s?|'+AREA+'(?:\\)\\s?|[-.\\s])?)\\d{3,4}[-.\\s]?\\d{4}(?!\\d)','g'),'phone');
+    add(/(?<!\d)1[568]\d{2}[-.\s]?\d{3,4}[-.\s]?\d{4}(?!\d)/g,'phone');
     add(/(?<![\d-])\d{2,6}-\d{2,6}-\d{2,8}(?:-\d{1,6})?(?![\d-])/g,'account');
     add(/(?<![\d-])\d{11,14}(?![\d-])/g,'account');
     add(/(?<![가-힣\d])\d{2,3}[가-힣]\s?\d{4}(?!\d)/g,'car');
@@ -1068,7 +1072,9 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     var TAIL='(?:\\s*[가-힣0-9A-Za-z\\-]{1,15}(?:호|층|동|아파트|빌라|빌딩|오피스텔|주택|번지|타워|맨션|상가|단지))*';
     add(new RegExp('(?:서울|부산|대구|인천|광주|대전|울산|세종|경기|강원|충청?북|충청?남|전라?북|전라?남|경상?북|경상?남|제주)(?:특별시|광역시|특별자치시|특별자치도|시|도)?\\s*[가-힣]{1,6}(?:시|군|구)\\s*(?:[가-힣]{1,6}(?:구|군)\\s*)?[가-힣0-9]{1,10}(?:동|읍|면|로|길|가)\\s*[\\d\\-]*(?:번지|번길)?'+TAIL,'g'),'addr');
     add(new RegExp('(?<![가-힣])[가-힣]{1,6}(?:구|군)\\s+[가-힣0-9]{1,10}(?:동|읍|면|로|길)\\s*\\d[\\d\\-]*(?:번지)?'+TAIL,'g'),'addr');
-    out=out.filter(function(f){if(f.cat==='name'){if(NOT_NAME.test(f.text))return false;if(Array.from(f.text).length<2)return false;}if(f.cat==='addr'&&!/\d/.test(f.text))return false;return true;});
+    out=out.filter(function(f){if(f.cat==='name'){if(NOT_NAME.test(f.text))return false;if(Array.from(f.text).length<2)return false;}if(f.cat==='addr'&&!/\d/.test(f.text))return false;
+      if(f.cat==='account'&&/^(?:(?:19|20)\d{2}|\d{2})-(?:0?[1-9]|1[0-2])-(?:0?[1-9]|[12]\d|3[01])$/.test(f.text))return false; /* 2026-03-05 · 26-03-05 같은 날짜는 계좌가 아님 */
+      return true;});
     /* 겹치면 앞선 것(먼저 찾은 순서·더 긴 것) 유지 */
     out.sort(function(a,b){return a.s-b.s||(b.e-b.s)-(a.e-a.s);});
     var res=[],last=-1;out.forEach(function(f){if(f.s>=last){res.push(f);last=f.e;}});
@@ -1119,7 +1125,7 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
     $('stage').dataset.tone='ready';setFace(face);$('guideMsg').textContent=g;$('status').textContent=st;document.title=st+' | 개인정보 가리기';$('pos').textContent='글 · '+Array.from(TEXT).length+'글자';
   }
   function textExample(){
-    $('textIn').value='2026. 9. 17. 상담 기록 (가상 예시)\n\n이용자 가나다(1975년생) 님과 초기상담을 진행함. 연락처 010-1234-5678, 주소 서울특별시 강남구 역삼동 123-4 행복아파트 101동 203호. 주민등록번호 750302-1234567.\n라마바 씨는 2024년부터 재가복지팀 부서에서 근무 중이며 자녀 사아자(2010.05.01.)와 함께 거주. 이메일 abc@example.com, 차량 12가 3456 보유.\n급여는 농협 123-4567-8901-23 계좌로 입금. 담당자 의견: 가나다 님은 건강 상태 양호, 다음 상담 10월 2일 10:00.';
+    $('textIn').value='2026. 9. 17. 상담 기록 (가상 예시)\n\n이용자 홍길동(1948년생) 어르신과 서비스 이용 상담을 진행함. 연락처 010-0000-0000, 주소 서울특별시 강남구 역삼동 123-4 행복아파트 101동 203호. 주민등록번호 480302-1000000.\n홍길동 어르신은 2024년부터 경로식당과 한글교실을 이용 중이며 자녀 홍하나(1975.05.01.)와 함께 거주. 이메일 abc@example.com, 차량 12가 3456 보유.\n프로그램 참가비는 농협 000-0000-0000-00 계좌로 받음. 담당자 의견: 홍길동 어르신은 건강 상태 양호, 다음 상담 10월 2일 10:00.';
     DECIDE={};MANUAL=[];renderText();
   }
   $('textIn').addEventListener('input',function(){clearTimeout(window._tt);window._tt=setTimeout(renderText,350);});

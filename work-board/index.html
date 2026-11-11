@@ -195,8 +195,8 @@ textarea.prompt{min-height:260px;font-size:14px;line-height:1.55;background:var(
   <section class="card">
     <h2><span class="no">1</span>기본</h2>
     <div class="grid3">
-      <div class="fld"><label for="fOrg">기관·부서</label><input type="text" id="fOrg" maxlength="60" placeholder="예: ○○복지관 지역조직팀"></div>
-      <div class="fld"><label for="fFrom">넘기는 사람 <small>직함</small></label><input type="text" id="fFrom" maxlength="40" placeholder="예: 지역조직팀 사회복지사"></div>
+      <div class="fld"><label for="fOrg">기관·부서</label><input type="text" id="fOrg" maxlength="60" placeholder="예: ○○복지관 지역조직화팀"></div>
+      <div class="fld"><label for="fFrom">넘기는 사람 <small>직함</small></label><input type="text" id="fFrom" maxlength="40" placeholder="예: 지역조직화팀 사회복지사"></div>
       <div class="fld"><label for="fTo">받는 사람 <small>직함, 비워도 됨</small></label><input type="text" id="fTo" maxlength="40" placeholder="예: 신규 사회복지사"></div>
       <div class="fld"><label for="fDate">날짜</label><input type="date" id="fDate"></div>
     </div>
@@ -338,14 +338,14 @@ textarea.prompt{min-height:260px;font-size:14px;line-height:1.55;background:var(
   $('btnAdd').addEventListener('click',function(){S.rows.push(row({}));openIdx=S.rows.length-1;save();renderList();renderOut();var el=$('f_name_'+openIdx);if(el){el.focus();el.scrollIntoView({block:'center'});}});
   $('btnEx').addEventListener('click',function(){
     if(S.rows.length&&!confirm('지금 목록 뒤에 예시 업무 6개를 더할까요?'))return;
-    [{name:'프로그램 실적 보고',cycle:'매월',when:'매월 5일까지',owner:'지역조직팀 사회복지사',sub:'지역조직팀 팀장',what:'지난달 프로그램별 참여 인원과 횟수를 모아 보고서 양식에 넣고 결재를 올린다.',where:'공유 폴더 > 2026 > 실적보고 / 실적 집계 엑셀',partner:'구청 담당 부서',caution:'출석부 원본과 숫자가 맞는지 먼저 본다.',now:'10월분 제출 끝. 11월분은 12월 5일.'},
-     {name:'자원봉사자 관리',cycle:'매주',when:'매주 금요일',owner:'지역조직팀 사회복지사',sub:'',what:'봉사 일정 확인, 활동 일지 정리, 봉사 시간 입력.',where:'봉사 관리 시스템 / 공유 폴더 > 자원봉사',partner:'자원봉사센터',caution:'봉사 시간 입력은 활동한 달 안에.',now:''},
-     {name:'어르신 나들이 행사',cycle:'연 1회',when:'4월',months:'3, 4',owner:'지역조직팀 사회복지사',sub:'사례관리팀 사회복지사',what:'계획서 → 장소·차량 예약 → 참가 신청 → 보험 → 진행 → 결과보고.',where:'공유 폴더 > 2026 > 행사 > 나들이',partner:'버스 업체, 식당(계약 부서 통해)',caution:'보험 가입 명단 마감일 확인.',now:'내년 계획서는 2월에 작성.'},
-     {name:'후원금 결과보고',cycle:'연 1회',when:'결산 때',months:'1, 2',owner:'총무팀 사무원',sub:'총무팀 팀장',what:'후원금 수입·사용 내역을 정리해 보고서를 만든다.',where:'회계 프로그램 / 공유 폴더 > 후원',partner:'구청 담당 부서',caution:'지정·비지정 구분을 통장과 맞춘다.',now:''},
-     {name:'운영위원회',cycle:'분기',when:'3·6·9·12월',owner:'총무팀 팀장',sub:'총무팀 사무원',what:'안건 모으기 → 소집 통지 → 회의 → 회의록 → 보고.',where:'공유 폴더 > 운영위원회',partner:'운영위원',caution:'소집 통지 기한은 기관 규정을 본다.',now:'12월 회의 안건 모으는 중.'},
+    [{name:'프로그램 실적 보고',cycle:'매월',when:'매월 5일까지',owner:'지역조직화팀 사회복지사',sub:'지역조직화팀 팀장',what:'지난달 프로그램별 참여 인원과 횟수를 모아 보고서 양식에 넣고 결재를 올린다.',where:'공유 폴더 > 2026 > 실적보고 / 실적 집계 엑셀',partner:'구청 담당 부서',caution:'출석부 원본과 숫자가 맞는지 먼저 본다.',now:'10월분 제출 끝. 11월분은 12월 5일.'},
+     {name:'자원봉사자 관리',cycle:'매주',when:'매주 금요일',owner:'지역조직화팀 사회복지사',sub:'',what:'봉사 일정 확인, 활동 일지 정리, 봉사 시간 입력.',where:'봉사 관리 시스템 / 공유 폴더 > 자원봉사',partner:'자원봉사센터',caution:'봉사 시간 입력은 활동한 달 안에.',now:''},
+     {name:'어르신 나들이 행사',cycle:'연 1회',when:'4월',months:'3, 4',owner:'지역조직화팀 사회복지사',sub:'사례관리팀 사회복지사',what:'계획서 → 장소·차량 예약 → 참가 신청 → 보험 → 진행 → 결과보고.',where:'공유 폴더 > 2026 > 행사 > 나들이',partner:'버스 업체, 식당(계약 부서 통해)',caution:'보험 가입 명단 마감일 확인.',now:'내년 계획서는 2월에 작성.'},
+     {name:'후원금 결과보고',cycle:'연 1회',when:'결산 때',months:'1, 2',owner:'운영지원팀 사무원',sub:'운영지원팀 팀장',what:'후원금 수입·사용 내역을 정리해 보고서를 만든다.',where:'회계 프로그램 / 공유 폴더 > 후원',partner:'구청 담당 부서',caution:'지정·비지정 구분을 통장과 맞춘다.',now:''},
+     {name:'운영위원회',cycle:'분기',when:'3·6·9·12월',owner:'운영지원팀 팀장',sub:'운영지원팀 사무원',what:'안건 모으기 → 소집 통지 → 회의 → 회의록 → 보고.',where:'공유 폴더 > 운영위원회',partner:'운영위원',caution:'소집 통지 기한은 기관 규정을 본다.',now:'12월 회의 안건 모으는 중.'},
      {name:'민원·문의 전화',cycle:'수시',when:'',owner:'전 직원',sub:'',what:'전화 메모를 남기고 담당자에게 전한다.',where:'전화 메모지',partner:'',caution:'개인정보는 메모에 적지 않는다.',now:''}
     ].forEach(function(o){S.rows.push(row(o));});
-    if(!S.org)S.org='○○복지관 지역조직팀';$('fOrg').value=S.org;save();renderList();renderOut();toast('예시 업무를 넣었습니다. 우리 업무로 고쳐 쓰세요.');
+    if(!S.org)S.org='○○복지관 지역조직화팀';$('fOrg').value=S.org;save();renderList();renderOut();toast('예시 업무를 넣었습니다. 우리 업무로 고쳐 쓰세요.');
   });
   $('btnPasteOpen').addEventListener('click',function(){$('pasteBox').hidden=!$('pasteBox').hidden;});
   $('btnPaste').addEventListener('click',function(){
@@ -361,7 +361,12 @@ textarea.prompt{min-height:260px;font-size:14px;line-height:1.55;background:var(
   $('importFile').addEventListener('change',function(){
     var f=this.files[0];this.value='';if(!f)return;var fr=new FileReader();
     fr.onload=function(){try{var o=JSON.parse(fr.result);if(!o||o.app!=='welfare-tools.work-board'||!Array.isArray(o.rows))throw 0;
-      if(S.rows.length&&!confirm('지금 목록('+S.rows.length+'개)을 불러온 파일('+o.rows.length+'개)로 바꿀까요? 「취소」를 누르면 뒤에 더합니다.')){o.rows.forEach(function(r){S.rows.push(row(r));});}
+      var how='swap';
+      if(S.rows.length){
+        if(confirm('불러온 파일(업무 '+o.rows.length+'개)을 지금 목록('+S.rows.length+'개) 뒤에 더할까요?\n\n「확인」 = 뒤에 더하기\n「취소」 = 더하지 않기 (바꿀지 한 번 더 묻습니다)'))how='add';
+        else if(!confirm('그러면 지금 목록('+S.rows.length+'개)을 지우고 불러온 파일로 바꿀까요?\n\n「확인」 = 바꾸기\n「취소」 = 그만두기 (아무것도 바뀌지 않습니다)')){$('ioNote').textContent='불러오지 않았습니다. 지금 목록은 그대로입니다.';return;}
+      }
+      if(how==='add'){o.rows.forEach(function(r){S.rows.push(row(r));});}
       else{S=blank();['org','from','to','date'].forEach(function(k){S[k]=String(o[k]||'').slice(0,80);});S.rows=o.rows.slice(0,200).map(row);[['fOrg','org'],['fFrom','from'],['fTo','to'],['fDate','date']].forEach(function(k){$(k[0]).value=S[k[1]];});}
       save();renderList();renderOut();$('ioNote').textContent='불러왔습니다.';}catch(e){$('ioNote').textContent='업무 정리판 파일이 아닙니다.';}};
     fr.readAsText(f);
@@ -441,7 +446,7 @@ textarea.prompt{min-height:260px;font-size:14px;line-height:1.55;background:var(
     AIK.copy(text,$('copyNote'),'글자로 복사했습니다(표 모양은 빠집니다).');
   });
   $('btnAi').addEventListener('click',function(){if(!rows().length){$('aiNote').textContent='업무를 먼저 적어 주세요.';return;}AIK.copy(aiPrompt(),$('aiNote'),'주문서를 복사했습니다. AI 대화창에 붙여 넣으세요.');});
-  var h=decodeURIComponent(location.hash.replace('#',''));
+  var h='';try{h=decodeURIComponent(location.hash.replace('#',''));}catch(e){h='';}
   var HT={'인수인계':'hand','hand':'hand','업무분장':'duty','duty':'duty','달력':'cal','cal':'cal','ai':'ai'};
   if(HT[h]){tab=HT[h];[].forEach.call($('tabs').children,function(x){x.classList.toggle('on',x.dataset.t===tab);});}
   window._wb={state:function(){return S;},monthsOf:monthsOf};
