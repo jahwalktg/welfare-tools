@@ -6,12 +6,12 @@
 <meta name="robots" content="index, follow">
 <title>쉬운 안내문 만들기 | 사회복지사 업무 도구</title>
 <!--meta:start-->
-<meta name="description" content="어르신·이용자·보호자에게 나가는 안내문을 붙이면 긴 문장과 어려운 말을 표시하고 쉬운 말을 제안합니다. 누르면 그 자리만 바뀝니다. 날짜·장소·문의가 빠졌는지 살펴보고, 큰 글자 인쇄와 「쉽게 다시 써 달라」는 AI 주문서까지. 점수는 매기지 않습니다.">
+<meta name="description" content="어르신·이용자·보호자에게 나가는 안내문을 붙이면 긴 문장과 어려운 말을 표시하고 쉬운 말을 제안합니다. 누르면 그 자리만 바뀝니다. 날짜·장소·문의가 빠졌는지 살펴보고, 큰 글자 인쇄와 「쉽게 다시 써 달라」는 AI 주문서까지. 「공문·기안 점검」으로 바꾸면 항목 기호…">
 <link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/easy-notice/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="사회복지사 업무 도구">
-<meta property="og:title" content="쉬운 안내문 만들기 | 사회복지사 업무 도구">
-<meta property="og:description" content="어르신·이용자·보호자에게 나가는 안내문을 붙이면 긴 문장과 어려운 말을 표시하고 쉬운 말을 제안합니다. 누르면 그 자리만 바뀝니다. 날짜·장소·문의가 빠졌는지 살펴보고, 큰 글자 인쇄와 「쉽게 다시 써 달라」는 AI 주문서까지. 점수는 매기지 않습니다.">
+<meta property="og:title" content="쉬운 안내문 만들기 · 공문 점검 | 사회복지사 업무 도구">
+<meta property="og:description" content="어르신·이용자·보호자에게 나가는 안내문을 붙이면 긴 문장과 어려운 말을 표시하고 쉬운 말을 제안합니다. 누르면 그 자리만 바뀝니다. 날짜·장소·문의가 빠졌는지 살펴보고, 큰 글자 인쇄와 「쉽게 다시 써 달라」는 AI 주문서까지. 「공문·기안 점검」으로 바꾸면 항목 기호…">
 <meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/easy-notice/">
 <meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
 <meta property="og:image:width" content="1200">
@@ -125,6 +125,11 @@ details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;alig
 .c-rom{border-bottom:3px dotted var(--m-rom);background:var(--m-rom-bg)}
 .c-num{border-bottom:3px dashed var(--m-rom);background:transparent}
 .c-stig{border-bottom:3px solid var(--m-stig);background:var(--m-stig-bg)}
+.c-doc{border-bottom:3px solid var(--m-neg);background:var(--m-neg-bg)}
+.c-docsp{border-bottom:3px dashed var(--m-style);background:var(--m-style-bg)}
+.modes{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+.modes button{min-height:46px;padding:0 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:16px}
+.modes button[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
 .mk.on,.lchip.on{outline:3px solid var(--blue);outline-offset:1px}
 .pop{position:absolute;z-index:6;left:0;width:min(400px,100%);padding:12px 14px 14px;border-radius:14px;border:2px solid var(--blue);background:var(--surface);box-shadow:0 8px 28px rgba(10,18,40,.25);font-size:15px;line-height:1.5;white-space:normal}
 .pop p{margin:0 0 6px}
@@ -184,25 +189,33 @@ details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;alig
 <div class="wrapall">
   <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › <a href="../index.html#ai">AI 주문서</a></p>
   <h1>쉬운 안내문 만들기</h1>
-  <p class="lead">어르신·이용자·보호자에게 나가는 안내문을 붙여 넣으면 긴 문장, 어려운 한자말, 돌려 말한 곳, 낙인이 될 수 있는 말을 표시하고 고칠 말을 보여 줍니다. 고르고 고치는 것은 사람입니다. 점수나 등급은 매기지 않습니다.</p>
+  <div class="modes" id="modes" role="tablist" aria-label="무엇을 살펴볼지 고르기">
+    <button type="button" role="tab" id="mode-easy" data-mode="easy" aria-selected="true">쉬운 안내문</button>
+    <button type="button" role="tab" id="mode-doc" data-mode="doc" aria-selected="false">공문·기안 점검</button>
+  </div>
+  <p class="lead" data-m="easy">어르신·이용자·보호자에게 나가는 안내문을 붙여 넣으면 긴 문장, 어려운 한자말, 돌려 말한 곳, 낙인이 될 수 있는 말을 표시하고 고칠 말을 보여 줍니다. 고르고 고치는 것은 사람입니다. 점수나 등급은 매기지 않습니다.</p>
+  <p class="lead" data-m="doc" hidden>공문·기안 본문을 붙여 넣으면 항목 기호 순서, 날짜·시각·금액 표기, 「붙임」과 「끝.」 표시, 띄어쓰기·기호에서 공문서 작성 규칙과 다른 곳을 표시하고 고칠 모양을 보여 줍니다. 표시만 합니다. 점수나 판정은 없습니다.</p>
   <ul class="notice">
     <li><b>참고사항입니다</b> 한 현장의 개인 경험으로 만든 도구입니다. 표시는 「살펴보세요」라는 뜻이지 틀렸다는 판정이 아닙니다. 법정 용어·고유명사는 그대로 두세요. 고친 글의 책임은 쓰는 분에게 있습니다.</li>
     <li><b>글은 이 컴퓨터 밖으로 나가지 않습니다</b> 붙여 넣은 글은 저장하지 않습니다. 이용자 이름·전화번호 같은 개인정보는 넣지 않아도 됩니다.</li>
     <li><b>줄인 시간은 동료와 클라이언트에게</b> 우리 기관 말에 맞게 「내 낱말」을 더하거나 「내 기관에 맞게 다시 만들기」로 바꿔 쓰세요.</li>
   </ul>
+  <p class="note" data-m="doc" style="margin:0 0 16px" hidden><b>공문·기안 점검은 행정기관 공문서 기준입니다.</b> 「행정업무의 운영 및 혁신에 관한 규정」과 그 시행규칙, 행정업무운영 편람에서 확인한 것만 표시합니다. 사회복지시설은 <b>기관 서식·관행과 주무관청이 준 양식이 먼저</b>입니다. 다르면 「그대로 둠」을 누르세요. 문서번호·결재선·직인·수신자 표시는 다루지 않습니다.</p>
 
   <!-- 1. 붙여 넣기 -->
   <section class="card" aria-labelledby="h-in">
-    <h2 id="h-in">① 안내문 붙여 넣기</h2>
+    <h2 id="h-in">① <span data-m="easy">안내문</span><span data-m="doc" hidden>공문·기안 본문</span> 붙여 넣기</h2>
     <div class="row" style="margin-bottom:8px">
       <span class="lbl" style="font-size:14px;color:var(--muted);font-weight:600;align-self:center">예시 넣기</span>
-      <button class="btn btn-small" type="button" data-ex="0">모집 안내</button>
-      <button class="btn btn-small" type="button" data-ex="1">휴관 안내</button>
-      <button class="btn btn-small" type="button" data-ex="2">서류 안내</button>
+      <button class="btn btn-small" type="button" data-ex="0" data-m="easy">모집 안내</button>
+      <button class="btn btn-small" type="button" data-ex="1" data-m="easy">휴관 안내</button>
+      <button class="btn btn-small" type="button" data-ex="2" data-m="easy">서류 안내</button>
+      <button class="btn btn-small" type="button" data-ex="3" data-m="doc" hidden>협조 요청 공문</button>
+      <button class="btn btn-small" type="button" data-ex="4" data-m="doc" hidden>행사 계획 기안</button>
       <button class="btn btn-small" type="button" id="btnClear">지우기</button>
       <button class="btn btn-small" type="button" id="btnUndo" disabled>되돌리기</button>
     </div>
-    <label for="src" class="hint" style="display:block;margin:0 0 4px">안내문을 여기에 붙여 넣거나 바로 쓰세요. 고치면 아래 표시가 바로 바뀝니다.</label>
+    <label for="src" class="hint" style="display:block;margin:0 0 4px"><span data-m="easy">안내문을 여기에 붙여 넣거나 바로 쓰세요.</span><span data-m="doc" hidden>공문·기안의 본문(제목부터 「끝.」까지)을 여기에 붙여 넣으세요. 이용자 이름 같은 개인정보는 지우고 넣어도 됩니다.</span> 고치면 아래 표시가 바로 바뀝니다.</label>
     <textarea id="src" spellcheck="false" placeholder="예) ○○복지관에서는 어르신 스마트폰 교실 참여자를 모집하오니 …"></textarea>
     <p class="hint" id="stat"></p>
   </section>
@@ -211,6 +224,7 @@ details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;alig
   <section class="card" aria-labelledby="h-view">
     <h2 id="h-view">② 살펴볼 곳 <small id="total" aria-live="polite">표시 0곳</small></h2>
     <div class="cats" id="cats" role="group" aria-label="표시 종류 켜고 끄기"></div>
+    <p class="hint" data-m="doc" style="margin:0 0 4px" hidden>공문 점검에서는 「공문 형식」과 「띄어쓰기·기호」만 켜 두었습니다. 어려운 낱말 같은 다른 표시는 필요할 때 켜세요. 「오후 2시로 쓰기」처럼 공문 규칙과 어긋나는 제안은 이 모드에서 나오지 않습니다.</p>
     <details id="limBox">
       <summary>긴 문장 기준 고치기</summary>
       <div class="row">
@@ -234,7 +248,7 @@ details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;alig
   </section>
 
   <!-- 3. 내 낱말 -->
-  <section class="card" aria-labelledby="h-my">
+  <section class="card" aria-labelledby="h-my" data-m="easy">
     <h2 id="h-my">③ 내 낱말 <small id="myCount"></small></h2>
     <p class="hint" style="margin-top:0">우리 기관에서 자주 쓰는 어려운 말과 쉬운 말을 더해 두면 다음에도 표시합니다. 이 브라우저에만 저장됩니다.</p>
     <div class="row" style="margin-top:8px">
@@ -253,11 +267,13 @@ details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;alig
 
   <!-- 4. 쓰기 -->
   <section class="card" aria-labelledby="h-out">
-    <h2 id="h-out">④ 고친 글 쓰기</h2>
+    <h2 id="h-out"><span data-m="easy">④</span><span data-m="doc" hidden>③</span> 고친 글 쓰기</h2>
     <div class="row">
       <button class="btn btn-main" type="button" id="btnCopy">고친 글 복사</button>
-      <button class="btn" type="button" id="btnAi">AI 주문서 복사</button>
+      <button class="btn" type="button" id="btnAi" data-m="easy">AI 주문서 복사</button>
     </div>
+    <p class="hint" data-m="doc" hidden>복사한 글을 기관 기안문 서식에 붙여 넣으세요. 줄 맞춤·들여쓰기(둘째 항목부터 2타씩)와 「끝.」 앞 띄우기는 붙여 넣은 뒤 서식에서 한 번 더 살펴보세요.</p>
+    <div data-m="easy">
     <p class="note"><b>AI에 넣기 전에</b> 이용자 이름·전화번호·주소 같은 개인정보는 지우고 넣으세요. AI가 쓴 글은 날짜·시간·장소·금액·전화번호가 바뀌지 않았는지 꼭 다시 보세요.</p>
     <p class="hint err" id="aiWarn" hidden></p>
     <details>
@@ -284,6 +300,7 @@ details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;alig
       <button class="btn btn-main" type="button" id="btnPrint">큰 글자로 인쇄</button>
     </div>
     <p class="hint">인쇄 창에서 용지 A4, 「머리글·바닥글」은 끄면 깔끔합니다. 고친 글만 인쇄됩니다. 기관명과 전화는 저장하지 않습니다.</p>
+    </div>
   </section>
 
   <section class="uses">
@@ -293,6 +310,7 @@ details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;alig
       <li><strong>한 문장이 너무 길 때</strong> 40자·60자가 넘는 문장을 색으로 보여 주고 끊을 만한 곳을 알려 줍니다.</li>
       <li><strong>게시판·가정통신문·문자 안내</strong> 날짜·시간·장소·문의 전화가 보이는지 한 번 더 살핍니다.</li>
       <li><strong>어르신용 큰 글자판</strong> 고친 글을 큰 글자·넓은 줄 간격으로 A4에 인쇄합니다.</li>
+      <li><strong>공문·기안을 올리기 전에</strong> 「공문·기안 점검」으로 바꾸면 항목 기호 순서(1. → 가. → 1) …), 날짜·시각·금액 표기, 「붙임」과 「끝.」 표시를 살핍니다.</li>
     </ul>
   </section>
 
@@ -303,6 +321,9 @@ details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;alig
       <li><b>㉮ 문화체육관광부·국립국어원, 「쉬운 공공언어 쓰기 길잡이」</b> — 문장은 짧게, 권위적·차별적 표현, 외국 글자·줄임말, 번역 투, 「~시 → ~할 때」, 안내문 끝에 문의처 밝히기.<br><a href="https://www.korean.go.kr/front/etcData/etcDataView.do?mn_id=208&amp;etc_seq=399&amp;pageIndex=1" target="_blank" rel="noopener">국립국어원 누리집 자료 보기</a></li>
       <li><b>㉯ 국립국어원, 「알기 쉬운 행정용어」(2018)</b> — 다듬은 행정용어 1,000개.<br><a href="https://www.korean.go.kr/front/etcData/etcDataView.do?mn_id=&amp;etc_seq=638&amp;pageIndex=1" target="_blank" rel="noopener">국립국어원 누리집 자료 보기</a></li>
       <li><b>㉰ 국립국어원, 「(개정판) 한눈에 알아보는 공공언어 바로 쓰기」(2022)</b> — 찾아보기와 부록 「필수 개선 행정용어 100개」 「꼭 가려 써야 할 일본어 투 용어 50개」.<br><a href="https://www.korean.go.kr/front/etcData/etcDataView.do?mn_id=&amp;etc_seq=699&amp;pageIndex=1" target="_blank" rel="noopener">국립국어원 누리집 자료 보기</a></li>
+      <li><b>㉱ 「행정업무의 운영 및 혁신에 관한 규정」 제7조(문서 작성의 방법)</b> — 숫자는 아라비아 숫자(제4항), 날짜는 연·월·일 글자 대신 온점, 시각은 24시각제에 쌍점(제5항). 옛 이름은 「행정 효율과 협업 촉진에 관한 규정」입니다. 확인한 판: 대통령령 제36728호, 시행 2026. 10. 2.<br><a href="https://www.law.go.kr/법령/행정업무의운영및혁신에관한규정" target="_blank" rel="noopener">국가법령정보센터에서 보기</a></li>
+      <li><b>㉲ 「행정업무의 운영 및 혁신에 관한 규정 시행규칙」 제2조·제4조</b> — 항목 기호 1., 가., 1), 가), (1), (가), ①, ㉮(제2조제1항), 금액 표기(제2조제2항), 「붙임」 표시(제4조제4항), 「끝」 표시(제4조제5항). 확인한 판: 행정안전부령 제408호, 시행 2023. 6. 28.<br><a href="https://www.law.go.kr/법령/행정업무의운영및혁신에관한규정시행규칙" target="_blank" rel="noopener">국가법령정보센터에서 보기</a></li>
+      <li><b>㉳ 행정안전부 「행정업무운영 편람」의 요약</b> — ㉰의 부록 「행정업무운영 편람(요약)」(2020년판 편람 발췌)으로 확인했습니다. 날짜·시각·금액의 예시, 항목 기호와 내용 사이 1타, 항목이 하나면 기호를 붙이지 않음, 첫째 항목은 1.부터, 「붙임」 다음 2타, 「끝」 앞 2타. 편람 원문 전체는 열어 보지 못했습니다.</li>
     </ol>
     <ul>
       <li>긴 문장 기준(40자·60자)은 이 도구가 정한 숫자입니다. 위 자료에는 「문장을 짧게 쓴다」는 원칙만 있고 글자 수 기준은 없습니다. 숫자·기호가 절반을 넘는 줄(날짜·시간만 적은 줄)은 긴 문장으로 보지 않습니다.</li>
@@ -310,11 +331,13 @@ details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;alig
       <li>「14:00」 「2026. 11. 20.」은 공문서 표기에 맞는 모양입니다. 어르신 안내문에서는 「오후 2시」 「11월 20일」이 읽기 쉬워 표시합니다.</li>
       <li>「수급자」처럼 법에 있는 말도 사람을 부르는 말로 쓰면 낙인이 될 수 있어 표시합니다. 대상을 알려야 하는 글이면 그대로 두세요.</li>
       <li>사전에 없는 어려운 말은 표시하지 못합니다. 표시가 없다고 쉬운 글이라는 뜻은 아닙니다. 읽을 분에게 한번 읽어 보시게 하는 것이 가장 좋습니다.</li>
+      <li>공문·기안 점검의 띄어쓰기·기호 표시(쌍점, 물결표, 「제4장」, 「1년 이상」, 「끝.」의 마침표 등)는 ㉰의 공문서 고쳐 쓰기 보기에서 확인한 것입니다. 규정(㉱·㉲)은 행정기관에 적용되는 것이고, 날짜·시각은 「특별한 사유가 있으면 다른 방법으로 표시할 수 있다」고 되어 있습니다.</li>
+      <li>공문·기안 점검은 붙여 넣은 글자만 봅니다. 들여쓰기(2타씩), 오른쪽 한계선, 표 안의 「이하 빈칸」, 수신·발신 명의·문서번호·결재선·직인은 살피지 못합니다.</li>
     </ul>
   </section>
 
   <footer class="foot">
-    <p><strong>붙여 넣은 글은 이 PC 브라우저 안에서만 살펴보고 저장하지 않습니다.</strong> 저장되는 것은 「내 낱말」과 긴 문장 기준 숫자, 표시 종류 고르기뿐입니다.</p>
+    <p><strong>붙여 넣은 글은 이 PC 브라우저 안에서만 살펴보고 저장하지 않습니다.</strong> 저장되는 것은 「내 낱말」과 긴 문장 기준 숫자, 표시 종류 고르기, 마지막에 고른 모드(쉬운 안내문·공문 점검)뿐입니다.</p>
     <p>만든 사람: 서울강남지역자활센터 김태균</p>
   </footer>
 </div>
@@ -705,7 +728,7 @@ var EN=(function(){
     return out;
   }
   var BASE=compile(DICT);
-  var PRI={my:0,stig:1,word:2,han:3,style:4,neg:5,rom:6,num:6.5};
+  var PRI={my:0,doc:0.4,docsp:0.6,stig:1,word:2,han:3,style:4,neg:5,rom:6,num:6.5};
   function preOK(e,text,idx){
     var lb=e.lb||(e.mid?'any':'h');
     if(lb==='any')return true;
@@ -910,6 +933,225 @@ var EN=(function(){
       marks.push({s:s2,e:e2,cat:'rom',key:t,txt:t,why:'로마자 낱말입니다. 한글로 적거나, 꼭 필요하면 한글 뒤 괄호에 넣어 주세요.',src:'A',cands:[],p:7});}
   }
 
+  /* ---------- 공문·기안 점검 ----------
+     근거를 원문에서 확인한 규칙만 넣는다. (2026-11-11 확인)
+     · 「행정업무의 운영 및 혁신에 관한 규정」 제7조제4항·제5항 (숫자·날짜·시각)
+     · 같은 규정 시행규칙 제2조제1항(항목 기호)·제2항(금액), 제4조제4항(붙임)·제5항(끝)
+     · 행정안전부 「행정업무운영 편람」 — 국립국어원 자료 ㉰ 부록의 요약으로 확인
+     · 국립국어원 자료 ㉰의 공문서 고쳐 쓰기 보기(띄어쓰기·기호)
+     쉬운 안내문에만 맞는 제안(오후 2시로 쓰기, ~해 주세요 등)은 공문 모드에서 쓰지 않는다(eo). */
+  var EO_WHY=['「~에 한하여」','「~ 시(時)」','「미(未)~」','「매(枚)」','「개소」','「○인」','「~간(間)」','「당(當)','「본(本)','「및」','「내지」','「~(으)로 인하여」','「~ 하(下)에」','「~고자 합니다」','옛 편지 말투','「~해 주세요」 「~하세요」로 쓰면','돌려 부탁한 말','공문 말투입니다','명령하듯 끊은 말투','「~함」으로 끊은'];
+  RULES.forEach(function(ru){
+    if(ru.cat==='num'){ru.o.eo=1;return;}
+    for(var i=0;i<EO_WHY.length;i++)if(ru.why.indexOf(EO_WHY[i])===0){ru.o.eo=1;break;}
+  });
+  var REG='「행정업무의 운영 및 혁신에 관한 규정」',RUL='「행정업무의 운영 및 혁신에 관한 규정 시행규칙」',PYN='행정업무운영 편람',KOR='국립국어원 「(개정판) 한눈에 알아보는 공공언어 바로 쓰기」';
+  var RF={
+    item:RUL+' 제2조제1항',
+    itemP:RUL+' 제2조제1항 · '+PYN+'(항목의 구분)',
+    money:RUL+' 제2조제2항',
+    date:REG+' 제7조제5항',
+    dateC:REG+' 제7조제5항 · '+KOR,
+    att:RUL+' 제4조제4항 · '+PYN+'(첨부물의 표시)',
+    end:RUL+' 제4조제5항 · '+PYN+'(문서의 「끝」 표시)',
+    endC:PYN+'(문서의 「끝」 표시) · '+KOR,
+    sp:KOR+'의 공문서 고쳐 쓰기 보기'
+  };
+  function RD(cat,ref,re,why,fn,o){o=o||{};o.doc=1;o.ref=ref;R(cat,cat==='docsp'?'C':'L',re,why,fn,o);}
+  function pad2(n){return (n<10?'0':'')+n;}
+  function commas(s){return String(s).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+  function numToKor(n){
+    var d=['','일','이','삼','사','오','육','칠','팔','구'],u=['천','백','십',''],b=['','만','억','조','경'],g=[],out='';
+    n=String(n).replace(/^0+/,'');if(!n)return '영';
+    while(n.length){g.unshift(n.slice(-4));n=n.slice(0,-4);}
+    g.forEach(function(x,gi){var s='';x=('0000'+x).slice(-4);for(var i=0;i<4;i++){var v=+x.charAt(i);if(v)s+=d[v]+u[i];}if(s)out+=s+b[g.length-1-gi];});
+    return out;
+  }
+  function korToNum(s){
+    var D={'일':1,'이':2,'삼':3,'사':4,'오':5,'육':6,'칠':7,'팔':8,'구':9},U={'십':10,'백':100,'천':1000},B={'만':1e4,'억':1e8,'조':1e12},tot=0,sec=0,cur=0;
+    s=s.replace(/\s/g,'');if(!s)return NaN;if(s==='영')return 0;
+    for(var i=0;i<s.length;i++){var c=s.charAt(i);
+      if(D[c]){cur=D[c];}
+      else if(U[c]){sec+=(cur||1)*U[c];cur=0;}
+      else if(B[c]){sec+=cur;tot+=(sec||1)*B[c];sec=0;cur=0;}
+      else return NaN;}
+    return tot+sec+cur;
+  }
+  /* 날짜 */
+  var W_DATE='공문서의 날짜는 연·월·일 글자 대신 온점(.)을 찍어 씁니다. 예: 2026. 11. 11. (특별한 사유가 있으면 다른 방법으로 쓸 수 있습니다.)';
+  var W_DOT='날짜의 온점은 연·월·일 글자를 대신하므로 「일」 뒤에도 찍고, 온점 뒤는 한 칸 띄웁니다. 예: 2026. 11. 11.(수)';
+  RD('doc',RF.date,/(^|[^\d])((?:19|20)\d{2})년[ \t]?(\d{1,2})월(?:[ \t]?(\d{1,2})일)?/g,W_DATE,function(m,text){
+      var mo=+m[3],d=m[4]?+m[4]:0;if(mo<1||mo>12||(m[4]&&(d<1||d>31)))return null;
+      if(!m[4]){var rest=text.slice(m.index+m[0].length);if(/^[가-힣]/.test(rest)&&!/^(에|부터|까지|중|말|초|경)(?![가-힣])/.test(rest))return null;}
+      return [m[2]+'. '+mo+'.'+(m[4]?' '+d+'.':'')];},{lead:1});
+  RD('doc',RF.date,/(^|[^\d])(\d{1,2})월[ \t]?(\d{1,2})일/g,W_DATE,function(m){
+      var mo=+m[2],d=+m[3];if(mo<1||mo>12||d<1||d>31)return null;return [mo+'. '+d+'.'];},{lead:1});
+  RD('doc',RF.dateC,/(^|[^\d.])((?:19|20)\d{2})\.[ \t]*(\d{1,2})\.[ \t]*(\d{1,2})(\.?)(?!\d)/g,W_DOT,function(m){
+      if(+m[3]<1||+m[3]>12||+m[4]<1||+m[4]>31)return null;
+      var c=m[2]+'. '+m[3]+'. '+m[4]+'.';return c===m[0].slice(m[1].length)?null:[c];},{lead:1});
+  RD('doc',RF.dateC,/(^|[^\d.])(\d{1,2})\.[ \t]*(\d{1,2})(\.?)(?=[ \t]?\([월화수목금토일]\))/g,W_DOT,function(m){
+      if(+m[2]<1||+m[2]>12||+m[3]<1||+m[3]>31)return null;
+      var c=m[2]+'. '+m[3]+'.';return c===m[0].slice(m[1].length)?null:[c];},{lead:1});
+  /* 시각 */
+  var W_TIME='공문서의 시각은 24시각제로 쓰고, 시·분 글자 대신 쌍점(:)을 찍습니다. 예: 오후 3시 20분 → 15:20, 오전 7시 9분 → 07:09 (특별한 사유가 있으면 다른 방법으로 쓸 수 있습니다.)';
+  function hm24(mk,h,mi){
+    if(h>24||mi>59)return null;
+    if(mk){if(/오후|저녁|밤|낮/.test(mk)){if(h<12&&!(mk==='밤'&&h<5))h+=12;else if(mk==='밤'&&h===12)h=0;}else if(h===12)h=0;return [pad2(h)+':'+pad2(mi)];}
+    if(h>=13||h===0||h===12)return [pad2(h)+':'+pad2(mi)];
+    return h<=7?[pad2(h+12)+':'+pad2(mi),pad2(h)+':'+pad2(mi)]:[pad2(h)+':'+pad2(mi),pad2(h+12)+':'+pad2(mi)];
+  }
+  RD('doc',RF.date+' · '+PYN+'(숫자 등의 표시)',/(^|[^\d가-힣])(?:(오전|오후|낮|밤|저녁|아침|새벽)[ \t]?)?(\d{1,2})시(?:[ \t]?(\d{1,2})분|[ \t]?(반)(?![가-힣]))?(?=부터|까지|에는|에(?![가-힣])|경|쯤|[ \t~,.)(\n]|$)/g,W_TIME,function(m){
+      return hm24(m[2],+m[3],m[4]?+m[4]:(m[5]?30:0));},{lead:1});
+  RD('doc',RF.date+' · '+PYN+'(숫자 등의 표시)',/(^|[^\d가-힣])(오전|오후)[ \t]?(\d{1,2}):(\d{2})(?!\d)/g,W_TIME,function(m){return hm24(m[2],+m[3],+m[4]);},{lead:1});
+  /* 금액 */
+  var HAMT='[일이삼사오육칠팔구십백천만억조영 ]+',JL='(?:입니다|이며|이고|으로|에서|에게|까지|부터|을|를|은|는|이|가|의|에|과|와|도|만|씩|로)?(?![가-힣])';
+  RD('doc',RF.money,new RegExp('(^|[^\\d,.])(금[ \\t]?)?(\\d{1,3}(?:,\\d{3})+|\\d+)[ \\t]?원(?='+JL+')(?![ \\t]?\\((?:금[ \\t]?)?'+HAMT+'[ \\t]?원\\))','g'),
+    '공문서의 금액은 아라비아 숫자로 쓰고, 숫자 다음 괄호 안에 한글로 적습니다. 예: 금113,560원(금일십일만삼천오백육십원). 표나 산출 내역의 숫자, 기관 서식에 따로 정한 모양은 그대로 두세요.',function(m){
+      var n=m[3].replace(/,/g,'');if(!+n)return null;return ['금'+commas(n)+'원(금'+numToKor(n)+'원)'];},{lead:1});
+  RD('doc',RF.money,new RegExp('(^|[^\\d,.])(금[ \\t]?)?(\\d{1,3}(?:,\\d{3})+|\\d+)[ \\t]?원[ \\t]?\\((?:금[ \\t]?)?('+HAMT+')[ \\t]?원\\)','g'),
+    '숫자로 적은 금액과 괄호 안 한글 금액이 서로 다릅니다. 어느 쪽이 맞는지 살펴보세요. 후보는 숫자 쪽에 맞춘 것입니다.',function(m){
+      var n=m[3].replace(/,/g,''),k=korToNum(m[4]);if(isNaN(k)||k===+n)return null;return ['금'+commas(n)+'원(금'+numToKor(n)+'원)'];},{lead:1});
+  /* 띄어쓰기·기호 (국립국어원 자료 ㉰의 공문서 보기에서 확인한 것) */
+  RD('docsp',RF.sp,/([가-힣]+|[)\]])([ \t]*[:：][ \t]*)(?=\S)/g,'표제 다음의 쌍점(:)은 앞말에 붙이고 뒷말과 띄어 씁니다. 예: 일시: 2026. 11. 11.',function(m){return m[2]===': '?null:[m[1]+': '];});
+  RD('docsp',RF.sp,/(^|[^\d])(\d{1,2})(?:[ \t]+:[ \t]*|:[ \t]+)(\d{2})(?!\d)/g,'시각을 나타내는 쌍점은 앞뒤를 붙여 씁니다. 예: 14:30',function(m){return [m[2]+':'+m[3]];},{lead:1});
+  RD('docsp',RF.sp,/(\S)(?:[ \t]+~[ \t]*|~[ \t]+)(?=\S)/g,'물결표(~)는 앞말과 뒷말에 모두 붙여 씁니다. 예: 09:00~12:00, 11. 16.(월)~12. 18.(금)',function(m){return [m[1]+'~'];});
+  RD('docsp',RF.sp,/제[ \t]+(\d+)(?=[ \t]?(?:조|항|호|장|절|차|회|기|분과)|[\-–]\d)/g,'차례를 나타내는 「제」는 뒤의 숫자와 붙여 씁니다. 예: 제4장, 제2026-11호',function(m){return ['제'+m[1]];},{wb:1});
+  RD('docsp',RF.sp,/(\d[\d,.]*[가-힣%㎡]{0,3}?)(이상|이하|미만|초과)/g,'「이상·이하·미만·초과」는 앞말과 띄어 씁니다. 예: 15세 이상, 30% 미만',function(m){return [m[1]+' '+m[2]];});
+  RD('docsp',RF.sp,/(\d+(?:일|개월|주|년|시간|분)|기한|기간|범위|예산)내(?=[ \t,.)]|에|로|의|\n|$)/g,'「내(內)」는 앞말과 띄어 씁니다. 예: 3일 내, 기한 내',function(m){return [m[1]+' 내'];});
+  RD('docsp',RF.sp,/(계약|발생|신청|접수|승인|취임|체결|제출|통보|종료|완료|시행|개최|방문|이용|변경|확인|검토|결재|교육|회의|행사|배치|산정|작성|반납|수령|참석|불참|초과|미달)(시|후|전)(?=[ \t,.)]|에|의|부터|까지|\n|$)/g,'「시(時)·후(後)·전(前)」은 앞말과 띄어 씁니다. 예: 계약 시, 승인 후',function(m){return [m[1]+' '+m[2]];});
+  RD('docsp',RF.sp,/각(\d+)(부|매|개|명|통|권|장|회)(?![가-힣])/g,'「각」은 뒤의 숫자와 띄어 씁니다. 예: 각 1부',function(m){return ['각 '+m[1]+m[2]];},{wb:1});
+  RD('docsp',RF.sp,new RegExp('(\\d[\\d,.]*(?:십|백|천|만|억|조)+)(개|명|원|건|회|곳|부|가구|세대)(?='+JL+')','g'),'「천·만·억」 같은 수 뒤의 단위는 띄어 씁니다. 예: 3천 명, 23만 개, 5천억 원',function(m){return [m[1]+' '+m[2]];});
+  RD('docsp',RF.sp,/(\d+(?:일|월|시|년))[ \t]경(?=[ \t,.)]|에|부터|까지|\n|$)/g,'「경(頃)」은 앞말에 붙여 씁니다. 예: 20일경',function(m){return [m[1]+'경'];});
+  RD('docsp',RF.sp,/(\d+(?:개월|일|주|년|시간|분))[ \t]간(?=[ \t,.)]|에|의|\n|$)/g,'기간을 나타내는 「간(間)」은 앞말에 붙여 씁니다. 예: 2개월간',function(m){return [m[1]+'간'];});
+  RD('docsp',RF.sp,/(\d+월|\d+년)(초|말)(?![가-힣])/g,'「초·말」은 앞말과 띄어 씁니다. 예: 10월 초, 2026년 말',function(m){return [m[1]+' '+m[2]];});
+  RD('docsp',RF.sp,/([가-힣])및(?=[ \t])/g,'「및」은 앞말과 띄어 씁니다. 예: 고용 및 복지',function(m){return [m[1]+' 및'];});
+  RD('docsp',RF.sp,/알려드(립니다|리니|리오니|리며|리고|렸습니다|림)/g,'「알려 드리다」는 띄어 씁니다.',function(m){return ['알려 드'+m[1]];});
+  RD('docsp',RF.sp,/(참고|전달|협조|제출|참석|통보|확인|조치|회신)바람(?![가-힣])/g,'「바람」은 앞말과 띄어 씁니다. 예: 참고 바람',function(m){return [m[1]+' 바람'];});
+  RD('docsp',RF.sp,/(\([월화수목금토일]\))[ \t]+(까지|부터)(?![가-힣])/g,'날짜 뒤의 「까지·부터」는 앞말에 붙여 씁니다. 예: 10. 25.(금)까지',function(m){return [m[1]+m[2]];});
+
+  /* 항목 기호·붙임·끝: 줄 단위로 살핀다 */
+  var HG='가나다라마바사아자차카타파하거너더러머버서어저처커터퍼허',CNUM='①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳',CHAN='㉮㉯㉰㉱㉲㉳㉴㉵㉶㉷㉸㉹㉺㉻';
+  var LVN=[null,'1.','가.','1)','가)','(1)','(가)','①','㉮'],W_ORDER='(차례: 1. → 가. → 1) → 가) → (1) → (가) → ① → ㉮)';
+  function fmtMarker(lv,n){
+    var h=HG.charAt(n-1)||'가';
+    return [null,n+'.',h+'.',n+')',h+')','('+n+')','('+h+')',CNUM.charAt(n-1)||'①',CHAN.charAt(n-1)||'㉮'][lv];
+  }
+  function parseMarker(s){
+    var m,ix;
+    if((m=/^(\d{1,2})\.(?!\d)/.exec(s))){if(/^\d{1,2}\.[ \t]?\d{1,2}\./.test(s))return null;return {lv:1,n:+m[1],len:m[0].length};}
+    if((m=/^([가-힣])\.[ \t]+(?!끝)\S/.exec(s))&&(ix=HG.indexOf(m[1]))>=0)return {lv:2,n:ix+1,len:2};
+    if((m=/^(\d{1,2})\)/.exec(s)))return {lv:3,n:+m[1],len:m[0].length};
+    if((m=/^([가-힣])\)/.exec(s))&&(ix=HG.indexOf(m[1]))>=0)return {lv:4,n:ix+1,len:2};
+    if((m=/^\((\d{1,2})\)/.exec(s)))return {lv:5,n:+m[1],len:m[0].length};
+    if((m=/^\(([가-힣])\)[ \t]/.exec(s))&&(ix=HG.indexOf(m[1]))>=0)return {lv:6,n:ix+1,len:3};
+    if(s.length>1&&!/[ \t]/.test(s.charAt(1)))return null;
+    if((ix=CNUM.indexOf(s.charAt(0)))>=0)return {lv:7,n:ix+1,len:1};
+    if((ix=CHAN.indexOf(s.charAt(0)))>=0)return {lv:8,n:ix+1,len:1};
+    return null;
+  }
+  function docMarks(text,marks){
+    function add(s,e,why,ref,cands,src,rs){
+      var tx=text.slice(s,e),o={s:s,e:e,cat:'doc',key:tx,txt:tx,why:why,src:src||'L',ref:ref,p:PRI.doc,
+        cands:(cands||[]).filter(function(t){return t!==text.slice(rs==null?s:rs,e);}).map(function(t){return {t:t,l:/^ | $| {2}/.test(t)?t.replace(/ /g,'∨'):t,x:0};})};
+      if(rs!=null)o.rs=rs;
+      if(o.cands.some(function(c){return c.l!==c.t;}))o.why+=' (∨는 빈칸 한 칸)';
+      marks.push(o);
+    }
+    var lines=[],pos=0;text.split('\n').forEach(function(l){lines.push({s:pos,t:l});pos+=l.length+1;});
+    var last=[0,0,0,0,0,0,0,0,0],typed=[0,0,0,0,0,0,0,0,0],depth=0,first=true,open=[],groups=[],attach=null,attLine=-1,ends=[];
+    var W_GAP='항목 기호와 그 항목의 내용 사이는 한 칸(1타) 띄웁니다.';
+    function qty(st,c){
+      c=c.replace(/[ \t]*끝\.?[ \t]*$/,'').replace(/[ \t]+$/,'');
+      if(!c||/\d+[ \t]?(부|매|장|권|통|개|건|쪽|종|식|점|세트)/.test(c))return;
+      add(st,st+c.length,'첨부물은 이름과 수량을 함께 적습니다. 예: 사업 계획서 1부.',RF.att,[]);
+    }
+    lines.forEach(function(L,li){
+      var ind=/^[ \t\u3000]*/.exec(L.t)[0].length,s=L.t.slice(ind),st=L.s+ind,k;
+      /* 끝 표시 */
+      var em=/^(.*?)([ \t]*)끝(\.?)[ \t]*$/.exec(L.t);
+      if(em&&(em[1].replace(/[ \t]/g,'')===''||em[2]!==''||/[.)\]"”’」』]$/.test(em[1]))){
+        var alone=em[1].replace(/[ \t]/g,'')==='',gs=L.s+em[1].length,ks=gs+em[2].length,ke=ks+1+em[3].length;
+        ends.push({li:li,ks:ks,ke:ke,gs:alone?ks:gs,gapBad:!alone&&em[2]!=='  ',noDot:!em[3],alone:alone});
+      }
+      if(!s){attach=null;return;}
+      /* 붙임 */
+      var am=/^붙임([ \t]*[:：][ \t]*|[ \t]+|(?=\d))/.exec(s),alt=am?null:/^(첨부물|첨부서류|첨부 서류|첨부|별첨)([ \t]*[:：][ \t]*|[ \t]+(?=\d{1,2}\.))/.exec(s);
+      /* 「붙임 서식에 따라 … 바랍니다.」처럼 줄 첫머리에 온 본문 문장은 붙임 표시로 보지 않는다 */
+      if(am&&/(니다|한다|바람|하여|하고|하며)[.,]?[ \t]*$/.test(s)&&!/끝\.?[ \t]*$/.test(s))am=null;
+      if(am||alt){
+        var word=am?'붙임':alt[1],sep=am?am[1]:alt[2],head=word+sep,rest=s.slice(head.length);
+        if(attLine<0)attLine=li;
+        if(word!=='붙임')add(st,st+head.length,'첨부물은 「붙임」이라고 표시합니다. 「붙임」 다음에는 쌍점 없이 한 글자(2타) 띄우고 첨부물 이름을 적습니다.',RF.att,['붙임  ']);
+        else if(sep!=='  ')add(st,st+head.length,/[:：]/.test(sep)?'「붙임」 다음에는 쌍점(:) 없이 한 글자(2타) 띄우고 첨부물 이름을 적습니다.':'「붙임」 다음에는 한 글자(2타) 띄우고 첨부물 이름을 적습니다.',RF.att,['붙임  ']);
+        var im=/^(\d{1,2})\.([ \t]*)/.exec(rest),cst=st+head.length;
+        attach={next:1};
+        if(im){
+          if(+im[1]!==1)add(cst,cst+im[1].length+1,'붙임이 둘 이상이면 1.부터 차례로 항목을 나눕니다.',RF.att,['1.']);
+          else if(im[2]===''&&rest.length>im[0].length)add(cst,cst+im[1].length+1,W_GAP,RF.itemP,['1. '],'P');
+          attach.next=2;cst+=im[0].length;rest=rest.slice(im[0].length);
+        }
+        qty(cst,rest);return;
+      }
+      if(attach){
+        var im2=/^(\d{1,2})\.([ \t]*)/.exec(s);
+        if(im2&&!/^\d{1,2}\.[ \t]?\d{1,2}\./.test(s)){
+          if(+im2[1]!==attach.next)add(st,st+im2[1].length+1,'붙임의 항목 번호 차례가 맞지 않습니다. 이 자리는 「'+attach.next+'.」입니다.',RF.att,[attach.next+'.']);
+          else if(im2[2]===''&&s.length>im2[0].length)add(st,st+im2[1].length+1,W_GAP,RF.itemP,[im2[1]+'. '],'P');
+          attach.next=Math.max(attach.next,+im2[1])+1;qty(st+im2[0].length,s.slice(im2[0].length));return;
+        }
+        attach=null;
+      }
+      /* 항목 기호 */
+      var mk=parseMarker(s);
+      if(!mk){
+        var nm=/^(?:[ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ]+|[IVX]{1,4}|[A-Za-z])[.)](?=[ \t])/.exec(s);
+        if(nm)add(st,st+nm[0].length,'규칙에 나온 항목 기호(1., 가., 1), 가), (1), (가), ①, ㉮)가 아닙니다. 계획서·보고서처럼 양식이 따로 있으면 그대로 두세요.',RF.item,[]);
+        return;
+      }
+      var ms=st,me=st+mk.len,mtxt=text.slice(ms,me),lg=0;
+      if(first){
+        first=false;
+        if(mk.lv===1&&mk.n!==1){
+          add(ms,me,'첫째 항목은 「1.」부터 시작합니다. 본문의 일부만 붙여 넣었다면 그대로 두세요.',RF.itemP,[],'P');
+          last[1]=mk.n;typed[1]=1;depth=1;open[1]={n:1,flag:true};groups.push(open[1]);return;
+        }
+        if(mk.lv!==1){for(k=1;k<mk.lv;k++){last[k]=1;typed[k]=k;}depth=mk.lv-1;
+          add(ms,me,'첫째 항목은 「1.」부터 시작합니다. 본문의 일부만 붙여 넣었다면 그대로 두세요. '+W_ORDER,RF.itemP,[],'P');
+          lg=mk.lv;last[lg]=mk.n;typed[lg]=mk.lv;depth=lg;open[lg]={n:1,flag:true};groups.push(open[lg]);return;}
+      }
+      for(k=depth;k>=1;k--)if(typed[k]===mk.lv){lg=k;break;}
+      var fresh=false;
+      if(!lg){lg=Math.min(depth+1,8);fresh=true;}
+      else for(k=lg+1;k<=8;k++){last[k]=0;typed[k]=0;open[k]=null;}
+      var exp=fresh?1:last[lg]+1,badType=mk.lv!==lg,badNum=mk.n!==exp,flagged=true;
+      if(badType)add(ms,me,'항목 기호의 단계가 맞지 않습니다. '+(lg>1?'「'+LVN[lg-1]+'」 아래 항목은 「'+LVN[lg]+'」 꼴로 씁니다. ':'첫째 항목은 「1.」 꼴로 씁니다. ')+W_ORDER,RF.item,[fmtMarker(lg,badNum&&mk.n<exp?exp:mk.n)]);
+      else if(badNum)add(ms,me,'항목 기호의 차례가 맞지 않습니다. 숫자는 오름차순, 한글은 가나다순으로 붙입니다. 이 자리는 「'+fmtMarker(lg,exp)+'」입니다.',RF.item,[fmtMarker(lg,exp)]);
+      else if(me<L.s+L.t.length&&!/[ \t]/.test(text.charAt(me)))add(ms,me,W_GAP,RF.itemP,[mtxt+' '],'P');
+      else flagged=false;
+      last[lg]=(mk.n>exp)?mk.n:exp;typed[lg]=mk.lv;depth=lg;
+      if(fresh||!open[lg]){open[lg]={n:0,flag:false,s:ms,e:me};groups.push(open[lg]);}
+      open[lg].n++;if(flagged)open[lg].flag=true;
+    });
+    groups.forEach(function(g){
+      if(g.n===1&&!g.flag&&g.s!=null)add(g.s,g.e,'이 단계에 항목이 하나뿐입니다. 항목이 하나만 있으면 항목 기호를 붙이지 않습니다. 붙여 넣은 글이 일부이거나 뒤에 항목이 더 있으면 그대로 두세요.',RF.itemP,[],'P');
+    });
+    ends.forEach(function(E){
+      var why=[],ref=RF.end;
+      if(attLine>E.li)why.push('「끝」 표시는 붙임 다음에 합니다. 붙임이 있으면 붙임의 마지막 글자에서 한 글자 띄우고 적습니다.');
+      if(E.gapBad)why.push('본문(붙임이 있으면 붙임)의 마지막 글자에서 한 글자(2타) 띄우고 「끝.」을 적습니다.');
+      if(E.noDot){why.push('「끝」 뒤에는 마침표를 찍습니다.');if(!E.gapBad&&attLine<=E.li)ref=RF.endC;}
+      if(!why.length)return;
+      add(E.ks,E.ke,why.join(' '),ref,(E.gapBad||E.noDot)?[(E.gapBad?'  ':'')+'끝.']:[],'L',E.gapBad?E.gs:null);
+    });
+  }
+  function docInfo(text){
+    var e=/(^|[ \t.)\]"”’」』])끝\.?[ \t]*$/m.exec(text),a=/^[ \t]*(?:붙임(?=[ \t:：\d])|(?:첨부|별첨)(?=[ \t]*[:：]|[ \t]+\d))[^\n]{0,24}/m.exec(text);
+    return [
+      {k:'「끝」 표시',found:e?'끝.':null,no:'「끝.」 표시가 보이지 않습니다. 본문(붙임이 있으면 붙임)의 마지막 글자에서 한 글자 띄우고 적습니다. 본문의 일부만 붙여 넣었다면 그대로 두세요.',more:''},
+      {k:'붙임',found:a?a[0].trim():null,no:'「붙임」 표시는 보이지 않습니다. 첨부하는 서류가 있을 때만 본문이 끝난 줄 다음에 적습니다.',more:'',soft:1}
+    ];
+  }
+
   /* ---------- 문장 나누기·길이 ---------- */
   function countLen(s){return s.replace(/\s/g,'').length;}
   function splitSentences(t){
@@ -961,7 +1203,7 @@ var EN=(function(){
   }
   function analyze(text,opt){
     opt=opt||{};text=String(text||'');
-    var y=+opt.y||40,r=+opt.r||60,marks=[],m;
+    var y=+opt.y||40,r=+opt.r||60,marks=[],m,doc=opt.mode==='doc';
     BASE.concat(compile(myEntries(opt.my))).forEach(function(c){
       c.re.lastIndex=0;
       while((m=c.re.exec(text))){
@@ -971,6 +1213,7 @@ var EN=(function(){
       }
     });
     RULES.forEach(function(ru){
+      if(doc?ru.o.eo:ru.o.doc)return;
       ru.re.lastIndex=0;
       while((m=ru.re.exec(text))){
         if(m[0]===''){ru.re.lastIndex++;continue;}
@@ -979,35 +1222,50 @@ var EN=(function(){
         if(ru.o.wbd&&/[가-힣0-9]/.test(text.charAt(m.index-1)))continue;
         var c=ru.fn?ru.fn(m,text):[];if(c===null||e<=s)continue;
         var tx=text.slice(s,e);
-        marks.push({s:s,e:e,cat:ru.cat,key:tx,txt:tx,why:ru.why,src:ru.src,cands:c.filter(function(t){return t!==tx;}).map(function(t){return {t:t,l:t===''?'빼기':t.trim()||t,x:0};}),p:PRI[ru.cat]});
+        marks.push({s:s,e:e,cat:ru.cat,key:tx,txt:tx,why:ru.why,src:ru.src,ref:ru.o.ref||'',cands:c.filter(function(t){return t!==tx;}).map(function(t){return {t:t,l:t===''?'빼기':t.trim()||t,x:0};}),p:PRI[ru.cat]});
       }
     });
     romanMarks(text,marks);
+    if(doc)docMarks(text,marks);
     var mask=[],mr=/(?:https?:\/\/|www\.)[^\s)]+|[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g;
     while((m=mr.exec(text)))mask.push([m.index,m.index+m[0].length]);
     (opt.keep||[]).forEach(function(k){k=String(k).trim();if(!k)return;var p=0,ix;while((ix=text.indexOf(k,p))>=0){mask.push([ix,ix+k.length]);p=ix+k.length;}});
     marks=marks.filter(function(a){for(var q=0;q<mask.length;q++)if(a.s<mask[q][1]&&a.e>mask[q][0])return false;return true;});
+    /* 공문 형식 표시는 「종류 + 그 글자 + 그 줄」로 알아보고, 「이 자리는 그대로 둠」을 누른 것만 뺀다 */
+    var kid=opt.keepIds||{};
+    marks=marks.filter(function(a){
+      if(a.cat!=='doc'&&a.cat!=='docsp')return true;
+      var ls=text.lastIndexOf('\n',a.s-1)+1,le=text.indexOf('\n',a.e);if(le<0)le=text.length;
+      a.id=a.cat+'|'+a.txt+'|'+text.slice(ls,le).trim();
+      return !kid[a.id];
+    });
     marks.sort(function(a,b){return a.s-b.s||(b.e-b.s)-(a.e-a.s)||a.p-b.p;});
     var sents=splitSentences(text),ks=opt.keepSent||{};
     sents.forEach(function(q){q.txt=text.slice(q.s,q.e);var hg=(q.txt.match(/[가-힣]/g)||[]).length;
       q.lv=(ks[q.txt]||hg*2<q.len)?0:(q.len>r?2:q.len>y?1:0);});
-    var out=[],last=-1,si=0;
-    marks.forEach(function(a){
-      if(a.s<last)return;
-      while(si<sents.length&&sents[si].e<=a.s)si++;
-      if(si>=sents.length||a.s<sents[si].s||a.e>sents[si].e)return;
-      a.si=si;out.push(a);last=a.e;
-    });
-    var counts={long:0,word:0,han:0,style:0,neg:0,rom:0,num:0,stig:0};
+    /* 겹치는 표시는 앞에서부터 하나씩만. 꺼 둔 종류는 켜 둔 종류를 가리지 않게 따로 센다. */
+    function pick(list){
+      var acc=[],last=-1,si=0;
+      list.forEach(function(a){
+        if(a.s<last)return;
+        while(si<sents.length&&sents[si].e<=a.s)si++;
+        if(si>=sents.length||a.s<sents[si].s||a.e>sents[si].e)return;
+        a.si=si;acc.push(a);last=a.e;
+      });
+      return acc;
+    }
+    var on=opt.on||{},out=pick(marks.filter(function(a){return on[a.cat]!==false;}));
+    var counts={long:0,word:0,han:0,style:0,neg:0,rom:0,num:0,stig:0,doc:0,docsp:0};
     out.forEach(function(a){counts[a.cat]++;});
+    Object.keys(counts).forEach(function(c){if(on[c]===false)counts[c]=pick(marks.filter(function(a){return a.cat===c;})).length;});
     sents.forEach(function(q){if(q.lv)counts.long++;});
-    var info=findInfo(text);
-    counts.miss=text.trim()?info.filter(function(x){return !x.found;}).length:0;
-    return {marks:out,sents:sents,counts:counts,info:info};
+    var info=doc?docInfo(text):findInfo(text);
+    counts.miss=(text.trim()&&!doc)?info.filter(function(x){return !x.found;}).length:0;
+    return {marks:out,sents:sents,counts:counts,info:info,mode:doc?'doc':'easy'};
   }
 
   /* ---------- AI 주문서 ---------- */
-  var CATNAME={long:'긴 문장',word:'어려운 낱말',han:'한자말 투',style:'피동·돌려 말하기',neg:'이중 부정',rom:'영어·줄임말·한자',num:'숫자로 적은 날짜·시각',stig:'낙인이 될 수 있는 말',miss:'빠진 것 알림'};
+  var CATNAME={long:'긴 문장',word:'어려운 낱말',han:'한자말 투',style:'피동·돌려 말하기',neg:'이중 부정',rom:'영어·줄임말·한자',num:'숫자로 적은 날짜·시각',stig:'낙인이 될 수 있는 말',miss:'빠진 것 알림',doc:'공문 형식',docsp:'띄어쓰기·기호'};
   function buildPrompt(text,res,keep,on,y){
     var L=[],k=(keep||[]).map(function(s){return String(s).trim();}).filter(Boolean);
     on=on||{};
@@ -1037,6 +1295,8 @@ var EN=(function(){
   function srcLabel(src){
     if(src==='M')return {cls:'my',tag:'내 낱말',full:'이 브라우저에 더해 둔 내 낱말'};
     if(src==='F')return {cls:'fld',tag:'현장 말',full:'확인한 자료에는 없고 현장에서 모은 말입니다.'};
+    if(src==='L')return {cls:'ok',tag:'법령',full:''};
+    if(src==='P')return {cls:'ok',tag:'행정업무운영 편람',full:''};
     return {cls:'ok',tag:'국립국어원 자료',full:src.split('').map(function(c){return SRC[c];}).join(' · ')};
   }
   function dictStats(){
@@ -1045,7 +1305,7 @@ var EN=(function(){
       if(e.cat==='word'){o.word++;if(ok)o.wordOk++;else o.wordField++;}else if(e.cat==='stig')o.stig++;else o.abbr++;});
     return o;
   }
-  return {analyze:analyze,splitSentences:splitSentences,countLen:countLen,cutHints:cutHints,conj:conj,vf:vf,fixP:fixP,joinP:joinP,findInfo:findInfo,buildPrompt:buildPrompt,srcLabel:srcLabel,dictStats:dictStats,DICT:DICT,RULES:RULES,SRC:SRC,CATNAME:CATNAME};
+  return {analyze:analyze,splitSentences:splitSentences,countLen:countLen,cutHints:cutHints,conj:conj,vf:vf,fixP:fixP,joinP:joinP,findInfo:findInfo,docInfo:docInfo,numToKor:numToKor,korToNum:korToNum,buildPrompt:buildPrompt,srcLabel:srcLabel,dictStats:dictStats,DICT:DICT,RULES:RULES,SRC:SRC,CATNAME:CATNAME};
 })();
 if(typeof module!=='undefined'&&module.exports)module.exports=EN;
 </script>
@@ -1094,15 +1354,50 @@ if(typeof module!=='undefined'&&module.exports)module.exports=EN;
 '서류가 미비한 경우 접수가 되지 않으며, 미제출 시에는 지원 대상에서 제외될 수 있습니다. 제출하신 서류는 일체 반환하지 않습니다.',
 '기 제출한 서류에 변동 사항이 없지 않은 경우에는 담당자에게 유선으로 문의하시기 바랍니다.',
 'E-mail 접수도 가능합니다.','',
-'문의: ○○지역아동센터 (전화 02-000-0000, 평일 10:00~18:00)'].join('\n')
+'문의: ○○지역아동센터 (전화 02-000-0000, 평일 10:00~18:00)'].join('\n'),
+/* 공문·기안 점검용 (지어낸 글, 일부러 틀린 곳을 넣음) */
+['수신  ○○구청장(복지정책과장)',
+'제목  2026년 어르신 겨울나기 물품 지원 사업 협조 요청','',
+'1. 귀 기관의 무궁한 발전을 기원합니다.',
+'2. 우리 복지관에서 아래와 같이 어르신 겨울나기 물품 지원 사업을 진행하오니 대상자 추천에 협조하여 주시기 바랍니다.',
+'  가. 사업 기간 : 2026년 11월 16일(월) ~ 12월 18일(금)',
+'  나. 전달 일시: 2026.11.27(금) 오후 2시 30분',
+'  라. 장소:○○복지관 3층 강당',
+'  마. 지원 내용',
+'    (1) 겨울 이불과 난방용품: 1가구당 150,000원 상당',
+'    (2) 총 사업비: 금15,000,000원(금일천오십만원)',
+'  바. 추천 기한: 2026. 11. 20.(금) 18:00까지',
+'3. 추천서는 붙임 서식에 따라 작성하여 제 2026-11호 공문으로 보내 주시기 바랍니다.','',
+'첨부 : 1. 대상자 추천서 서식 1부.',
+'2. 사업 계획서. 끝'].join('\n'),
+['제목  2026년 송년 행사 운영 계획(안)','',
+'2026년 이용자 송년 행사를 다음과 같이 운영하고자 합니다.','',
+'1. 행사 개요',
+'  1) 일시: 2026. 12. 18(금) 15시~17시',
+'  2) 장소: 본관 2층 식당',
+'  3) 참석 인원: 이용자 80명, 자원봉사자 15명이상',
+'2. 세부 일정',
+'  가. 1부: 기념식(15시00분 ~ 15시 30분)',
+'  가. 2부: 나눔 마당(15:30~17:00)',
+'3. 소요 예산: 1,200,000원(산출 내역 붙임)',
+'  가. 다과비 600,000원',
+'4.준비 사항',
+'  가. 행사 안내문은 12월 5일까지 게시',
+'  나. 참석 여부는 기한내 담당자에게 알려드립니다.','',
+'붙임 행사 세부 계획서 1부.끝.'].join('\n')
   ];
 
   /* ---------- 상태 ---------- */
-  var CATS=['long','word','han','style','neg','rom','num','stig','miss'];
-  var ON=(function(){var o={};CATS.forEach(function(c){o[c]=true;});try{var s=JSON.parse(lsGet(KEY_CAT)||'null');if(s)CATS.forEach(function(c){if(s[c]===false)o[c]=false;});}catch(e){}return o;})();
+  var KEY_CATD='welfare-tools.easy-notice.cats-doc.v1',KEY_MODE='welfare-tools.easy-notice.mode.v1';
+  var CATS_E=['long','word','han','style','neg','rom','num','stig','miss'],CATS_D=['doc','docsp','word','han','style','neg','rom','stig','long'];
+  function loadOn(key,list,def){var o={};list.forEach(function(c){o[c]=def?!!def[c]:true;});try{var s=JSON.parse(lsGet(key)||'null');if(s)list.forEach(function(c){if(typeof s[c]==='boolean')o[c]=s[c];});}catch(e){}return o;}
+  /* 공문 점검에서는 형식·띄어쓰기만 켜 둔다. 쉬운 말 표시는 필요할 때 켠다. */
+  var ON_E=loadOn(KEY_CAT,CATS_E,null),ON_D=loadOn(KEY_CATD,CATS_D,{doc:1,docsp:1});
+  var MODE='easy',CATS=CATS_E,ON=ON_E;
+  function onAll(){var o={};['long','word','han','style','neg','rom','num','stig','miss','doc','docsp'].forEach(function(c){o[c]=!!ON[c];});return o;}
   var LIM=(function(){try{var s=JSON.parse(lsGet(KEY_LIM)||'null');if(s&&s.y>0&&s.r>0)return {y:+s.y,r:+s.r};}catch(e){}return {y:40,r:60};})();
   var MY=(function(){try{var s=JSON.parse(lsGet(KEY_MY)||'null');if(Array.isArray(s))return s.filter(function(x){return x&&x.w&&x.to;});}catch(e){}return [];})();
-  var UNDO=[],KS={},RES=null,OPEN=null;
+  var UNDO=[],KS={},KM={},RES=null,OPEN=null;
   var src=$('src'),view=$('view'),pop=$('pop');
 
   function keepList(){return $('keep').value.split(/[,，\n]/).map(function(s){return s.trim();}).filter(Boolean);}
@@ -1111,13 +1406,14 @@ if(typeof module!=='undefined'&&module.exports)module.exports=EN;
   /* ---------- 종류 고르기 ---------- */
   var SW={long:['긴','background:var(--long-y)'],word:['낱말','border-bottom:3px solid var(--m-word);background:var(--m-word-bg)'],han:['투','border-bottom:3px dashed var(--m-han);background:var(--m-han-bg)'],
     style:['돌려','border-bottom:3px dotted var(--m-style);background:var(--m-style-bg)'],neg:['부정','border-bottom:4px double var(--m-neg);background:var(--m-neg-bg)'],
-    rom:['AB','border-bottom:3px dotted var(--m-rom);background:var(--m-rom-bg)'],num:['12','border-bottom:3px dashed var(--m-rom);background:transparent'],stig:['낙인','border-bottom:3px solid var(--m-stig);background:var(--m-stig-bg)'],miss:['?','background:var(--amber-bg)']};
+    rom:['AB','border-bottom:3px dotted var(--m-rom);background:var(--m-rom-bg)'],num:['12','border-bottom:3px dashed var(--m-rom);background:transparent'],stig:['낙인','border-bottom:3px solid var(--m-stig);background:var(--m-stig-bg)'],miss:['?','background:var(--amber-bg)'],
+    doc:['1.가.','border-bottom:3px solid var(--m-neg);background:var(--m-neg-bg)'],docsp:['띄어','border-bottom:3px dashed var(--m-style);background:var(--m-style-bg)']};
   function buildCats(){
     var box=$('cats');box.textContent='';
     CATS.forEach(function(c){
       var lab=document.createElement('label');lab.className='cat'+(ON[c]?'':' off');
       var cb=document.createElement('input');cb.type='checkbox';cb.checked=ON[c];cb.id='cat-'+c;
-      cb.addEventListener('change',function(){ON[c]=cb.checked;lsSet(KEY_CAT,JSON.stringify(ON));lab.className='cat'+(ON[c]?'':' off');closePop();render();});
+      cb.addEventListener('change',function(){ON[c]=cb.checked;lsSet(MODE==='doc'?KEY_CATD:KEY_CAT,JSON.stringify(ON));lab.className='cat'+(ON[c]?'':' off');closePop();render();});
       var sw=document.createElement('span');sw.className='sw';sw.setAttribute('style',SW[c][1]);sw.setAttribute('aria-hidden','true');sw.textContent=SW[c][0];
       var tx=document.createElement('span');tx.innerHTML=esc(EN.CATNAME[c])+' <b id="cnt-'+c+'">0</b>곳';
       lab.appendChild(cb);lab.appendChild(sw);lab.appendChild(tx);box.appendChild(lab);
@@ -1128,13 +1424,13 @@ if(typeof module!=='undefined'&&module.exports)module.exports=EN;
   var VM=[]; /* 지금 화면에 보이는 표시 */
   function render(){
     var text=src.value;
-    RES=EN.analyze(text,{y:LIM.y,r:LIM.r,keep:keepList(),my:MY,keepSent:KS});
+    RES=EN.analyze(text,{y:LIM.y,r:LIM.r,keep:keepList(),my:MY,keepSent:KS,keepIds:KM,mode:MODE,on:onAll()});
     CATS.forEach(function(c){var el=$('cnt-'+c);if(el)el.textContent=RES.counts[c]||0;});
     var total=0;CATS.forEach(function(c){if(c!=='miss'&&ON[c])total+=RES.counts[c]||0;});
     $('total').textContent='표시 '+total+'곳';
     $('stat').textContent=text.trim()?('글자 수 '+EN.countLen(text)+'자(공백 빼고) · 문장 '+RES.sents.length+'개'):'';
     VM=RES.marks.filter(function(a){return ON[a.cat];});
-    if(!text.trim()){view.innerHTML='<span class="empty">위 칸에 안내문을 붙여 넣으면 여기에 살펴볼 곳이 표시됩니다. 「예시 넣기」를 눌러 먼저 써 보세요.</span>';}
+    if(!text.trim()){view.innerHTML='<span class="empty">위 칸에 '+(MODE==='doc'?'공문·기안 본문을':'안내문을')+' 붙여 넣으면 여기에 살펴볼 곳이 표시됩니다. 「예시 넣기」를 눌러 먼저 써 보세요.</span>';}
     else{
       var h='',pos=0,mi=0;
       RES.sents.forEach(function(q,qi){
@@ -1155,21 +1451,40 @@ if(typeof module!=='undefined'&&module.exports)module.exports=EN;
       view.innerHTML=h;
     }
     renderMiss(text);
-    $('aiBox').value=text.trim()?EN.buildPrompt(text,RES,keepList(),ON,LIM.y):'';
+    $('aiBox').value=(text.trim()&&MODE==='easy')?EN.buildPrompt(text,RES,keepList(),ON,LIM.y):'';
     $('aiWarn').hidden=true;
   }
   function renderMiss(text){
-    var box=$('miss');
-    if(!ON.miss||!text.trim()){box.hidden=true;return;}
+    var box=$('miss'),doc=MODE==='doc';
+    if(!(doc?ON.doc:ON.miss)||!text.trim()){box.hidden=true;return;}
     box.hidden=false;
-    var h='<h3>날짜·시간·장소·문의 전화 — 보이는지 살펴봤습니다</h3><ul>';
+    var h='<h3>'+(doc?'「끝」 표시와 「붙임」 — 보이는지 살펴봤습니다':'날짜·시간·장소·문의 전화 — 보이는지 살펴봤습니다')+'</h3><ul>';
     RES.info.forEach(function(x){
       if(x.found)h+='<li class="yes">'+esc(x.k)+' — 보입니다: 「'+esc(x.found.length>28?x.found.slice(0,28)+'…':x.found)+'」'+(x.more?' <span style="color:var(--amber);font-weight:700">'+esc(x.more)+'</span>':'')+'</li>';
-      else h+='<li class="no">'+esc(x.no)+'</li>';
+      else h+='<li class="'+(x.soft?'yes':'no')+'">'+esc(x.no)+'</li>';
     });
-    h+='</ul><p class="hint">글자 모양으로만 찾습니다. 안내문에 따라 없어도 되는 내용일 수 있습니다.</p>';
+    h+='</ul><p class="hint">'+(doc?'글자 모양으로만 찾습니다. 수신·발신 명의·문서번호·결재선·직인과 들여쓰기는 살피지 않습니다.':'글자 모양으로만 찾습니다. 안내문에 따라 없어도 되는 내용일 수 있습니다.')+'</p>';
     box.innerHTML=h;
   }
+
+  /* ---------- 모드: 쉬운 안내문 / 공문·기안 점검 ---------- */
+  function setMode(m,fromUser){
+    MODE=(m==='doc')?'doc':'easy';CATS=MODE==='doc'?CATS_D:CATS_E;ON=MODE==='doc'?ON_D:ON_E;
+    Array.prototype.forEach.call(document.querySelectorAll('[data-m]'),function(el){el.hidden=el.getAttribute('data-m')!==MODE;});
+    Array.prototype.forEach.call(document.querySelectorAll('#modes [data-mode]'),function(b){b.setAttribute('aria-selected',b.getAttribute('data-mode')===MODE?'true':'false');});
+    src.setAttribute('placeholder',MODE==='doc'?'예) 1. 귀 기관의 무궁한 발전을 기원합니다.\n2. 아래와 같이 …':'예) ○○복지관에서는 어르신 스마트폰 교실 참여자를 모집하오니 …');
+    view.setAttribute('aria-label',MODE==='doc'?'표시한 공문·기안 본문':'표시한 안내문');
+    if(fromUser){lsSet(KEY_MODE,MODE);try{history.replaceState(null,'',MODE==='doc'?'#공문':location.pathname+location.search);}catch(e){}}
+    closePop();buildCats();render();
+  }
+  function modeFromHash(){
+    var h='';try{h=decodeURIComponent(location.hash.replace(/^#/,''));}catch(e){h=location.hash.replace(/^#/,'');}
+    if(/^(공문|기안|doc)$/i.test(h))return 'doc';
+    if(/^(쉬운|안내문|easy)$/i.test(h))return 'easy';
+    return null;
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('#modes [data-mode]'),function(b){b.addEventListener('click',function(){if(b.getAttribute('data-mode')!==MODE)setMode(b.getAttribute('data-mode'),true);});});
+  window.addEventListener('hashchange',function(){var m=modeFromHash();if(m&&m!==MODE){lsSet(KEY_MODE,m);setMode(m,false);}});
 
   /* ---------- 까닭·고칠 말 창 ---------- */
   function closePop(back){
@@ -1202,7 +1517,7 @@ if(typeof module!=='undefined'&&module.exports)module.exports=EN;
     var pc=document.createElement('div');pc.className='pc';
     real.forEach(function(c){
       var b=mkBtn('cand',c.l,function(){
-        var t=src.value,ns=t.slice(0,a.s)+c.t+t.slice(a.e),at=a.s+c.t.length;
+        var t=src.value,rs=(a.rs!=null?a.rs:a.s),ns=t.slice(0,rs)+c.t+t.slice(a.e),at=rs+c.t.length;
         closePop();setText(ns);toast('바꿨습니다. 「되돌리기」로 되돌릴 수 있습니다.');focusFrom(at);
       });
       if(c.x){b.title='현장에서 더한 후보';b.classList.add('man');}
@@ -1213,10 +1528,14 @@ if(typeof module!=='undefined'&&module.exports)module.exports=EN;
     if(real.length||man.length)pop.appendChild(pc);
     else{var np=document.createElement('p');np.className='hint';np.style.margin='0 0 8px';np.textContent='저절로 바꿀 말은 없습니다. 「직접 고치기」로 고쳐 보세요.';pop.appendChild(np);}
     if(real.some(function(c){return c.x;})){var xp=document.createElement('p');xp.className='psrc';xp.textContent='점선 단추는 자료에 없는, 현장에서 더한 후보입니다.';pop.appendChild(xp);}
-    var ps=document.createElement('p');ps.className='psrc';ps.textContent=(a.src==='F'||a.src==='M'?'':'확인한 자료: ')+sl.full;pop.appendChild(ps);
+    var ps=document.createElement('p');ps.className='psrc';ps.textContent=a.ref?'근거: '+a.ref:(a.src==='F'||a.src==='M'?'':'확인한 자료: ')+sl.full;pop.appendChild(ps);
     var pa=document.createElement('div');pa.className='pa';
     pa.appendChild(mkBtn('btn btn-small','직접 고치기',function(){selectInSrc(a.s,a.e);}));
-    pa.appendChild(mkBtn('btn btn-small','이 말은 그대로 둠',function(){
+    if(a.id)pa.appendChild(mkBtn('btn btn-small','이 자리는 그대로 둠',function(){
+      /* 공문 형식 표시는 그 줄의 그 자리만 그대로 둔다(같은 기호가 다른 줄에서 가려지지 않게) */
+      KM[a.id]=1;closePop();render();toast('이 자리는 표시하지 않습니다. 그 줄을 고치거나 「지우기」를 누르면 다시 살핍니다.');focusFrom(a.e);
+    }));
+    else pa.appendChild(mkBtn('btn btn-small','이 말은 그대로 둠',function(){
       var k=$('keep'),cur=keepList(),key=a.key.trim();if(key&&cur.indexOf(key)<0)cur.push(key);k.value=cur.join(', ');
       closePop();render();toast('「'+key+'」은 그대로 둡니다. 「바꾸면 안 되는 말」 칸에서 뺄 수 있습니다.');focusFrom(a.e);
     }));
@@ -1258,8 +1577,8 @@ if(typeof module!=='undefined'&&module.exports)module.exports=EN;
   $('keep').addEventListener('input',function(){clearTimeout(tmr);tmr=setTimeout(function(){closePop();render();},220);});
   Array.prototype.forEach.call(document.querySelectorAll('[data-ex]'),function(b){b.addEventListener('click',function(){
     if(src.value.trim()&&!confirm('지금 글을 지우고 예시를 넣을까요? (「되돌리기」로 되돌릴 수 있습니다)'))return;
-    closePop();KS={};setText(EX[+b.dataset.ex]);toast('지어낸 예시 글을 넣었습니다.');});});
-  $('btnClear').addEventListener('click',function(){if(!src.value)return;closePop();KS={};setText('');$('keep').value='';render();src.focus();toast('지웠습니다. 「되돌리기」로 되돌릴 수 있습니다.');});
+    closePop();KS={};KM={};setText(EX[+b.dataset.ex]);toast(+b.dataset.ex>2?'지어낸 예시 공문을 넣었습니다. 일부러 틀린 곳을 넣어 두었습니다.':'지어낸 예시 글을 넣었습니다.');});});
+  $('btnClear').addEventListener('click',function(){if(!src.value)return;closePop();KS={};KM={};setText('');$('keep').value='';render();src.focus();toast('지웠습니다. 「되돌리기」로 되돌릴 수 있습니다.');});
   $('btnUndo').addEventListener('click',function(){if(!UNDO.length)return;closePop();src.value=UNDO.pop();$('btnUndo').disabled=!UNDO.length;render();toast('되돌렸습니다.');});
 
   /* ---------- 긴 문장 기준 ---------- */
@@ -1337,8 +1656,10 @@ if(typeof module!=='undefined'&&module.exports)module.exports=EN;
   });
 
   /* ---------- 시작 ---------- */
-  buildCats();renderMy();render();
-  window._en={render:render,state:function(){return {res:RES,on:ON,lim:LIM,my:MY};}};
+  renderMy();
+  /* 주소 끝이 #공문·#doc이면 공문 점검으로, 아니면 마지막에 고른 모드로 연다 */
+  setMode(modeFromHash()||(lsGet(KEY_MODE)==='doc'?'doc':'easy'),false);
+  window._en={render:render,setMode:setMode,state:function(){return {res:RES,on:ON,lim:LIM,my:MY,mode:MODE};}};
 })();
 </script>
 <script src="../ai-kit.js"></script>

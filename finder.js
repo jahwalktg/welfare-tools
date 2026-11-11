@@ -36,7 +36,7 @@
     'safety-links': '안전포스터 안전교육자료 산업안전 공단자료',
     'style-card': '스타일 카드 우리기관 기관스타일 말투 문체 틀 견본 양식 맞춤 hwpx 한글파일 챗gpt 제미나이 ai 프롬프트 주문서',
     'doc-remake': '문서 바꾸기 문서만들기 공모 신청서 양식채우기 작년문서 올해 계획서 결과보고 평가서 공문 기안 회의록 운영위원회 가정통신문 후원편지 감사편지 소식지 홍보글 채용공고 인수인계 업무매뉴얼 전화응대 대본 메모 초안 hwpx pdf 개인정보가리기 ai 챗gpt 제미나이 주문서 프롬프트 일지 홍보글 기사 영상대본 결과보고서재활용 기안문',
-    'easy-notice': '쉬운 안내문 쉬운말 안내문 점검 어려운말 긴문장 순화 공공언어 가정통신문 공지 게시문 어르신 큰글자 인쇄 낙인 표현 다듬기 문장 고치기',
+    'easy-notice': '쉬운 안내문 쉬운말 안내문 점검 어려운말 긴문장 순화 공공언어 가정통신문 공지 게시문 어르신 큰글자 인쇄 낙인 표현 다듬기 문장 고치기 공문 기안 기안문 공문서 공문점검 항목기호 붙임 끝표시 공문서작성법',
     'ai-howto': 'ai 인공지능 챗gpt 클로드 제미나이 주문서 프롬프트 사용법',
     'prompt-minutes': '회의록 회의정리 ai회의록 운영위원회회의록',
     'prompt-survey': '설문보고서 결과보고 만족도보고서',
@@ -53,12 +53,12 @@
   var ROLES = [
     ['case', '사례관리·상담', ['search', 'basic', 'phone', 'guide', 'mask-privacy', 'date-calc', 'list-compare', 'doc-remake', 'easy-notice', 'prompt-notice', 'prompt-guide', 'repeat-checklist', 'gangnam']],
     ['prog', '프로그램·교육', ['attendance', 'cert-print', 'group-maker', 'random-pick', 'survey-tally', 'doc-remake', 'prompt-survey', 'break-timer', 'qr', 'file-tools', 'face-mask']],
-    ['acct', '행정·회계', ['search', 'guide', 'work-board', 'eval-folders', 'repeat-checklist', 'leave-tracker', 'date-calc', 'excel', 'form-overlay', 'form-prompt', 'doc-remake', 'style-card', 'prompt-minutes', 'show-vote', 'shortcuts']],
+    ['acct', '행정·회계', ['search', 'guide', 'work-board', 'eval-folders', 'repeat-checklist', 'leave-tracker', 'date-calc', 'excel', 'form-overlay', 'form-prompt', 'doc-remake', 'easy-notice', 'style-card', 'prompt-minutes', 'show-vote', 'shortcuts']],
     ['fund', '후원·홍보', ['newsletter', 'press', 'greeting', 'easy-notice', 'doc-remake', 'labels', 'face-mask', 'map', 'qr', 'prompt-directions']],
     ['fac', '총무·시설·안전', ['work-board', 'eval-folders', 'phone', 'safety', 'safety-post', 'safety-links', 'repeat-checklist', 'leave-tracker', 'meeting-timer', 'labels']],
     ['new', '처음 왔어요', ['search', 'guide', 'work-board', 'phone', 'style-card', 'ai-howto', 'repeat-checklist', 'mask-privacy', 'shortcuts', 'excel']]
   ];
-  var QUICK = ['우리 기관 스타일', '문서 바꾸기', '지침 찾기', '인수인계', '신입 안내서', '국기초 가늠', '만 나이', '명단 대조', '개인정보 가리기', '수료증 나누기', '주소 라벨', '소식지', '안내문 쉬운 말', '안전표지', '회의록'];
+  var QUICK = ['우리 기관 스타일', '문서 바꾸기', '지침 찾기', '인수인계', '공문 점검', '신입 안내서', '국기초 가늠', '만 나이', '명단 대조', '개인정보 가리기', '수료증 나누기', '주소 라벨', '소식지', '안내문 쉬운 말', '안전표지', '회의록'];
   var KEY = 'welfare-tools.mybox.v1';
 
   var root = document.getElementById('finder'); if (!root) return;
