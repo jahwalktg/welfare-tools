@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>쉬운 안내문 만들기 | 사회복지사 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="어르신·이용자·보호자에게 나가는 안내문을 붙이면 긴 문장과 어려운 말을 표시하고 쉬운 말을 제안합니다. 누르면 그 자리만 바뀝니다. 날짜·장소·문의가 빠졌는지 살펴보고, 큰 글자 인쇄와 「쉽게 다시 써 달라」는 AI 주문서까지. 점수는 매기지 않습니다.">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/easy-notice/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="쉬운 안내문 만들기 | 사회복지사 업무 도구">
+<meta property="og:description" content="어르신·이용자·보호자에게 나가는 안내문을 붙이면 긴 문장과 어려운 말을 표시하고 쉬운 말을 제안합니다. 누르면 그 자리만 바뀝니다. 날짜·장소·문의가 빠졌는지 살펴보고, 큰 글자 인쇄와 「쉽게 다시 써 달라」는 AI 주문서까지. 점수는 매기지 않습니다.">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/easy-notice/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --red:#C62E3A; --green:#1F8A4C;
+  --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC;
+  --text:#1A2B50; --muted:#5B6885;
+  --blue-bg:#E8F0FF; --amber:#8A5A00; --amber-bg:#FFF1CC; --amber-line:#E5B93C; --green-bg:#E3F5EA; --red-bg:#FDECEE; --btn-text:#FFFFFF;
+  --m-word:#1A5FE0; --m-word-bg:#E1EBFF;
+  --m-han:#6B3FD4; --m-han-bg:#EEE7FF;
+  --m-style:#0B7A75; --m-style-bg:#DDF4F1;
+  --m-neg:#B4530A; --m-neg-bg:#FFE8D2;
+  --m-rom:#4A5878; --m-rom-bg:#E6EAF3;
+  --m-stig:#C62E3A; --m-stig-bg:#FDDDE1;
+  --long-y:#FFF1CC; --long-r:#FFD9DC;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#27407A; --red:#FF7A84; --green:#5FD08E;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+    --m-word:#8DB6FF; --m-word-bg:#1F3672;
+    --m-han:#C3AEFF; --m-han-bg:#34286B;
+    --m-style:#6FE0D6; --m-style-bg:#0F3F3D;
+    --m-neg:#FFB572; --m-neg-bg:#4A2A0C;
+    --m-rom:#C3CDE8; --m-rom-bg:#2A3663;
+    --m-stig:#FF8F98; --m-stig-bg:#531B26;
+    --long-y:#3F3410; --long-r:#4A1A24;
+  }
+}
+:root[data-theme="dark"]{
+  --blue:#6BA1FF; --navy:#27407A; --red:#FF7A84; --green:#5FD08E;
+  --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+  --text:#EAF0FF; --muted:#A9B6DA;
+  --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+  --m-word:#8DB6FF; --m-word-bg:#1F3672;
+  --m-han:#C3AEFF; --m-han-bg:#34286B;
+  --m-style:#6FE0D6; --m-style-bg:#0F3F3D;
+  --m-neg:#FFB572; --m-neg-bg:#4A2A0C;
+  --m-rom:#C3CDE8; --m-rom-bg:#2A3663;
+  --m-stig:#FF8F98; --m-stig-bg:#531B26;
+  --long-y:#3F3410; --long-r:#4A1A24;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
+.lead{margin:0 0 12px;color:var(--muted);max-width:75ch}
+.notice{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:0 0 16px;padding:0;list-style:none}
+.notice li{padding:12px 14px;border-radius:12px;border:1.5px solid var(--amber-line);background:var(--amber-bg);font-size:15px;line-height:1.5}
+.notice li b{display:block;color:var(--amber)}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px;min-width:0}
+.card h2{margin:0 0 10px;font-size:19px}
+.card h2 small{font-size:15px;font-weight:700;color:var(--blue);margin-left:6px;white-space:nowrap}
+.row{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:flex-end}
+.fld{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fld label,.fld .lbl{font-size:14px;color:var(--muted);font-weight:600}
+input[type=text],input[type=tel],input[type=number],select,textarea{min-height:46px;padding:8px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-size:17px;max-width:100%}
+input[type=number]{width:92px}
+textarea{width:100%;min-height:220px;font-size:16px;line-height:1.7;font-family:inherit;resize:vertical}
+.btn{min-height:44px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.btn:disabled{opacity:.45;cursor:default}
+.btn-main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.btn-small{min-height:36px;font-size:14px;padding:0 10px}
+.chk{display:inline-flex;align-items:center;gap:6px;min-height:40px;font-size:15px}
+.chk input{width:20px;height:20px;flex:none}
+.hint{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.err{color:var(--red);font-weight:700}
+.note{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:var(--amber-bg);border:1.5px solid var(--amber-line);font-size:14px}
+details{margin-top:12px}
+details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;align-items:center}
+
+/* 종류 고르기 */
+.cats{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 4px}
+.cat{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 10px 0 8px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-size:14px;font-weight:600;cursor:pointer}
+.cat input{width:18px;height:18px;flex:none;margin:0}
+.cat .sw{display:inline-block;min-width:22px;padding:0 3px;font-size:13px;line-height:1.5;text-align:center;border-radius:3px 3px 0 0}
+.cat b{font-weight:800}
+.cat.off{color:var(--muted);background:transparent}
+
+/* 미리보기와 표시 */
+.viewwrap{position:relative;margin-top:10px}
+.view{min-height:120px;padding:14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);font-size:17px;line-height:2.15;white-space:pre-wrap}
+.view .empty{color:var(--muted);font-size:15px}
+.sent.y{background:var(--long-y);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:3px}
+.sent.r{background:var(--long-r);-webkit-box-decoration-break:clone;box-decoration-break:clone;border-radius:3px}
+.lchip{display:inline;font-size:12px;font-weight:800;line-height:1.4;border-radius:999px;border:1.5px solid var(--amber-line);background:var(--surface);color:var(--amber);padding:2px 8px;margin-right:4px;vertical-align:2px;white-space:nowrap}
+.sent.r .lchip{border-color:var(--red);color:var(--red)}
+.mk{display:inline;max-width:100%;font:inherit;color:inherit;line-height:inherit;text-align:inherit;white-space:normal;margin:0;padding:1px 1px 0;border:0;border-bottom:3px solid var(--m-word);border-radius:3px 3px 0 0;background:var(--m-word-bg);-webkit-appearance:none;appearance:none}
+.c-word{border-bottom-color:var(--m-word);background:var(--m-word-bg)}
+.c-han{border-bottom:3px dashed var(--m-han);background:var(--m-han-bg)}
+.c-style{border-bottom:3px dotted var(--m-style);background:var(--m-style-bg)}
+.c-neg{border-bottom:4px double var(--m-neg);background:var(--m-neg-bg)}
+.c-rom{border-bottom:3px dotted var(--m-rom);background:var(--m-rom-bg)}
+.c-num{border-bottom:3px dashed var(--m-rom);background:transparent}
+.c-stig{border-bottom:3px solid var(--m-stig);background:var(--m-stig-bg)}
+.mk.on,.lchip.on{outline:3px solid var(--blue);outline-offset:1px}
+.pop{position:absolute;z-index:6;left:0;width:min(400px,100%);padding:12px 14px 14px;border-radius:14px;border:2px solid var(--blue);background:var(--surface);box-shadow:0 8px 28px rgba(10,18,40,.25);font-size:15px;line-height:1.5;white-space:normal}
+.pop p{margin:0 0 6px}
+.pop .pk{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.pop .pw{font-size:17px;font-weight:800}
+.tagc,.tsrc{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.tagc{background:var(--blue-bg);color:var(--blue)}
+.tsrc.ok{background:var(--green-bg);color:var(--green)}
+.tsrc.fld{background:var(--amber-bg);color:var(--amber)}
+.tsrc.my{background:var(--blue-bg);color:var(--blue)}
+.pop .pc{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.pop .cand{min-height:42px;padding:0 14px;border-radius:10px;border:1.5px solid var(--blue);background:var(--blue-bg);font-weight:700;font-size:16px;text-align:left}
+.pop .cand.man{border-style:dashed;background:transparent;font-weight:600}
+.pop .pa{display:flex;flex-wrap:wrap;gap:6px;border-top:1.5px solid var(--line);padding-top:8px;margin-top:4px}
+.pop .psrc{font-size:13px;color:var(--muted)}
+.miss{margin-top:12px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface)}
+.miss h3{margin:0 0 4px;font-size:15px}
+.miss ul{margin:0;padding:0;list-style:none;display:grid;gap:4px;font-size:15px}
+.miss li.no{color:var(--amber);font-weight:700}
+.miss li.yes{color:var(--muted)}
+.mylist{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.mylist li{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:8px 12px;border:1.5px solid var(--line);border-radius:10px;font-size:15px}
+.dict{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:4px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));font-size:14px}
+.dict li{padding:6px 8px;border:1px solid var(--line);border-radius:8px}
+.dict li b{font-weight:800}
+.uses{margin-top:20px}
+.uses ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.uses li{padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);font-size:15px}
+.srcs{margin-top:20px;font-size:15px}
+.srcs ol{margin:8px 0 0;padding-left:22px;display:grid;gap:6px}
+.srcs ul{margin:8px 0 0;padding-left:20px;display:grid;gap:4px;color:var(--muted);font-size:14px}
+.foot{margin-top:24px;padding:14px 4px 0;border-top:1.5px solid var(--line);font-size:15px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:999px;font-size:15px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1}
+[hidden]{display:none!important}
+@media (max-width:420px){h1{font-size:25px}.card{padding:14px 12px}.view{padding:12px 10px;font-size:16px}}
+
+/* 큰 글자 인쇄 */
+#printArea{display:none}
+@page{size:A4;margin:18mm 16mm}
+@media print{
+  body{background:#fff;color:#000}
+  body>*:not(#printArea){display:none!important}
+  #printArea{display:block!important;color:#000;font-family:var(--font);word-break:keep-all;overflow-wrap:anywhere}
+  #printArea[data-size="n"]{font-size:14pt}
+  #printArea[data-size="l"]{font-size:19pt}
+  #printArea[data-size="x"]{font-size:25pt}
+  #printArea{line-height:1.6}
+  #printArea[data-wide="1"]{line-height:2.05}
+  #printArea h1{margin:0 0 .9em;font-size:1.45em;line-height:1.35;text-align:center;color:#000}
+  #printArea .pbody{white-space:pre-wrap;margin:0}
+  #printArea .pfoot{margin-top:1.4em;padding-top:.6em;border-top:2px solid #000;font-weight:700}
+}
+</style>
+</head>
+<body>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › <a href="../index.html#ai">AI 주문서</a></p>
+  <h1>쉬운 안내문 만들기</h1>
+  <p class="lead">어르신·이용자·보호자에게 나가는 안내문을 붙여 넣으면 긴 문장, 어려운 한자말, 돌려 말한 곳, 낙인이 될 수 있는 말을 표시하고 고칠 말을 보여 줍니다. 고르고 고치는 것은 사람입니다. 점수나 등급은 매기지 않습니다.</p>
+  <ul class="notice">
+    <li><b>참고사항입니다</b> 한 현장의 개인 경험으로 만든 도구입니다. 표시는 「살펴보세요」라는 뜻이지 틀렸다는 판정이 아닙니다. 법정 용어·고유명사는 그대로 두세요. 고친 글의 책임은 쓰는 분에게 있습니다.</li>
+    <li><b>글은 이 컴퓨터 밖으로 나가지 않습니다</b> 붙여 넣은 글은 저장하지 않습니다. 이용자 이름·전화번호 같은 개인정보는 넣지 않아도 됩니다.</li>
+    <li><b>줄인 시간은 동료와 클라이언트에게</b> 우리 기관 말에 맞게 「내 낱말」을 더하거나 「내 기관에 맞게 다시 만들기」로 바꿔 쓰세요.</li>
+  </ul>
+
+  <!-- 1. 붙여 넣기 -->
+  <section class="card" aria-labelledby="h-in">
+    <h2 id="h-in">① 안내문 붙여 넣기</h2>
+    <div class="row" style="margin-bottom:8px">
+      <span class="lbl" style="font-size:14px;color:var(--muted);font-weight:600;align-self:center">예시 넣기</span>
+      <button class="btn btn-small" type="button" data-ex="0">모집 안내</button>
+      <button class="btn btn-small" type="button" data-ex="1">휴관 안내</button>
+      <button class="btn btn-small" type="button" data-ex="2">서류 안내</button>
+      <button class="btn btn-small" type="button" id="btnClear">지우기</button>
+      <button class="btn btn-small" type="button" id="btnUndo" disabled>되돌리기</button>
+    </div>
+    <label for="src" class="hint" style="display:block;margin:0 0 4px">안내문을 여기에 붙여 넣거나 바로 쓰세요. 고치면 아래 표시가 바로 바뀝니다.</label>
+    <textarea id="src" spellcheck="false" placeholder="예) ○○복지관에서는 어르신 스마트폰 교실 참여자를 모집하오니 …"></textarea>
+    <p class="hint" id="stat"></p>
+  </section>
+
+  <!-- 2. 살펴볼 곳 -->
+  <section class="card" aria-labelledby="h-view">
+    <h2 id="h-view">② 살펴볼 곳 <small id="total" aria-live="polite">표시 0곳</small></h2>
+    <div class="cats" id="cats" role="group" aria-label="표시 종류 켜고 끄기"></div>
+    <details id="limBox">
+      <summary>긴 문장 기준 고치기</summary>
+      <div class="row">
+        <div class="fld"><label for="limY">노랑 — 이 글자 수를 넘으면</label><input type="number" id="limY" min="10" max="200" step="1" value="40" inputmode="numeric"></div>
+        <div class="fld"><label for="limR">빨강 — 이 글자 수를 넘으면</label><input type="number" id="limR" min="10" max="300" step="1" value="60" inputmode="numeric"></div>
+        <button class="btn btn-small" type="button" id="limReset">처음 숫자로</button>
+      </div>
+      <p class="hint">공백은 빼고 셉니다. 40·60은 이 도구가 정한 숫자입니다. 우리 기관 이용자에 맞게 고치세요. 이 브라우저에만 저장됩니다.</p>
+    </details>
+    <div class="viewwrap" id="viewwrap">
+      <div class="view" id="view" aria-label="표시한 안내문"></div>
+      <div class="pop" id="pop" role="dialog" aria-label="까닭과 고칠 말" hidden></div>
+    </div>
+    <p class="hint">표시를 누르면 까닭과 고칠 말이 나옵니다. 고칠 말을 누르면 그 자리만 바뀌고, 「되돌리기」로 되돌릴 수 있습니다. 키보드는 Tab으로 옮겨 가고 Enter로 엽니다.</p>
+    <div class="miss" id="miss" hidden></div>
+    <div class="fld" style="margin-top:12px">
+      <label for="keep">바꾸면 안 되는 말 (쉼표로 나눠 적기 — 법정 용어·사업 이름·고유명사)</label>
+      <input type="text" id="keep" placeholder="예: 주민등록등본, 기초생활수급자, 노인맞춤돌봄서비스" autocomplete="off" style="width:100%">
+    </div>
+    <p class="hint">여기 적은 말은 표시하지 않고, AI 주문서에도 「바꾸면 안 되는 말」로 들어갑니다. 저장하지 않습니다.</p>
+  </section>
+
+  <!-- 3. 내 낱말 -->
+  <section class="card" aria-labelledby="h-my">
+    <h2 id="h-my">③ 내 낱말 <small id="myCount"></small></h2>
+    <p class="hint" style="margin-top:0">우리 기관에서 자주 쓰는 어려운 말과 쉬운 말을 더해 두면 다음에도 표시합니다. 이 브라우저에만 저장됩니다.</p>
+    <div class="row" style="margin-top:8px">
+      <div class="fld"><label for="myW">어려운 말</label><input type="text" id="myW" placeholder="예: 내소" autocomplete="off"></div>
+      <div class="fld"><label for="myT">쉬운 말 (여럿이면 쉼표)</label><input type="text" id="myT" placeholder="예: 기관에 오기" autocomplete="off"></div>
+      <button class="btn btn-main" type="button" id="myAdd">더하기</button>
+    </div>
+    <ul class="mylist" id="myList"></ul>
+    <div class="row" style="margin-top:8px"><button class="btn btn-small" type="button" id="myClear" hidden>내 낱말 모두 지우기</button></div>
+    <details id="dictBox">
+      <summary id="dictSum">이 도구의 사전 보기</summary>
+      <p class="hint"><span class="tsrc ok">국립국어원 자료</span> 아래 「근거·출처」의 자료에서 그 낱말과 바꿀 말을 직접 확인한 것 · <span class="tsrc fld">현장 말</span> 확인한 자료에는 없고 현장에서 모은 것. 뜻이 갈리는 말은 「살펴보세요」로만 보여 줍니다.</p>
+      <ul class="dict" id="dictList"></ul>
+    </details>
+  </section>
+
+  <!-- 4. 쓰기 -->
+  <section class="card" aria-labelledby="h-out">
+    <h2 id="h-out">④ 고친 글 쓰기</h2>
+    <div class="row">
+      <button class="btn btn-main" type="button" id="btnCopy">고친 글 복사</button>
+      <button class="btn" type="button" id="btnAi">AI 주문서 복사</button>
+    </div>
+    <p class="note"><b>AI에 넣기 전에</b> 이용자 이름·전화번호·주소 같은 개인정보는 지우고 넣으세요. AI가 쓴 글은 날짜·시간·장소·금액·전화번호가 바뀌지 않았는지 꼭 다시 보세요.</p>
+    <p class="hint err" id="aiWarn" hidden></p>
+    <details>
+      <summary>AI 주문서 미리 보기</summary>
+      <textarea id="aiBox" readonly aria-label="AI 주문서" style="min-height:200px;font-size:14px"></textarea>
+    </details>
+
+    <h2 style="margin-top:18px">큰 글자 인쇄 (A4)</h2>
+    <div class="row">
+      <div class="fld" style="flex:1 1 260px"><label for="pTitle">제목 줄 (비우면 글의 첫 줄)</label><input type="text" id="pTitle" autocomplete="off" style="width:100%"></div>
+      <div class="fld"><label for="pOrg">기관명</label><input type="text" id="pOrg" placeholder="○○복지관" autocomplete="off"></div>
+      <div class="fld"><label for="pTel">문의 전화</label><input type="tel" id="pTel" placeholder="02-000-0000" autocomplete="off"></div>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <div class="fld"><span class="lbl" id="l-size">글자 크기</span>
+        <div class="row" role="radiogroup" aria-labelledby="l-size">
+          <label class="chk"><input type="radio" name="pSize" value="n"> 보통</label>
+          <label class="chk"><input type="radio" name="pSize" value="l" checked> 크게</label>
+          <label class="chk"><input type="radio" name="pSize" value="x"> 아주 크게</label>
+        </div>
+      </div>
+      <label class="chk"><input type="checkbox" id="pWide" checked> 줄 간격 넓게</label>
+      <label class="chk"><input type="checkbox" id="pFirst" checked> 첫 줄을 제목으로</label>
+      <button class="btn btn-main" type="button" id="btnPrint">큰 글자로 인쇄</button>
+    </div>
+    <p class="hint">인쇄 창에서 용지 A4, 「머리글·바닥글」은 끄면 깔끔합니다. 고친 글만 인쇄됩니다. 기관명과 전화는 저장하지 않습니다.</p>
+  </section>
+
+  <section class="uses">
+    <h2 style="font-size:19px;margin:0">이럴 때 좋아요</h2>
+    <ul>
+      <li><strong>프로그램 모집·휴관·신청 안내문</strong> 공문 말투로 쓴 안내문에서 「익일」「지참」「~에 한하여」 같은 말을 찾아 쉬운 말로 바꿉니다.</li>
+      <li><strong>한 문장이 너무 길 때</strong> 40자·60자가 넘는 문장을 색으로 보여 주고 끊을 만한 곳을 알려 줍니다.</li>
+      <li><strong>게시판·가정통신문·문자 안내</strong> 날짜·시간·장소·문의 전화가 보이는지 한 번 더 살핍니다.</li>
+      <li><strong>어르신용 큰 글자판</strong> 고친 글을 큰 글자·넓은 줄 간격으로 A4에 인쇄합니다.</li>
+    </ul>
+  </section>
+
+  <section class="srcs" aria-labelledby="h-src">
+    <h2 id="h-src" style="font-size:19px;margin:0">근거·출처</h2>
+    <p class="hint">2026년 11월 11일에 원문을 열어 확인한 자료만 적었습니다. 「국립국어원 자료」 꼬리표는 낱말이면 그 낱말과 바꿀 말이, 글투 표시면 같은 고쳐 쓰기 보기가 아래 자료에 실려 있을 때만 붙였습니다. 나머지는 「현장 말」입니다. 고칠 말 가운데 점선 단추는 자료에 없는, 현장에서 더한 후보입니다.</p>
+    <ol>
+      <li><b>㉮ 문화체육관광부·국립국어원, 「쉬운 공공언어 쓰기 길잡이」</b> — 문장은 짧게, 권위적·차별적 표현, 외국 글자·줄임말, 번역 투, 「~시 → ~할 때」, 안내문 끝에 문의처 밝히기.<br><a href="https://www.korean.go.kr/front/etcData/etcDataView.do?mn_id=208&amp;etc_seq=399&amp;pageIndex=1" target="_blank" rel="noopener">국립국어원 누리집 자료 보기</a></li>
+      <li><b>㉯ 국립국어원, 「알기 쉬운 행정용어」(2018)</b> — 다듬은 행정용어 1,000개.<br><a href="https://www.korean.go.kr/front/etcData/etcDataView.do?mn_id=&amp;etc_seq=638&amp;pageIndex=1" target="_blank" rel="noopener">국립국어원 누리집 자료 보기</a></li>
+      <li><b>㉰ 국립국어원, 「(개정판) 한눈에 알아보는 공공언어 바로 쓰기」(2022)</b> — 찾아보기와 부록 「필수 개선 행정용어 100개」 「꼭 가려 써야 할 일본어 투 용어 50개」.<br><a href="https://www.korean.go.kr/front/etcData/etcDataView.do?mn_id=&amp;etc_seq=699&amp;pageIndex=1" target="_blank" rel="noopener">국립국어원 누리집 자료 보기</a></li>
+    </ol>
+    <ul>
+      <li>긴 문장 기준(40자·60자)은 이 도구가 정한 숫자입니다. 위 자료에는 「문장을 짧게 쓴다」는 원칙만 있고 글자 수 기준은 없습니다. 숫자·기호가 절반을 넘는 줄(날짜·시간만 적은 줄)은 긴 문장으로 보지 않습니다.</li>
+      <li>「~하시기 바랍니다」는 위 자료에서도 바른 표현으로 씁니다. 이 도구는 어르신 안내문에서 더 짧은 「~해 주세요」를 권하는 뜻으로 표시합니다.</li>
+      <li>「14:00」 「2026. 11. 20.」은 공문서 표기에 맞는 모양입니다. 어르신 안내문에서는 「오후 2시」 「11월 20일」이 읽기 쉬워 표시합니다.</li>
+      <li>「수급자」처럼 법에 있는 말도 사람을 부르는 말로 쓰면 낙인이 될 수 있어 표시합니다. 대상을 알려야 하는 글이면 그대로 두세요.</li>
+      <li>사전에 없는 어려운 말은 표시하지 못합니다. 표시가 없다고 쉬운 글이라는 뜻은 아닙니다. 읽을 분에게 한번 읽어 보시게 하는 것이 가장 좋습니다.</li>
+    </ul>
+  </section>
+
+  <footer class="foot">
+    <p><strong>붙여 넣은 글은 이 PC 브라우저 안에서만 살펴보고 저장하지 않습니다.</strong> 저장되는 것은 「내 낱말」과 긴 문장 기준 숫자, 표시 종류 고르기뿐입니다.</p>
+    <p>만든 사람: 서울강남지역자활센터 김태균</p>
+  </footer>
+</div>
+<div id="printArea" aria-hidden="true"><h1 id="prH"></h1><div class="pbody" id="prB"></div><div class="pfoot" id="prF"></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script id="core">
+/* ===== 살펴보기 규칙 (화면 없이도 돌아가는 순수 함수) ===== */
+var EN=(function(){
+  'use strict';
+  /* ---------- 한글 낱자 ---------- */
+  var H0=0xAC00;
+  function isH(ch){if(!ch)return false;var c=ch.charCodeAt(0);return c>=0xAC00&&c<=0xD7A3;}
+  function dec(ch){var c=ch.charCodeAt(0)-H0;return [Math.floor(c/588),Math.floor((c%588)/28),c%28];}
+  function com(a,b,c){return String.fromCharCode(H0+a*588+b*28+c);}
+  function addJ(ch,j){var d=dec(ch);return com(d[0],d[1],j);}
+  function esc(s){return s.replace(/[.*+?^${}()|[\]\\\/]/g,'\\$&');}
+  function jongOf(s){
+    s=String(s||'').replace(/[^가-힣0-9A-Za-z]+$/,'');
+    var ch=s.charAt(s.length-1);if(!ch)return 0;
+    if(isH(ch))return dec(ch)[2];
+    if(/[0-9]/.test(ch))return ({'0':21,'1':8,'3':16,'6':1,'7':8,'8':8})[ch]||0;
+    if(/[lL]/.test(ch))return 8;if(/[mnMN]/.test(ch))return 4;
+    return 0;
+  }
+  /* 조사 맞추기: 받침에 따라 은/는, 이/가, 을/를, 과/와, 으로/로 */
+  var PAIRS=[['으로','로'],['이나','나'],['이며','며'],['이란','란'],['은','는'],['이','가'],['을','를'],['과','와']];
+  function fixP(word,p){
+    if(!p)return '';
+    var j=jongOf(word);
+    for(var i=0;i<PAIRS.length;i++){
+      var a=PAIRS[i][0],b=PAIRS[i][1],f=null;
+      if(p.indexOf(a)===0)f=a;else if(p.indexOf(b)===0)f=b;
+      if(f===null)continue;
+      var pick=(a==='으로')?((j>0&&j!==8)?'으로':'로'):(j>0?a:b);
+      return pick+p.slice(f.length);
+    }
+    return p;
+  }
+  var ADVS={'따로':1,'나중에':1,'다음에':1,'앞으로':1,'미리':1,'걸어서':1,'한꺼번에':1,'되도록':1,'바로':1,'곧바로':1,'갑자기':1,'반드시':1,'꼭':1,'빨리':1,'서둘러':1,'계속':1,'늘':1,'언제나':1,'직접':1,'곧':1,'이미':1,'어쩔 수 없이':1,'예고 없이':1,'그때그때':1,'언제든':1,'임시로':1,'우선':1,'정해진 기간에만':1};
+  function joinP(t,josa){
+    if(!josa||t==='')return t;
+    if(ADVS[t]&&/^(으로|로|에)(는|도|만)?$/.test(josa))return t+josa.replace(/^(으로|로|에)/,'');
+    var p=fixP(t,josa);
+    if(/^(에|로|으로)$/.test(p)&&t.slice(-p.length)===p)return t;
+    return t+p;
+  }
+
+  /* ---------- 풀이씨 끝바꿈(활용) ---------- */
+  var IRR={'싣':'ㄷ','듣':'ㄷ','묻':'ㄷ','깨닫':'ㄷ','돕':'ㅂ','눕':'ㅂ','굽':'ㅂ','줍':'ㅂ','춥':'ㅂ','덥':'ㅂ','쉽':'ㅂ','어렵':'ㅂ','가깝':'ㅂ','무겁':'ㅂ','가볍':'ㅂ','고맙':'ㅂ','반갑':'ㅂ','낫':'ㅅ','짓':'ㅅ','붓':'ㅅ','잇':'ㅅ','젓':'ㅅ'};
+  var EU_RU={'따르':1,'치르':1,'들르':1,'다다르':1};
+  function bright(j){return j===0||j===2||j===8;}
+  function vinfo(S){
+    var head=S.slice(0,-1),L=S.slice(-1),d=dec(L),cho=d[0],jung=d[1],jong=d[2];
+    var w=S.split(' ').pop(),irr=IRR[w]||'',o={S:S},R;
+    if(irr==='ㄷ'){R=head+com(cho,jung,8);o.inf=R+(bright(jung)?'아':'어');o.eu=R+'으';o.n=R+'은';o.l=R+'을';o.m=R+'음';o.b=S+'습';o.type='c';}
+    else if(irr==='ㅂ'){R=head+com(cho,jung,0);o.inf=R+((w==='돕'||w==='곱')?'와':'워');o.eu=R+'우';o.n=R+'운';o.l=R+'울';o.m=R+'움';o.b=S+'습';o.type='c';}
+    else if(irr==='ㅅ'){R=head+com(cho,jung,0);o.inf=R+(bright(jung)?'아':'어');o.eu=R+'으';o.n=R+'은';o.l=R+'을';o.m=R+'음';o.b=S+'습';o.type='c';}
+    else if(L==='르'&&!EU_RU[w]&&head&&isH(head.slice(-1))){
+      var P=head.slice(-1),pd=dec(P);
+      o.inf=head.slice(0,-1)+com(pd[0],pd[1],8)+(bright(pd[1])?'라':'러');
+      o.eu=S;o.n=head+'른';o.l=head+'를';o.m=head+'름';o.b=head+'릅';o.type='v';
+    }
+    else if(jong===0){
+      o.type='v';o.eu=S;o.n=head+com(cho,jung,4);o.l=head+com(cho,jung,8);o.m=head+com(cho,jung,16);o.b=head+com(cho,jung,17);
+      if(jung===18){var pc=head.slice(-1),pv=isH(pc)?dec(pc)[1]:-1;o.inf=head+com(cho,(pv===0||pv===8)?0:4,0);}
+      else if(jung===8)o.inf=head+com(cho,9,0);
+      else if(jung===13)o.inf=head+com(cho,14,0);
+      else if(jung===20)o.inf=head+com(cho,6,0);
+      else if(jung===11||jung===16||jung===19)o.inf=S+'어';
+      else o.inf=S;
+    }
+    else if(jong===8){o.type='l';o.eu=S;o.n=head+com(cho,jung,4);o.l=S;o.m=head+com(cho,jung,10);o.b=head+com(cho,jung,17);o.inf=S+(bright(jung)?'아':'어');}
+    else{o.type='c';o.eu=S+'으';o.n=S+'은';o.l=S+'을';o.m=S+'음';o.b=S+'습';o.inf=S+(bright(jung)?'아':'어');}
+    o.past=o.inf.slice(0,-1)+addJ(o.inf.slice(-1),20);
+    o.dl=(o.type==='l')?head+com(cho,jung,0):null;
+    return o;
+  }
+  function isVerb(t){return t.length>1&&t.slice(-1)==='다';}
+  /* 「○○하다」 꼴 뒤에 붙은 끝(tail: 하여·합니다·한…)을 쉬운 풀이씨 v에 옮겨 붙인다. 못 옮기면 null */
+  function conj(v,tail){
+    var S=v.slice(0,-1),m;
+    tail=tail.replace(/^하오니/,'하니'); /* 옛 편지 말투 「~하오니」는 「~하니」로 */
+    if(S.slice(-1)==='하')return S.slice(0,-1)+tail;
+    if(/^[되돼됐된될됨됩]/.test(tail))return null;
+    var o=vinfo(S);
+    if((m=/^(?:하였|했)(.*)$/.exec(tail)))return o.past+m[1];
+    if((m=/^(?:하여|해)(.*)$/.exec(tail)))return o.inf+m[1];
+    if((m=/^합(.*)$/.exec(tail))){
+      if(o.type==='c')return (m[1].charAt(0)==='니'?o.b:o.eu.slice(0,-1)+addJ(o.eu.slice(-1),17))+m[1];
+      return o.b+m[1];
+    }
+    if((m=/^한다(.*)$/.exec(tail)))return (o.type==='c'?S+'는다':o.n+'다')+m[1];
+    if((m=/^한(.*)$/.exec(tail)))return o.n+m[1];
+    if((m=/^할(.*)$/.exec(tail)))return o.l+m[1];
+    if((m=/^함(.*)$/.exec(tail)))return o.m+m[1];
+    if((m=/^하(시|십|셔|세|실|신|셨|심)(.*)$/.exec(tail)))return (o.dl||o.eu)+m[1]+m[2];
+    if((m=/^하(면|며|므로|려|러)(.*)$/.exec(tail)))return o.eu+m[1]+m[2];
+    if((m=/^하(니|나|오니|오며)(.*)$/.exec(tail)))return (o.dl||o.eu)+m[1]+m[2];
+    if((m=/^하는(.*)$/.exec(tail)))return (o.dl||S)+'는'+m[1];
+    if((m=/^하(고|지|기|게|거나|도록|자|겠|던|다|더|든|길|되)(.*)$/.exec(tail)))return S+m[1]+m[2];
+    return null;
+  }
+  function vf(v){
+    var S=v.slice(0,-1);
+    if(S.slice(-1)==='하'){var b=S.slice(0,-1);return {S:S,ha:1,gi:b,gi2:b+'하기',seyo:b+'하세요',inf:b+'해',l:b+'할',n:b+'한',neun:b+'하는',myeon:b+'하면'};}
+    var o=vinfo(S);
+    return {S:S,ha:0,gi:S+'기',gi2:S+'기',seyo:(o.dl||o.eu)+'세요',inf:o.inf,l:o.l,n:o.n,neun:(o.dl||S)+'는',myeon:(o.type==='c'?o.eu:S)+'면'};
+  }
+  function pasMap(t){
+    if(/^되었/.test(t))return '하였'+t.slice(2);
+    if(/^되어/.test(t))return '하여'+t.slice(2);
+    var k={'되':'하','돼':'해','됐':'했','된':'한','될':'할','됨':'함','됩':'합'}[t.charAt(0)];
+    return k?k+t.slice(1):t;
+  }
+
+  /* ---------- 사전 ----------
+     D(어려운 말|다른 꼴, 쉬운 말|…, 종류, 출처, 덧붙임)
+     종류 n = 그대로 바꿔 끼우는 말, v = 「○○하다」 꼴(활용형까지 맞춤)
+     출처 A·B·C = 아래 SRC의 자료에서 그 낱말과 바꿀 말을 직접 확인함 / F = 확인한 자료에 없음(현장에서 모은 말)
+     덧붙임 to2 = 현장에서 더한 후보, soft = 많이 쓰는 말, ask = 뜻이 달라질 수 있어 「살펴보세요」만,
+            mid = 낱말 가운데에 있어도 잡음, vo = 풀이씨 꼴만 잡음, pas = 「되다」 꼴도 쉬운 풀이씨로, tp = 「되다」 꼴에 쓸 말,
+            n = 이름씨 자리에 쓸 말, la = 뒤에 와야 하는 글(정규식), open = 뒤에 무엇이 붙어도 잡음, cat = 표시 종류 */
+  var SRC={
+    A:'문화체육관광부·국립국어원 「쉬운 공공언어 쓰기 길잡이」',
+    B:'국립국어원 「알기 쉬운 행정용어」(2018)',
+    C:'국립국어원 「(개정판) 한눈에 알아보는 공공언어 바로 쓰기」(2022)'
+  };
+  var DICT=[];
+  function D(w,to,t,src,o){
+    o=o||{};
+    DICT.push({w:w.split('|'),to:to?to.split('|'):[],to2:o.to2?o.to2.split('|'):[],t:t,src:src,soft:!!o.soft,ask:!!o.ask,note:o.note||'',
+      mid:!!o.mid,vo:!!o.vo,pas:!!o.pas,tp:o.tp?o.tp.split('|'):null,n:o.n?o.n.split('|'):null,la:o.la||'',open:!!o.open,lb:o.lb||'',cat:o.cat||'word'});
+  }
+  var WEEK='(?=[ \\t]?[월화수목금토일]요일|[ \\t]?(?:중|초|말|부터|까지|에|내)(?![가-힣]))';
+
+  /* ── 때·차례를 나타내는 한자말 ── */
+  D('익일','다음 날|이튿날','n','C');
+  D('익월','다음 달','n','C');
+  D('익년도|익년','다음 해|이듬해','n','BC');
+  D('금일','오늘','n','C');
+  D('금번','이번','n','C');
+  D('금회','이번','n','BC');
+  D('금년','올해','n','C');
+  D('명일','내일','n','B');
+  D('내주','다음 주','n','B',{la:WEEK});
+  D('차월','다음 달','n','C');
+  D('당일','그날','n','B',{soft:1,to2:'바로 그날'});
+  D('당해','그','n','C',{la:'(?=[ \\t]?(?:연도|년도|사업|기관|시설|월|분기|학기|법인|센터))'});
+  D('동절기','겨울철','n','B');
+  D('하절기','여름철','n','C');
+  D('전년 대비|전년대비','지난해보다','n','C');
+  D('전년','지난해','n','C');
+  D('추후','나중에','n','A',{to2:'다음에'});
+  D('차후','앞으로','n','B',{to2:'나중에'});
+  D('향후','앞으로','n','BC');
+  D('조속히','빨리','n','C',{to2:'서둘러'});
+  D('지체 없이|지체없이','바로|곧바로','n','C');
+  D('상시','계속','n','C',{to2:'늘|언제나'});
+  D('차주','다음 주','n','F',{la:WEEK});
+  D('정오','낮 12시','n','F');
+  D('격주','2주에 한 번','n','F');
+  D('연중','일 년 내내|한 해 내내','n','F');
+  D('일자','날짜','n','F');
+  D('일시','날짜와 시간|때','n','F',{soft:1,lb:'nd',la:'(?=[ \\t]?[:：]|[ \\t]?및|[ \\t]?장소|[ \\t]?안내)'});
+  D('기한 내에|기한내에|기한 내|기한내','마감 날짜까지|날짜 안에','n','F',{soft:1});
+  D('한시적으로','정해진 기간에만','n','F');
+  D('잠정적으로','임시로|우선','n','F');
+
+  /* ── 가리키는 말·꾸미는 말 ── */
+  D('상기','위','n','BC',{la:'(?=의[ \\t]|와[ \\t]?같|[ \\t]?(?:내용|사항|서류|양식|일정|표|명단|장소|계좌|주소|기준|대상|목록|안내|항목|기간|금액|조건|자격|사업|프로그램|교육|행사|신청|규정))'});
+  D('하기','아래','n','B',{la:'(?=의[ \\t]|와[ \\t]?같|[ \\t]?(?:내용|사항|서류|양식|일정|표|명단|장소|계좌|주소|기준|대상|목록|안내|항목|기간|금액|조건|자격|사업|프로그램|교육|행사|신청|규정|연락처|번호))'});
+  D('별첨','따로 붙임','n','B',{to2:'붙임'});
+  D('소정의|소정','정해진','n','BC',{la:'(?=[ \\t]?(?:양식|서식|절차|기간|교육|과정|금액|수수료|기준|자격|시간|장소|방법|서류|신청서|심사))',note:'자료에는 「소정 양식 → 정해진 양식」으로 실려 있습니다.'});
+  D('필히','반드시','n','AC',{to2:'꼭'});
+  D('일체','모두','n','C',{to2:'전부|일절',note:'「모두」의 뜻이면 「모두」, 「전혀 ~않는다」는 뜻이면 「일절」이 맞습니다.'});
+  D('제반','여러|모든','n','B',{la:'(?=[ \\t])'});
+  D('허위','거짓','n','B');
+  D('적의 조치','적절한 조치|알맞게 처리','n','ABC');
+  D('일환으로','하나로','n','C');
+  D('내역','내용','n','C',{soft:1,to2:'명세'});
+  D('소관','담당','n','C');
+  D('수취인','받는 사람|받는 이','n','BC',{to2:'받는 분'});
+  D('시건장치|시건 장치','잠금장치','n','BC');
+  D('노후','낡은','n','B',{la:'(?=[ \\t]?(?:시설|주택|건물|설비|장비|차량|배관|기기))',note:'자료에는 「노후 시설 → 낡은 시설」로 실려 있습니다.'});
+  D('행선지','가는 곳|목적지','n','BC');
+  D('대절','전세','n','C',{to2:'빌림'});
+  D('자동 제세동기|자동제세동기','자동 심장 충격기','n','C',{open:1});
+  D('낙상','떨어져 다침','n','B',{to2:'넘어져 다침',soft:1,note:'돌봄 현장에서 굳은 말입니다. 「넘어져 다침」처럼 풀어 쓰면 쉽습니다.'});
+  D('유선','전화','n','F',{la:'(?=으로|상(?![가-힣])|[ \\t]?(?:문의|접수|연락|신청|상담|예약|확인|통보|안내))'});
+  D('구비서류|구비 서류','준비할 서류|갖출 서류','n','F',{open:1});
+  D('수령인','받는 분','n','F');
+  D('중식','점심|점심 식사','n','F');
+  D('석식','저녁|저녁 식사','n','F');
+  D('조식','아침|아침 식사','n','F');
+  D('별도의','따로 마련한|다른','n','F');
+  D('별도','따로','n','F',{la:'(?=로(?![가-힣])|[ \\t])'});
+  D('일괄','한꺼번에','n','F');
+  D('가급적','되도록','n','F');
+  D('부득이하게|부득이','어쩔 수 없이','n','F');
+  D('부득이한','어쩔 수 없는','n','F');
+  D('불가피하게','어쩔 수 없이','n','F');
+  D('불가피한','어쩔 수 없는','n','F');
+  D('사전에','미리','n','F');
+  D('사전','미리','n','F',{la:'(?=[ \\t]?(?:신청|예약|접수|등록|안내|연락|문의|통보|협의|준비|교육|동의|확인|공지|결제|조사|점검))'});
+  D('기타','그 밖에|그 밖의','n','F',{soft:1,la:'(?=[ \\t]?(?:문의|사항|자세한|궁금|필요|서류|내용|비용|안내|:))'});
+  D('인근','가까운|근처','n','F');
+  D('도보','걸어서','n','F');
+  D('소재지','주소|있는 곳','n','F');
+  D('실비','실제 든 비용','n','F');
+  D('자부담','본인이 내는 돈','n','F');
+  D('증빙서류|증빙 서류','증명 서류','n','F',{open:1});
+  D('증빙','증명','n','F');
+  D('사본','복사본','n','F');
+  D('자필','직접','n','F',{la:'(?=[ \\t]?(?:서명|기재|작성|기입)|로(?![가-힣])|으로(?![가-힣]))'});
+  D('연령','나이','n','F');
+  D('거주지','사는 곳','n','F');
+  D('해당자','해당하는 분|맞는 분','n','F');
+  D('희망자','원하는 분','n','F');
+  D('대기자','기다리는 분','n','F');
+  D('선착순','먼저 온 순서|오신 순서대로','n','F',{soft:1});
+
+  /* ── 「○○하다」 꼴 한자말 ── */
+  D('내방','찾아오다','v','B',{to2:'오다|방문하다'});
+  D('송부','보내다','v','C',{mid:1});
+  D('수령','받다','v','C',{mid:1});
+  D('수납','받다','v','AC',{vo:1});
+  D('징구','걷다|거두다','v','B',{to2:'받다'});
+  D('통보','알리다','v','C');
+  D('고지','알리다','v','B',{note:'자료에는 「고지 의무 → 알릴 의무」로 실려 있습니다.'});
+  D('상이','다르다','v','C',{vo:1});
+  D('부합','맞다','v','C',{vo:1});
+  D('게재','싣다','v','C',{tp:'실리다'});
+  D('패용','달다','v','BC');
+  D('날인','도장을 찍다','v','B',{n:'도장 찍기'});
+  D('엄수','지키다','v','C');
+  D('제고','높이다','v','C');
+  D('수여','주다','v','C',{to2:'드리다'});
+  D('소요','걸리다|들다','v','B',{pas:1});
+  D('사료','생각하다','v','BC',{vo:1,pas:1});
+  D('유예','미루다','v','B',{tp:'미뤄지다'});
+  D('개소','열다','v','B',{lb:'nd',n:'문 열기'});
+  D('실시','하다','v','C',{vo:1,soft:1,note:'자료에는 「교육을 실시한다 → 교육을 한다」로 실려 있습니다.'});
+  D('종료','마치다|끝내다','v','C',{tp:'끝나다',n:'끝|마침'});
+  D('첨부','붙이다','v','B',{n:'붙임',soft:1,note:'자료에는 「첨부 서류 → 붙임 서류」로 실려 있습니다.'});
+  D('환불','돌려주다','v','B',{soft:1});
+  D('다운로드','내려받다','v','C');
+  D('업로드','올리다','v','C');
+  D('모니터링','점검하다','v','ABC',{to2:'살펴보다'});
+  D('제출','내다','v','F',{mid:1,soft:1});
+  D('기재','적다|쓰다','v','F',{mid:1});
+  D('기입','적어 넣다|적다','v','F');
+  D('지참','가져오다|가지고 오다','v','F',{mid:1});
+  D('구비','갖추다|준비하다','v','F',{vo:1});
+  D('미비','빠지다|모자라다','v','F',{n:'빠짐|모자람'});
+  D('개시','시작하다','v','F');
+  D('불가','안 되다','v','F',{lb:'any',n:'안 됨|할 수 없음'});
+  D('경유','거치다','v','F',{vo:1});
+  D('납부','내다','v','F',{mid:1,soft:1});
+  D('납입','내다','v','F');
+  D('교부','내주다|드리다','v','F');
+  D('배부','나누어 드리다|나누어 주다','v','F');
+  D('발송','보내다','v','F');
+  D('회신','답하다','v','F');
+  D('통지','알리다','v','F');
+  D('열람','보다','v','F');
+  D('숙지','잘 알아 두다','v','F');
+  D('준수','지키다','v','F');
+  D('섭취','먹다','v','F');
+  D('탑승','타다','v','F');
+  D('승차','타다','v','F');
+  D('하차','내리다','v','F');
+  D('귀가','집에 가다|집으로 돌아가다','v','F');
+  D('반납','돌려주다','v','F');
+  D('반환','돌려주다','v','F');
+  D('연기','미루다','v','F',{vo:1,tp:'미뤄지다',soft:1});
+  D('지연','늦어지다','v','F',{pas:1});
+  D('재개','다시 시작하다|다시 열다','v','F');
+  D('휴관','쉬다|문을 닫다','v','F',{soft:1,n:'쉬는 날|문 닫음'});
+  D('감면','깎아 주다|줄여 주다','v','F');
+  D('경과','지나다','v','F');
+  D('동반','함께 오다|함께 가다','v','F');
+  D('자제','삼가다|줄이다','v','F');
+  D('소지','가지다','v','F',{n:'가지고 있기'});
+
+  /* ── 외국어·외래어 ── */
+  D('홈페이지','누리집','n','ABC',{open:1,soft:1,to2:'누리집(홈페이지)',note:'다듬은 말은 「누리집」입니다. 읽는 분께 낯설면 「누리집(홈페이지)」처럼 함께 써도 됩니다.'});
+  D('이메일','전자 우편','n','AC',{open:1,soft:1});
+  D('매뉴얼|메뉴얼','안내서|설명서','n','BC',{open:1});
+  D('가이드라인','지침','n','B',{open:1});
+  D('인센티브','혜택|특전','n','BC',{open:1});
+  D('원스톱|원스탑','한번에|한자리','n','BC',{open:1});
+  D('체크리스트|체크 리스트','점검표','n','BC',{open:1});
+  D('스케줄','일정','n','B',{open:1});
+  D('이벤트','행사','n','B',{open:1});
+  D('워크숍|워크샵','공동 연수','n','B',{soft:1,to2:'함께하는 교육'});
+  D('리플릿|리플렛','홍보지|광고지','n','B',{to2:'안내 쪽지'});
+  D('브로슈어|브로셔','안내서|소책자','n','C');
+  D('뉴스레터','소식지','n','B',{open:1});
+  D('바우처','이용권','n','BC',{open:1,soft:1,note:'사업 이름에 든 말(○○바우처)이면 그대로 두고 풀이를 붙여 주세요.'});
+  D('니즈','필요|바람','n','BC');
+  D('아웃리치','현장 지원 활동|거리 상담','n','C',{to2:'찾아가는 상담'});
+  D('팝업창|팝업','알림창','n','C');
+  D('프로그램','활동|교실','n','F',{ask:1,note:'복지관에서 굳은 말입니다. 어르신께는 「○○ 교실」 「○○ 활동」이 더 쉽게 읽힐 수 있습니다.'});
+  D('오리엔테이션','첫 모임|미리 알려 드리는 모임','n','F',{open:1});
+  D('팸플릿|팜플렛|팜플릿','소책자|작은 책자','n','F');
+  D('키오스크','무인 안내기|무인 주문기','n','F',{open:1});
+  D('데이케어','주간보호|낮 돌봄','n','F',{open:1});
+  D('클라이언트','이용자','n','F');
+  D('비대면','만나지 않고','n','F',{soft:1,to2:'전화·인터넷으로'});
+
+  /* ── 복지 현장 말: 바꾸면 뜻이 달라질 수 있어 「살펴보세요」만 ── */
+  D('접수','신청|내기','n','AC',{ask:1,note:'신청하는 분이 하는 일이면 「접수」가 아니라 「신청」 「제출(내기)」입니다. 기관이 받는 일이면 그대로 두세요.'});
+  D('대상자','대상이 되는 분|이용하실 분','n','F',{ask:1});
+  D('해당','그|이','n','F',{ask:1,la:'(?=[ \\t](?:사항|내용|서류|기간|일자|날짜|기관|시설|프로그램|사업|부서|과목|항목))'});
+  D('사례관리','사례관리(어려움을 함께 살피고 도움을 잇는 일)|상담과 도움 연결','n','F',{ask:1,note:'현장 전문 용어입니다. 이용자께 나가는 글이면 풀이를 붙이거나 풀어 써 보세요.'});
+  D('욕구','필요한 것|바라는 것','n','F',{ask:1,note:'복지 현장 말입니다. 일상에서는 다른 뜻으로 읽힐 수 있습니다.'});
+  D('재가','집에서 받는','n','F',{ask:1,la:'(?=[ \\t]?(?:복지|서비스|어르신|노인|장애인|방문|지원|돌봄))',note:'법에 있는 말(재가복지·재가급여)이면 그대로 두고 풀이를 붙여 주세요.'});
+  D('송영','차량 이동 지원|모셔 오고 모셔다 드리기','n','F');
+  D('와상','누워 지내시는','n','F',{la:'(?=[ \\t]?(?:어르신|노인|환자|상태|장애인))'});
+  D('기저질환','평소 앓고 있는 병','n','F');
+  D('투약','약 드리기|약 먹기','n','F');
+  D('결식','끼니를 거름','n','F',{soft:1,la:'(?![ \\t]?아동|[ \\t]?우려)(?![가-힣])'});
+
+  /* ── 기관 안에서 쓰는 줄임말 ── */
+  D('지사협','지역사회보장협의체','n','F',{cat:'rom'});
+  D('노맞돌|맞돌','노인맞춤돌봄서비스','n','F',{cat:'rom'});
+  D('활보','활동지원사|장애인 활동지원','n','F',{cat:'rom'});
+  D('요보사','요양보호사','n','F',{cat:'rom'});
+  D('자봉','자원봉사자|자원봉사','n','F',{cat:'rom'});
+  D('국기초','국민기초생활보장','n','F',{cat:'rom'});
+  D('긴복','긴급복지지원','n','F',{cat:'rom'});
+  D('건보','국민건강보험','n','F',{cat:'rom'});
+  D('지아센','지역아동센터','n','F',{cat:'rom'});
+
+  /* ── 낙인이 될 수 있는 말 ── */
+  var ST_LAW='법에 있는 말이지만 사람을 부르는 말로 쓰면 낙인이 될 수 있습니다. 대상을 알려야 하는 글이면 그대로 두고, 사람을 부르는 말이면 바꿔 보세요.';
+  D('기초생활수급자|기초생활 수급자|수급자','이용자|이용하시는 분','n','F',{cat:'stig',mid:1,note:ST_LAW});
+  D('불우 이웃|불우이웃','어려운 이웃','n','B',{cat:'stig',to2:'이웃'});
+  D('불우','어려운','n','F',{cat:'stig',la:'(?=[ \\t]?(?:아동|청소년|노인|가정|학생|어르신))'});
+  D('장애우','장애인','n','B',{cat:'stig'});
+  D('독거노인|독거 노인|독거 어르신|독거어르신','홀로 사는 노인|홀몸 노인','n','B',{cat:'stig',to2:'홀몸 어르신|혼자 사시는 어르신'});
+  D('결손가정|결손 가정','한부모 가족','n','A',{cat:'stig',to2:'조손 가족',note:'「어딘가 모자라다」는 뜻이 담긴 말입니다. 자료는 「한 부모 가족, 청소년 가장 가족」처럼 있는 그대로 쓰기를 권합니다.'});
+  D('소외 계층|소외계층','도움이 필요한 이웃','n','F',{cat:'stig',note:'자료(㉮)는 차별로 읽힐 수 있으니 빼는 것이 좋다고 합니다. 꼭 필요한 말인지 살펴보세요. 바꿀 말은 현장에서 모은 것입니다.'});
+  D('농아','청각·언어 장애인','n','B',{cat:'stig'});
+  D('불구자','장애인','n','B',{cat:'stig'});
+  D('학부형','학부모','n','B',{cat:'stig',to2:'보호자'});
+  D('수혜자','혜택받는 사람','n','B',{cat:'stig',to2:'이용하시는 분|받으시는 분',note:'베푸는 쪽에서 본 말입니다. 받는 분이 주인인 말로 바꿔 보세요.'});
+  D('빈곤층|극빈층|극빈','저소득 주민','n','F',{cat:'stig'});
+  D('영세민','저소득 주민','n','F',{cat:'stig'});
+  D('편부|편모','한부모','n','F',{cat:'stig',open:1});
+  D('정상인','비장애인','n','F',{cat:'stig'});
+  D('일반인','비장애인','n','F',{cat:'stig',ask:1,note:'장애인과 견주어 쓴 말이면 「비장애인」으로 바꿔 보세요. 다른 뜻이면 그대로 두세요.'});
+  D('정신지체|정신박약','지적장애','n','F',{cat:'stig',open:1});
+  D('맹인|장님','시각장애인','n','F',{cat:'stig'});
+  D('벙어리','언어장애인','n','F',{cat:'stig'});
+  D('귀머거리','청각장애인','n','F',{cat:'stig'});
+  D('노숙자|부랑인','노숙인','n','F',{cat:'stig'});
+  D('탈북자','북한이탈주민','n','F',{cat:'stig'});
+  D('결식아동|결식 아동','급식 지원 아동','n','F',{cat:'stig',ask:1,note:'법·사업 이름에 든 말이면 그대로 두세요. 아이를 부르는 말로는 쓰지 않는 것이 좋습니다.'});
+  D('문제아|문제 아동','도움이 필요한 아동','n','F',{cat:'stig'});
+  D('비행 청소년|비행청소년','위기 청소년','n','F',{cat:'stig'});
+  D('저소득층|취약계층|취약 계층','','n','F',{cat:'stig',ask:1,note:'대상을 알려야 하는 글이면 그대로 두세요. 받는 분이 읽는 글에서 그분을 가리키는 말이면 꼭 필요한지 살펴보세요.'});
+  D('요보호','보호가 필요한','n','F',{cat:'stig',la:'(?=[ \\t]?(?:아동|대상|노인|가정))'});
+  D('무의탁','돌볼 가족이 없는|홀로 지내는','n','F',{cat:'stig',open:1});
+
+  /* ---------- 사전을 찾는 틀 ---------- */
+  var JOSA='에서|에게|으로|부터|까지|이나|이며|이란|입니다|은|는|이|가|을|를|과|와|의|에|로|도|만|임';
+  var JO2='(?:는|도|만|의)?';
+  var NEVER='((?!))';
+  var REQ='([ \\t]?(?:(?:하여|해)[ \\t]?주시기|하시기)?[ \\t]?바랍니다|[ \\t]?바람(?![가-힣])|[ \\t]?요망(?![가-힣]))';
+  var VT='((?:하|해|했|한|할|함|합)[가-힣]*)';
+  var PT='((?:되|돼|됐|된|될|됨|됩)[가-힣]*)';
+  var TS='([ \\t]?(?:시|후|전|중)(?:에는|에도|엔|에)?)(?![가-힣])';
+  var NJ='((?:'+JOSA+')'+JO2+')?(?![가-힣])';
+  function compile(list){
+    var out=[];
+    list.forEach(function(e){
+      e.w.forEach(function(w){
+        var body,mode;
+        if(e.la){body=esc(w)+e.la;mode='stem';}
+        else if(e.open){body=esc(w);mode='stem';}
+        else if(e.t==='v'){body=esc(w)+'(?:'+(e.vo?NEVER:REQ)+'|'+VT+'|'+PT+'|'+(e.vo?NEVER:TS)+'|'+(e.vo?NEVER:NJ)+')';mode='v';}
+        else{body=esc(w)+'((?:'+JOSA+')'+JO2+')?(?![가-힣])';mode='n';}
+        out.push({e:e,w:w,re:new RegExp(body,'g'),mode:mode});
+      });
+    });
+    return out;
+  }
+  var BASE=compile(DICT);
+  var PRI={my:0,stig:1,word:2,han:3,style:4,neg:5,rom:6,num:6.5};
+  function preOK(e,text,idx){
+    var lb=e.lb||(e.mid?'any':'h');
+    if(lb==='any')return true;
+    var pv=text.charAt(idx-1);
+    if(isH(pv))return false;
+    if(lb==='nd'&&/[0-9]/.test(pv))return false;
+    return true;
+  }
+  function whyOf(e){
+    if(e.note)return e.note;
+    if(e.src==='M')return '「내 낱말」에 더해 둔 말입니다.';
+    if(e.cat==='stig')return '낙인이 되거나 차별로 읽힐 수 있는 말입니다. 바꿔 쓸 수 있는지 살펴보세요.';
+    if(e.cat==='rom')return '기관 안에서 쓰는 줄임말입니다. 읽는 분은 모를 수 있으니 풀어서 써 보세요.';
+    if(e.ask)return '현장에서 굳은 말입니다. 바꾸면 뜻이 달라질 수 있으니 바꿔도 되는지 살펴보세요.';
+    if(e.soft)return '많이 쓰는 말이지만 더 쉬운 말이 있습니다. 바꿔도 되는지 살펴보세요.';
+    return '읽는 분께 어려울 수 있는 말입니다. 쉬운 말로 바꿔 보세요.';
+  }
+  function makeD(c,m,text){
+    var e=c.e,s=m.index,full=m[0],end=s+full.length,cands=[],seen={};
+    function push(t,x){if(t==null||t===full||seen['t'+t])return;seen['t'+t]=1;cands.push({t:t,l:t===''?'빼기':t,x:x?1:0});}
+    function man(v){if(seen['m'+v])return;seen['m'+v]=1;cands.push({t:null,l:v,x:0});}
+    var nv=e.to.length,all=e.to.concat(e.to2);
+    function each(list,fn){list.forEach(function(t,i){fn(t,list===all&&i>=nv);});}
+    if(c.mode==='stem'||c.mode==='n'){
+      var josa='';
+      if(c.mode==='n')josa=m[1]||'';
+      else{var jm=/^(으로|로|은|는|이|가|을|를|과|와)(는|도|만)?(?![가-힣])/.exec(text.slice(end));if(jm){josa=jm[0];full+=josa;end+=josa.length;}}
+      each(all,function(t,x){
+        if(isVerb(t)&&e.t==='v'){push(joinP(vf(t).gi,josa),x);return;}
+        if(t==='')return;
+        push(joinP(t,josa),x);
+      });
+    }else{
+      var verbs=[],vx=[];each(all,function(t,x){if(isVerb(t)){verbs.push(t);vx.push(x);}});
+      var g1=m[1],g2=m[2],g3=m[3],g4=m[4],g5=m[5];
+      if(g1!==undefined){
+        verbs.forEach(function(v,i){var f=vf(v);push(f.seyo,vx[i]);if(!/(주|드리)$/.test(f.S))push(f.inf+' 주세요',vx[i]);});
+      }else if(g2!==undefined){
+        verbs.forEach(function(v,i){var r=conj(v,g2);if(r)push(r,vx[i]);else man(v);});
+      }else if(g3!==undefined){
+        var t2=pasMap(g3);
+        if(e.pas)verbs.forEach(function(v,i){var r=conj(v,t2);if(r)push(r,vx[i]);else man(v);});
+        else if(e.tp)e.tp.forEach(function(v){var r=conj(v,t2);if(r)push(r,0);else man(v);});
+        else verbs.forEach(function(v,i){if(v.slice(-2)==='하다')push(v.slice(0,-2)+g3,vx[i]);else man(v);});
+      }else if(g4!==undefined){
+        var g=g4.replace(/^[ \t]/,''),k=g.charAt(0),jj=g.slice(1),vs=verbs.concat(k==='시'&&e.tp?e.tp:[]);
+        vs.forEach(function(v,i){var f=vf(v),x=vx[i]||0;
+          if(k==='시'){push(f.l+' 때'+jj,x);push(f.myeon,x);}
+          else if(k==='후')push(f.n+' 뒤'+jj,x);
+          else if(k==='전')push(f.gi2+' 전'+jj,x);
+          else push(f.neun+' 중'+jj,x);});
+      }else{
+        var js=g5||'';
+        if(e.n)e.n.forEach(function(n){push(joinP(n,js),0);});
+        else verbs.forEach(function(v,i){var g=vf(v).gi;if(g)push(joinP(g,js),vx[i]);});
+        if(!js&&verbs.length&&/^[ \t][가-힣]/.test(text.slice(end))){var f0=vf(verbs[0]);push(f0.l,vx[0]);push(f0.neun,vx[0]);}
+      }
+    }
+    return {s:s,e:end,cat:e.cat,key:c.w,txt:full,why:whyOf(e),src:e.src,cands:cands,ask:e.ask,p:(e.src==='M'?PRI.my:PRI[e.cat])};
+  }
+
+  /* ---------- 글투 규칙 ---------- */
+  var RULES=[];
+  function R(cat,src,re,why,fn,o){RULES.push({cat:cat,src:src,re:re,why:why,fn:fn,o:o||{}});}
+  function mp(map,k,pre){return map[k]!==undefined?[(pre||'')+map[k]]:[];}
+  var JLA='(?=(?:'+JOSA+')?(?![가-힣]))';
+
+  /* 한자말 투 */
+  R('han','F',/에[ \t]?한(하여|해서|해|함|합니다|한다)(?![가-힣])/g,'「~에 한하여」는 「~만」으로 쓰면 쉽습니다.',function(m){return /함|합니다|한다/.test(m[1])?['만 됩니다','만 해당합니다']:['만'];});
+  var SI_SP={'우천':'비가 오면','필요':'필요하면','유사':'급한 일이 생기면','부재':'안 계시면|없으면','미납':'내지 않으면','불참':'오지 않으면|참석하지 못하면','결석':'빠지면','화재':'불이 나면','응급':'급할 때','비상':'급한 일이 생기면','긴급':'급할 때','해당':'해당하면','희망':'원하면','수업':'수업 때','교육':'교육 때','행사':'행사 때','공사':'공사 때','식사':'식사할 때','변경':'바뀌면|바꿀 때','초과':'넘으면','분실':'잃어버리면','선정':'뽑히면','지각':'늦으면','탈락':'떨어지면','당첨':'뽑히면','고장':'고장 나면','파손':'망가지면','발생':'생기면','사용':'쓸 때','문의':'물어볼 때','작성':'쓸 때','입장':'들어갈 때','퇴장':'나갈 때','퇴실':'나갈 때','입실':'들어갈 때','외출':'나갈 때','입소':'들어올 때','퇴소':'나갈 때','방문':'오실 때|방문할 때','참석':'오실 때|참석할 때','취소':'취소하면','해지':'그만두면|해지하면','탈퇴':'그만두면|탈퇴하면'};
+  R('han','AC',new RegExp('(신청|방문|우천|필요|발생|이용|참석|불참|결석|미납|입장|퇴장|퇴실|입실|분실|파손|해지|작성|문의|유사|부재|지각|조퇴|탈락|당첨|마감|도착|출발|외출|등록|가입|탈퇴|위반|적발|사용|결제|연체|훼손|고장|화재|응급|비상|긴급|해당|희망|수강|출석|이동|식사|상담|통화|연락|확인|수업|교육|행사|공사|취소|변경|선정|초과|구매|구입|환불|입소|퇴소|개최|대여)[ \\t]?시(에는|에도|엔|에)?(?=[ \\t,.)]|\\n|$)','g'),
+    '「~ 시(時)」는 「~할 때」 「~하면」으로 쓰면 쉽습니다.',function(m){var sp=SI_SP[m[1]],j=m[2]||'';return (sp?sp.split('|'):[m[1]+'할 때',m[1]+'하면']).map(function(c){return /때$/.test(c)?c+j:c;});},{wb:1});
+  var MI={'제출':'내지 않','참석':'오지 않','납부':'내지 않','납':'내지 않','수령':'받지 않','지참':'가져오지 않','포함':'들어 있지 않','기재':'적지 않','작성':'쓰지 않','도착':'오지 않'};
+  R('han','C',/미(제출|참석|신청|납부|납|수령|지급|포함|이용|작성|기재|등록|가입|확인|반납|동의|지참|실시|접수|충족|이수|참여|선정|도착|사용|해당|응답|회신|통보|발급)(?:([ \t]?시)(?:에는|에도|엔|에)?|(자)(는|가|를|에게|의|도|만)?)?(?![가-힣])/g,
+    '「미(未)~」는 「~하지 않음」으로 풀어 쓰면 쉽습니다.',function(m){var b=MI[m[1]]||(m[1]+'하지 않');
+      if(m[2])return [b+'으면'];if(m[3])return [b+'은 분'+fixP('분',m[4]||'')];return [b+'음'];},{wb:1});
+  R('han','BC',/([가-힣])[ \t]자(는|가|를|에게|의|도|만|와|로서)?(?=[ \t,.)]|\n|$)/g,'「~한 자(者)」는 「~한 사람」 「~한 분」으로 쓰면 부드럽습니다.',function(m){
+      var j=dec(m[1])[2];if(j!==4&&j!==8)return null;var p=m[2]||'';return [' 분'+fixP('분',p),' 사람'+fixP('사람',p)];},{lead:1});
+  R('han','F',/(\d+)[ \t]?매(은|는|이|가|을|를|과|와|의|에|도|만|씩)?(?![가-힣])/g,'「매(枚)」는 「장」으로 쓰면 쉽습니다.',function(m){return [m[1]+'장'+fixP('장',m[2]||'')];});
+  R('han','F',/(\d+)[ \t]?개소(은|는|이|가|을|를|과|와|의|에서|에|도|만)?(?![가-힣])/g,'「개소」는 「곳」으로 쓰면 쉽습니다.',function(m){return [m[1]+'곳'+fixP('곳',m[2]||'')];});
+  R('han','F',/(\d+)[ \t]?인(?=[ \t]?(?:이상|이하|이내|까지|당)|[,.)]|\n|$)/g,'「○인」은 「○명」으로 쓰면 쉽습니다. 「1인 가구」처럼 굳은 말은 그대로 두세요.',function(m){return [m[1]+'명'];});
+  R('han','F',/(\d+)(일|주|개월|년|시간)간(?![가-힣])/g,'「~간(間)」은 「~ 동안」으로 쓰면 쉽습니다.',function(m){return [m[1]+m[2]+' 동안'];});
+  R('han','F',new RegExp('당[ \\t]?(기관|센터|복지관|시설|재단|협회|법인|관)'+JLA,'g'),'「당(當) ○○」은 「우리 ○○」으로 쓰면 쉽습니다. (자료 ㉯의 「당관 → 우리 공관」과 같은 방식)',function(m){return ['우리 '+(m[1]==='관'?'기관':m[1])];},{wb:1});
+  R('han','F',/본[ \t](프로그램|기관|사업|안내문|행사|교육|센터|복지관|시설|서류|신청서|강좌|모집|공고|계획|과정|서비스|제도|조사|설문)/g,'「본(本) ○○」은 「이 ○○」으로 쓰면 쉽습니다.',function(m){return ['이 '+m[1]];},{wbd:1});
+  R('han','C',new RegExp('동[ \\t](건|사업|문서|기관|프로그램|행사|교육|센터|시설|서류|기간|제도)'+JLA,'g'),'「동(同) ○○」은 「이 ○○」으로 쓰면 쉽습니다.',function(m){return ['이 '+m[1]];},{wbd:1});
+  R('han','C',/기[ \t]([가-힣]{2,4}(?:한|된))(?![가-힣])/g,'「기(旣) ~한」은 「이미 ~한」으로 쓰면 쉽습니다.',function(m){return ['이미 '+m[1]];},{wbd:1});
+  R('han','C',new RegExp('타[ \\t]?(기관|지역|시설|센터|복지관|프로그램|사업|학교|부서|지자체|단체|용도|인)'+JLA,'g'),'「타(他) ○○」은 「다른 ○○」으로 쓰면 쉽습니다.',function(m){return ['다른 '+(m[1]==='인'?'사람':m[1])];},{wb:1});
+  R('han','AC',/([가-힣A-Za-z0-9)○])[ \t]및[ \t]/g,'「및」은 「와/과」로 쓰면 쉽습니다. 「또는」의 뜻이면 「또는」으로 분명히 써 주세요.',function(m){return [fixP(m[1],'과')+' ',' 또는 ',', '];},{lead:1});
+  R('han','F',/(\d[\d,.]*[가-힣%]*)[ \t]?내지[ \t]?(?=\d)/g,'「내지」는 「~에서 ~까지」 「~」로 쓰면 쉽습니다.',function(){return ['~','에서 '];},{lead:1});
+  R('han','C',/([가-힣0-9])(?:으로부터|로부터)(?![가-힣])/g,'「~(으)로부터」는 「~에서」 「~에게서」로 쓰면 쉽습니다.',function(){return ['에서','에게서'];},{lead:1});
+  R('han','C',/에[ \t]?의거(?:하여|해서|해|하고)?(?![가-힣])/g,'「~에 의거」는 「~에 따라」로 쓰면 쉽습니다.',function(){return ['에 따라'];});
+  R('han','AC',/에[ \t]?의(?:하여|해서|해)(?![가-힣])/g,'「~에 의해」는 「~에 따라」로, 사람이면 「~이/가」로 쓰면 쉽습니다.',function(){return ['에 따라'];});
+  R('han','F',/(으로|로)[ \t]?인(?:하여|해서|해)(?![가-힣])/g,'「~(으)로 인하여」는 「~ 때문에」 「~(으)로」로 쓰면 쉽습니다.',function(m){return [' 때문에',m[1]];});
+  R('han','C',/([가-힣A-Za-z0-9)])[을를][ \t]?통(?:하여|해서|해)(?![가-힣])/g,'「~을 통해」는 「~(으)로」로 쓰면 짧습니다.',function(m){return [fixP(m[1],'으로')];},{lead:1});
+  R('han','F',/(지도|감독|협조|동의|입회|보호|관리|인솔|책임|지원|후원|주관|주최)[ \t]?하에서?(?![가-힣])/g,'「~ 하(下)에」는 「~ 아래」 「~을 받아」로 쓰면 쉽습니다.',function(m){return [m[1]+' 아래',m[1]+fixP(m[1],'을')+' 받아'];},{wb:1});
+  R('han','F',/([가-힣]*[가-힣])고자[ \t]?(합니다|하오니|하니|함)(?![가-힣])/g,'「~고자 합니다」는 「~려고 합니다」로 쓰면 쉽습니다.',function(m){
+      var st=m[1],j=jongOf(st),mid=(j>0&&j!==8)?'으려고 ':'려고 ';return [st+mid+{'합니다':'합니다','하오니':'하니','하니':'하니','함':'합니다'}[m[2]]];});
+  R('han','F',/(하|바라|드리|되|이|있사|없사|주시|하시|하였사)오니(?![가-힣])/g,'옛 편지 말투입니다. 「~하니」로 쓰거나 문장을 끊어 「~합니다.」로 써 보세요.',function(m){
+      return mp({'하':'하니','바라':'바라니','드리':'드리니','되':'되니','이':'이니','있사':'있으니','없사':'없으니','주시':'주시니','하시':'하시니','하였사':'하였으니'},m[1]);});
+  R('han','C',/([가-힣A-Za-z0-9)])의[ \t]경우(?:에는|엔|에|는)?(?![가-힣])/g,'「~의 경우」는 「~은/는」으로 쓰면 짧습니다.',function(m){return [fixP(m[1],'은')];},{lead:1});
+  R('han','C',/([을를])[ \t]?필(한|하고|하여|해야|하지|할|하신)(?![가-힣])/g,'「~을 필하다」는 「~을 마치다」로 쓰면 쉽습니다.',function(m){return mp({'한':'친','하고':'치고','하여':'쳐','해야':'쳐야','하지':'치지','할':'칠','하신':'치신'},m[2],m[1]+' 마');});
+  R('han','C',/([을를])[ \t]?득(한|하고|하여|해|해야|하여야|하지|할)(?![가-힣])/g,'「~을 득하다」는 「~을 받다」로 쓰면 쉽습니다.',function(m){return mp({'한':'은','하고':'고','하여':'아','해':'아','해야':'아야','하여야':'아야','하지':'지','할':'을'},m[2],m[1]+' 받');});
+  R('han','C',/에[ \t]위치한(?![가-힣])/g,'「~에 위치한」은 「~에 있는」으로 쓰면 쉽습니다.',function(){return ['에 있는'];});
+
+  /* 숫자만 적은 날짜·시각, 달력에 따라 뜻이 갈리는 말 */
+  function korTime(h,mi){h=+h;mi=+mi;var a=h===0?'밤 12시':h<12?'오전 '+h+'시':h===12?'낮 12시':'오후 '+(h-12)+'시';return a+(mi?' '+mi+'분':'');}
+  R('num','F',/(^|[^\d:])((?:[01]?\d|2[0-3])):([0-5]\d)(?![\d:])/g,'숫자만 적은 시각입니다. 「오후 2시」처럼 쓰면 읽기 쉽습니다. (공문서는 14:00처럼 씁니다.)',function(m,text){
+      var h=+m[2],mi=+m[3],tail=mi?' '+mi+'분':'',o;
+      if(/(오전|오후|낮|밤|저녁|아침|새벽)[ \t]?$/.test(text.slice(Math.max(0,m.index-4),m.index+m[1].length)))o=[(h>12?h-12:h)+'시'+tail];
+      else if(h>=1&&h<=7)o=['오후 '+h+'시'+tail,'오전 '+h+'시'+tail];
+      else o=[korTime(h,mi)];
+      if(mi===30)o.push(o[0].replace(/ 30분$/,' 반'));
+      return o;},{lead:1});
+  R('num','F',/(^|[^\d.])(\d{4})\.[ \t]?(\d{1,2})\.[ \t]?(\d{1,2})\.?(?!\d)/g,'숫자와 점으로 적은 날짜입니다. 「11월 20일」처럼 쓰면 읽기 쉽습니다. (공문서는 2026. 11. 20.처럼 씁니다.)',function(m){
+      if(+m[3]<1||+m[3]>12||+m[4]<1||+m[4]>31)return null;return [m[2]+'년 '+(+m[3])+'월 '+(+m[4])+'일'];},{lead:1});
+  R('num','F',/(^|[^\d.])(\d{1,2})\.[ \t]?(\d{1,2})\.(?![ \t]?\d)/g,'숫자와 점으로 적은 날짜입니다. 「11월 20일」처럼 쓰면 읽기 쉽습니다. (공문서는 11. 20.처럼 씁니다.)',function(m,text){
+      if(+m[2]<1||+m[2]>12||+m[3]<1||+m[3]>31)return null;
+      if(/(^|\n)[ \t]*$/.test(text.slice(0,m.index+m[1].length))&&!/^[ \t]*[(~\-]/.test(text.slice(m.index+m[0].length)))return null;
+      return [(+m[2])+'월 '+(+m[3])+'일'];},{lead:1});
+  R('num','A',/(첫|둘|셋|넷|다섯)째[ \t]?주[ \t]?([월화수목금토일]요일)/g,'달력에 따라 다르게 읽힐 수 있는 말입니다. 「첫 번째 토요일」로 쓰거나 날짜를 함께 적어 주세요.',function(m){return [m[1]+' 번째 '+m[2]];});
+
+  /* 피동·돌려 말하기·겹말 */
+  var BARAM='「~해 주세요」 「~하세요」로 쓰면 짧고 부드럽습니다. 공문에서는 「바랍니다」도 바른 표현입니다.';
+  R('style','F',/되어(집니다|진다|지는|진|질|져서|져|졌|지고|지며|지면|지지)/g,'피동을 두 번 겹쳐 쓴 말입니다. 「됩니다」로 쓰거나 「누가 무엇을 한다」로 바꿔 보세요.',function(m){
+      return mp({'집니다':'됩니다','진다':'된다','지는':'되는','진':'된','질':'될','져서':'되어서','져':'되어','졌':'되었','지고':'되고','지며':'되며','지면':'되면','지지':'되지'},m[1]);});
+  R('style','C',/보여(집니다|진다|지는|진|질|져|졌|짐|지고|지며)/g,'피동을 두 번 겹쳐 쓴 말입니다. 「보입니다」로 쓰면 됩니다.',function(m){
+      return mp({'집니다':'보입니다','진다':'보인다','지는':'보이는','진':'보인','질':'보일','져':'보여','졌':'보였','짐':'보임','지고':'보이고','지며':'보이며'},m[1]);});
+  R('style','F',/쓰여(집니다|진다|지는|진|질|져|졌)/g,'피동을 두 번 겹쳐 쓴 말입니다. 「쓰입니다」로 쓰면 됩니다.',function(m){
+      return mp({'집니다':'쓰입니다','진다':'쓰인다','지는':'쓰이는','진':'쓰인','질':'쓰일','져':'쓰여','졌':'쓰였'},m[1]);});
+  R('style','F',/([가-힣]+)[ \t]수[ \t]?있도록[ \t]?하겠습니다/g,'돌려 말한 곳입니다. 「~하겠습니다」로 줄이면 약속이 분명해집니다.',function(m){
+      var w=m[1],l=w.slice(-1);if(l==='할'||l==='될'||l==='릴')return [w.slice(0,-1)+addJ(l,0)+'겠습니다'];if(l==='을')return [w.slice(0,-1)+'겠습니다'];return [];});
+  R('style','F',/하도록[ \t]?하겠습니다/g,'돌려 말한 곳입니다. 「~하겠습니다」로 줄여 보세요.',function(){return ['하겠습니다'];});
+  R('style','F',/(?:하여|해)[ \t]?주시면[ \t]?(?:감사하겠습니다|고맙겠습니다)/g,'돌려 부탁한 말입니다. 「~해 주세요」로 쓰면 분명합니다.',function(){return ['해 주세요'];});
+  R('style','F',/착오[ \t]?없으시기[ \t]?바랍니다/g,'공문 말투입니다. 무엇을 살펴 달라는지 쉬운 말로 써 보세요.',function(){return ['잘 살펴봐 주세요','헷갈리지 않게 살펴 주세요'];});
+  R('style','F',/(?:하여|해)[ \t]?주시기[ \t]?바랍니다/g,BARAM,function(){return ['해 주세요'];});
+  R('style','F',/([가-힣]*)시기[ \t]?바랍니다/g,BARAM,function(m){if(/(없으|있으)$/.test(m[1]))return [];return [m[1]+'세요'];});
+  R('style','F',/([가-힣]{2,})[ \t]바랍니다/g,BARAM,function(m){
+      var n=m[1];if(/하기$/.test(n))return [n.slice(0,-2)+'하세요',n.slice(0,-2)+'해 주세요'];if(/(기|를|을|이|가|히|게|록|서|로)$/.test(n))return [];return [n+'해 주세요'];});
+  R('style','C',/([가-힣]+)[이가][ \t]?요구(됩니다|된다|되며|되고)/g,'누가 해야 하는지 드러나지 않습니다. 「~해야 합니다」로 써 보세요.',function(m){return [m[1]+'해야 '+{'됩니다':'합니다','된다':'한다','되며':'하며','되고':'하고'}[m[2]]];});
+  R('style','C',/(진행|준비|검토|추진|운영|공사|접수|모집|건립|협의|조사|심사)[ \t]?중에[ \t]?있(습니다|으며|고|는|음)/g,'「~ 중에 있습니다」는 「~하고 있습니다」로 쓰면 자연스럽습니다.',function(m){return [m[1]+'하고 있'+m[2]];});
+  R('style','C',/필요로[ \t]?하(는|신|시는)/g,'「필요로 하는」은 「필요한」으로 쓰면 짧습니다.',function(m){return mp({'는':'필요한','신':'필요하신','시는':'필요하신'},m[1]);});
+  R('style','AC',/(이용|신청|운영|지원|진행|선정|참여|활용|교육|사업|과정|업무|판단|결정|준비|관리|처리|추진|수행|이행|함)에[ \t]?있어(?:서는|서|는)?(?=[ \t,])/g,'번역 투입니다. 「~에서」 「~은/는」으로 써 보세요.',function(m){return ['에서',fixP(m[1],'은')];},{lead:1});
+  R('style','AC',/에[ \t]?대(?:하여서는|해서는|하여는)(?![가-힣])/g,'「~에 대해서는」은 「~에는」 「~은/는」으로 쓰면 짧습니다.',function(){return ['에는'];});
+  R('style','C',/([가-힣])[ \t]관계로(?![가-힣])/g,'「~한 관계로」는 「~해서」 「~하였으므로」로 쓰면 쉽습니다.',function(m){return dec(m[1])[2]===4?[]:null;},{lead:1});
+  R('style','A',/([가-힣]{2,})[ \t](바람|요망|요함)(?=\.?[ \t]*(?:\n|$))/g,'명령하듯 끊은 말투입니다. 「~해 주세요」로 쓰면 부드럽습니다.',function(m){
+      var n=m[1];if(/하기$/.test(n))return [n.slice(0,-2)+'해 주세요'];if(/(를|을|이|가|히|게)$/.test(n))return [];return [n+'해 주세요',n+' 바랍니다'];});
+  R('style','A',/([가-힣]+)할[ \t]것(?=\.?[ \t]*(?:\n|$))/g,'명령하듯 끊은 말투입니다. 「~해 주세요」로 쓰면 부드럽습니다.',function(m){return [m[1]+'해 주세요',m[1]+'하세요'];});
+  R('style','F',/(가능|불가|필요|진행|제공|지급|마감|시작|운영|예정|취소|금지|요청|참석|준비|확인|안내|신청|통보|주의|부담|모집|발표|처리|간주)함(?=\.?[ \t]*(?:\n|$))/g,'「~함」으로 끊은 말투입니다. 읽는 분께 나가는 글은 「~합니다」가 부드럽습니다.',function(m){return [m[1]+'합니다'];});
+  R('style','C',/기간[ \t]?동안/g,'같은 뜻이 겹쳤습니다. 「기간에」나 「동안」 하나만 써도 됩니다.',function(){return ['기간에','동안'];});
+  R('style','C',/매[ \t]?(\d*[가-힣]{1,3})마다/g,'같은 뜻이 겹쳤습니다. 「매」와 「마다」 가운데 하나만 써도 됩니다.',function(m){return [m[1]+'마다','매'+m[1]];});
+  R('style','C',/약[ \t]?(\d[\d,]*)여[ \t]?(명|개|건|곳|가구|세대|회|일|년|개월|시간|분|가지)/g,'같은 뜻이 겹쳤습니다. 「약」과 「여」 가운데 하나만 써도 됩니다.',function(m){return ['약 '+m[1]+m[2],m[1]+'여 '+m[2]];});
+  R('style','F',/미리[ \t]?예약/g,'같은 뜻이 겹쳤습니다. 「예약」에 「미리」의 뜻이 들어 있습니다.',function(){return ['예약'];});
+  R('style','F',/사전에?[ \t]?미리/g,'같은 뜻이 겹쳤습니다.',function(){return ['미리'];});
+  R('style','F',/다시[ \t]?재(개|발급|신청|등록|교육|검사|방문|확인)/g,'같은 뜻이 겹쳤습니다. 「재(再)」에 「다시」의 뜻이 들어 있습니다.',function(m){return ['다시 '+(m[1]==='개'?'시작':m[1])];});
+  R('style','F',/과반수[ \t]?이상/g,'같은 뜻이 겹쳤습니다.',function(){return ['과반수','절반 넘게'];});
+  R('style','AC',/안내[ \t]?알림/g,'같은 뜻이 겹쳤습니다. 하나만 써도 됩니다.',function(){return ['안내','알림'];});
+  R('style','C',/(개선|교육|소개|접수|등록|구체화|활성화|강화|해소|유지|완화|금지|취소)시(키|켜|킬|킨|킵|켰)/g,'「~시키다」가 꼭 필요하지 않은 자리입니다. 「~하다」로 쓰면 됩니다.',function(m){return [m[1]+{'키':'하','켜':'해','킬':'할','킨':'한','킵':'합','켰':'했'}[m[2]]];});
+  R('style','F',/것으로[ \t]?(?:사료|판단|생각|예상|추정)(됩니다|된다|되며|되고)/g,'누가 그렇게 보는지 드러나지 않는 말입니다. 「~입니다」 「~할 것 같습니다」처럼 분명히 써 보세요.',function(m){return m[1]==='됩니다'?['것 같습니다']:[];});
+  R('style','C',/제공[ \t]?받(?=[가-힣])/g,'「제공받다」는 「받다」로 쓰면 짧습니다.',function(){return ['받'];});
+  R('style','F',/예정(?:으로|에)[ \t]?있(습니다|으며)/g,'「예정으로 있습니다」는 「예정입니다」로 쓰면 짧습니다.',function(m){return ['예정'+{'습니다':'입니다','으며':'이며'}[m[1]]];});
+  R('style','C',/만전을[ \t]?기(?:하여|해)[ \t]?주시기[ \t]?바랍니다/g,'어려운 한문 투입니다. 무엇을 해 달라는지 풀어 써 보세요.',function(){return ['허술함이 없도록 해 주세요','빈틈없이 준비해 주세요'];});
+
+  /* 이중 부정 */
+  var NEG2='부정하는 말이 두 번 나옵니다. 「~만 ~할 수 있습니다」 「~이 있어야 ~할 수 있습니다」처럼 긍정으로 쓰면 쉽습니다. 「안 된다」는 뜻을 꼭 알려야 하면 그대로 두세요.';
+  function mustForm(stem){if(!stem||!isH(stem.slice(-1)))return null;if(stem.slice(-1)==='하')return stem.slice(0,-1)+'해야';if(dec(stem.slice(-1))[2]===27)return null;try{return vinfo(stem).inf+'야';}catch(e){return null;}}
+  R('neg','F',/([가-힣]+)지[ \t]?않으면[ \t]?안[ \t]?(됩니다|된다|되며|되고|되므로|되오니|됨|돼요)/g,'이중 부정입니다. 「~해야 합니다」로 쓰면 바로 읽힙니다.',function(m){
+      var b=mustForm(m[1]);if(!b)return [];return [b+' '+{'됩니다':'합니다','된다':'한다','되며':'하며','되고':'하고','되므로':'하므로','되오니':'하니','됨':'함','돼요':'해요'}[m[2]]];});
+  R('neg','F',/([가-힣]+)지[ \t]?않을[ \t]?수[ \t]?없(습니다|다|으며|어)/g,'이중 부정입니다. 「~해야 합니다」로 쓰면 바로 읽힙니다.',function(m){
+      var b=mustForm(m[1]);if(!b)return [];return [b+' '+{'습니다':'합니다','다':'한다','으며':'하며','어':'해'}[m[2]]];});
+  R('neg','F',/없지[ \t]?(않습니다|않다|않아|않으며|않고|않은|아니하)/g,'이중 부정입니다. 「있다」로 쓰면 바로 읽힙니다.',function(m){
+      return mp({'않습니다':'있습니다','않다':'있다','않아':'있어','않으며':'있으며','않고':'있고','않은':'있는','아니하':'있'},m[1]);});
+  R('neg','F',/불가능하지[ \t]?(?:는[ \t]?)?않(습니다|다|으며)/g,'이중 부정입니다. 「가능합니다」로 쓰면 바로 읽힙니다.',function(m){return ['가능'+{'습니다':'합니다','다':'하다','으며':'하며'}[m[1]]];});
+  R('neg','F',/(?:아닌|않은|않는|없는)[ \t]것[은이도][ \t]?아(?:닙니다|니다|니며|니지만)/g,'이중 부정입니다. 긍정으로 바꿔 쓰면 바로 읽힙니다.',function(){return [];});
+  R('neg','F',/(제외하고는?|빼고는|외에는|이외에는|아니면|없으면|않으면|없이는)(?=[^.\n]{0,25}?(?:없습니다|않습니다|안[ \t]?됩니다|못[ \t]?합니다|불가))/g,NEG2,function(){return [];});
+
+  /* 영어·줄임말 */
+  var KNOWN=[
+    ['E-?mail|e-?mail|E-?MAIL','전자 우편|이메일','AC'],['H\\.?P\\.?|C\\.?P\\.?','휴대전화','A'],['FAX|Fax|fax','팩스','A'],['TEL|Tel|tel','전화','F'],
+    ['MOU','업무 협약','ABC'],['T\\/?F팀?|TFT','전담팀|특별팀','BC'],['SNS','누리 소통망|사회관계망','B'],['AED','자동 심장 충격기','C'],
+    ['VS\\.?|vs\\.?','대','C'],['SMS','문자 메시지','C'],['PC','컴퓨터','C'],['IT','정보 기술','AC'],['AI','인공 지능','C'],['ICT','정보 통신 기술','AC'],
+    ['R&D','연구 개발','AC'],['DB','데이터베이스','C'],['TV','텔레비전','C'],['DIY','손수 제작','B'],['QR[ \\t]?코드|QR','정보 무늬|큐아르(QR) 코드','B'],
+    ['OT','첫 모임|예비 교육','F'],['PT','발표','F'],['Q&A|QnA','묻고 답하기','F'],['FAQ','자주 묻는 질문','F'],
+    ['AM|am|A\\.M\\.|a\\.m\\.','오전','F'],['PM|pm|P\\.M\\.|p\\.m\\.','오후','F'],['No\\.|NO\\.','번호','F'],['ex\\)|Ex\\)|EX\\)|e\\.g\\.','예:','F'],
+    ['ID','아이디','F'],['PW','비밀번호','F'],['APP|App|app','앱','F'],['URL','인터넷 주소','F'],['KIT|Kit|kit','꾸러미','F'],['ARS','자동 응답 전화','F'],['ATM','현금 인출기','F'],['MT','수련 모임','F'],['TIP|Tip|tip','도움말','B']
+  ].map(function(k){return {re:new RegExp('(?:'+k[0]+')','g'),to:k[1].split('|'),src:k[2]};});
+  var UNIT=/^(cm|mm|km|kg|mg|ml|mL|kcal|cc|ea|EA|Km|KG|Kg|CM|MM|ML|KM|ok|OK)$/;
+  function romanMarks(text,marks){
+    var m,re,used=[];
+    function inUsed(s,e){for(var i=0;i<used.length;i++)if(s<used[i][1]&&e>used[i][0])return true;return false;}
+    re=/\(([A-Za-z][A-Za-z0-9 .&\/'\-]*)\)/g;
+    while((m=re.exec(text))){var pv=text.charAt(m.index-1);if(!isH(pv))continue;used.push([m.index,m.index+m[0].length]);
+      marks.push({s:m.index,e:m.index+m[0].length,cat:'rom',key:m[0],txt:m[0],why:'한글 뒤 괄호에 넣은 로마자입니다. 읽는 분께 꼭 필요하지 않으면 빼도 됩니다.',src:'A',cands:[{t:'',l:'괄호째 빼기',x:0}],p:PRI.rom});}
+    re=/\(([㐀-䶿一-鿿]+)\)|[㐀-䶿一-鿿]+/g;
+    while((m=re.exec(text))){
+      marks.push({s:m.index,e:m.index+m[0].length,cat:'rom',key:m[0],txt:m[0],why:m[1]?'괄호 안 한자입니다. 뜻을 가리는 데 꼭 필요하지 않으면 빼도 됩니다.':'한자입니다. 한글로 적어 주세요.',src:'A',cands:m[1]?[{t:'',l:'괄호째 빼기',x:0}]:[],p:PRI.rom});}
+    KNOWN.forEach(function(k){k.re.lastIndex=0;while((m=k.re.exec(text))){
+      var s=m.index,e=s+m[0].length;if(/[A-Za-z0-9]/.test(text.charAt(s-1))||/[A-Za-z0-9]/.test(text.charAt(e)))continue;if(inUsed(s,e))continue;
+      marks.push({s:s,e:e,cat:'rom',key:m[0],txt:m[0],why:'로마자 줄임말입니다. 한글로 풀어 쓰거나 한글 뒤 괄호에 넣어 주세요.',src:k.src,cands:k.to.map(function(t){return {t:t,l:t,x:0};}),p:5.5});}});
+    re=/[A-Za-z][A-Za-z0-9&'\-]*/g;
+    while((m=re.exec(text))){var t=m[0],s2=m.index,e2=s2+t.length;
+      if(t.length<2||UNIT.test(t)||/^[A-Za-z]\d+$/.test(t)||inUsed(s2,e2))continue;
+      marks.push({s:s2,e:e2,cat:'rom',key:t,txt:t,why:'로마자 낱말입니다. 한글로 적거나, 꼭 필요하면 한글 뒤 괄호에 넣어 주세요.',src:'A',cands:[],p:7});}
+  }
+
+  /* ---------- 문장 나누기·길이 ---------- */
+  function countLen(s){return s.replace(/\s/g,'').length;}
+  function splitSentences(t){
+    var prot={},m,re=/\d{1,4}\.[ \t]?\d{1,2}\.(?:[ \t]?\d{1,2}\.)?|\d+\.\d+|(?:^|\n)[ \t]*\d{1,2}\.(?=[ \t])/g;
+    while((m=re.exec(t))){for(var k=m.index;k<m.index+m[0].length;k++)if(t.charAt(k)==='.')prot[k]=1;}
+    var out=[],st=0,i=0,n=t.length;
+    function put(a,b){while(a<b&&/\s/.test(t.charAt(a)))a++;while(b>a&&/\s/.test(t.charAt(b-1)))b--;if(b>a)out.push({s:a,e:b,len:countLen(t.slice(a,b))});}
+    while(i<n){
+      var ch=t.charAt(i);
+      if(ch==='\n'){put(st,i);st=i+1;i++;continue;}
+      if((ch==='.'||ch==='!'||ch==='?'||ch==='…'||ch==='。')&&!prot[i]){
+        var j=i+1;while(j<n&&/[.!?…"'”’)\]]/.test(t.charAt(j)))j++;
+        if(j>=n||/\s/.test(t.charAt(j))){put(st,j);st=j;i=j;continue;}
+      }
+      i++;
+    }
+    put(st,n);
+    return out;
+  }
+  var CUT=/(하며|하고|으며|이며|되며|하여|하나|지만|는데|은데|므로|하오니|하니|으니|이니|어서|아서|해서|면서|위하여|위해|대상으로)(,?)(?=[ \t])/g;
+  function cutHints(s){
+    var out=[],m;CUT.lastIndex=0;
+    while((m=CUT.exec(s))){var e=m.index+m[0].length;if(countLen(s.slice(0,e))<8||countLen(s.slice(e))<8)continue;out.push(s.slice(Math.max(0,e-9),e).replace(/^\S*\s/,''));}
+    return out.slice(0,3);
+  }
+
+  /* ---------- 날짜·시간·장소·문의 전화가 보이는지 ---------- */
+  function findInfo(t){
+    function f(re){var m=re.exec(t);return m?m[0].trim():null;}
+    var d=f(/\d{1,2}[ \t]?월[ \t]?\d{1,2}[ \t]?일(?:[ \t]?\([월화수목금토일]\))?|\d{1,4}\.[ \t]?\d{1,2}\.(?:[ \t]?\d{1,2}\.?)?(?:[ \t]?\([월화수목금토일]\))?|(?:^|[^\d])\d{1,2}\/\d{1,2}(?!\d)|매(?:주|월|달|일)[ \t]?[가-힣]*요일|[월화수목금토일]요일/);
+    var dow=/[월화수목금토일]요일|\([월화수목금토일]\)/.test(t);
+    var tm=f(/(?:오전|오후|낮|저녁|아침|밤)[ \t]?\d{1,2}[ \t]?시(?:[ \t]?\d{1,2}[ \t]?분|[ \t]?반)?|\d{1,2}[ \t]?시(?:[ \t]?\d{1,2}[ \t]?분|[ \t]?반)?(?![가-힣])|\d{1,2}:\d{2}(?:[ \t]?~[ \t]?\d{1,2}:\d{2})?/);
+    var pl=f(/(?:장소|곳)[ \t]?[:：][^\n]{2,30}/)||f(/\d층[ \t]?[가-힣]{0,8}/)||f(/[가-힣]+(?:로|길)[ \t]?\d+(?:번길)?/)||f(/[가-힣A-Za-z0-9○]{1,12}(?:복지관|센터|회관|경로당|강당|교실|사무실|식당|체육관|도서관|학교|공원)/);
+    var ph=f(/(?:0\d{1,2}|1[5-9]\d{2})[-.)][ \t]?[0-9○]{3,4}[-.][0-9○]{4}|1[5-9]\d{2}[-.]\d{4}|☎[ \t]?[0-9○][0-9○\-]*/);
+    var who=/문의|담당/.test(t);
+    return [
+      {k:'날짜',found:d,no:'날짜가 보이지 않습니다. 넣을 내용이면 넣어 주세요.',more:(d&&!dow)?'요일은 보이지 않습니다. 날짜 옆에 요일을 함께 쓰면 헷갈리지 않습니다.':''},
+      {k:'시간',found:tm,no:'시간이 보이지 않습니다. 넣을 내용이면 넣어 주세요.',more:''},
+      {k:'장소',found:pl,no:'장소가 보이지 않습니다. 넣을 내용이면 넣어 주세요.',more:''},
+      {k:'문의 전화',found:ph,no:'문의 전화번호가 보이지 않습니다. 넣을 내용이면 넣어 주세요.',more:(ph&&!who)?'누구에게 물으면 되는지(담당·문의)는 보이지 않습니다.':''}
+    ];
+  }
+
+  /* ---------- 살펴보기 ---------- */
+  function myEntries(my){
+    return (my||[]).filter(function(x){return x&&x.w&&x.to;}).map(function(x){
+      return {w:[x.w],to:String(x.to).split(/[,|]/).map(function(s){return s.trim();}).filter(Boolean),to2:[],t:'n',src:'M',soft:false,ask:false,note:'',mid:false,vo:false,pas:false,tp:null,n:null,la:'',open:true,lb:'any',cat:'word'};
+    });
+  }
+  function analyze(text,opt){
+    opt=opt||{};text=String(text||'');
+    var y=+opt.y||40,r=+opt.r||60,marks=[],m;
+    BASE.concat(compile(myEntries(opt.my))).forEach(function(c){
+      c.re.lastIndex=0;
+      while((m=c.re.exec(text))){
+        if(m[0]===''){c.re.lastIndex++;continue;}
+        if(!preOK(c.e,text,m.index))continue;
+        marks.push(makeD(c,m,text));
+      }
+    });
+    RULES.forEach(function(ru){
+      ru.re.lastIndex=0;
+      while((m=ru.re.exec(text))){
+        if(m[0]===''){ru.re.lastIndex++;continue;}
+        var lead=ru.o.lead?(m[ru.o.lead]||'').length:0,s=m.index+lead,e=m.index+m[0].length;
+        if(ru.o.wb&&isH(text.charAt(m.index-1)))continue;
+        if(ru.o.wbd&&/[가-힣0-9]/.test(text.charAt(m.index-1)))continue;
+        var c=ru.fn?ru.fn(m,text):[];if(c===null||e<=s)continue;
+        var tx=text.slice(s,e);
+        marks.push({s:s,e:e,cat:ru.cat,key:tx,txt:tx,why:ru.why,src:ru.src,cands:c.filter(function(t){return t!==tx;}).map(function(t){return {t:t,l:t===''?'빼기':t.trim()||t,x:0};}),p:PRI[ru.cat]});
+      }
+    });
+    romanMarks(text,marks);
+    var mask=[],mr=/(?:https?:\/\/|www\.)[^\s)]+|[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g;
+    while((m=mr.exec(text)))mask.push([m.index,m.index+m[0].length]);
+    (opt.keep||[]).forEach(function(k){k=String(k).trim();if(!k)return;var p=0,ix;while((ix=text.indexOf(k,p))>=0){mask.push([ix,ix+k.length]);p=ix+k.length;}});
+    marks=marks.filter(function(a){for(var q=0;q<mask.length;q++)if(a.s<mask[q][1]&&a.e>mask[q][0])return false;return true;});
+    marks.sort(function(a,b){return a.s-b.s||(b.e-b.s)-(a.e-a.s)||a.p-b.p;});
+    var sents=splitSentences(text),ks=opt.keepSent||{};
+    sents.forEach(function(q){q.txt=text.slice(q.s,q.e);var hg=(q.txt.match(/[가-힣]/g)||[]).length;
+      q.lv=(ks[q.txt]||hg*2<q.len)?0:(q.len>r?2:q.len>y?1:0);});
+    var out=[],last=-1,si=0;
+    marks.forEach(function(a){
+      if(a.s<last)return;
+      while(si<sents.length&&sents[si].e<=a.s)si++;
+      if(si>=sents.length||a.s<sents[si].s||a.e>sents[si].e)return;
+      a.si=si;out.push(a);last=a.e;
+    });
+    var counts={long:0,word:0,han:0,style:0,neg:0,rom:0,num:0,stig:0};
+    out.forEach(function(a){counts[a.cat]++;});
+    sents.forEach(function(q){if(q.lv)counts.long++;});
+    var info=findInfo(text);
+    counts.miss=text.trim()?info.filter(function(x){return !x.found;}).length:0;
+    return {marks:out,sents:sents,counts:counts,info:info};
+  }
+
+  /* ---------- AI 주문서 ---------- */
+  var CATNAME={long:'긴 문장',word:'어려운 낱말',han:'한자말 투',style:'피동·돌려 말하기',neg:'이중 부정',rom:'영어·줄임말·한자',num:'숫자로 적은 날짜·시각',stig:'낙인이 될 수 있는 말',miss:'빠진 것 알림'};
+  function buildPrompt(text,res,keep,on,y){
+    var L=[],k=(keep||[]).map(function(s){return String(s).trim();}).filter(Boolean);
+    on=on||{};
+    L.push('아래 안내문을 어르신이 읽기 쉽게 다시 써 주세요.');
+    L.push('');
+    L.push('[지켜 주세요]');
+    L.push('1. 사실(날짜·요일·시간·장소·금액·전화번호·기관 이름·사람 수)은 한 글자도 바꾸지 마세요. 없는 내용을 지어내지 마세요.');
+    L.push('2. 바꾸면 안 되는 말: '+(k.length?k.join(', '):'(없음)')+' — 법에 있는 말과 사업·기관 이름도 그대로 두세요.');
+    L.push('3. 한 문장은 공백 빼고 '+(y||40)+'자 안쪽으로, 한 문장에 한 가지 내용만 쓰세요.');
+    L.push('4. 어려운 한자말·외국어·줄임말은 쉬운 우리말로 바꾸고, 꼭 써야 하면 괄호로 풀이를 붙이세요.');
+    L.push('5. 「~하시기 바랍니다」 대신 「~해 주세요」로, 피동과 이중 부정 대신 「누가 무엇을 한다」로 쓰세요.');
+    L.push('6. 사람을 낮추거나 낙인이 될 수 있는 말은 쓰지 마세요(위 2번에 적은 말은 그대로).');
+    L.push('7. 날짜·시간·장소·준비물·문의 전화는 줄을 나누어 한눈에 보이게 쓰세요.');
+    L.push('8. 꾸밈 기호(별표·샵)나 표 없이 보통 글로 쓰세요.');
+    L.push('9. 다 쓴 뒤 「바꾼 곳 목록(원래 말 → 바꾼 말)」과 「사람이 확인할 곳」을 따로 적어 주세요.');
+    L.push('');
+    L.push('[안내문]');
+    L.push(text.trim());
+    var lines=[];
+    if(on.long!==false)res.sents.forEach(function(q){if(q.lv)lines.push('- 긴 문장('+q.len+'자): '+q.txt.slice(0,24)+(q.txt.length>24?'…':''));});
+    res.marks.forEach(function(a){if(on[a.cat]===false)return;var c=a.cands.filter(function(x){return x.t!==null;})[0];lines.push('- '+CATNAME[a.cat]+': '+a.txt.trim()+(c?' → '+(c.t===''?'(빼기)':c.t.trim()):''));});
+    if(lines.length){L.push('');L.push('[도구가 표시한 곳 — 참고만 하세요]');if(lines.length>60){lines=lines.slice(0,60);lines.push('- … (더 있음)');}L=L.concat(lines);}
+    var miss=res.info.filter(function(x){return !x.found;}).map(function(x){return x.k;});
+    if(miss.length&&on.miss!==false){L.push('');L.push('[글에 보이지 않는 내용] '+miss.join(', ')+' — 지어내지 말고, 필요해 보이면 「사람이 확인할 곳」에 적어 주세요.');}
+    return L.join('\n');
+  }
+  function srcLabel(src){
+    if(src==='M')return {cls:'my',tag:'내 낱말',full:'이 브라우저에 더해 둔 내 낱말'};
+    if(src==='F')return {cls:'fld',tag:'현장 말',full:'확인한 자료에는 없고 현장에서 모은 말입니다.'};
+    return {cls:'ok',tag:'국립국어원 자료',full:src.split('').map(function(c){return SRC[c];}).join(' · ')};
+  }
+  function dictStats(){
+    var o={total:0,ok:0,field:0,word:0,wordOk:0,wordField:0,stig:0,abbr:0,rules:RULES.length,known:KNOWN.length};
+    DICT.forEach(function(e){o.total++;var ok=e.src!=='F';if(ok)o.ok++;else o.field++;
+      if(e.cat==='word'){o.word++;if(ok)o.wordOk++;else o.wordField++;}else if(e.cat==='stig')o.stig++;else o.abbr++;});
+    return o;
+  }
+  return {analyze:analyze,splitSentences:splitSentences,countLen:countLen,cutHints:cutHints,conj:conj,vf:vf,fixP:fixP,joinP:joinP,findInfo:findInfo,buildPrompt:buildPrompt,srcLabel:srcLabel,dictStats:dictStats,DICT:DICT,RULES:RULES,SRC:SRC,CATNAME:CATNAME};
+})();
+if(typeof module!=='undefined'&&module.exports)module.exports=EN;
+</script>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id);};
+  var KEY_MY='welfare-tools.easy-notice.mywords.v1',KEY_LIM='welfare-tools.easy-notice.limits.v1',KEY_CAT='welfare-tools.easy-notice.cats.v1';
+  function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+  function lsSet(k,v){try{if(v==null)localStorage.removeItem(k);else localStorage.setItem(k,v);}catch(e){}}
+  function toast(t){var el=$('toast');el.textContent=t;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(function(){el.classList.remove('show');},2200);}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function copyText(t,msg){
+    function fb(){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}ta.remove();}
+    if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).catch(fb);else fb();
+    toast(msg||'복사했습니다');
+  }
+
+  /* ---------- 예시 (지어낸 글) ---------- */
+  var EX=[
+['2026년 하반기 어르신 스마트폰 교실 참여자 모집 안내','',
+'○○복지관에서는 관내 거주 65세 이상 독거노인 및 저소득 어르신을 대상으로 디지털 기기 활용 능력 제고를 위하여 스마트폰 교실을 운영하고자 하오니 참여를 희망하시는 분께서는 하기 일정을 참고하시어 기한 내에 신청서를 제출하여 주시기 바랍니다.','',
+'1. 모집 기간: 2026. 11. 16.(월) ~ 11. 27.(금) 09:00~18:00',
+'2. 모집 인원: 20명(선착순 마감)',
+'3. 신청 방법: 복지관 2층 사무실 내방 또는 유선 접수',
+'4. 구비서류: 신분증 지참, 참가 신청서 1부(소정 양식)',
+'5. 교육 일시: 12. 1.(화)부터 매주 화요일 14:00~15:30',
+'6. 참가비: 무료(교재비 5,000원은 본인 부담)','',
+'※ 신청서를 기한 내에 제출하지 않으면 안 됩니다.',
+'※ 금번 교육은 OT(오리엔테이션) 불참 시 수강이 불가합니다.',
+'※ 기타 문의 사항은 담당자에게 문의 바랍니다.'].join('\n'),
+['시설 보수 공사에 따른 임시 휴관 안내','',
+'당 복지관은 노후 시설 보수 공사로 인하여 아래와 같이 임시 휴관을 실시하오니 이용에 착오 없으시기 바랍니다.','',
+'- 휴관 기간: 12. 22.(화) ~ 익일 12. 23.(수)',
+'- 휴관 중에는 경로식당 및 프로그램실 이용이 일체 불가하며, 도시락은 12. 21.(월) 사전 신청자에 한하여 배부할 예정입니다.',
+'- 도시락 수령 시 본인 확인이 필요하므로 회원증을 필히 지참하여 주시기 바랍니다.',
+'- 공사 일정은 사정에 따라 변경될 수 있으며 변경 시 홈페이지 및 SNS를 통해 추후 통보하겠습니다.','',
+'휴관 기간 동안 불편을 드려 죄송합니다. 조속히 공사를 종료하고 금년 내에 보다 나은 환경에서 서비스를 제공할 수 있도록 하겠습니다.','',
+'문의: ○○복지관 총무팀 ☎ 02-000-0000'].join('\n'),
+['아동 급식 지원 신청 서류 안내','',
+'결손가정 및 수급자 가정 아동의 보호자께서는 급식 지원 신청을 위하여 다음의 서류를 구비하여 11. 20.(금)까지 지역아동센터로 송부하여 주시기 바랍니다.','',
+'1. 신청서(상기 양식에 보호자가 자필 기재 후 날인)',
+'2. 주민등록등본 1부(최근 3개월 이내 발급분에 한함)',
+'3. 통장 사본 1매','',
+'서류가 미비한 경우 접수가 되지 않으며, 미제출 시에는 지원 대상에서 제외될 수 있습니다. 제출하신 서류는 일체 반환하지 않습니다.',
+'기 제출한 서류에 변동 사항이 없지 않은 경우에는 담당자에게 유선으로 문의하시기 바랍니다.',
+'E-mail 접수도 가능합니다.','',
+'문의: ○○지역아동센터 (전화 02-000-0000, 평일 10:00~18:00)'].join('\n')
+  ];
+
+  /* ---------- 상태 ---------- */
+  var CATS=['long','word','han','style','neg','rom','num','stig','miss'];
+  var ON=(function(){var o={};CATS.forEach(function(c){o[c]=true;});try{var s=JSON.parse(lsGet(KEY_CAT)||'null');if(s)CATS.forEach(function(c){if(s[c]===false)o[c]=false;});}catch(e){}return o;})();
+  var LIM=(function(){try{var s=JSON.parse(lsGet(KEY_LIM)||'null');if(s&&s.y>0&&s.r>0)return {y:+s.y,r:+s.r};}catch(e){}return {y:40,r:60};})();
+  var MY=(function(){try{var s=JSON.parse(lsGet(KEY_MY)||'null');if(Array.isArray(s))return s.filter(function(x){return x&&x.w&&x.to;});}catch(e){}return [];})();
+  var UNDO=[],KS={},RES=null,OPEN=null;
+  var src=$('src'),view=$('view'),pop=$('pop');
+
+  function keepList(){return $('keep').value.split(/[,，\n]/).map(function(s){return s.trim();}).filter(Boolean);}
+  function setText(t,keepUndo){if(!keepUndo){UNDO.push(src.value);if(UNDO.length>60)UNDO.shift();}src.value=t;$('btnUndo').disabled=!UNDO.length;render();}
+
+  /* ---------- 종류 고르기 ---------- */
+  var SW={long:['긴','background:var(--long-y)'],word:['낱말','border-bottom:3px solid var(--m-word);background:var(--m-word-bg)'],han:['투','border-bottom:3px dashed var(--m-han);background:var(--m-han-bg)'],
+    style:['돌려','border-bottom:3px dotted var(--m-style);background:var(--m-style-bg)'],neg:['부정','border-bottom:4px double var(--m-neg);background:var(--m-neg-bg)'],
+    rom:['AB','border-bottom:3px dotted var(--m-rom);background:var(--m-rom-bg)'],num:['12','border-bottom:3px dashed var(--m-rom);background:transparent'],stig:['낙인','border-bottom:3px solid var(--m-stig);background:var(--m-stig-bg)'],miss:['?','background:var(--amber-bg)']};
+  function buildCats(){
+    var box=$('cats');box.textContent='';
+    CATS.forEach(function(c){
+      var lab=document.createElement('label');lab.className='cat'+(ON[c]?'':' off');
+      var cb=document.createElement('input');cb.type='checkbox';cb.checked=ON[c];cb.id='cat-'+c;
+      cb.addEventListener('change',function(){ON[c]=cb.checked;lsSet(KEY_CAT,JSON.stringify(ON));lab.className='cat'+(ON[c]?'':' off');closePop();render();});
+      var sw=document.createElement('span');sw.className='sw';sw.setAttribute('style',SW[c][1]);sw.setAttribute('aria-hidden','true');sw.textContent=SW[c][0];
+      var tx=document.createElement('span');tx.innerHTML=esc(EN.CATNAME[c])+' <b id="cnt-'+c+'">0</b>곳';
+      lab.appendChild(cb);lab.appendChild(sw);lab.appendChild(tx);box.appendChild(lab);
+    });
+  }
+
+  /* ---------- 그리기 ---------- */
+  var VM=[]; /* 지금 화면에 보이는 표시 */
+  function render(){
+    var text=src.value;
+    RES=EN.analyze(text,{y:LIM.y,r:LIM.r,keep:keepList(),my:MY,keepSent:KS});
+    CATS.forEach(function(c){var el=$('cnt-'+c);if(el)el.textContent=RES.counts[c]||0;});
+    var total=0;CATS.forEach(function(c){if(c!=='miss'&&ON[c])total+=RES.counts[c]||0;});
+    $('total').textContent='표시 '+total+'곳';
+    $('stat').textContent=text.trim()?('글자 수 '+EN.countLen(text)+'자(공백 빼고) · 문장 '+RES.sents.length+'개'):'';
+    VM=RES.marks.filter(function(a){return ON[a.cat];});
+    if(!text.trim()){view.innerHTML='<span class="empty">위 칸에 안내문을 붙여 넣으면 여기에 살펴볼 곳이 표시됩니다. 「예시 넣기」를 눌러 먼저 써 보세요.</span>';}
+    else{
+      var h='',pos=0,mi=0;
+      RES.sents.forEach(function(q,qi){
+        h+=esc(text.slice(pos,q.s));
+        var lv=ON.long?q.lv:0;
+        if(lv)h+='<span class="sent '+(lv===2?'r':'y')+'"><button type="button" class="lchip" data-q="'+qi+'" aria-label="긴 문장 '+q.len+'자. 누르면 까닭이 나옵니다">긴 문장 '+q.len+'자</button>';
+        var p=q.s;
+        while(mi<VM.length&&VM[mi].s<q.e){
+          var a=VM[mi];
+          if(a.s>=p){h+=esc(text.slice(p,a.s))+'<button type="button" class="mk c-'+a.cat+'" data-i="'+mi+'" aria-label="'+esc(EN.CATNAME[a.cat]+': '+a.txt.trim()+'. 누르면 까닭과 고칠 말이 나옵니다')+'">'+esc(text.slice(a.s,a.e))+'</button>';p=a.e;}
+          mi++;
+        }
+        h+=esc(text.slice(p,q.e));
+        if(lv)h+='</span>';
+        pos=q.e;
+      });
+      h+=esc(text.slice(pos));
+      view.innerHTML=h;
+    }
+    renderMiss(text);
+    $('aiBox').value=text.trim()?EN.buildPrompt(text,RES,keepList(),ON,LIM.y):'';
+    $('aiWarn').hidden=true;
+  }
+  function renderMiss(text){
+    var box=$('miss');
+    if(!ON.miss||!text.trim()){box.hidden=true;return;}
+    box.hidden=false;
+    var h='<h3>날짜·시간·장소·문의 전화 — 보이는지 살펴봤습니다</h3><ul>';
+    RES.info.forEach(function(x){
+      if(x.found)h+='<li class="yes">'+esc(x.k)+' — 보입니다: 「'+esc(x.found.length>28?x.found.slice(0,28)+'…':x.found)+'」'+(x.more?' <span style="color:var(--amber);font-weight:700">'+esc(x.more)+'</span>':'')+'</li>';
+      else h+='<li class="no">'+esc(x.no)+'</li>';
+    });
+    h+='</ul><p class="hint">글자 모양으로만 찾습니다. 안내문에 따라 없어도 되는 내용일 수 있습니다.</p>';
+    box.innerHTML=h;
+  }
+
+  /* ---------- 까닭·고칠 말 창 ---------- */
+  function closePop(back){
+    if(pop.hidden)return;
+    pop.hidden=true;pop.textContent='';
+    var on=view.querySelector('.on');if(on){on.classList.remove('on');if(back)on.focus();}
+    OPEN=null;
+  }
+  function place(btn){
+    var wr=$('viewwrap').getBoundingClientRect(),rs=btn.getClientRects(),br=rs.length?rs[rs.length-1]:btn.getBoundingClientRect();
+    pop.style.top=(br.bottom-wr.top+8)+'px';
+    var w=Math.min(400,wr.width);
+    pop.style.left=Math.max(0,Math.min(br.left-wr.left,wr.width-w))+'px';
+  }
+  function mkBtn(cls,label,fn){var b=document.createElement('button');b.type='button';b.className=cls;b.textContent=label;b.addEventListener('click',fn);return b;}
+  function selectInSrc(s,e){closePop();src.focus();try{src.setSelectionRange(s,e);}catch(x){}try{src.scrollIntoView({block:'center'});}catch(x){}toast('위 칸에서 그 자리를 골라 두었습니다. 바로 고쳐 쓰세요.');}
+  function focusFrom(pos){
+    var bs=view.querySelectorAll('.mk');
+    for(var i=0;i<bs.length;i++){if(VM[+bs[i].dataset.i].s>=pos){bs[i].focus();return;}}
+    if(bs.length)bs[bs.length-1].focus();
+  }
+  function openMark(btn){
+    var a=VM[+btn.dataset.i];if(!a)return;
+    closePop();OPEN=a;btn.classList.add('on');
+    var sl=EN.srcLabel(a.src);
+    var h='<p class="pk"><span class="tagc">'+esc(EN.CATNAME[a.cat])+'</span><span class="tsrc '+sl.cls+'">'+esc(sl.tag)+'</span></p>'+
+      '<p class="pw">「'+esc(a.txt.trim())+'」</p><p>'+esc(a.why)+'</p>';
+    pop.innerHTML=h;
+    var real=a.cands.filter(function(c){return c.t!==null;}),man=a.cands.filter(function(c){return c.t===null;});
+    var pc=document.createElement('div');pc.className='pc';
+    real.forEach(function(c){
+      var b=mkBtn('cand',c.l,function(){
+        var t=src.value,ns=t.slice(0,a.s)+c.t+t.slice(a.e),at=a.s+c.t.length;
+        closePop();setText(ns);toast('바꿨습니다. 「되돌리기」로 되돌릴 수 있습니다.');focusFrom(at);
+      });
+      if(c.x){b.title='현장에서 더한 후보';b.classList.add('man');}
+      b.setAttribute('aria-label','「'+c.l+'」으로 바꾸기'+(c.x?' (현장에서 더한 후보)':''));
+      pc.appendChild(b);
+    });
+    man.forEach(function(c){pc.appendChild(mkBtn('cand man','→ '+c.l+' (직접 고치기)',function(){selectInSrc(a.s,a.e);}));});
+    if(real.length||man.length)pop.appendChild(pc);
+    else{var np=document.createElement('p');np.className='hint';np.style.margin='0 0 8px';np.textContent='저절로 바꿀 말은 없습니다. 「직접 고치기」로 고쳐 보세요.';pop.appendChild(np);}
+    if(real.some(function(c){return c.x;})){var xp=document.createElement('p');xp.className='psrc';xp.textContent='점선 단추는 자료에 없는, 현장에서 더한 후보입니다.';pop.appendChild(xp);}
+    var ps=document.createElement('p');ps.className='psrc';ps.textContent=(a.src==='F'||a.src==='M'?'':'확인한 자료: ')+sl.full;pop.appendChild(ps);
+    var pa=document.createElement('div');pa.className='pa';
+    pa.appendChild(mkBtn('btn btn-small','직접 고치기',function(){selectInSrc(a.s,a.e);}));
+    pa.appendChild(mkBtn('btn btn-small','이 말은 그대로 둠',function(){
+      var k=$('keep'),cur=keepList(),key=a.key.trim();if(key&&cur.indexOf(key)<0)cur.push(key);k.value=cur.join(', ');
+      closePop();render();toast('「'+key+'」은 그대로 둡니다. 「바꾸면 안 되는 말」 칸에서 뺄 수 있습니다.');focusFrom(a.e);
+    }));
+    pa.appendChild(mkBtn('btn btn-small','닫기',function(){closePop(true);}));
+    pop.appendChild(pa);
+    pop.hidden=false;place(btn);
+    var first=pop.querySelector('button');if(first)first.focus();
+    try{pop.scrollIntoView({block:'nearest'});}catch(x){}
+  }
+  function openSent(btn){
+    var q=RES.sents[+btn.dataset.q];if(!q)return;
+    closePop();OPEN=q;btn.classList.add('on');
+    var cuts=EN.cutHints(q.txt);
+    var h='<p class="pk"><span class="tagc">긴 문장</span><span class="tsrc fld">이 도구의 기준</span></p>'+
+      '<p class="pw">공백 빼고 '+q.len+'자</p>'+
+      '<p>'+(q.lv===2?'기준('+LIM.r+'자)을 넘는 아주 긴 문장입니다. ':'기준('+LIM.y+'자)을 넘는 문장입니다. ')+'한 문장에 한 가지 내용만 담아 둘로 나눠 보세요.</p>';
+    if(cuts.length)h+='<p>끊을 만한 곳: '+cuts.map(function(c){return '「…'+esc(c)+'」 뒤';}).join(', ')+'</p>';
+    pop.innerHTML=h;
+    var pa=document.createElement('div');pa.className='pa';
+    pa.appendChild(mkBtn('btn btn-small','직접 고치기',function(){selectInSrc(q.s,q.e);}));
+    pa.appendChild(mkBtn('btn btn-small','이 문장은 그대로 둠',function(){KS[q.txt]=1;closePop();render();toast('이 문장은 표시하지 않습니다.');}));
+    pa.appendChild(mkBtn('btn btn-small','닫기',function(){closePop(true);}));
+    pop.appendChild(pa);
+    pop.hidden=false;place(btn);
+    var first=pop.querySelector('button');if(first)first.focus();
+    try{pop.scrollIntoView({block:'nearest'});}catch(x){}
+  }
+  view.addEventListener('click',function(e){
+    var t=e.target;if(!t||!t.classList)return;
+    if(t.classList.contains('mk')){if(t.classList.contains('on'))closePop(true);else openMark(t);}
+    else if(t.classList.contains('lchip')){if(t.classList.contains('on'))closePop(true);else openSent(t);}
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!pop.hidden){e.preventDefault();closePop(true);}});
+  document.addEventListener('click',function(e){if(pop.hidden)return;var t=e.target;if(pop.contains(t)||view.contains(t))return;closePop();});
+  window.addEventListener('resize',function(){if(!pop.hidden){var on=view.querySelector('.on');if(on)place(on);}});
+
+  /* ---------- 입력 ---------- */
+  var tmr;src.addEventListener('input',function(){clearTimeout(tmr);tmr=setTimeout(function(){closePop();render();},220);});
+  $('keep').addEventListener('input',function(){clearTimeout(tmr);tmr=setTimeout(function(){closePop();render();},220);});
+  Array.prototype.forEach.call(document.querySelectorAll('[data-ex]'),function(b){b.addEventListener('click',function(){
+    if(src.value.trim()&&!confirm('지금 글을 지우고 예시를 넣을까요? (「되돌리기」로 되돌릴 수 있습니다)'))return;
+    closePop();KS={};setText(EX[+b.dataset.ex]);toast('지어낸 예시 글을 넣었습니다.');});});
+  $('btnClear').addEventListener('click',function(){if(!src.value)return;closePop();KS={};setText('');$('keep').value='';render();src.focus();toast('지웠습니다. 「되돌리기」로 되돌릴 수 있습니다.');});
+  $('btnUndo').addEventListener('click',function(){if(!UNDO.length)return;closePop();src.value=UNDO.pop();$('btnUndo').disabled=!UNDO.length;render();toast('되돌렸습니다.');});
+
+  /* ---------- 긴 문장 기준 ---------- */
+  function limApply(save){
+    var y=parseInt($('limY').value,10),r=parseInt($('limR').value,10);
+    if(!(y>=10)||!(r>=10))return;if(r<y)r=y;
+    LIM={y:y,r:r};if(save)lsSet(KEY_LIM,JSON.stringify(LIM));closePop();render();
+  }
+  $('limY').value=LIM.y;$('limR').value=LIM.r;
+  $('limY').addEventListener('input',function(){limApply(true);});
+  $('limR').addEventListener('input',function(){limApply(true);});
+  $('limReset').addEventListener('click',function(){$('limY').value=40;$('limR').value=60;LIM={y:40,r:60};lsSet(KEY_LIM,null);closePop();render();});
+
+  /* ---------- 내 낱말 ---------- */
+  function saveMy(){lsSet(KEY_MY,MY.length?JSON.stringify(MY):null);}
+  function renderMy(){
+    var ul=$('myList');ul.textContent='';
+    $('myCount').textContent=MY.length?MY.length+'개':'';
+    $('myClear').hidden=!MY.length;
+    MY.forEach(function(x,i){
+      var li=document.createElement('li');var sp=document.createElement('span');sp.innerHTML='<b>'+esc(x.w)+'</b> → '+esc(x.to);
+      var b=mkBtn('btn btn-small','지우기',function(){MY.splice(i,1);saveMy();renderMy();closePop();render();});
+      b.setAttribute('aria-label','내 낱말 '+x.w+' 지우기');
+      li.appendChild(sp);li.appendChild(b);ul.appendChild(li);
+    });
+  }
+  function addMy(){
+    var w=$('myW').value.trim(),t=$('myT').value.trim();
+    if(!w||!t){toast('어려운 말과 쉬운 말을 모두 적어 주세요.');return;}
+    if(/\d{6}[- ]?\d{7}|01\d[- .]?\d{3,4}[- .]?\d{4}/.test(w+' '+t)){toast('전화번호·주민번호 모양은 넣지 않습니다.');return;}
+    MY=MY.filter(function(x){return x.w!==w;});MY.push({w:w,to:t});saveMy();renderMy();
+    $('myW').value='';$('myT').value='';$('myW').focus();closePop();render();toast('「'+w+'」을 내 낱말에 더했습니다.');
+  }
+  $('myAdd').addEventListener('click',addMy);
+  [$('myW'),$('myT')].forEach(function(el){el.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addMy();}});});
+  $('myClear').addEventListener('click',function(){if(!confirm('내 낱말을 모두 지울까요?'))return;MY=[];saveMy();renderMy();closePop();render();});
+
+  /* ---------- 사전 보기 ---------- */
+  var st=EN.dictStats();
+  $('dictSum').textContent='이 도구의 사전 보기 (낱말 '+st.total+'개 · 국립국어원 자료 '+st.ok+'개 · 현장 말 '+st.field+'개)';
+  $('dictBox').addEventListener('toggle',function(){
+    var ul=$('dictList');if(!$('dictBox').open||ul.childNodes.length)return;
+    var h='';
+    EN.DICT.forEach(function(e){
+      var sl=EN.srcLabel(e.src),to=e.to.concat(e.to2).filter(Boolean).join(', ');
+      h+='<li><b>'+esc(e.w[0])+'</b> → '+esc(to||'(꼭 필요한지 살펴보기)')+' <span class="tsrc '+sl.cls+'" title="'+esc(sl.full)+'">'+esc(sl.tag)+'</span>'+(e.ask?' <span class="tsrc fld">살펴보세요</span>':'')+'</li>';
+    });
+    ul.innerHTML=h;
+  });
+
+  /* ---------- 복사·AI 주문서·인쇄 ---------- */
+  $('btnCopy').addEventListener('click',function(){if(!src.value.trim()){toast('먼저 글을 넣어 주세요.');return;}copyText(src.value,'고친 글을 복사했습니다.');});
+  $('btnAi').addEventListener('click',function(){
+    var t=src.value;if(!t.trim()){toast('먼저 글을 넣어 주세요.');return;}
+    var w=[];
+    if(/01[016789][- .]?\d{3,4}[- .]?\d{4}/.test(t))w.push('휴대전화 번호처럼 보이는 숫자');
+    if(/\d{6}[- ]?[1-4]\d{6}/.test(t))w.push('주민등록번호처럼 보이는 숫자');
+    var warn=$('aiWarn');
+    if(w.length){warn.textContent='글에 '+w.join(', ')+'가 있습니다. 개인 것이면 지우고 AI에 넣으세요.';warn.hidden=false;}else warn.hidden=true;
+    copyText(EN.buildPrompt(t,RES,keepList(),ON,LIM.y),'AI 주문서를 복사했습니다. 개인정보를 지웠는지 살펴보고 붙여 넣으세요.');
+  });
+  $('btnPrint').addEventListener('click',function(){
+    var t=src.value.replace(/\s+$/,'');if(!t.trim()){toast('먼저 글을 넣어 주세요.');return;}
+    var title=$('pTitle').value.trim(),body=t.replace(/^\s*\n/,'');
+    if(!title&&$('pFirst').checked){var ix=body.indexOf('\n');if(ix<0){title=body;body='';}else{title=body.slice(0,ix).trim();body=body.slice(ix+1).replace(/^\s*\n/,'');}}
+    else if(title&&$('pFirst').checked){var ix2=body.indexOf('\n'),fl=(ix2<0?body:body.slice(0,ix2)).trim();if(fl===title)body=ix2<0?'':body.slice(ix2+1).replace(/^\s*\n/,'');}
+    $('prH').textContent=title;$('prH').hidden=!title;
+    $('prB').textContent=body;
+    var org=$('pOrg').value.trim(),tel=$('pTel').value.trim(),f=[];
+    if(org)f.push(org);if(tel)f.push('문의 전화 '+tel);
+    $('prF').textContent=f.join('   ');$('prF').hidden=!f.length;
+    var pa=$('printArea');pa.setAttribute('data-size',(document.querySelector('input[name=pSize]:checked')||{value:'l'}).value);
+    pa.setAttribute('data-wide',$('pWide').checked?'1':'0');
+    closePop();window.print();
+  });
+
+  /* ---------- 시작 ---------- */
+  buildCats();renderMy();render();
+  window._en={render:render,state:function(){return {res:RES,on:ON,lim:LIM,my:MY};}};
+})();
+</script>
+<script src="../ai-kit.js"></script>
+<script>/* AI 주문서 끝에 우리 기관 스타일(기관 기본)을 붙인다 */
+(function(){if(!window.EN||!window.AIK||!EN.buildPrompt)return;var o=EN.buildPrompt;EN.buildPrompt=function(){var p=o.apply(this,arguments),st=AIK.read(),b=st.use?AIK.block(null,st):'';return p&&b?p+'\n\n'+b:p;};})();</script>
+<script src="../videos.js?v=5"></script><script src="../remake.js"></script>
+</body>
+</html>

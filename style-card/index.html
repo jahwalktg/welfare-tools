@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>우리 기관 스타일 카드 | 사회복지사 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="견본 문서(빈 양식이나 개인정보를 가린 문서)를 AI에 보여 주고 우리 기관의 틀·말투·낱말을 담은 카드를 만들어 둡니다. 한 번 만들면 모든 AI 주문서 끝에 자동으로 붙습니다. 한글 문서는 hwpx로. 파일로 내보내 동료와 함께 씁니다.">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/style-card/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="우리 기관 스타일 카드 | 사회복지사 업무 도구">
+<meta property="og:description" content="견본 문서(빈 양식이나 개인정보를 가린 문서)를 AI에 보여 주고 우리 기관의 틀·말투·낱말을 담은 카드를 만들어 둡니다. 한 번 만들면 모든 AI 주문서 끝에 자동으로 붙습니다. 한글 문서는 hwpx로. 파일로 내보내 동료와 함께 씁니다.">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/style-card/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --red:#C62E3A; --green:#1F8A4C;
+  --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC;
+  --text:#1A2B50; --muted:#5B6885;
+  --blue-bg:#E8F0FF; --amber:#8A5A00; --amber-bg:#FFF1CC; --amber-line:#E5B93C; --green-bg:#E3F5EA; --red-bg:#FDECEE; --btn-text:#FFFFFF;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#27407A; --red:#FF7A84; --green:#5FD08E;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+  }
+}
+:root[data-theme="dark"]{
+  --blue:#6BA1FF; --navy:#27407A; --red:#FF7A84; --green:#5FD08E;
+  --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+  --text:#EAF0FF; --muted:#A9B6DA;
+  --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
+.lead{margin:0 0 6px;color:var(--muted)}
+.now{margin:0 0 14px;font-size:14px;color:var(--muted)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.tabs button{min-height:46px;padding:0 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:16px}
+.tabs button.on{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:19px}
+.row{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end}
+.fld{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fld label,.fld .lbl{font-size:14px;color:var(--muted);font-weight:600}
+input[type=text],input[type=date],input[type=number],select,textarea{min-height:46px;padding:8px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-size:17px;max-width:100%}
+input[type=text].wide{width:240px}
+input[type=number]{width:110px}
+textarea{width:100%;min-height:140px;font-size:15px;font-family:inherit}
+.btn{min-height:44px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.btn-main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.btn-small{min-height:36px;font-size:14px;padding:0 10px}
+.chk{display:inline-flex;align-items:center;gap:6px;min-height:40px;font-size:15px}
+.chk input{width:20px;height:20px}
+.hint{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.err{color:var(--red);font-weight:700}
+.big{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:14px 0 0}
+.big .box{padding:12px 14px;border-radius:12px;background:var(--bg);border:1.5px solid var(--line)}
+.big .box .k{font-size:14px;color:var(--muted)}
+.big .box .v{font-size:26px;font-weight:800;line-height:1.3}
+.big .box .s{font-size:14px;color:var(--muted)}
+.big .box.main{background:var(--blue-bg);border-color:var(--blue)}
+.big .box button{margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1.5px solid var(--line);font-size:15px;font-weight:600;background:var(--surface)}
+.chip.yes{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.chip.no{color:var(--muted)}
+.chip small{font-weight:400}
+details{margin-top:12px}
+details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;align-items:center}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--bg);font-size:14px}
+.tblwrap{overflow-x:auto;max-width:100%;margin-top:10px}
+.rules td input{width:100%;min-height:38px;font-size:15px;padding:4px 8px}
+.rules td input[type=number]{width:72px}
+.note{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:var(--amber-bg);border:1.5px solid var(--amber-line);font-size:14px}
+.tag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:13px;font-weight:700;margin:1px 2px}
+.tag.y{background:var(--green-bg);color:var(--green)}
+.tag.h{background:var(--red-bg);color:var(--red)}
+.listres td.age{font-weight:800;white-space:nowrap}
+.listres tr.bad td{background:var(--amber-bg)}
+.uses{margin-top:20px}
+.uses ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.uses li{padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);font-size:15px}
+.foot{margin-top:24px;padding:14px 4px 0;border-top:1.5px solid var(--line);font-size:15px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:999px;font-size:15px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+.toast.show{opacity:1}
+[hidden]{display:none!important}
+
+/* ── AI 주문서 화면 공통 ── */
+.notice{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:10px 0 18px;padding:0;list-style:none}
+.notice li{padding:12px 14px;border-radius:12px;border:1.5px solid var(--amber-line);background:var(--amber-bg);font-size:15px;line-height:1.5}
+.notice li b{display:block;color:var(--amber)}
+.card h2{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.card h2 small,.card h3 small,label small{font-weight:400;font-size:14px;color:var(--muted)}
+.card h3{margin:18px 0 6px;font-size:16px}
+.no{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--blue);color:var(--btn-text);font-size:15px;flex:none}
+.grid2{display:grid;gap:10px 14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid2 input,.fld input.full,.fld textarea{width:100%}
+input.full{width:100%}
+.chips.sm{margin:6px 0 0;gap:6px}
+.chips.sm .chip{font-size:14px;padding:4px 10px;cursor:pointer;min-height:32px;text-align:left;overflow-wrap:anywhere}
+.chips.sm .chip.no{text-decoration:line-through}
+.plainlist{margin:6px 0;padding-left:20px;font-size:15px}
+.plainlist li{margin:4px 0}
+.linkbtn{border:0;background:none;padding:0;color:var(--blue);text-decoration:underline;font:inherit;cursor:pointer}
+.lbl{display:block;margin:12px 0 4px;font-size:14px;color:var(--muted);font-weight:600}
+.drop{display:flex;flex-direction:column;align-items:center;gap:2px;padding:16px 12px;margin:8px 0 4px;border:2px dashed var(--line);border-radius:12px;background:var(--bg);text-align:center;cursor:pointer}
+.drop small{color:var(--muted);font-size:14px}
+.drop.over{border-color:var(--blue);background:var(--blue-bg)}
+textarea.prompt{min-height:260px;font-size:14px;line-height:1.55;background:var(--bg)}
+.pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:14px;padding:12px;border-radius:10px;background:var(--bg);border:1.5px solid var(--line);margin:8px 0 0}
+.scard{padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;margin:8px 0;background:var(--bg)}
+.scard .snip{margin:4px 0 8px;font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+.modes{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.mode{display:flex;flex-direction:column;gap:2px;text-align:left;padding:12px 14px;min-height:64px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface)}
+.mode strong{font-size:17px}
+.mode small{font-size:14px;color:var(--muted)}
+.mode.on{border-color:var(--blue);background:var(--blue-bg);box-shadow:inset 0 0 0 1px var(--blue)}
+.src{padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;margin:0 0 12px}
+.src h3{margin:0 0 4px}
+.src select{min-width:200px;max-width:100%}
+.chk.big{display:flex;align-items:flex-start;gap:8px;margin-top:12px;padding:12px;border-radius:12px;border:1.5px solid var(--line);font-weight:600;min-height:0}
+.chk.big input{flex:none;margin-top:2px}
+.chk.big.need{border-color:var(--red);background:var(--red-bg)}
+.big .box.warn{background:var(--amber-bg);border-color:var(--amber-line)}
+.big .box .v{font-size:22px}
+.big .box .s{overflow-wrap:anywhere}
+.uses a,.hint a{color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › <a href="../index.html#ai">AI 주문서</a></p>
+  <h1>우리 기관 스타일 카드</h1>
+  <p class="lead">AI에게 「우리 기관은 이렇게 씁니다」를 알려 주는 카드입니다. 한 번 만들어 두면 이 사이트의 <strong>모든 AI 주문서 끝에 자동으로 붙어</strong>, 챗GPT·제미나이가 우리 기관 틀과 말투로 써 줍니다. 견본 문서를 AI에 보여 주면 카드는 AI가 만들어 줍니다.</p>
+  <ul class="notice">
+    <li><b>참고사항입니다</b> 한 현장의 개인 경험으로 만든 도구입니다. AI가 만든 카드와 글은 초안이니 꼭 읽고 고치세요. 쓴 결과의 책임은 쓰는 분에게 있습니다.</li>
+    <li><b>견본은 빈 양식이나 가린 문서로</b> 이용자 이름·주민번호·연락처·사례 내용이 든 문서는 AI에 올리지 않습니다. 빈 양식, 또는 개인정보를 가린 문서를 견본으로 쓰세요.</li>
+    <li><b>줄인 시간은 동료와 클라이언트에게</b> 카드는 이 브라우저에만 저장됩니다. 파일로 내보내 동료에게 주면 같은 스타일을 함께 씁니다.</li>
+  </ul>
+
+  <section class="card">
+    <h2><span class="no">1</span>기관 기본 — 짧게 다섯 칸</h2>
+    <p class="hint">아는 것만 적으세요. 비워도 됩니다. 적는 대로 저장됩니다.</p>
+    <div class="grid2">
+      <div class="fld"><label for="oType">기관 종류</label><input type="text" id="oType" maxlength="60" placeholder="예: 종합사회복지관"><div class="chips sm" id="typeChips"></div></div>
+      <div class="fld"><label for="oCall">이용자를 부르는 말</label><input type="text" id="oCall" maxlength="60" placeholder="예: 어르신 / 회원님 / 이용인 / 아동·보호자"></div>
+      <div class="fld"><label for="oTone">말투</label><input type="text" id="oTone" maxlength="120" placeholder="예: 공문은 ~합니다, 안내문은 ~해요"><div class="chips sm" id="toneChips"></div></div>
+      <div class="fld"><label for="oAvoid">쓰지 않는 말</label><input type="text" id="oAvoid" maxlength="200" placeholder="예: 수급자, 대상자, 독거노인 → 쓰지 않음"></div>
+    </div>
+    <div class="fld" style="margin-top:10px"><label for="oExtra">그 밖에 지킬 것 <small>날짜 쓰는 법, 기관 이름 쓰는 법, 담당 표시 등</small></label><textarea id="oExtra" maxlength="400" style="min-height:70px" placeholder="예: 날짜는 2026. 3. 5.(목) 꼴 / 기관 이름은 「○○복지관」 / 문의는 부서 이름과 대표 전화만"></textarea></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="no">2</span>문서 스타일 카드 만들기 — 견본을 AI에게 보여 주기</h2>
+    <p class="hint">공문, 사업계획서, 결과보고서, 가정통신문처럼 <b>문서 종류마다 한 장씩</b> 만들어 두면 좋습니다. 견본 한 개면 됩니다.</p>
+
+    <h3>① 견본 준비</h3>
+    <ul class="plainlist">
+      <li><b>빈 양식</b>이 가장 좋습니다. 채워진 문서밖에 없으면 이름·연락처·사례 내용을 지우거나 가린 뒤 씁니다.</li>
+      <li><b>한글 문서는 hwpx로 저장</b>해 주세요. 옛 형식(.hwp)은 AI에 따라 못 읽거나 표가 흐트러질 수 있습니다. <button type="button" class="linkbtn" id="btnHwpx">hwpx로 저장하는 법</button></li>
+    </ul>
+    <div class="note" id="hwpxHelp" hidden>
+      <b>hwpx로 저장하는 법</b><br>
+      한글에서 문서를 열고 <b>파일 → 다른 이름으로 저장하기</b> → 아래쪽 <b>파일 형식</b>을 <b>「한글 표준 문서 (*.hwpx)」</b>로 바꿔 저장합니다.<br>
+      늘 hwpx로 저장하려면 <b>도구 → 환경 설정 → 파일</b>에서 저장 형식을 hwpx로 바꿔 둡니다(메뉴 이름은 한글 판마다 조금 다릅니다).<br>
+      hwpx는 AI가 읽기 쉬운 개방형 문서 형식이라 정부도 공공 문서에 쓰도록 했습니다(행정안전부, 2026년). 그래도 안 읽히면 <b>PDF로 저장</b>해 올리세요.
+    </div>
+
+    <h3>② 어떻게 보여 줄까요</h3>
+    <div class="tabs" id="howTabs" role="tablist">
+      <button type="button" data-h="up" class="on">AI에 파일을 직접 올리기</button>
+      <button type="button" data-h="paste">여기서 글을 꺼내 붙이기</button>
+    </div>
+    <div id="howUp">
+      <p class="hint">챗GPT·제미나이 대화창의 <b>＋(파일 첨부)</b>로 견본 파일(hwpx·PDF)을 올리고, 아래 주문서를 붙여 보냅니다. 표가 많은 양식에 좋습니다.</p>
+    </div>
+    <div id="howPaste" hidden>
+      <p class="hint">파일 올리기가 안 되거나 사용량이 끝났을 때 씁니다. 파일은 이 PC 안에서만 읽고 어디에도 보내지 않습니다.</p>
+      <label class="drop" id="drop"><input type="file" id="file" accept=".hwpx,.docx,.pdf,.txt,.md" hidden><b>견본 파일을 끌어다 놓거나 눌러서 고르기</b><small>hwpx · docx · pdf · txt</small></label>
+      <p class="hint err" id="fileMsg" role="status"></p>
+      <label class="lbl" for="sample">견본 글 <small>파일에서 꺼낸 글이 여기에 들어옵니다. 직접 붙여 넣어도 됩니다.</small></label>
+      <textarea id="sample" style="min-height:150px" placeholder="견본 문서의 글을 붙여 넣으세요"></textarea>
+      <div id="maskBox" hidden>
+        <p class="lbl">개인정보로 보이는 곳 <small>주문서에는 가린 채로 들어갑니다. 기관 대표 전화처럼 그대로 둘 것은 눌러서 풉니다.</small></p>
+        <div class="chips sm" id="maskChips"></div>
+      </div>
+      <div class="fld" style="margin-top:8px"><label for="names">가릴 이름 <small>쉼표로 — 견본에 사람 이름이 있으면 적으세요</small></label><input type="text" id="names" class="full" placeholder="예: 김하늘, 이바다"></div>
+    </div>
+
+    <h3>③ 카드 만들기 주문서</h3>
+    <textarea class="prompt" id="mkPrompt" readonly aria-label="카드 만들기 주문서"></textarea>
+    <div class="row" style="margin-top:8px"><button class="btn btn-main" id="btnMkCopy" type="button">주문서 복사</button><span class="hint" id="mkNote" role="status" style="margin:0"></span></div>
+
+    <h3>④ AI가 준 카드를 여기에 붙여 저장</h3>
+    <div class="row">
+      <div class="fld"><label for="cName">카드 이름</label><input type="text" id="cName" class="wide" maxlength="40" placeholder="예: 공문 / 사업계획서 / 가정통신문"></div>
+    </div>
+    <textarea id="cText" style="min-height:150px;margin-top:8px" placeholder="AI 답에서 「=== 문서 스타일 카드 … === 끝 ===」 부분을 붙여 넣으세요. 읽어 보고 틀린 곳은 고칩니다."></textarea>
+    <div class="row" style="margin-top:8px"><button class="btn btn-main" id="btnSave" type="button">카드 저장</button><button class="btn" id="btnNew" type="button" hidden>새 카드 쓰기</button><span class="hint" id="saveNote" role="status" style="margin:0"></span></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="no">3</span>저장된 카드</h2>
+    <div id="cardList"></div>
+    <div class="row" style="margin-top:12px">
+      <label class="chk"><input type="checkbox" id="useAll"> 주문서에 우리 기관 스타일 붙이기</label>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button class="btn btn-small" id="btnExport" type="button">파일로 내보내기</button>
+      <label class="btn btn-small" style="display:inline-flex;align-items:center;cursor:pointer">파일에서 불러오기<input type="file" id="importFile" accept=".json" hidden></label>
+      <button class="btn btn-small" id="btnWipe" type="button">모두 지우기</button>
+      <span class="hint" id="ioNote" role="status" style="margin:0"></span>
+    </div>
+    <details>
+      <summary>주문서 끝에 이렇게 붙습니다 (미리 보기)</summary>
+      <pre class="pre" id="preview"></pre>
+    </details>
+  </section>
+
+  <section class="uses">
+    <h2>다음에는</h2>
+    <ul>
+      <li><strong><a href="../doc-remake/index.html">우리 기관 스타일로 문서 만들기·바꾸기</a></strong> 받은 양식 채우기, 작년 문서를 올해 것으로, 메모를 문서로. 여기서 만든 카드를 골라 씁니다.</li>
+      <li><strong>다른 주문서에도</strong> 회의록·설문 보고서·공문 주문서 끝에 「기관 기본」이 자동으로 붙습니다.</li>
+      <li><strong>동료와 함께</strong> 「파일로 내보내기」로 받은 파일을 동료가 「파일에서 불러오기」 하면 같은 카드를 씁니다.</li>
+    </ul>
+  </section>
+  <footer class="foot">
+    <p><strong>이 PC 안에서만 처리합니다.</strong> 견본 글과 카드는 인터넷으로 보내지 않습니다. AI에 올린 내용은 그 AI 서비스의 약관을 따릅니다.</p>
+    <p>만든 사람: 서울강남지역자활센터 김태균</p>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="../ai-kit.js"></script>
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id);};
+  var S=AIK.read(), editing=null, how='up', keep=new Set(), items=[];
+  var TYPES=['종합사회복지관','노인복지관','장애인복지관','지역아동센터','노인요양시설','장애인거주시설','주간보호센터','지역자활센터','정신건강복지센터','가족센터'];
+  var TONES=['공문은 ~합니다','안내문은 ~해요','개조식(~함, ~임)','어르신께는 높임말 쉽게'];
+  function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('show');},2200);}
+  function save(){AIK.write(S);renderList();}
+  function chips(box,arr,input,key,add){box.textContent='';arr.forEach(function(v){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=v;b.addEventListener('click',function(){var cur=input.value.trim();input.value=add&&cur&&cur.indexOf(v)<0?cur+', '+v:v;S.org[key]=input.value;save();});box.appendChild(b);});}
+
+  /* 1. 기관 기본 */
+  [['oType','type'],['oCall','call'],['oTone','tone'],['oAvoid','avoid'],['oExtra','extra']].forEach(function(k){
+    $(k[0]).value=S.org[k[1]];
+    $(k[0]).addEventListener('input',function(){S.org[k[1]]=$(k[0]).value;save();});
+  });
+  chips($('typeChips'),TYPES,$('oType'),'type',false);
+  chips($('toneChips'),TONES,$('oTone'),'tone',true);
+
+  /* 2. 카드 만들기 */
+  $('btnHwpx').addEventListener('click',function(){$('hwpxHelp').hidden=!$('hwpxHelp').hidden;});
+  $('howTabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;how=b.dataset.h;[].forEach.call($('howTabs').children,function(x){x.classList.toggle('on',x===b);});$('howUp').hidden=how!=='up';$('howPaste').hidden=how!=='paste';renderPrompt();});
+  function names(){return $('names').value.split(/[,，\n]/).map(function(s){return s.trim();}).filter(Boolean);}
+  function maskScan(){
+    var t=$('sample').value;items=AIK.find(t,names());
+    $('maskBox').hidden=!items.length;var box=$('maskChips');box.textContent='';
+    items.forEach(function(it){var b=document.createElement('button');b.type='button';var on=!keep.has(it.raw);b.className='chip'+(on?' yes':' no');b.textContent=(on?it.raw+' → '+it.label:it.raw+' (그대로 둠)');b.title=on?'눌러서 그대로 두기':'눌러서 다시 가리기';b.addEventListener('click',function(){if(keep.has(it.raw))keep.delete(it.raw);else keep.add(it.raw);maskScan();renderPrompt();});box.appendChild(b);});
+  }
+  function sampleMasked(){return AIK.apply($('sample').value,items,keep).text;}
+  function mkPrompt(){
+    var src=how==='up'?'제가 이 대화에 올린 파일이 [견본 문서]입니다.':'아래 [견본 문서]를 붙였습니다.';
+    var p='당신은 사회복지기관의 문서 담당자를 돕는 편집자입니다. '+src+' 이 견본을 분석해서, 다른 AI 대화에도 그대로 붙여 쓸 수 있는 「문서 스타일 카드」를 만들어 주세요.\n\n'
+      +'카드에 담을 것 (견본에서 실제로 보이는 것만):\n'
+      +'1. 문서 종류와 쓰임 — 한 줄\n'
+      +'2. 틀 — 제목 모양, 머리(문서번호·수신·날짜 등 자리), 큰 항목의 이름과 순서, 항목 번호 매기는 법(1. 가. 1) 가) 등), 표가 있으면 표마다 칸 이름과 순서, 끝맺음(붙임·「끝.」·담당 표시)\n'
+      +'3. 말투 — 문장 끝(~합니다 / ~함 / ~해요), 높임 정도, 견본에 그대로 나오는 자주 쓰는 표현 5~10개\n'
+      +'4. 낱말 — 이용자를 부르는 말, 기관·부서 이름을 쓰는 법, 날짜·시간·금액을 쓰는 법\n'
+      +'5. 분량 — 항목마다 대략 몇 줄인지\n'
+      +'6. 채워야 할 칸 — 이 문서를 새로 쓰려면 제가 알려 줘야 하는 정보 목록\n\n'
+      +'지켜 주세요:\n'
+      +'- 견본의 내용(사람 이름, 숫자, 사례, 사업 내용)은 카드에 옮기지 마세요. 틀과 말투만 담습니다.\n'
+      +'- 견본에서 보이지 않는 규칙은 지어내지 마세요. 알 수 없으면 「견본에서 확인 안 됨」이라고 적습니다.\n'
+      +'- 「이용자A」「[전화1]」처럼 가려진 표시는 개인정보를 가린 자리입니다. 그대로 둡니다.\n'
+      +'- 결과는 「=== 문서 스타일 카드: (문서 종류) ===」로 시작해 「=== 끝 ===」으로 끝나는 한 덩어리 글로 주세요. 설명은 그 밖에 두 줄 이내.';
+    var org=AIK.block(null,S);
+    if(org)p+='\n\n참고 — 우리 기관 기본(카드에 다시 적지 않아도 됩니다):\n'+org.split('\n').filter(function(l){return l.indexOf('- ')===0;}).join('\n');
+    if(how==='paste')p+='\n\n[견본 문서]\n'+(sampleMasked().trim()||'(여기에 견본 글이 들어갑니다 — 위 칸에 붙여 넣으세요)');
+    return p;
+  }
+  function renderPrompt(){$('mkPrompt').value=mkPrompt();}
+  $('sample').addEventListener('input',function(){maskScan();renderPrompt();});
+  $('names').addEventListener('input',function(){maskScan();renderPrompt();});
+  function take(file){
+    if(!file)return;$('fileMsg').textContent='읽는 중…';
+    AIK.readFile(file).then(function(r){$('sample').value=r.text;$('fileMsg').className='hint';$('fileMsg').textContent=r.kind+' 파일에서 '+r.text.length.toLocaleString()+'자를 꺼냈습니다.'+(r.note?' '+r.note:'');if(!$('cName').value)$('cName').value=file.name.replace(/\.[^.]+$/,'').slice(0,40);maskScan();renderPrompt();},
+      function(e){$('fileMsg').className='hint err';$('fileMsg').textContent=e.message;});
+  }
+  $('file').addEventListener('change',function(){take(this.files[0]);this.value='';});
+  var dz=$('drop');
+  ['dragenter','dragover'].forEach(function(ev){dz.addEventListener(ev,function(e){e.preventDefault();dz.classList.add('over');});});
+  ['dragleave','drop'].forEach(function(ev){dz.addEventListener(ev,function(e){e.preventDefault();dz.classList.remove('over');});});
+  dz.addEventListener('drop',function(e){take(e.dataTransfer.files[0]);});
+  $('btnMkCopy').addEventListener('click',function(){
+    if(how==='paste'&&!$('sample').value.trim()){$('mkNote').textContent='견본 글을 먼저 넣어 주세요.';return;}
+    AIK.copy(mkPrompt(),$('mkNote'),how==='up'?'복사했습니다. AI 대화창에 견본 파일을 올리고 이 글을 붙여 보내세요.':'복사했습니다. AI 대화창에 붙여 보내세요.');
+  });
+
+  /* 카드 저장·목록 */
+  function clean(t){var m=t.match(/===\s*문서 스타일 카드[\s\S]*?===\s*끝\s*===/);return (m?m[0]:t).trim();}
+  $('btnSave').addEventListener('click',function(){
+    var text=clean($('cText').value),name=$('cName').value.trim();
+    if(!text){$('saveNote').textContent='카드 글을 붙여 넣어 주세요.';return;}
+    if(!name){var m=text.match(/문서 스타일 카드\s*[:：]\s*([^=\n]+)/);name=m?m[1].trim().slice(0,40):'이름 없는 카드';}
+    var hit=AIK.find(text,[]);
+    if(editing){var c=S.cards.filter(function(x){return x.id===editing;})[0];if(c){c.name=name;c.text=text;}}
+    else S.cards.push({id:'c'+Date.now().toString(36),name:name,text:text});
+    save();resetForm();$('saveNote').textContent='「'+name+'」 카드를 저장했습니다.'+(hit.length?' 카드 안에 전화번호 같은 것이 '+hit.length+'곳 보입니다. 개인정보면 지워 주세요.':'');
+  });
+  function resetForm(){editing=null;$('cName').value='';$('cText').value='';$('btnSave').textContent='카드 저장';$('btnNew').hidden=true;}
+  $('btnNew').addEventListener('click',function(){resetForm();$('saveNote').textContent='';});
+  function renderList(){
+    var box=$('cardList');box.textContent='';
+    if(!S.cards.length){var p=document.createElement('p');p.className='hint';p.textContent='아직 문서 스타일 카드가 없습니다. 위 ②~④로 한 장 만들어 보세요. 「기관 기본」만 적어도 주문서에 붙습니다.';box.appendChild(p);}
+    S.cards.forEach(function(c){
+      var d=document.createElement('div');d.className='scard';
+      var h=document.createElement('b');h.textContent=c.name;d.appendChild(h);
+      var s=document.createElement('span');s.className='hint';s.textContent=' '+c.text.length.toLocaleString()+'자';d.appendChild(s);
+      var pre=document.createElement('p');pre.className='snip';pre.textContent=c.text.replace(/\s+/g,' ').slice(0,140)+(c.text.length>140?'…':'');d.appendChild(pre);
+      var row=document.createElement('div');row.className='row';
+      [['고치기',function(){editing=c.id;$('cName').value=c.name;$('cText').value=c.text;$('btnSave').textContent='고친 내용 저장';$('btnNew').hidden=false;$('cText').scrollIntoView({block:'center'});$('cText').focus();}],
+       ['복사',function(){AIK.copy(c.text,null);toast('카드 글을 복사했습니다.');}],
+       ['지우기',function(){if(!confirm('「'+c.name+'」 카드를 지울까요?'))return;S.cards=S.cards.filter(function(x){return x!==c;});if(editing===c.id)resetForm();save();}]
+      ].forEach(function(a){var b=document.createElement('button');b.type='button';b.className='btn btn-small';b.textContent=a[0];b.addEventListener('click',a[1]);row.appendChild(b);});
+      d.appendChild(row);box.appendChild(d);
+    });
+    $('useAll').checked=S.use;
+    var pv=AIK.block(S.cards[0]?S.cards[0].id:null,S);
+    $('preview').textContent=pv||'(아직 붙을 내용이 없습니다. 「기관 기본」을 적거나 카드를 저장하세요.)';
+    renderPrompt();
+  }
+  $('useAll').addEventListener('change',function(){S.use=this.checked;save();});
+  $('btnExport').addEventListener('click',function(){
+    var blob=new Blob([JSON.stringify({app:'welfare-tools.style',v:1,org:S.org,cards:S.cards},null,2)],{type:'application/json'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='우리기관_스타일카드.json';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+    $('ioNote').textContent='파일로 받았습니다. 동료에게 주거나 다른 PC에서 불러오세요.';
+  });
+  $('importFile').addEventListener('change',function(){
+    var f=this.files[0];this.value='';if(!f)return;
+    var fr=new FileReader();fr.onload=function(){
+      try{var o=JSON.parse(fr.result);if(!o||o.app!=='welfare-tools.style')throw 0;
+        var n=0;(o.cards||[]).forEach(function(c){if(c&&c.text&&!S.cards.some(function(x){return x.text===c.text;})){S.cards.push({id:'c'+Date.now().toString(36)+(n++),name:String(c.name||'불러온 카드').slice(0,40),text:String(c.text).slice(0,12000)});}});
+        if(!AIK.hasOrg(S)&&o.org){['type','call','tone','avoid','extra'].forEach(function(k){S.org[k]=String(o.org[k]||'').slice(0,400);});[['oType','type'],['oCall','call'],['oTone','tone'],['oAvoid','avoid'],['oExtra','extra']].forEach(function(k){$(k[0]).value=S.org[k[1]];});}
+        save();$('ioNote').textContent='카드 '+n+'장을 불러왔습니다.'+(n===0?' (이미 같은 카드가 있습니다)':'');
+      }catch(e){$('ioNote').textContent='스타일 카드 파일이 아닙니다.';}
+    };fr.readAsText(f);
+  });
+  $('btnWipe').addEventListener('click',function(){
+    if(!confirm('기관 기본과 카드 '+S.cards.length+'장을 이 브라우저에서 모두 지울까요?'))return;
+    AIK.clear();S=AIK.read();[['oType','type'],['oCall','call'],['oTone','tone'],['oAvoid','avoid'],['oExtra','extra']].forEach(function(k){$(k[0]).value='';});resetForm();renderList();$('ioNote').textContent='모두 지웠습니다.';
+  });
+  renderList();
+})();
+</script>
+<script src="../videos.js?v=5"></script>
+<script src="../remake.js"></script>
+</body>
+</html>
