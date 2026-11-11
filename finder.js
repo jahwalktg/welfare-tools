@@ -11,6 +11,7 @@
     'work-board': '인수인계 인수인계서 업무분장 업무분장표 업무매뉴얼 매뉴얼 업무목록 업무정리 담당 부담당 한해달력 연간일정 후임 전임 퇴사 이직 인계 소규모시설',
     'repeat-checklist': '할일 반복업무 체크리스트 매일 매주 매달 업무목록 루틴 보고기한',
     'leave-tracker': '연차 휴가 직원휴가 잔여연차 휴가관리 입사일',
+    'eval-folders': '시설평가 평가준비 평가지표 서류철 폴더만들기 폴더 인덱스탭 바인더라벨 목차표지 평가의날 지도점검 감사서류 인수인계 야근',
     'list-compare': '명단대조 명단비교 중복찾기 빠진사람 누락 두명단 비교 대상자확인',
     'group-maker': '조편성 조나누기 모둠 팀나누기 교육조 프로그램조',
     'random-pick': '추첨 제비뽑기 룰렛 사다리 뽑기 경품',
@@ -52,9 +53,9 @@
   var ROLES = [
     ['case', '사례관리·상담', ['search', 'basic', 'phone', 'guide', 'mask-privacy', 'date-calc', 'list-compare', 'doc-remake', 'easy-notice', 'prompt-notice', 'prompt-guide', 'repeat-checklist', 'gangnam']],
     ['prog', '프로그램·교육', ['attendance', 'cert-print', 'group-maker', 'random-pick', 'survey-tally', 'doc-remake', 'prompt-survey', 'break-timer', 'qr', 'file-tools', 'face-mask']],
-    ['acct', '행정·회계', ['search', 'guide', 'work-board', 'repeat-checklist', 'leave-tracker', 'date-calc', 'excel', 'form-overlay', 'form-prompt', 'doc-remake', 'style-card', 'prompt-minutes', 'show-vote', 'shortcuts']],
+    ['acct', '행정·회계', ['search', 'guide', 'work-board', 'eval-folders', 'repeat-checklist', 'leave-tracker', 'date-calc', 'excel', 'form-overlay', 'form-prompt', 'doc-remake', 'style-card', 'prompt-minutes', 'show-vote', 'shortcuts']],
     ['fund', '후원·홍보', ['newsletter', 'press', 'greeting', 'easy-notice', 'doc-remake', 'labels', 'face-mask', 'map', 'qr', 'prompt-directions']],
-    ['fac', '총무·시설·안전', ['work-board', 'phone', 'safety', 'safety-post', 'safety-links', 'repeat-checklist', 'leave-tracker', 'meeting-timer', 'labels']],
+    ['fac', '총무·시설·안전', ['work-board', 'eval-folders', 'phone', 'safety', 'safety-post', 'safety-links', 'repeat-checklist', 'leave-tracker', 'meeting-timer', 'labels']],
     ['new', '처음 왔어요', ['search', 'guide', 'work-board', 'phone', 'style-card', 'ai-howto', 'repeat-checklist', 'mask-privacy', 'shortcuts', 'excel']]
   ];
   var QUICK = ['우리 기관 스타일', '문서 바꾸기', '지침 찾기', '인수인계', '신입 안내서', '국기초 가늠', '만 나이', '명단 대조', '개인정보 가리기', '수료증 나누기', '주소 라벨', '소식지', '안내문 쉬운 말', '안전표지', '회의록'];

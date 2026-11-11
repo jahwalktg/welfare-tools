@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>평가 서류철·폴더 만들기 | 사회복지사 업무 도구</title>
+<!--meta:start-->
+<meta name="description" content="평가 지표 목록을 붙여 넣으면 지표 번호에 맞춘 빈 PC 폴더 묶음(zip), 서류철 옆면·인덱스 탭 라벨, 목차 표지, 매달 30분 점검표를 한 번에 만듭니다. 지표 내용·배점은 다루지 않고 틀만 만듭니다.">
+<link rel="canonical" href="https://jahwalktg.github.io/welfare-tools/eval-folders/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="사회복지사 업무 도구">
+<meta property="og:title" content="평가 서류철·폴더 만들기 | 사회복지사 업무 도구">
+<meta property="og:description" content="평가 지표 목록을 붙여 넣으면 지표 번호에 맞춘 빈 PC 폴더 묶음(zip), 서류철 옆면·인덱스 탭 라벨, 목차 표지, 매달 30분 점검표를 한 번에 만듭니다. 지표 내용·배점은 다루지 않고 틀만 만듭니다.">
+<meta property="og:url" content="https://jahwalktg.github.io/welfare-tools/eval-folders/">
+<meta property="og:image" content="https://jahwalktg.github.io/welfare-tools/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<!--meta:end-->
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<style>
+:root{
+  --blue:#1A6EFF; --navy:#1A2B50; --red:#C62E3A; --green:#1F8A4C;
+  --bg:#F3F6FC; --surface:#FFFFFF; --line:#D5DDEC;
+  --text:#1A2B50; --muted:#5B6885;
+  --blue-bg:#E8F0FF; --amber:#8A5A00; --amber-bg:#FFF1CC; --amber-line:#E5B93C; --green-bg:#E3F5EA; --red-bg:#FDECEE; --btn-text:#FFFFFF;
+  --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --blue:#6BA1FF; --navy:#27407A; --red:#FF7A84; --green:#5FD08E;
+    --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+    --text:#EAF0FF; --muted:#A9B6DA;
+    --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+  }
+}
+:root[data-theme="dark"]{
+  --blue:#6BA1FF; --navy:#27407A; --red:#FF7A84; --green:#5FD08E;
+  --bg:#0E1630; --surface:#17224A; --line:#2F3F73;
+  --text:#EAF0FF; --muted:#A9B6DA;
+  --blue-bg:#1C2D5E; --amber:#FFD166; --amber-bg:#3A2F10; --amber-line:#8F7420; --green-bg:#123524; --red-bg:#3D1620; --btn-text:#0E1630;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:anywhere}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrapall{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
+.crumb{margin:0;color:var(--muted);font-size:15px}
+.crumb a{color:inherit;text-decoration:underline dotted;text-underline-offset:3px}
+h1{margin:2px 0 4px;font-size:30px;line-height:1.25}
+.lead{margin:0 0 6px;color:var(--muted)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.tabs button{min-height:46px;padding:0 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:700;font-size:16px}
+.tabs button.on{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:19px}
+.row{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end}
+.fld{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fld label,.fld .lbl{font-size:14px;color:var(--muted);font-weight:600}
+input[type=text],input[type=date],input[type=number],select,textarea{min-height:46px;padding:8px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-size:17px;max-width:100%}
+input[type=text].wide{width:240px}
+input[type=number]{width:110px}
+textarea{width:100%;min-height:140px;font-size:15px;font-family:inherit}
+.btn{min-height:44px;padding:0 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:600}
+.btn-main{background:var(--blue);border-color:var(--blue);color:var(--btn-text)}
+.btn-small{min-height:36px;font-size:14px;padding:0 10px}
+.chk{display:inline-flex;align-items:center;gap:6px;min-height:40px;font-size:15px}
+.chk input{width:20px;height:20px}
+.hint{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.err{color:var(--red);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1.5px solid var(--line);font-size:15px;font-weight:600;background:var(--surface)}
+.chip.yes{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.chip.no{color:var(--muted)}
+.chip small{font-weight:400}
+details{margin-top:12px}
+details summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;align-items:center}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--bg);font-size:14px}
+.tblwrap{overflow-x:auto;max-width:100%;margin-top:10px}
+.note{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:var(--amber-bg);border:1.5px solid var(--amber-line);font-size:14px}
+.uses{margin-top:20px}
+.uses ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.uses li{padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);font-size:15px}
+.foot{margin-top:24px;padding:14px 4px 0;border-top:1.5px solid var(--line);font-size:15px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:999px;font-size:15px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+.toast.show{opacity:1}
+[hidden]{display:none!important}
+
+/* ── AI 주문서 화면 공통 ── */
+.notice{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:10px 0 18px;padding:0;list-style:none}
+.notice li{padding:12px 14px;border-radius:12px;border:1.5px solid var(--amber-line);background:var(--amber-bg);font-size:15px;line-height:1.5}
+.notice li b{display:block;color:var(--amber)}
+.card h2{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.card h2 small,.card h3 small,label small{font-weight:400;font-size:14px;color:var(--muted)}
+.card h3{margin:18px 0 6px;font-size:16px}
+.no{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--blue);color:var(--btn-text);font-size:15px;flex:none}
+.grid2{display:grid;gap:10px 14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid2 input,.fld input.full,.fld textarea{width:100%}
+input.full{width:100%}
+.chips.sm{margin:6px 0 0;gap:6px}
+.chips.sm .chip{font-size:14px;padding:4px 10px;cursor:pointer;min-height:32px;text-align:left;overflow-wrap:anywhere}
+.chips.sm .chip.no{text-decoration:line-through}
+.plainlist{margin:6px 0;padding-left:20px;font-size:15px}
+.plainlist li{margin:4px 0}
+.linkbtn{border:0;background:none;padding:0;color:var(--blue);text-decoration:underline;font:inherit;cursor:pointer}
+.lbl{display:block;margin:12px 0 4px;font-size:14px;color:var(--muted);font-weight:600}
+.pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:14px;padding:12px;border-radius:10px;background:var(--bg);border:1.5px solid var(--line);margin:8px 0 0}
+.uses a,.hint a{color:var(--blue)}
+
+/* ── 이 화면만 ── */
+.grid2 select{width:100%}
+.yr{align-items:center;gap:6px}
+.yr input[type=number]{width:96px}
+.yr span{font-size:15px;color:var(--muted)}
+#raw{min-height:170px;font-size:15px;line-height:1.5;white-space:pre;overflow:auto;tab-size:8}
+.tblwrap.tall{max-height:440px;overflow:auto}
+table.list{min-width:560px}
+table.list th{position:sticky;top:0;z-index:1}
+table.list td{padding:4px}
+table.list input{width:100%;min-height:38px;font-size:15px;padding:4px 8px;border-radius:8px}
+table.list .c-num{width:104px}
+table.list .c-area{width:160px}
+table.list .c-del{width:66px;text-align:center}
+table.list tr.nonum .c-num input{border-color:var(--amber-line);background:var(--amber-bg)}
+input.sm{width:84px}
+.chkcol{display:flex;flex-direction:column;gap:2px;margin-top:10px}
+.chkcol .chk{align-items:flex-start;min-height:36px}
+.chkcol .chk input{flex:none;margin-top:3px}
+#tree{max-height:300px;overflow:auto;line-height:1.5}
+#pages{display:flex;flex-direction:column;gap:12px;align-items:center;margin-top:12px;min-width:0;overflow:hidden}
+#pages>.hint{align-self:flex-start;margin:0}
+.pagewrap{background:#DDE2EA;padding:8px;border-radius:10px;max-width:100%;overflow:hidden}
+#measure{position:absolute;left:-99999px;top:0;width:297mm;visibility:hidden;pointer-events:none}
+#printArea{display:none}
+
+/* 인쇄 용지 (실제 mm, 어두운 테마에서도 흰 종이) */
+.page,.doc{background:#fff;color:#111;font-family:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif;word-break:keep-all;overflow-wrap:anywhere;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{position:relative;width:210mm;height:297mm;overflow:hidden;line-height:1.2}
+.lab{position:absolute;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:1.2mm 2mm}
+.page.cut .lab{outline:0.2mm dashed #8A8F98;outline-offset:-0.1mm}
+#pages .page:not(.cut) .lab{outline:0.2mm dotted #C9D0DC;outline-offset:-0.1mm}
+#pages .lab.empty{background:repeating-linear-gradient(45deg,transparent 0 3mm,rgba(0,0,0,.05) 3mm 6mm)}
+.lab .lin{max-width:100%;min-width:0}
+.lab .ln{font-size:2.4em;font-weight:800;line-height:1.05;white-space:nowrap}
+.lab .lt{font-weight:600;margin-top:.15em}
+.lab .lt.solo{font-size:1.5em;font-weight:800}
+.lab .lm,.lab .la{font-size:.62em;color:#333}
+.lab .la{margin-top:.25em}
+.lab .lm{margin-bottom:.15em}
+.lab.k-tab .ln{font-size:2.2em}
+.lab.k-tab .lt{font-size:.8em;font-weight:500;margin-top:.1em}
+.lab.k-tab .lt.solo{font-size:1.2em;font-weight:800}
+.lab.band{padding-left:5mm}
+.lab.band::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3mm;background:var(--ac,#888)}
+.lab.k-tab.band{padding-left:4mm}
+.lab.k-tab.band::before{width:2mm}
+.lab.vert{align-items:flex-start;padding:3mm 1mm}
+.lab.vert .lin{display:flex;flex-direction:column;align-items:center;gap:.45em;width:100%}
+.lab.vert .ln{font-size:1.5em}
+.lab.vert .lt,.lab.vert .lt.solo{width:1.05em;font-size:1.3em;font-weight:700;line-height:1.12;word-break:break-all;margin:0}
+.lab.vert .lm,.lab.vert .la{font-size:.5em;margin:0}
+.lab.vert.band{padding-left:1mm;padding-top:7mm}
+.lab.vert.band::before{left:0;right:0;top:0;bottom:auto;width:auto;height:4mm}
+.doc{width:210mm;min-height:297mm;padding:14mm 12mm;font-size:11pt;line-height:1.4}
+.doc.land{width:297mm;min-height:210mm;padding:12mm}
+.doc .dt{font-size:20pt;font-weight:800;text-align:center;margin:0 0 3mm;line-height:1.3}
+.doc .dm{text-align:center;font-size:11pt;margin:0 0 5mm;color:#333}
+.doc .dm2{display:flex;flex-wrap:wrap;gap:2mm 10mm;justify-content:space-between;font-size:11pt;margin:0 0 4mm}
+.doc .blank{display:inline-block;width:30mm;height:1.15em;border-bottom:0.3mm solid #333;vertical-align:bottom}
+.doc .blank.s{width:11mm}
+.doc table{border-collapse:collapse;width:100%;table-layout:fixed;font-size:10.5pt;min-width:0}
+.doc th,.doc td{border:0.3mm solid #333;padding:1.6mm 2mm;background:#fff;color:#111;text-align:left;vertical-align:middle;font-size:inherit}
+.doc th{background:#EEF1F5;text-align:center;font-weight:700}
+.doc thead{display:table-header-group}
+.doc tr{break-inside:avoid;page-break-inside:avoid}
+.doc td.c{text-align:center;font-weight:700}
+.doc .w-no{width:22mm}
+.doc .w-ar{width:38mm}
+.doc .w-nt{width:42mm}
+.doc .w-wh{width:20mm}
+.doc .w-mo{width:13.5mm}
+.doc table.mchk{font-size:9.5pt}
+.doc table.mchk td{height:8.5mm;padding:1mm 1.5mm}
+.doc table.mchk th{padding:1.2mm 1mm}
+.doc .dn{margin:4mm 0 0;font-size:9.5pt;color:#333}
+.doc .dot{display:inline-block;width:2.6mm;height:2.6mm;border-radius:50%;margin-right:1.5mm;background:var(--ac,#888);vertical-align:middle}
+@media print{
+  body{background:#fff;color:#111}
+  body > *{display:none !important}
+  body > #printArea{display:block !important}
+  #printArea .page{break-after:page;page-break-after:always}
+  #printArea .page:last-child{break-after:auto;page-break-after:auto}
+  #printArea .doc{width:auto;min-height:0;padding:0}
+  #printArea .doc + .doc{break-before:page;page-break-before:always}
+}
+</style>
+<style id="pgStyle">@page{size:A4 portrait;margin:0}</style>
+</head>
+<body>
+<div class="wrapall">
+  <p class="crumb"><a href="../index.html">사회복지사 업무 도구</a> › <a href="../index.html#docs">문서·명단 도구</a></p>
+  <h1>평가 서류철·폴더 만들기</h1>
+  <p class="lead">평가 지표 목록을 붙여 넣으면 <strong>지표 번호에 맞춘 빈 PC 폴더 묶음, 서류철 라벨, 목차 표지, 매달 30분 점검표</strong>를 한 번에 만듭니다. 서류는 기관에서 채우고, 이 도구는 번호를 맞춘 틀만 만듭니다.</p>
+  <ul class="notice">
+    <li><b>참고사항입니다</b> 한 현장의 개인 경험으로 만든 도구입니다. 지표 이름과 번호는 <strong>그해 평가 매뉴얼 원문</strong>에서 직접 붙여 넣으세요. 이 도구는 지표의 내용·배점을 알지 못하고 판정하지 않습니다. 쓴 결과의 책임은 쓰는 분에게 있습니다.</li>
+    <li><b>이 PC 안에서만</b> 목록은 이 브라우저에만 저장되고 어디에도 보내지 않습니다. 폴더 묶음은 빈 틀이며 서류는 들어 있지 않습니다.</li>
+    <li><b>줄인 시간은 동료와 클라이언트에게</b> 기관 방식이 다르면 「내 기관에 맞게 다시 만들기」로 바꿔 쓰세요.</li>
+  </ul>
+
+  <section class="card">
+    <h2><span class="no">1</span>지표 목록 넣기</h2>
+    <p class="hint">그해 평가 매뉴얼이나 지표 엑셀에서 지표 번호와 이름을 복사해 붙여 넣으세요. <b>한 줄에 지표 하나</b>입니다.</p>
+    <div class="grid2" style="margin-top:10px">
+      <div class="fld"><label for="org">기관 이름 <small>선택 — 라벨·표지·폴더 이름에 들어갑니다</small></label><input type="text" id="org" maxlength="30" placeholder="예: ○○복지관" autocomplete="off"></div>
+      <div class="fld"><span class="lbl" style="margin:0">평가 연도와 대상 기간 <small>선택</small></span>
+        <div class="row yr">
+          <input type="number" id="evalYear" min="2000" max="2100" placeholder="2027" aria-label="평가 연도"><span>년 평가 · 대상 기간</span>
+          <input type="number" id="from" min="2000" max="2100" placeholder="2024" aria-label="대상 기간 시작 연도"><span>~</span>
+          <input type="number" id="to" min="2000" max="2100" placeholder="2026" aria-label="대상 기간 끝 연도"><span>년</span>
+        </div>
+      </div>
+    </div>
+    <div class="fld" style="margin-top:12px"><label for="raw">지표 목록 붙여 넣기</label>
+      <textarea id="raw" spellcheck="false" placeholder="한 줄에 지표 하나씩 붙여 넣으세요. 이런 모양을 알아봅니다.&#10;&#10;A1 예시 지표 가&#10;1-1. 예시 지표 나&#10;(엑셀에서 복사한 칸)  번호 [탭] 이름 [탭] 영역&#10;[영역 이름]   ← 이런 줄은 그 아래 지표들의 영역이 됩니다"></textarea>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button class="btn btn-main" id="btnRead" type="button">목록 만들기</button>
+      <button class="btn" id="btnSample" type="button">예시 넣기</button>
+      <span class="hint" id="readNote" role="status" style="margin:0"></span>
+    </div>
+    <p class="hint">예시는 모양만 보여 주려고 지어낸 것입니다. 실제 지표는 그해 매뉴얼에서 가져오세요.</p>
+
+    <h3>읽은 목록 <small id="cnt"></small></h3>
+    <p class="hint" id="listEmpty" style="margin-top:0">아직 목록이 없습니다. 위 칸에 붙여 넣고 「목록 만들기」를 누르거나 「예시 넣기」로 모양을 먼저 보세요.</p>
+    <div id="listWrap" hidden>
+      <div class="tblwrap tall"><table class="list" id="list">
+        <thead><tr><th class="c-num">번호</th><th>지표 이름</th><th class="c-area">영역</th><th class="c-del">빼기</th></tr></thead>
+        <tbody id="listBody"></tbody>
+      </table></div>
+      <p class="hint">번호·이름·영역이 잘못 나뉜 줄은 칸에서 바로 고치세요. 노란 칸은 번호를 못 찾은 줄입니다.</p>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="btn btn-small" id="btnAdd" type="button">줄 더하기</button>
+      <button class="btn btn-small" id="btnCopy" type="button">표 복사 (엑셀에 붙이기)</button>
+      <button class="btn btn-small" id="btnWipe" type="button">지우기</button>
+      <span class="hint" id="listNote" role="status" style="margin:0"></span>
+    </div>
+    <p class="hint">목록은 이 브라우저가 기억해 두어 다음에 열어도 그대로 있습니다. 지표 목록은 개인정보가 아니라서 저장해도 괜찮습니다. 여럿이 쓰는 PC라면 다 쓴 뒤 「지우기」를 누르세요.</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="no">2</span>PC 폴더 묶음(zip) 받기</h2>
+    <p class="hint">지표마다 빈 폴더를 만들어 파일 하나(zip)로 드립니다. 받은 파일에서 마우스 오른쪽 단추 → 「압축 풀기」 한 뒤, 공유 폴더나 내 PC에 옮겨 두세요.</p>
+    <div class="grid2" style="margin-top:10px">
+      <div class="fld"><label for="zMode">폴더 이름 규칙</label>
+        <select id="zMode">
+          <option value="numname">번호_이름 (예: A1_예시 지표 가)</option>
+          <option value="num">번호만 (예: A1)</option>
+          <option value="area">영역 폴더 아래에 번호_이름</option>
+        </select></div>
+      <div class="fld"><label for="zSub">지표 폴더 안의 하위 폴더</label>
+        <select id="zSub">
+          <option value="none">없음</option>
+          <option value="year">연도별 (대상 기간의 해마다)</option>
+          <option value="pdca">1_계획 · 2_실행 · 3_평가·환류</option>
+          <option value="custom">직접 적기</option>
+        </select></div>
+      <div class="fld" id="zCustomBox" hidden><label for="zCustom">하위 폴더 이름 <small>쉼표로 나눠 적기</small></label><input type="text" id="zCustom" maxlength="300" placeholder="예: 1_계획, 2_실행, 3_평가·환류, 사진" autocomplete="off"></div>
+      <div class="fld"><label for="zMax">폴더 이름 길이</label>
+        <select id="zMax">
+          <option value="30">30글자까지 (긴 이름은 줄임)</option>
+          <option value="40">40글자까지</option>
+          <option value="60">60글자까지</option>
+          <option value="100">100글자까지 (거의 그대로)</option>
+        </select></div>
+    </div>
+    <div class="chkcol">
+      <label class="chk" id="zAreaNoBox" hidden><input type="checkbox" id="zAreaNo"> <span>영역 폴더 앞에 순서 번호 붙이기 (예: 1_시설·환경) <small>— 탐색기에서 영역이 목록 순서대로 놓입니다</small></span></label>
+      <label class="chk"><input type="checkbox" id="zMemo"> <span>지표 폴더마다 「이 폴더에 넣을 것.txt」 빈 메모 넣기 <small>— 빈 폴더만 든 묶음은 일부 압축 프로그램에서 안 보일 수 있어 켜 두기를 권합니다</small></span></label>
+    </div>
+    <p class="lbl">이렇게 만들어집니다</p>
+    <pre class="pre" id="tree" tabindex="0" aria-label="폴더 모양 미리 보기" style="margin-top:0"></pre>
+    <p class="hint" id="zInfo" role="status"></p>
+    <div class="row" style="margin-top:10px">
+      <button class="btn btn-main" id="btnZip" type="button">폴더 묶음(zip) 받기</button>
+      <span class="hint" id="zNote" role="status" style="margin:0"></span>
+    </div>
+    <p class="hint">폴더 이름에 쓸 수 없는 글자( \ / : * ? " &lt; &gt; | )는 「·」나 「-」로 바꾸거나 빼고, 이름 끝의 점과 빈칸은 지웁니다. 같은 이름이 겹치면 뒤에 (2)를 붙입니다. 윈도우 「압축 풀기」로 풀면 같은 이름의 폴더가 한 겹 더 생길 수 있습니다. 그때는 안쪽 폴더를 꺼내 쓰세요.</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="no">3</span>인쇄물 — 서류철 라벨 · 목차 표지 · 매달 점검표</h2>
+    <div class="tabs" id="outTabs" role="group" aria-label="인쇄물 고르기">
+      <button type="button" data-o="spine" class="on">옆면(등) 라벨</button>
+      <button type="button" data-o="tab">인덱스 탭 라벨</button>
+      <button type="button" data-o="toc">목차 표지</button>
+      <button type="button" data-o="check">매달 30분 점검표</button>
+    </div>
+
+    <div id="optLab">
+      <p class="hint" id="labLead" style="margin-top:0"></p>
+      <p class="lbl">한 장(A4)에 몇 칸 <small>— 눌러서 고르거나 아래에 숫자를 직접 적으세요</small></p>
+      <div class="chips sm" id="gridChips" style="margin-top:0"></div>
+      <div class="row" style="margin-top:10px">
+        <div class="fld"><label for="lCols">가로 칸 수</label><input type="number" class="sm" id="lCols" min="1" max="10"></div>
+        <div class="fld"><label for="lRows">세로 칸 수</label><input type="number" class="sm" id="lRows" min="1" max="40"></div>
+        <div class="fld"><label for="lM">바깥 여백 mm</label><input type="number" class="sm" id="lM" min="0" max="40" step="0.5"></div>
+        <div class="fld"><label for="lG">칸 사이 간격 mm</label><input type="number" class="sm" id="lG" min="0" max="20" step="0.5"></div>
+        <div class="fld"><label for="lStart">시작 칸</label><input type="number" class="sm" id="lStart" min="1" value="1"></div>
+        <div class="fld" id="lDirBox"><label for="lDir">글자 방향</label>
+          <select id="lDir"><option value="auto">칸 모양에 맞게</option><option value="h">가로쓰기</option><option value="v">세로쓰기</option></select></div>
+      </div>
+      <div class="chkcol">
+        <label class="chk"><input type="checkbox" id="lBand"> <span>영역별 색 띠 <small>— 영역이 같은 지표는 같은 색</small></span></label>
+        <label class="chk"><input type="checkbox" id="lCut"> <span>자르는 선(점선) 인쇄</span></label>
+        <label class="chk" id="lMetaBox"><input type="checkbox" id="lMeta"> <span>기관 이름·평가 연도를 작은 글씨로 넣기</span></label>
+        <label class="chk" id="lNameBox"><input type="checkbox" id="lName"> <span>번호 아래에 지표 이름도 작게 넣기</span></label>
+      </div>
+      <p class="hint">글자 크기는 칸에 맞춰 알아서 줄입니다(번호는 크게, 이름은 작게). 「시작 칸」은 쓰다 남은 라벨지에 이어 찍을 때 첫 칸 번호입니다(왼쪽 위부터 1, 2, 3…).</p>
+    </div>
+    <div id="optToc" hidden>
+      <p class="hint" style="margin-top:0">서류철 맨 앞에 끼우는 지표 목록 한 장입니다(번호·이름·영역·비고 빈칸). A4 세로로 인쇄됩니다.</p>
+    </div>
+    <div id="optCheck" hidden>
+      <p class="hint" style="margin-top:0">지표 × 열두 달 체크 표입니다. 매달 마지막 주에 30분, 「평가의 날」을 정해 그달 서류를 번호 폴더와 서류철에 넣었는지 봅니다. A4 가로로 인쇄됩니다.</p>
+      <div class="row" style="margin-top:10px">
+        <div class="fld"><label for="cYear">점검표 연도</label><select id="cYear"></select></div>
+        <div class="fld"><label for="cDow">평가의 날 요일</label>
+          <select id="cDow"><option value="">빈칸 (손으로 적기)</option><option value="월">월요일</option><option value="화">화요일</option><option value="수">수요일</option><option value="목">목요일</option><option value="금">금요일</option></select></div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:12px">
+      <button class="btn btn-main" id="btnPrint" type="button">인쇄</button>
+      <span class="hint" id="pInfo" role="status" style="margin:0"></span>
+    </div>
+    <p class="hint" id="pHint"></p>
+    <div id="pages"></div>
+  </section>
+
+  <section class="card">
+    <h2>현장 요령 — 번호 하나로 맞추기</h2>
+    <ul class="plainlist">
+      <li><b>지표 번호 = 서류철 이름 = PC 폴더 이름.</b> 종이 서류와 파일을 같은 번호 자리에 두면 누가 찾아도 같은 곳을 엽니다.</li>
+      <li><b>인덱스 탭으로 나누기.</b> 서류철 하나에 지표 여러 개를 넣을 때는 간지마다 번호 탭을 붙입니다.</li>
+      <li><b>매달 마지막 주 30분, 평가의 날.</b> 그달에 생긴 서류를 그달에 넣어 두면 평가 직전에 몰아서 찾지 않아도 됩니다.</li>
+    </ul>
+  </section>
+
+  <section class="uses">
+    <h2>이럴 때 좋아요</h2>
+    <ul>
+      <li><strong>평가 3년 주기를 시작할 때</strong> 첫해에 번호 폴더와 서류철을 만들어 두면 서류가 생길 때마다 넣을 자리가 정해져 있습니다.</li>
+      <li><strong>담당자가 바뀔 때</strong> 목차 표지와 번호 폴더만 보면 어디에 무엇이 있는지 알 수 있어 인수인계가 짧아집니다.</li>
+      <li><strong>지도점검·감사 서류철에도</strong> 점검 항목 목록을 붙여 넣으면 같은 방식으로 폴더·라벨·점검표가 나옵니다.</li>
+    </ul>
+  </section>
+  <footer class="foot">
+    <p><strong>이 PC 안에서만 처리합니다.</strong> 지표 목록은 인터넷으로 보내지 않고, 폴더 묶음도 이 브라우저 안에서 만듭니다.</p>
+    <p>만든 사람: 서울강남지역자활센터 김태균</p>
+  </footer>
+</div>
+<div id="measure" aria-hidden="true"></div>
+<div id="printArea"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ── 계산 부분 (화면 없이도 돌아가는 순수 함수) : 목록 읽기 · 폴더 이름 · 폴더 계획 · zip 만들기 ── */
+var EF = (function () {
+  'use strict';
+  var MAX_ITEMS = 500;
+  var MEMO_NAME = '이 폴더에 넣을 것.txt';
+
+  /* ---------- 목록 읽기 ---------- */
+  /* 줄 맨 앞의 번호: A1, A-1, 1-1, 1.2.3, Ⅱ-1, 가. A.  — 뒤에 점·괄호·빈칸이 오고 그다음이 이름 */
+  var RE_LINE = /^((?:[A-Za-z]{1,3}[-.]?)?\d{1,3}(?:[-.]\d{1,3}){0,3}|[ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ]{1,2}(?:[-.]\d{1,3}){0,3}|[A-Za-z가나다라마바사아자차카타파하](?=[.)]))(?:[.)](?!\d)\s*|[\s:：]+)(\S.*)$/;
+  /* 칸 하나가 통째로 번호인지 */
+  var RE_CELL = /^(?:(?:[A-Za-z]{1,3}[-.]?)?\d{1,3}(?:[-.]\d{1,3}){0,3}|[ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ]{1,2}(?:[-.]\d{1,3}){0,3}|[A-Za-z가-힣])[.)]?$/;
+  var RE_AREA_BR = /^[\[【〔<〈《]\s*(.+?)\s*[\]】〕>〉》]$/;
+  var RE_AREA_HASH = /^#+\s*(.+)$/;
+  var RE_AREA_LBL = /^(?:평가\s*)?영역\s*[:：]\s*(.+)$/;
+  var RE_MARK = /^[■◆▶□◇▷◎★☆▣]\s*(.+)$/;          /* 번호가 없으면 영역 줄로 본다 */
+  var RE_BULLET = /^(?:[-–—•·*※]+\s*|[○●]\s+)/;      /* 글머리표는 떼고 지표로 읽는다 */
+  var RE_PAREN_NUM = /^\(((?:[A-Za-z]{1,3}[-.]?)?\d{1,3}(?:[-.]\d{1,3}){0,3})\)\s*/;
+  var HEAD_NUM = /^(번호|지표번호|연번|순번|코드|no\.?|#)$/i;
+  var HEAD_NAME = /^(지표|지표명|지표이름|평가지표|평가지표명|항목|항목명|평가항목|세부항목|이름|제목)$/;
+  var HEAD_AREA = /^(영역|평가영역|구분|분야|범주|대분류)$/;
+
+  function norm(s) {
+    s = String(s == null ? '' : s).replace(/[ 　]/g, ' ').replace(/[​-‍﻿]/g, '');
+    return s.normalize ? s.normalize('NFC') : s;
+  }
+  function tidy(s, n) { return String(s == null ? '' : s).replace(/\s+/g, ' ').trim().slice(0, n); }
+  function cellNum(s) { return s.replace(/[.)]$/, ''); }
+  function isNumCell(s) { return !!s && s.length <= 16 && RE_CELL.test(s) && (/\d/.test(s) || /^[A-Za-z가-힣ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ]{1,2}[.)]?$/.test(s)); }
+  function splitNum(s) {
+    s = s.trim();
+    var m = RE_LINE.exec(s);
+    if (m) return { num: m[1], name: m[2].replace(/^[-–—·:：]\s+/, '') };
+    if (/\d/.test(s) && RE_CELL.test(s)) return { num: cellNum(s), name: '' };
+    return { num: '', name: s };
+  }
+  function headMap(cells) {
+    var map = { num: -1, name: -1, area: -1 }, hit = 0;
+    for (var i = 0; i < cells.length; i++) {
+      var c = cells[i].replace(/\s/g, '');
+      if (!c) continue;
+      if (/\d/.test(c)) return null;
+      if (map.num < 0 && HEAD_NUM.test(c)) { map.num = i; hit++; }
+      else if (map.name < 0 && HEAD_NAME.test(c)) { map.name = i; hit++; }
+      else if (map.area < 0 && HEAD_AREA.test(c)) { map.area = i; hit++; }
+    }
+    return hit >= 2 && map.name >= 0 ? map : null;
+  }
+  function parse(text) {
+    var lines = norm(text).replace(/\r\n?/g, '\n').split('\n');
+    var items = [], cur = '', col = null, header = 0, cut = false;
+    function add(num, name, area) {
+      num = tidy(num, 16); name = tidy(name, 200); area = tidy(area, 40);
+      if (!num && !name) return;
+      if (area) cur = area; else area = cur;
+      if (items.length >= MAX_ITEMS) { cut = true; return; }
+      items.push({ num: num, name: name, area: area });
+    }
+    for (var li = 0; li < lines.length; li++) {
+      var line = lines[li];
+      if (!line.trim()) continue;
+      if (line.indexOf('\t') >= 0) {
+        var cells = line.split('\t').map(function (c) { return c.trim(); });
+        var ne = cells.filter(Boolean);
+        if (!ne.length) continue;
+        var hm = headMap(cells);
+        if (hm) { col = hm; header++; continue; }
+        if (ne.length > 1 || col) {
+          var num = '', name = '', area = '', sp;
+          if (col) {
+            num = col.num >= 0 ? cellNum(cells[col.num] || '') : '';
+            name = cells[col.name] || '';
+            area = col.area >= 0 ? (cells[col.area] || '') : '';
+            if (!num && name) { sp = splitNum(name); if (sp.num) { num = sp.num; name = sp.name; } }
+          } else if (isNumCell(cells[0]) && !(!/\d/.test(cells[0]) && isNumCell(cells[1] || '') && /\d/.test(cells[1] || ''))) {
+            var rest = cells.slice(1).filter(Boolean);
+            num = cellNum(cells[0]); name = rest[0] || ''; area = rest[1] || '';
+          } else if (isNumCell(cells[1] || '')) {
+            area = cells[0]; num = cellNum(cells[1]); name = cells.slice(2).filter(Boolean)[0] || '';
+          } else {
+            sp = splitNum(ne[0]); num = sp.num; name = sp.name; area = ne[1] || '';
+          }
+          add(num, name, area);
+          continue;
+        }
+        line = ne[0];
+      }
+      var s = line.trim(), m;
+      if ((m = RE_AREA_BR.exec(s)) || (m = RE_AREA_HASH.exec(s)) || (m = RE_AREA_LBL.exec(s))) { cur = tidy(m[1], 40); continue; }
+      if ((m = RE_MARK.exec(s))) {
+        var t = splitNum(m[1]);
+        if (!t.num) { cur = tidy(m[1], 40); continue; }
+        add(t.num, t.name, ''); continue;
+      }
+      s = s.replace(RE_BULLET, '').replace(/^지표\s*(?=[A-Za-z]{0,3}[-.]?\d)/, '').replace(RE_PAREN_NUM, '$1 ');
+      var r = splitNum(s);
+      add(r.num, r.name, '');
+    }
+    var noNum = 0;
+    items.forEach(function (it) { if (!it.num) noNum++; });
+    return { items: items, noNum: noNum, header: header, cut: cut };
+  }
+
+  /* ---------- 폴더 이름 ---------- */
+  var RESERVED = /^(con|prn|aux|nul|com[0-9]|lpt[0-9])(\..*)?$/i;
+  function chars(s) { return Array.from ? Array.from(s) : s.split(''); }
+  function trimEnd(s) { return s.replace(/[. ]+$/, ''); }
+  /* 윈도우 폴더 이름에 쓸 수 없는 글자를 바꾸거나 빼고, 끝의 점·빈칸을 지운다 */
+  function cleanName(s) {
+    s = norm(s)
+      .replace(/[\u0000-\u001f\u007f]/g, ' ')
+      .replace(/\s*[\\/|]\s*/g, '·')
+      .replace(/\s*:\s*/g, '-')
+      .replace(/[*?]/g, '')
+      .replace(/"/g, "'")
+      .replace(/</g, '(').replace(/>/g, ')')
+      .replace(/\s+/g, ' ')
+      .replace(/^ +/, '');
+    s = trimEnd(s);
+    if (RESERVED.test(s)) s = '_' + s;
+    return s;
+  }
+  function cut(s, n) { var a = chars(s); return a.length > n ? trimEnd(a.slice(0, n).join('')) : s; }
+  function folderName(it, mode, max) {
+    max = max || 40;
+    var num = cleanName(it.num || ''), name = cleanName(it.name || ''), out;
+    if (mode === 'num') out = num || name;
+    else if (num && name) {
+      out = num + '_' + name;
+      if (chars(out).length > max) out = num + '_' + cut(name, Math.max(4, max - chars(num).length - 1));
+    } else out = num || name;
+    out = cut(out, max);
+    if (RESERVED.test(out)) out = '_' + out;
+    return out || '이름 없음';
+  }
+  function uniq(used, name) {
+    var key = '$' + name.toLowerCase();
+    if (!used[key]) { used[key] = 1; return name; }
+    for (var n = 2; ; n++) {
+      var cand = name + ' (' + n + ')', k = '$' + cand.toLowerCase();
+      if (!used[k]) { used[k] = 1; return cand; }
+    }
+  }
+
+  /* ---------- 평가 연도·기간 ---------- */
+  function yr(v) { var n = parseInt(v, 10); return n >= 1900 && n <= 2200 ? n : 0; }
+  function years(meta) {
+    meta = meta || {};
+    var a = yr(meta.from), b = yr(meta.to);
+    if (!a && !b) return [];
+    if (!a) a = b; if (!b || b < a) b = a;
+    if (b - a > 9) b = a + 9;
+    var out = []; for (var y = a; y <= b; y++) out.push(y);
+    return out;
+  }
+  function periodText(meta) { var y = years(meta); return !y.length ? '' : y.length > 1 ? y[0] + '~' + y[y.length - 1] : String(y[0]); }
+  function rootName(meta) {
+    meta = meta || {};
+    var org = tidy(meta.org, 30), y = yr(meta.year), p = periodText(meta);
+    return [org, y ? y + '년' : '', '평가 서류철', p ? '(' + p + ')' : ''].filter(Boolean).join(' ');
+  }
+  function memoText(it, meta) {
+    var head = [it.num, it.name].filter(Boolean).join(' ');
+    var org = tidy((meta || {}).org, 30), y = yr((meta || {}).year), p = periodText(meta);
+    var L = ['지표: ' + head];
+    if (it.area) L.push('영역: ' + it.area);
+    var ev = [org, y ? y + '년 평가' : '', p ? '대상 기간 ' + p + '년' : ''].filter(Boolean).join(' · ');
+    if (ev) L.push('평가: ' + ev);
+    L.push('', '이 폴더에 넣을 것 (그해 평가 매뉴얼을 보고 직접 적으세요)', '- ', '- ', '- ', '', '담당:                확인한 날:', '');
+    return L.join('\r\n');
+  }
+  function subNames(opt, meta) {
+    var list = [];
+    if (opt.sub === 'year') list = years(meta).map(function (y) { return y + '년'; });
+    else if (opt.sub === 'pdca') list = ['1_계획', '2_실행', '3_평가·환류'];
+    else if (opt.sub === 'custom') list = String(opt.custom || '').split(/[,，、;\/\n]+/);
+    var used = {}, out = [];
+    list.forEach(function (s) { s = cut(cleanName(s), 40); if (s && out.length < 20) out.push(uniq(used, s)); });
+    return out;
+  }
+
+  /* ---------- 폴더 계획: 어떤 폴더·파일을 만들지 ---------- */
+  var enc = typeof TextEncoder !== 'undefined' ? new TextEncoder() : null;
+  function utf8(s) { return enc.encode(s); }
+  function plan(items, opt) {
+    opt = opt || {};
+    var meta = opt.meta || {}, max = Math.min(100, Math.max(10, +opt.max || 40));
+    var root = cut(cleanName(rootName(meta)), 80) || '평가 서류철';
+    var subs = subNames(opt, meta);
+    var tree = { name: root, kids: [], used: {} }, areas = {}, rows = [], renamed = 0;
+    (items || []).forEach(function (it, i) {
+      var parent = tree;
+      if (opt.mode === 'area') {
+        var a = tidy(it.area, 40) || '영역 없음';
+        if (!areas[a]) {
+          var an = cut((opt.areaNo ? (tree.kids.length + 1) + '_' : '') + (cleanName(a) || '영역'), max);
+          areas[a] = { name: uniq(tree.used, an), kids: [], used: {} };
+          tree.kids.push(areas[a]);
+        }
+        parent = areas[a];
+      }
+      var mode = opt.mode === 'num' ? 'num' : 'numname';
+      var fn = uniq(parent.used, folderName(it, mode, max));
+      var plain = mode === 'num' ? (tidy(it.num, 16) || tidy(it.name, 200)) : [tidy(it.num, 16), tidy(it.name, 200)].filter(Boolean).join('_');
+      if (fn !== plain) renamed++;
+      var row = { i: i, folder: fn, path: '' };
+      var node = { name: fn, kids: subs.map(function (s) { return { name: s, kids: [] }; }), row: row };
+      if (opt.memo) node.file = { name: MEMO_NAME, text: memoText(it, meta) };
+      parent.kids.push(node);
+      rows.push(row);
+    });
+    var entries = [], lines = [], nDir = 0, nFile = 0, maxPath = 0;
+    (function walk(n, path, depth) {
+      var p = path + n.name;
+      entries.push({ name: p + '/', dir: true }); nDir++;
+      lines.push({ depth: depth, name: n.name, dir: true });
+      if (p.length > maxPath) maxPath = p.length;
+      if (n.file) {
+        entries.push({ name: p + '/' + n.file.name, text: n.file.text }); nFile++;
+        lines.push({ depth: depth + 1, name: n.file.name, dir: false });
+        if (p.length + 1 + n.file.name.length > maxPath) maxPath = p.length + 1 + n.file.name.length;
+      }
+      if (n.row) n.row.path = p;
+      n.kids.forEach(function (k) { walk(k, p + '/', depth + 1); });
+    })(tree, '', 0);
+    return { root: root, entries: entries, lines: lines, rows: rows, subs: subs, nDir: nDir, nFile: nFile, maxPath: maxPath, renamed: renamed };
+  }
+  function treeText(p, limit) {
+    limit = limit || 60;
+    var out = p.lines.slice(0, limit).map(function (l) {
+      return l.depth === 0 ? l.name : new Array(l.depth).join('    ') + (l.dir ? '└ ' : '· ') + l.name;
+    });
+    if (p.lines.length > limit) out.push('… (아래로 ' + (p.lines.length - limit) + '줄 더)');
+    return out.join('\n');
+  }
+
+  /* ---------- zip 만들기: 압축 없이(stored), 파일 이름은 UTF-8 표시(0x0800) ---------- */
+  var CRC = (function () {
+    var t = [], c, n, k;
+    for (n = 0; n < 256; n++) { c = n; for (k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; }
+    return t;
+  })();
+  function crc32(u8) { var c = 0xFFFFFFFF; for (var i = 0; i < u8.length; i++) c = CRC[(c ^ u8[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+  function makeZip(entries, date) {
+    date = date || new Date();
+    var dosTime = (date.getHours() << 11) | (date.getMinutes() << 5) | (date.getSeconds() >> 1);
+    var dosDate = ((Math.max(1980, date.getFullYear()) - 1980) << 9) | ((date.getMonth() + 1) << 5) | date.getDate();
+    var list = entries.map(function (e) {
+      var data = e.dir ? new Uint8Array(0) : (e.data || (function () {
+        var b = utf8(e.text || ''), o = new Uint8Array(b.length + 3);
+        o[0] = 0xEF; o[1] = 0xBB; o[2] = 0xBF; o.set(b, 3); return o;       /* 메모장이 한글을 바로 읽게 BOM */
+      })());
+      return { name: utf8(e.name), data: data, dir: !!e.dir, crc: e.dir ? 0 : crc32(data) };
+    });
+    var size = 22;
+    list.forEach(function (f) { size += 30 + f.name.length + f.data.length + 46 + f.name.length; });
+    var buf = new Uint8Array(size), dv = new DataView(buf.buffer), p = 0;
+    list.forEach(function (f) {
+      f.off = p;
+      dv.setUint32(p, 0x04034b50, true); dv.setUint16(p + 4, 20, true); dv.setUint16(p + 6, 0x0800, true); dv.setUint16(p + 8, 0, true);
+      dv.setUint16(p + 10, dosTime, true); dv.setUint16(p + 12, dosDate, true); dv.setUint32(p + 14, f.crc, true);
+      dv.setUint32(p + 18, f.data.length, true); dv.setUint32(p + 22, f.data.length, true);
+      dv.setUint16(p + 26, f.name.length, true); dv.setUint16(p + 28, 0, true);
+      buf.set(f.name, p + 30); buf.set(f.data, p + 30 + f.name.length);
+      p += 30 + f.name.length + f.data.length;
+    });
+    var cdStart = p;
+    list.forEach(function (f) {
+      dv.setUint32(p, 0x02014b50, true); dv.setUint16(p + 4, 20, true); dv.setUint16(p + 6, 20, true); dv.setUint16(p + 8, 0x0800, true); dv.setUint16(p + 10, 0, true);
+      dv.setUint16(p + 12, dosTime, true); dv.setUint16(p + 14, dosDate, true); dv.setUint32(p + 16, f.crc, true);
+      dv.setUint32(p + 20, f.data.length, true); dv.setUint32(p + 24, f.data.length, true);
+      dv.setUint16(p + 28, f.name.length, true); dv.setUint16(p + 30, 0, true); dv.setUint16(p + 32, 0, true);
+      dv.setUint16(p + 34, 0, true); dv.setUint16(p + 36, 0, true); dv.setUint32(p + 38, f.dir ? 0x10 : 0x20, true);
+      dv.setUint32(p + 42, f.off, true);
+      buf.set(f.name, p + 46);
+      p += 46 + f.name.length;
+    });
+    dv.setUint32(p, 0x06054b50, true); dv.setUint16(p + 4, 0, true); dv.setUint16(p + 6, 0, true);
+    dv.setUint16(p + 8, list.length, true); dv.setUint16(p + 10, list.length, true);
+    dv.setUint32(p + 12, p - cdStart, true); dv.setUint32(p + 16, cdStart, true); dv.setUint16(p + 20, 0, true);
+    return buf;
+  }
+
+  return { parse: parse, cleanName: cleanName, folderName: folderName, uniq: uniq, years: years, periodText: periodText, rootName: rootName,
+    memoText: memoText, subNames: subNames, plan: plan, treeText: treeText, crc32: crc32, makeZip: makeZip, MEMO_NAME: MEMO_NAME, MAX_ITEMS: MAX_ITEMS };
+})();
+if (typeof module !== 'undefined' && module.exports) module.exports = EF;
+</script>
+<script>
+/* ── 화면 부분 ── */
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var KEY = 'welfare-tools.eval-folders.v1';
+  /* 예시는 모양만 보여 주려고 지어낸 틀이다. 실제 평가지표 문구를 넣지 않는다. */
+  var SAMPLE = ['[시설·환경]', 'A1 예시 지표 가', 'A2 예시 지표 나', 'A3 예시 지표 다',
+    '[재정·조직]', 'B1 예시 지표 가', 'B2 예시 지표 나', 'B3 예시 지표 다',
+    '[프로그램]', 'C1 예시 지표 가', 'C2 예시 지표 나', 'C3 예시 지표 다', 'C4 예시 지표 라',
+    '[이용자 권리]', 'D1 예시 지표 가', 'D2 예시 지표 나',
+    '[지역사회]', 'E1 예시 지표 가', 'E2 예시 지표 나'].join('\n');
+  var COLORS = ['#1A6EFF', '#1F8A4C', '#E08A00', '#C62E3A', '#7A4FD6', '#0E9AA7', '#B0457A', '#6B7280'];
+  var GRIDS = {
+    spine: [['2×7', 2, 7], ['3×8', 3, 8], ['3×7', 3, 7], ['2×5', 2, 5], ['5×1 세로로 긴 등', 5, 1], ['7×1 좁은 등', 7, 1]],
+    tab: [['4×10', 4, 10], ['5×12', 5, 12], ['5×16', 5, 16], ['6×15', 6, 15]]
+  };
+  var OUTS = ['spine', 'tab', 'toc', 'check'];
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function toast(m) { var t = $('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(function () { t.classList.remove('show'); }, 2400); }
+  function ci(v, lo, hi) { v = Math.round(+v); if (!isFinite(v)) v = lo; return Math.min(hi, Math.max(lo, v)); }
+  function cn(v, lo, hi) { v = +v; if (!isFinite(v)) v = lo; return Math.min(hi, Math.max(lo, v)); }
+  function f2(v) { return Math.round(v * 100) / 100; }
+
+  /* ---------- 저장 ---------- */
+  function def() {
+    return { v: 1, meta: { org: '', year: '', from: '', to: '' }, raw: '', items: [],
+      zip: { mode: 'numname', sub: 'none', custom: '', max: 40, areaNo: true, memo: true },
+      lab: { spine: { cols: 2, rows: 7, m: 8, g: 2, dir: 'auto' }, tab: { cols: 5, rows: 12, m: 8, g: 2 }, band: true, cut: true, meta: true, name: true },
+      chk: { year: '', dow: '' }, out: 'spine' };
+  }
+  function str(v, n) { return typeof v === 'string' ? v.slice(0, n) : typeof v === 'number' ? String(v) : ''; }
+  function load() {
+    var d = def(), o = null;
+    try { o = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+    if (!o || typeof o !== 'object') return d;
+    if (o.meta && typeof o.meta === 'object') ['org', 'year', 'from', 'to'].forEach(function (k) { d.meta[k] = str(o.meta[k], 30); });
+    d.raw = str(o.raw, 60000);
+    if (Array.isArray(o.items)) d.items = o.items.slice(0, EF.MAX_ITEMS).filter(function (x) { return x && typeof x === 'object'; })
+      .map(function (x) { return { num: str(x.num, 16), name: str(x.name, 200), area: str(x.area, 40) }; });
+    var z = o.zip;
+    if (z && typeof z === 'object') {
+      if (['numname', 'num', 'area'].indexOf(z.mode) >= 0) d.zip.mode = z.mode;
+      if (['none', 'year', 'pdca', 'custom'].indexOf(z.sub) >= 0) d.zip.sub = z.sub;
+      d.zip.custom = str(z.custom, 300);
+      if ([30, 40, 60, 100].indexOf(+z.max) >= 0) d.zip.max = +z.max;
+      if (typeof z.areaNo === 'boolean') d.zip.areaNo = z.areaNo;
+      if (typeof z.memo === 'boolean') d.zip.memo = z.memo;
+    }
+    var l = o.lab;
+    if (l && typeof l === 'object') {
+      ['spine', 'tab'].forEach(function (k) {
+        if (l[k] && typeof l[k] === 'object') ['cols', 'rows', 'm', 'g'].forEach(function (f) { var v = +l[k][f]; if (isFinite(v) && l[k][f] !== '' && l[k][f] != null) d.lab[k][f] = v; });
+      });
+      if (l.spine && ['auto', 'h', 'v'].indexOf(l.spine.dir) >= 0) d.lab.spine.dir = l.spine.dir;
+      ['band', 'cut', 'meta', 'name'].forEach(function (b) { if (typeof l[b] === 'boolean') d.lab[b] = l[b]; });
+    }
+    if (o.chk && typeof o.chk === 'object') { d.chk.year = str(o.chk.year, 6); d.chk.dow = str(o.chk.dow, 2); }
+    if (OUTS.indexOf(o.out) >= 0) d.out = o.out;
+    return d;
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  var S = load(), dirty = false;
+
+  /* ---------- 1. 목록 ---------- */
+  function areaCount() { var m = {}, n = 0; S.items.forEach(function (it) { var a = it.area.trim(); if (a && !m[a]) { m[a] = 1; n++; } }); return n; }
+  function renderCount() {
+    var a = areaCount();
+    $('cnt').textContent = S.items.length ? '지표 ' + S.items.length + '개' + (a ? ' · 영역 ' + a + '개' : '') : '';
+  }
+  function renderList() {
+    var tb = $('listBody'); tb.textContent = '';
+    S.items.forEach(function (it, i) {
+      var tr = document.createElement('tr');
+      if (!it.num) tr.className = 'nonum';
+      [['num', '번호', 16], ['name', '지표 이름', 200], ['area', '영역', 40]].forEach(function (c) {
+        var td = document.createElement('td'), inp = document.createElement('input');
+        td.className = 'c-' + c[0];
+        inp.type = 'text'; inp.value = it[c[0]]; inp.maxLength = c[2]; inp.autocomplete = 'off';
+        inp.setAttribute('aria-label', (i + 1) + '번째 줄 ' + c[1]);
+        inp.dataset.i = i; inp.dataset.k = c[0];
+        td.appendChild(inp); tr.appendChild(td);
+      });
+      var td = document.createElement('td'), b = document.createElement('button');
+      td.className = 'c-del'; b.type = 'button'; b.className = 'btn btn-small'; b.textContent = '빼기'; b.dataset.del = i;
+      b.setAttribute('aria-label', (i + 1) + '번째 줄 빼기');
+      td.appendChild(b); tr.appendChild(td); tb.appendChild(tr);
+    });
+    $('listEmpty').hidden = S.items.length > 0;
+    $('listWrap').hidden = !S.items.length;
+    renderCount();
+  }
+  $('listBody').addEventListener('input', function (e) {
+    var t = e.target, i = +t.dataset.i, k = t.dataset.k;
+    if (!k || !S.items[i]) return;
+    S.items[i][k] = t.value; dirty = true;
+    if (k === 'num') t.closest('tr').classList.toggle('nonum', !t.value.trim());
+    renderCount(); changed();
+  });
+  $('listBody').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-del]'); if (!b) return;
+    S.items.splice(+b.dataset.del, 1); dirty = true; renderList(); changed();
+  });
+  function readRaw() {
+    var t = $('raw').value;
+    S.raw = t.slice(0, 60000);
+    var r = EF.parse(t);
+    if (!r.items.length) { $('readNote').textContent = '읽을 줄이 없습니다. 한 줄에 지표 하나씩 붙여 넣어 주세요.'; save(); return false; }
+    if (dirty && S.items.length && !confirm('표에서 고친 내용이 있습니다. 붙여 넣은 글로 목록을 다시 만들까요?')) return false;
+    S.items = r.items; dirty = false;
+    renderList(); changed();
+    $('readNote').textContent = '지표 ' + r.items.length + '개를 읽었습니다.' + (r.noNum ? ' 번호를 못 찾은 줄 ' + r.noNum + '개(노란 칸)를 확인하세요.' : '') + (r.cut ? ' ' + EF.MAX_ITEMS + '개까지만 읽었습니다.' : '');
+    return true;
+  }
+  $('btnRead').addEventListener('click', readRaw);
+  $('raw').addEventListener('paste', function () { if (!S.items.length) setTimeout(readRaw, 0); });
+  $('raw').addEventListener('input', function () { S.raw = $('raw').value.slice(0, 60000); save(); });
+  function loadSample() {
+    if (S.items.length && !confirm('지금 목록을 예시로 바꿀까요?')) return;
+    $('raw').value = SAMPLE; dirty = false;
+    if (!S.meta.org && !S.meta.year && !S.meta.from && !S.meta.to) { S.meta = { org: '○○복지관', year: '2027', from: '2024', to: '2026' }; fillMeta(); }
+    readRaw();
+    $('readNote').textContent = '지어낸 예시 ' + S.items.length + '줄을 넣었습니다. 모양을 본 뒤 그해 매뉴얼의 지표로 바꿔 넣으세요.';
+  }
+  $('btnSample').addEventListener('click', loadSample);
+  $('btnAdd').addEventListener('click', function () {
+    if (S.items.length >= EF.MAX_ITEMS) { toast(EF.MAX_ITEMS + '개까지 넣을 수 있습니다'); return; }
+    var last = S.items[S.items.length - 1];
+    S.items.push({ num: '', name: '', area: last ? last.area : '' }); dirty = true;
+    renderList(); changed();
+    var inp = $('listBody').querySelector('tr:last-child input'); if (inp) inp.focus();
+  });
+  function copyText(text, done) {
+    function fallback() {
+      var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.select();
+      var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta); done(ok);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done(true); }, fallback);
+    else fallback();
+  }
+  $('btnCopy').addEventListener('click', function () {
+    if (!S.items.length) { $('listNote').textContent = '먼저 지표 목록을 넣어 주세요.'; return; }
+    var p = EF.plan(S.items, zipOpt()), cell = function (v) { return String(v).replace(/[\t\r\n]+/g, ' '); };
+    var rows = [['번호', '지표 이름', '영역', '폴더 이름'].join('\t')].concat(S.items.map(function (it, i) {
+      return [cell(it.num), cell(it.name), cell(it.area), cell(p.rows[i].folder)].join('\t');
+    }));
+    copyText(rows.join('\n'), function (ok) { $('listNote').textContent = ok ? '표를 복사했습니다. 엑셀 칸을 누르고 붙여 넣으세요.' : '복사하지 못했습니다. 브라우저에서 복사를 허용해 주세요.'; });
+  });
+  $('btnWipe').addEventListener('click', function () {
+    if (!confirm('지표 목록과 이 화면의 설정을 이 브라우저에서 모두 지울까요?')) return;
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    S = def(); dirty = false;
+    fillAll();
+    $('readNote').textContent = ''; $('zNote').textContent = '';
+    $('listNote').textContent = '모두 지웠습니다.';
+  });
+
+  /* ---------- 기관·연도 ---------- */
+  var META_IDS = [['org', 'org'], ['evalYear', 'year'], ['from', 'from'], ['to', 'to']];
+  function fillMeta() { META_IDS.forEach(function (m) { $(m[0]).value = S.meta[m[1]]; }); fillYearSel(); }
+  META_IDS.forEach(function (m) {
+    $(m[0]).addEventListener('input', function () { S.meta[m[1]] = $(m[0]).value.slice(0, 30); fillYearSel(); changed(); });
+  });
+  function labelMeta() { var y = parseInt(S.meta.year, 10); return [S.meta.org.trim(), y > 1900 ? y + '년 평가' : ''].filter(Boolean).join(' · '); }
+  function metaLine() {
+    var y = parseInt(S.meta.year, 10), p = EF.periodText(S.meta);
+    return [S.meta.org.trim(), y > 1900 ? y + '년 평가' : '', p ? '대상 기간 ' + p + '년' : ''].filter(Boolean).join(' · ');
+  }
+
+  /* ---------- 2. 폴더 묶음 ---------- */
+  function zipOpt() { return { meta: S.meta, mode: S.zip.mode, sub: S.zip.sub, custom: S.zip.custom, max: S.zip.max, areaNo: S.zip.areaNo, memo: S.zip.memo }; }
+  function fillZip() {
+    $('zMode').value = S.zip.mode; $('zSub').value = S.zip.sub; $('zCustom').value = S.zip.custom; $('zMax').value = String(S.zip.max);
+    $('zAreaNo').checked = S.zip.areaNo; $('zMemo').checked = S.zip.memo;
+  }
+  function renderTree() {
+    $('zCustomBox').hidden = S.zip.sub !== 'custom';
+    $('zAreaNoBox').hidden = S.zip.mode !== 'area';
+    if (!S.items.length) { $('tree').textContent = '(1번에서 지표 목록을 넣으면 여기에 폴더 모양이 나옵니다)'; $('zInfo').textContent = ''; return; }
+    var p = EF.plan(S.items, zipOpt()), info = '폴더 ' + p.nDir + '개' + (p.nFile ? ', 메모 파일 ' + p.nFile + '개' : '') + '.';
+    $('tree').textContent = EF.treeText(p, 60);
+    if (p.renamed) info += ' 쓸 수 없는 글자를 바꾸거나 길이를 줄이거나 (2)를 붙인 이름 ' + p.renamed + '개.';
+    if (S.zip.sub === 'year' && !p.subs.length) info += ' 연도별 하위 폴더를 만들려면 1번에서 대상 기간을 적어 주세요.';
+    if (S.zip.sub === 'custom' && !p.subs.length) info += ' 하위 폴더 이름을 적어 주세요.';
+    if (p.maxPath > 150) info += ' 가장 긴 경로가 ' + p.maxPath + '글자입니다. 윈도우는 전체 경로가 길면(260글자 안팎) 파일을 못 여는 일이 있으니 「폴더 이름 길이」를 줄여 보세요.';
+    $('zInfo').textContent = info;
+  }
+  [['zMode', 'mode'], ['zSub', 'sub'], ['zMax', 'max']].forEach(function (a) {
+    $(a[0]).addEventListener('change', function () { S.zip[a[1]] = a[1] === 'max' ? +$(a[0]).value : $(a[0]).value; save(); renderTree(); });
+  });
+  $('zCustom').addEventListener('input', function () { S.zip.custom = $('zCustom').value; save(); renderTree(); });
+  [['zAreaNo', 'areaNo'], ['zMemo', 'memo']].forEach(function (a) {
+    $(a[0]).addEventListener('change', function () { S.zip[a[1]] = $(a[0]).checked; save(); renderTree(); });
+  });
+  $('btnZip').addEventListener('click', function () {
+    if (!S.items.length) { $('zNote').textContent = '먼저 1번에서 지표 목록을 넣어 주세요.'; return; }
+    var p = EF.plan(S.items, zipOpt()), bytes;
+    try { bytes = EF.makeZip(p.entries, new Date()); } catch (e) { $('zNote').textContent = '묶음을 만들지 못했습니다: ' + (e.message || e); return; }
+    var blob = new Blob([bytes], { type: 'application/zip' }), a = document.createElement('a'), url = URL.createObjectURL(blob);
+    a.href = url; a.download = p.root + '.zip';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    $('zNote').textContent = '받았습니다. 폴더 ' + p.nDir + '개' + (p.nFile ? ', 메모 파일 ' + p.nFile + '개' : '') + ' — 압축을 풀어 쓰세요.';
+  });
+
+  /* ---------- 3. 인쇄물 ---------- */
+  function isLab() { return S.out === 'spine' || S.out === 'tab'; }
+  function areaColors() { var m = {}, n = 0; S.items.forEach(function (it) { var a = it.area.trim(); if (a && !m[a]) m[a] = COLORS[n++ % COLORS.length]; }); return m; }
+  function fs0(kind, vert, w, h, it) {
+    if (vert) return f2(cn((w - 3) * 2.835 / 2.2, 5, 30));
+    var lines = kind === 'tab' ? (S.lab.name && it.name && it.num ? 3.7 : 2.7) : 5.2;
+    return f2(cn((h - 2.5) * 2.835 / lines, 5, 30));
+  }
+  function labPages(kind) {
+    var o = S.lab[kind], cols = ci(o.cols, 1, 10), rows = ci(o.rows, 1, 40), m = cn(o.m, 0, 40), g = cn(o.g, 0, 20);
+    var w = (210 - 2 * m - (cols - 1) * g) / cols, h = (297 - 2 * m - (rows - 1) * g) / rows;
+    if (!(w >= 10 && h >= 6)) return { err: '칸이 너무 작습니다. 칸 수나 여백·간격을 줄여 주세요.' };
+    var per = cols * rows, start = ci($('lStart').value, 1, per) - 1;
+    var vert = kind === 'spine' && (o.dir === 'v' || (o.dir !== 'h' && h > w * 2.5));
+    var colors = S.lab.band ? areaColors() : {}, metaS = kind === 'spine' && S.lab.meta ? labelMeta() : '';
+    var list = [], i;
+    for (i = 0; i < start; i++) list.push(null);
+    list = list.concat(S.items);
+    var pages = [];
+    for (var pg = 0; pg * per < list.length; pg++) {
+      var html = '<div class="page' + (S.lab.cut ? ' cut' : '') + '">';
+      for (var k = 0; k < per; k++) {
+        var idx = pg * per + k; if (idx >= list.length) break;
+        var it = list[idx], r = Math.floor(k / cols), c = k % cols;
+        var pos = 'left:' + f2(m + c * (w + g)) + 'mm;top:' + f2(m + r * (h + g)) + 'mm;width:' + f2(w) + 'mm;height:' + f2(h) + 'mm';
+        if (!it) { html += '<div class="lab empty" style="' + pos + '"></div>'; continue; }
+        var col = colors[it.area.trim()] || '', fs = fs0(kind, vert, w, h, it), inner = '';
+        if (metaS) inner += '<div class="lm">' + esc(metaS) + '</div>';
+        if (it.num) inner += '<div class="ln">' + esc(it.num) + '</div>';
+        if (it.name && (kind === 'spine' || S.lab.name || !it.num)) inner += '<div class="lt' + (it.num ? '' : ' solo') + '">' + esc(it.name) + '</div>';
+        if (kind === 'spine' && it.area.trim()) inner += '<div class="la">' + esc(it.area.trim()) + '</div>';
+        html += '<div class="lab k-' + kind + (vert ? ' vert' : '') + (col ? ' band' : '') + '" data-fs="' + fs + '" style="' + pos + ';font-size:' + fs + 'pt' + (col ? ';--ac:' + col : '') + '"><div class="lin">' + inner + '</div></div>';
+      }
+      pages.push(html + '</div>');
+    }
+    return { pages: pages, w: w, h: h, per: per, vert: vert };
+  }
+  /* 글자 크기 자동 맞춤: 칸 밖으로 나가면 들어올 때까지 줄인다 */
+  function over(el) {
+    if (el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1) return true;
+    var L = el.getBoundingClientRect(), kids = el.querySelectorAll('.lin > *');
+    for (var i = 0; i < kids.length; i++) {
+      var r = kids[i].getBoundingClientRect();
+      if (!r.width && !r.height) continue;
+      if (r.left < L.left - 0.6 || r.right > L.right + 0.6 || r.top < L.top - 0.6 || r.bottom > L.bottom + 0.6) return true;
+    }
+    return false;
+  }
+  function fitLabels(root) {
+    var labs = root.querySelectorAll('.lab[data-fs]');
+    for (var n = 0; n < labs.length; n++) {
+      var el = labs[n];
+      if (!over(el)) continue;
+      var a = 8, b = Math.floor(+el.dataset.fs * 2) - 1, best = 4;      /* 반 pt 단위, 4pt까지 */
+      while (a <= b) {
+        var mid = (a + b) >> 1;
+        el.style.fontSize = (mid / 2) + 'pt';
+        if (over(el)) b = mid - 1; else { best = mid / 2; a = mid + 1; }
+      }
+      el.style.fontSize = best + 'pt';
+    }
+  }
+  function tocHTML() {
+    var colors = S.lab.band ? areaColors() : {};
+    var rows = S.items.map(function (it) {
+      var a = it.area.trim(), col = colors[a];
+      return '<tr><td class="c">' + esc(it.num) + '</td><td>' + esc(it.name) + '</td><td>' + (col ? '<span class="dot" style="--ac:' + col + '"></span>' : '') + esc(a) + '</td><td></td></tr>';
+    }).join('');
+    var ml = metaLine();
+    return '<div class="doc"><div class="dt">평가 서류철 목차</div><p class="dm">' + esc((ml ? ml + ' · ' : '') + '지표 ' + S.items.length + '개') + '</p>'
+      + '<table><thead><tr><th class="w-no">번호</th><th>지표 이름</th><th class="w-ar">영역</th><th class="w-nt">비고</th></tr></thead><tbody>' + rows + '</tbody></table>'
+      + '<p class="dn">지표 번호 = 서류철 라벨 = PC 폴더 이름. 서류가 생기면 같은 번호의 서류철과 폴더에 넣습니다.</p></div>';
+  }
+  function checkYears() {
+    var ys = EF.years(S.meta);
+    if (S.chk.year === 'all') return ys.length ? ys : [''];
+    return [S.chk.year];
+  }
+  function checkHTML() {
+    var org = S.meta.org.trim(), dow = S.chk.dow, mo = '';
+    for (var k = 1; k <= 12; k++) mo += '<th class="w-mo">' + k + '월</th>';
+    var cells = new Array(13).join('<td></td>');
+    var rows = S.items.map(function (it) { return '<tr><td class="c">' + esc(it.num) + '</td><td>' + esc(it.name) + '</td><td></td>' + cells + '</tr>'; }).join('');
+    return checkYears().map(function (y) {
+      return '<div class="doc land"><div class="dt">' + (y ? esc(y) + '년 ' : '<span class="blank s"></span>년 ') + '매달 30분 「평가의 날」 점검표</div>'
+        + '<div class="dm2"><span>기관: ' + (org ? esc(org) : '<span class="blank"></span>') + '</span>'
+        + '<span>평가의 날: 매달 마지막 주 ' + (dow ? esc(dow) : '<span class="blank s"></span>') + '요일 <span class="blank s"></span>시부터 30분</span>'
+        + '<span>담당: <span class="blank"></span></span></div>'
+        + '<table class="mchk"><thead><tr><th class="w-no">번호</th><th>지표 이름</th><th class="w-wh">담당</th>' + mo + '</tr></thead><tbody>' + rows + '</tbody></table>'
+        + '<p class="dn">그달 서류를 번호 폴더와 서류철에 넣었으면 ✓, 그달에 해당 없으면 ―. 빠진 서류는 다음 「평가의 날」에 먼저 채웁니다.</p></div>';
+    });
+  }
+  function fillYearSel() {
+    var ys = EF.years(S.meta), sel = $('cYear'), now = new Date().getFullYear();
+    var opts = [['', '빈칸 (손으로 적기)']];
+    (ys.length ? ys : [now, now + 1]).forEach(function (y) { opts.push([String(y), y + '년']); });
+    if (ys.length > 1) opts.push(['all', '대상 기간 해마다 한 장씩 (' + ys.length + '장)']);
+    if (!opts.some(function (o) { return o[0] === S.chk.year; })) S.chk.year = '';
+    sel.innerHTML = opts.map(function (o) { return '<option value="' + o[0] + '">' + esc(o[1]) + '</option>'; }).join('');
+    sel.value = S.chk.year;
+  }
+  function fillOut() {
+    var o = S.out, lab = isLab();
+    [].forEach.call($('outTabs').children, function (b) { var on = b.dataset.o === o; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    $('optLab').hidden = !lab; $('optToc').hidden = o !== 'toc'; $('optCheck').hidden = o !== 'check';
+    $('lBand').checked = S.lab.band; $('lCut').checked = S.lab.cut; $('lMeta').checked = S.lab.meta; $('lName').checked = S.lab.name;
+    $('cDow').value = S.chk.dow;
+    if (lab) {
+      var g = S.lab[o];
+      $('lCols').value = g.cols; $('lRows').value = g.rows; $('lM').value = g.m; $('lG').value = g.g;
+      $('lDirBox').hidden = o !== 'spine'; $('lMetaBox').hidden = o !== 'spine'; $('lNameBox').hidden = o !== 'tab';
+      $('lDir').value = S.lab.spine.dir;
+      $('labLead').textContent = o === 'spine'
+        ? '서류철 옆면(등)에 붙이는 라벨입니다. A4 스티커 용지나 보통 종이에 인쇄해 잘라 붙이세요. 등이 좁고 긴 서류철은 「5×1」처럼 세로로 긴 칸을 고르면 이름을 세로로 씁니다.'
+        : '간지(색인지)의 탭에 붙이는 작은 라벨입니다. 탭 크기에 맞게 칸 수를 고르세요.';
+      var box = $('gridChips'); box.textContent = '';
+      GRIDS[o].forEach(function (p) {
+        var b = document.createElement('button'); b.type = 'button';
+        b.className = 'chip' + (+g.cols === p[1] && +g.rows === p[2] ? ' yes' : '');
+        b.textContent = p[0];
+        b.addEventListener('click', function () { g.cols = p[1]; g.rows = p[2]; $('lStart').value = 1; save(); fillOut(); render(); });
+        box.appendChild(b);
+      });
+    }
+    $('pHint').textContent = lab
+      ? '인쇄 창에서 용지 A4, 배율 「실제 크기(100%)」, 여백 「없음」을 고르세요. 시판 라벨지는 포장에 적힌 칸 수·여백·간격을 넣고, 처음엔 보통 종이에 찍어 겹쳐 보세요.'
+      : o === 'toc' ? '화면에는 한 장으로 길게 보이지만 인쇄하면 쪽이 알아서 나뉘고 머리 줄이 쪽마다 들어갑니다.'
+        : 'A4 가로로 인쇄됩니다. 인쇄 창의 방향이 세로로 되어 있으면 「가로」로 바꿔 주세요.';
+  }
+  $('outTabs').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-o]'); if (!b) return;
+    S.out = b.dataset.o; $('lStart').value = 1; save(); fillOut(); render();
+  });
+  [['lCols', 'cols'], ['lRows', 'rows'], ['lM', 'm'], ['lG', 'g']].forEach(function (a) {
+    $(a[0]).addEventListener('input', function () {
+      if (!isLab()) return;
+      var v = parseFloat($(a[0]).value); if (!isFinite(v)) return;
+      S.lab[S.out][a[1]] = v; save();
+      var g = S.lab[S.out];
+      [].forEach.call($('gridChips').children, function (c, i) { var p = GRIDS[S.out][i]; c.classList.toggle('yes', +g.cols === p[1] && +g.rows === p[2]); });
+      later();
+    });
+  });
+  $('lStart').addEventListener('input', function () { later(); });
+  $('lDir').addEventListener('change', function () { S.lab.spine.dir = $('lDir').value; save(); render(); });
+  [['lBand', 'band'], ['lCut', 'cut'], ['lMeta', 'meta'], ['lName', 'name']].forEach(function (a) {
+    $(a[0]).addEventListener('change', function () { S.lab[a[1]] = $(a[0]).checked; save(); render(); });
+  });
+  $('cYear').addEventListener('change', function () { S.chk.year = $('cYear').value; save(); render(); });
+  $('cDow').addEventListener('change', function () { S.chk.dow = $('cDow').value; save(); render(); });
+
+  function render() {
+    var host = $('pages'), o = S.out, info = '';
+    if (!S.items.length) { host.innerHTML = '<p class="hint">1번에서 지표 목록을 넣으면 여기에 인쇄 모양이 나옵니다.</p>'; $('pInfo').textContent = ''; return; }
+    var avail = host.clientWidth - 16, land = o === 'check', sheets;
+    var meas = $('measure');
+    if (isLab()) {
+      var r = labPages(o);
+      if (r.err) { host.innerHTML = '<p class="hint err">' + esc(r.err) + '</p>'; $('pInfo').textContent = ''; return; }
+      meas.innerHTML = r.pages.join('');
+      fitLabels(meas);
+      info = '라벨 ' + S.items.length + '장 · A4 ' + r.pages.length + '쪽 · 칸 하나 ' + f2(r.w) + ' × ' + f2(r.h) + 'mm' + (r.vert ? ' (세로쓰기)' : '');
+    } else if (o === 'toc') {
+      meas.innerHTML = tocHTML();
+      info = '지표 ' + S.items.length + '개 · A4 세로';
+    } else {
+      sheets = checkHTML();
+      meas.innerHTML = sheets.join('');
+      info = '지표 ' + S.items.length + '개 × 12달 · A4 가로' + (sheets.length > 1 ? ' · ' + sheets.length + '장(해마다)' : '');
+    }
+    var z = avail > 0 ? Math.min(1, avail / ((land ? 297 : 210) * 3.7795)) : 1;
+    host.textContent = '';
+    while (meas.firstChild) {
+      var wrap = document.createElement('div'); wrap.className = 'pagewrap'; wrap.style.zoom = z;
+      wrap.appendChild(meas.firstChild); host.appendChild(wrap);
+    }
+    $('pInfo').textContent = info;
+  }
+  function later() { clearTimeout(later.t); later.t = setTimeout(render, 250); }
+  window.addEventListener('resize', later);
+  $('btnPrint').addEventListener('click', function () {
+    if (!S.items.length) { $('pInfo').textContent = '먼저 1번에서 지표 목록을 넣어 주세요.'; return; }
+    clearTimeout(later.t); render();
+    var area = $('printArea'); area.textContent = '';
+    [].forEach.call($('pages').querySelectorAll('.page,.doc'), function (p) { area.appendChild(p.cloneNode(true)); });
+    if (!area.firstChild) return;
+    $('pgStyle').textContent = '@page{size:A4 ' + (S.out === 'check' ? 'landscape' : 'portrait') + ';margin:' + (isLab() ? '0' : '12mm') + '}';
+    setTimeout(function () { window.print(); }, 80);
+  });
+  window.addEventListener('afterprint', function () { $('printArea').textContent = ''; });
+
+  /* ---------- 공통 ---------- */
+  function changed() { save(); renderTree(); later(); }
+  function fillAll() {
+    $('raw').value = S.raw; $('lStart').value = 1;
+    fillMeta(); fillZip(); renderList(); renderTree(); fillOut(); render();
+  }
+  fillAll();
+  /* 주소 끝에 #sample 을 붙이면 예시를 넣은 채로 연다(카드 그림·시험용). 목록이 비어 있을 때만. */
+  if (location.hash === '#sample' && !S.items.length) loadSample();
+  window._evalFolders = { EF: EF, state: function () { return S; }, render: render };
+})();
+</script>
+<script src="../videos.js?v=5"></script><script src="../remake.js"></script>
+</body>
+</html>
