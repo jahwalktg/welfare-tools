@@ -3,6 +3,9 @@
    새 영상을 올리면 아래 V(편 번호 → 유튜브 주소 끝 11글자)와 MAP(화면 → 편 번호)에 한 줄씩만 더한다.
    도구 화면: 첫 제목(h1) 아래에 「▶ 사용법 영상」 단추 / 첫 화면: 카드마다 단추.
    영상은 화면 안에 넣지 않고 새 창으로 유튜브를 연다(이 사이트는 아무것도 보내지 않는다는 약속 그대로). */
+/* 공통 의견·문의 줄 (jahwalktg.github.io/contact.js) */
+(function(){if(document.querySelector('script[src*="contact.js"]'))return;var s=document.createElement('script');s.src='https://jahwalktg.github.io/contact.js';s.defer=true;document.head.appendChild(s);})();
+
 (function () {
   var LIST = 'PLd5eK_bDlbRI';
   var WLIST = 'PLXJUgDGeey5Q';   // 사회복지 업무 도구 사용법 (w로 시작하는 편)
