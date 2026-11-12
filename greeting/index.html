@@ -587,8 +587,10 @@ function bindDrop(drop, input, onFile){
   ['dragleave', 'drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
   drop.addEventListener('drop', e => { const f = [...(e.dataTransfer.files || [])].find(x => /^image/.test(x.type)); if (f) onFile(f); else toast('그림 파일만 넣을 수 있습니다'); });
 }
-bindDrop($('photoDrop'), $('photoIn'), async f => { try { S.photo = await readImg(f, 1800, false); renderControls(); update(); } catch (e) { toast('사진을 읽지 못했습니다'); } });
-bindDrop($('logoDrop'), $('logoIn'), async f => { try { S.logo = await readImg(f, 600, true); renderControls(); update(); } catch (e) { toast('로고를 읽지 못했습니다'); } });
+const onPhoto = async f => { try { S.photo = await readImg(f, 1800, false); renderControls(); update(); } catch (e) { toast('사진을 읽지 못했습니다'); } };
+bindDrop($('photoDrop'), $('photoIn'), onPhoto);
+const onLogo = async f => { try { S.logo = await readImg(f, 600, true); renderControls(); update(); } catch (e) { toast('로고를 읽지 못했습니다'); } };
+bindDrop($('logoDrop'), $('logoIn'), onLogo);
 $('photoDel').addEventListener('click', () => { S.photo = null; renderControls(); update(); });
 $('logoDel').addEventListener('click', () => { S.logo = null; renderControls(); update(); });
 
@@ -651,6 +653,38 @@ $('btnText').addEventListener('click', () => {
   try { if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fb); else fb(); } catch (e) { fb(); }
 });
 
+/* ── 가상 예시 (2026-11-12) — 초대장에 지어낸 행사·명단을 넣고, 사진·로고는 이 화면에서 그린 그림(사람 없음)을 넣음 ── */
+const SAMPLE = {"banner": "○○복지관 송년 나눔 잔치", "logo": "○○복지관", "f": {"event": "2026 ○○복지관 송년 나눔 잔치", "date": "2026-12-18", "time": "오후 2시", "place": "○○복지관 3층 강당", "way": "○○역 3번 출구에서 걸어서 7분", "rsvp": "12월 11일까지 담당 사회복지사에게 참석 여부 회신"}, "o": {"org": "○○복지관", "head": "관장 김하늘", "all": "임직원·이용자 일동"}, "names": ["박○○ 후원회장님", "이○○ 자원봉사자님", "△△초등학교 교장선생님"]};
+function sampleCanvasFile(w, h, type, name, paint){
+  const c = document.createElement('canvas'); c.width = w; c.height = h; paint(c.getContext('2d'), w, h);
+  return new Promise(res => c.toBlob(b => res(new File([b], name, { type })), type, .9));
+}
+function samplePhotoPaint(g, W, H){
+  const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#FFE3C2'); sky.addColorStop(1, '#FFF7EC'); g.fillStyle = sky; g.fillRect(0, 0, W, H);
+  g.fillStyle = '#E9D3B0'; g.fillRect(0, H * .72, W, H * .28);
+  g.fillStyle = '#B4472E'; g.fillRect(W * .2, H * .22, W * .6, H * .5); g.fillStyle = '#8E3522'; g.fillRect(W * .2, H * .22, W * .6, H * .06);
+  g.fillStyle = '#FFF'; g.font = 'bold ' + Math.round(H * .07) + 'px sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(SAMPLE.banner, W / 2, H * .4, W * .55);
+  for (let i = 0; i < 4; i++) { g.fillStyle = '#5B3A22'; g.fillRect(W * (.25 + i * .14), H * .5, W * .1, H * .22); }
+  const cols = ['#E8483B', '#F6B33C', '#3FA66B', '#3D7DD8', '#8E5BB5'];
+  for (let i = 0; i < 16; i++) { const x = W * i / 15; g.fillStyle = cols[i % 5]; g.beginPath(); g.moveTo(x - 26, H * .1 + Math.sin(i) * 6); g.lineTo(x + 26, H * .1 + Math.sin(i) * 6); g.lineTo(x, H * .17); g.closePath(); g.fill(); }
+  [[.1, .35, '#F28CB1'], [.88, .3, '#3D7DD8'], [.93, .45, '#F6B33C'], [.06, .52, '#3FA66B']].forEach(([x, y, c]) => { g.strokeStyle = '#999'; g.beginPath(); g.moveTo(W * x, H * y + 50); g.lineTo(W * x, H * .8); g.stroke(); g.fillStyle = c; g.beginPath(); g.ellipse(W * x, H * y, 38, 48, 0, 0, Math.PI * 2); g.fill(); });
+  g.fillStyle = 'rgba(91,63,208,.85)'; g.font = 'bold 22px sans-serif'; g.fillText('가상 예시 그림', W / 2, H - 24);
+}
+function sampleLogoPaint(g, W, H){
+  g.clearRect(0, 0, W, H); g.fillStyle = '#1F3A5F'; g.beginPath(); g.arc(H / 2, H / 2, H / 2 - 6, 0, Math.PI * 2); g.fill();
+  g.fillStyle = '#FFD36B'; g.beginPath(); g.arc(H / 2, H / 2 - 8, H * .2, 0, Math.PI * 2); g.fill();
+  g.fillStyle = '#1F3A5F'; g.font = 'bold ' + Math.round(H * .42) + 'px sans-serif'; g.textAlign = 'left'; g.textBaseline = 'middle'; g.fillText(SAMPLE.logo, H + 14, H / 2 + 2, W - H - 20);
+}
+async function sampleFill(){
+  S.kind = 'invite'; S.year = yearFor('invite'); S.tpl = 0; S.auto = { label: true, title: true, body: true }; S.style = kindOf().style;
+  S.font = 'myeongjo'; S.size = 'sq'; S.photoMode = 'top';
+  S.f = Object.assign({}, SAMPLE.f); S.o = Object.assign({}, SAMPLE.o); S.names = SAMPLE.names.join('\n'); cur = 0;
+  renderControls(); update();
+  await onPhoto(await sampleCanvasFile(1200, 800, 'image/jpeg', '가상예시_행사장.jpg', samplePhotoPaint));
+  await onLogo(await sampleCanvasFile(520, 120, 'image/png', '가상예시_로고.png', sampleLogoPaint));
+}
+window.JT_SAMPLE = { what: '가상 초대장 · 받는 분 3명 · 그린 사진', fill: () => { sampleFill().catch(() => toast('예시를 넣지 못했습니다')); } };
+
 /* ── 시작 ── */
 if (location.hash === '#sample' && !S.o.org) { S.o.org = '○○복지관'; S.o.head = '기관장 홍길동'; S.names = '김○○ 대표님\n이○○ 님\n△△복지관 관장님'; }
 renderControls(); update();
@@ -658,6 +692,7 @@ window._greet = { S, draw, ganji, update, renderControls, set: (o) => { Object.a
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 <script src="../remake.js"></script>
 </body>
 </html>

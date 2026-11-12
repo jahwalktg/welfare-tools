@@ -610,6 +610,18 @@ $('logoFile').addEventListener('change', e => {
   rd.readAsDataURL(file);
 });
 
+/* ---------- 가상 예시 (2026-11-12) — 지어낸 신청서 주소(example.com)로 QR·A4 게시물·여러 개 명단을 채움 ---------- */
+const SAMPLE = {"url": "https://example.com/2027-program-apply", "cap": "찍으면 참여 신청서가 열려요", "title": "2027 상반기 프로그램 참여 신청", "guide": "신청 기간 2026. 12. 1.(화) ~ 12. 15.(화)\n대상 ○○동에 사는 어르신·장애인 가정\n문의 ○○복지관 1층 안내데스크", "org": "○○복지관", "batch": "사례관리팀 | https://example.com/form-case\n재가복지팀 | https://example.com/form-home\n급식지원팀 | https://example.com/form-meal"};
+function sampleFill(){
+  S.type = 'link'; S.f.link = Object.assign({}, S.f.link, { url: SAMPLE.url });
+  S.fg = '#1A4FB8'; S.bg = '#FFFFFF'; S.transparent = false; S.eyeSame = true; S.eye = S.fg; S.dot = 'rr'; S.eyeShape = 'rr';
+  S.center = 'text'; S.ctext = '신청'; S.csize = 'm'; S.cap = SAMPLE.cap;
+  S.sheet = 'poster'; S.sTitle = SAMPLE.title; S.sGuide = SAMPLE.guide; S.sOrg = SAMPLE.org;
+  $('batch').value = SAMPLE.batch; renderBatch();
+  renderControls(); renderFields(); render();
+}
+window.JT_SAMPLE = { what: '가상 신청서 링크 QR · A4 게시물 · 팀별 3개', go: '#cv', fill: sampleFill };
+
 const h = location.hash.slice(1);
 if (TYPES.some(t => t[0] === h)) S.type = h;
 renderControls(); renderFields(); render();
@@ -619,5 +631,6 @@ window._qr = { payload, verify: () => verify(curText, styleNow()), probe: () => 
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

@@ -788,7 +788,10 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('pos').addEventListener('click',function(){$('vName').focus();});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
   $('vName').value=S.name;$('vWho').value=S.who;
-  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C'){S.name='2026 하반기 어르신 스마트폰 교실 만족도';$('vName').value=S.name;$('vSrc').value='[2026 하반기 어르신 스마트폰 교실 만족도 2026-10-6, 응답 32명]\n1. 배운 내용이 생활에 도움이 되었다 (32명, 평균 4.13점)\n  - 매우 만족: 12명 (37.5%)\n  - 만족: 14명 (43.8%)\n  - 보통: 4명 (12.5%)\n  - 불만족: 2명 (6.3%)\n  - 매우 불만족: 0명 (0.0%)\n  긍정 응답 81.3%\n2. 강사의 설명이 이해하기 쉬웠다 (32명, 평균 4.31점)\n  긍정 응답 84.4%\n3. 다음에 배우고 싶은 것은? (32명)\n  - 사진 찍어 보내기: 5명 (15.6%)\n  - 영상 통화: 9명 (28.1%)\n  - 병원·기차 예약: 7명 (21.9%)\n  - 무인 주문기 쓰기: 11명 (34.4%)';}
+  /* 가상 예시 — #예시 주소와 「가상 예시로 해 보기」 단추가 함께 씀 (지어낸 설문) */
+  function sample(){S.name='2026 하반기 어르신 스마트폰 교실 만족도';S.who='교실 참여 어르신 32명, 2026-11-20~11-27';S.to='board';S.len='mid';$('vName').value=S.name;$('vWho').value=S.who;$('vSrc').value='[2026 하반기 어르신 스마트폰 교실 만족도 2026-11-27, 응답 32명]\n1. 배운 내용이 생활에 도움이 되었다 (32명, 평균 4.13점)\n  - 매우 만족: 12명 (37.5%)\n  - 만족: 14명 (43.8%)\n  - 보통: 4명 (12.5%)\n  - 불만족: 2명 (6.3%)\n  - 매우 불만족: 0명 (0.0%)\n  긍정 응답 81.3%\n2. 강사의 설명이 이해하기 쉬웠다 (32명, 평균 4.31점)\n  긍정 응답 84.4%\n3. 다음에 배우고 싶은 것은? (32명)\n  - 사진 찍어 보내기: 5명 (15.6%)\n  - 영상 통화: 9명 (28.1%)\n  - 병원·기차 예약: 7명 (21.9%)\n  - 무인 주문기 쓰기: 11명 (34.4%)\n4. 좋았던 점·바라는 점 (주관식, 이름은 뺌)\n  - 손주에게 사진을 처음 보내 봤어요.\n  - 진도가 빨라 따라가기 힘든 날이 있었어요.\n  - 옆에서 도와주는 봉사자가 한 명 더 있으면 좋겠어요.';}
+  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C')sample();
+  window.JT_SAMPLE={what:'가상 만족도 설문 결과(응답 32명)',go:'#prompt',fill:function(){sample();save();render();}};
   function tick(){JT.showNow(new Date());}
   render();save();tick();setInterval(tick,1000);
 })();
@@ -796,5 +799,6 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
 <script src="../ai-kit.js"></script>
 <script>AIK.attach();</script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

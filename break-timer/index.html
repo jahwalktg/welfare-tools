@@ -748,6 +748,17 @@ var FACES={"ready":"data:image/webp;base64,UklGRrw3AABXRUJQVlA4WAoAAAAQAAAApwAAp
   });
   document.addEventListener('visibilitychange',function(){if(!document.hidden){if(running())keepAwake(true);tick();}});
 
+  /* 가상 예시(2026-11-12): 무슨 시간·띄울 말·분·끝나는 시각을 채운다(시작은 안 함) */
+  window.JT_SAMPLE={what:'가상 쉬는 시간: 15분, 화면에 띄울 말, 끝나는 시각',ask:false,go:'#stage',fill:function(){
+    if(running()){if(!window.confirm('지금 가는 타이머를 끝내고 가상 예시 값으로 바꿀까요?'))return false;stop();}
+    S.kind=0;S.mode=KINDS[0].mode;S.min=15;S.label='어르신 스마트폰 교실 쉬는 시간';save();renderControls();
+    var d=new Date(Date.now()+40*60000);d.setMinutes(Math.ceil(d.getMinutes()/5)*5,0,0);
+    if(d.toDateString()===new Date().toDateString()){
+      $('timeIn').value=(d.getHours()<10?'0':'')+d.getHours()+':'+(d.getMinutes()<10?'0':'')+d.getMinutes();
+      $('timeNote').textContent='끝나는 시각도 예시로 넣었습니다. "이 시각에 끝나게 시작"을 누르면 그 시각까지 잽니다.';
+    }
+    tick();
+  }};
   JT.guardLeave(function(){return running();});
   renderControls();tick();
   if(running())keepAwake(true);
@@ -755,5 +766,6 @@ var FACES={"ready":"data:image/webp;base64,UklGRrw3AABXRUJQVlA4WAoAAAAQAAAApwAAp
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

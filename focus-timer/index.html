@@ -797,11 +797,20 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   });
   document.addEventListener('visibilitychange',function(){if(!document.hidden)tick();});
 
+  /* 가상 예시(2026-11-12): 할 일·집중·쉬는 분을 채운다. 오늘 기록은 건드리지 않음 */
+  window.JT_SAMPLE={what:'가상 할 일 하나, 50분 집중·10분 쉬기',ask:false,go:'#stage',fill:function(){
+    if((S.phase==='focus'||S.phase==='rest')&&!window.confirm('지금 하던 집중을 멈추고 가상 예시 값으로 바꿀까요? (이번 집중은 기록되지 않습니다)'))return false;
+    stopArmed=0;S.phase='idle';S.running=false;S.acc=0;S.total=0;S.overSince=0;
+    S.task='어르신 스마트폰 교실 결과보고서';S.focusMin=50;S.restMin=10;save();
+    if(document.activeElement===$('task'))$('task').blur();
+    renderPanel();tick();
+  }};
   JT.guardLeave(function(){return S.phase==='focus'||S.phase==='rest';},'집중 타이머가 진행 중입니다. 이 창을 떠나면 끝날 때 소리가 울리지 않습니다. 그래도 나갈까요?');
   renderPanel();tick();
   setInterval(tick,250);
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

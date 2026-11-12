@@ -677,6 +677,25 @@ $('postForm').addEventListener('change', e => {
 });
 window.addEventListener('resize', () => { if (ST.tab === 'signs') fitBox('sbox1', 'pg1', signPages()); if (ST.tab === 'post') renderPostPreview(); });
 
+/* 가상 예시 (2026-11-12): 「식당·카페·도시락」 꾸러미로 가상 부서의 표지·게시물 칸을 모두 채움 */
+window.JT_SAMPLE = { what: '가상 급식지원팀의 표지 꾸러미와 게시물 7가지', ask: false, go: '#tabs', fill: function () {
+  if ((ST.org || ST.unit || ST.items.length || Object.keys(ST.pf).length) && !confirm('지금 적어 둔 게시물 내용 대신 가상 예시를 넣을까요?\n(인쇄 목록은 그대로 두고 꾸러미 표지만 더합니다)')) return false;
+  const p = PACKS.find(x => x.id === 'food') || PACKS[0], who = ['팀장 김하늘', '조리 담당 이바다', '영양 담당 박구름', '시설 담당 최노을'];
+  ST.pack = p.id; ST.org = '○○복지관'; ST.unit = '급식지원팀 (무료 급식 조리실)';
+  p.signs.forEach(id => { if (!inSel(id)) ST.items.push({ k: 'sign', id, cap: SIGN[id][1], n: 1 }); });
+  p.text.forEach(([k, t]) => { if (!ST.items.some(it => it.k === 'text' && it.text === t)) ST.items.push({ k: 'text', kind: k, text: t, n: 1 }); });
+  ST.pf = {
+    policy: { lead: DEF_POLICY, items: DEF_POLICY_ITEMS, goal: '조리실 칼·화상 사고 0건\n이용자·종사자 안전교육 매월 1회', date: '2026년 11월 12일', title: '관장', boss: '정새벽' },
+    contact: { people: [['안전보건 총괄(기관장)', '정새벽', '내선 100'], ['안전보건 담당자', '최노을', '내선 105'], ['현장 관리감독자(팀장)', '김하늘', '내선 210'], ['조리실 책임자', '이바다', '내선 211']], hosp: '○○병원 응급실', hospTel: '(병원 대표 번호를 적으세요)', gas: '○○도시가스', gasTel: '(고장 신고 번호를 적으세요)', addr: '○○시 ○○구 바다로 123 구름빌딩 1층 ○○복지관' },
+    evac: { exit: '조리실 뒤 철문(주차장 쪽), 1층 정문', route: '조리실 → 뒷문 철문 → 주차장\n식당 홀 → 복도 오른쪽 → 1층 정문', meet: '건물 앞 주차장 화단 옆', ext: '조리실 입구, 식당 홀 배식대 옆', aid: '조리실 사무 책상 아래 서랍', staff: '팀장 김하늘 (없으면 조리 담당 이바다)', img: '' },
+    risk: { date: '2026년 11월 10일', who: '팀장 김하늘, 조리 담당 이바다, 이용자 자원봉사자 대표 박구름', rows: p.risks.map((r, i) => r.concat([who[i % who.length].split(' ').pop(), '2026-12-' + String(Math.min(28, 5 + i * 4)).padStart(2, '0')])) },
+    msds: { rows: [['주방용 세제(중성)', '식기 세척', '조리실 싱크대 아래'], ['락스(염소계 표백제)', '도마·행주 소독', '창고 2단 선반 (잠금)'], ['기름때 제거제', '후드·가스레인지 청소', '창고 2단 선반 (잠금)']], place: '조리실 입구 파란 파일함', staff: '조리 담당 이바다' },
+    check: { title: '작업 전 안전점검표', ym: '2026년 11월', items: p.checks.join('\n') },
+    near: { per: '2' }
+  };
+  ST.post = 'risk'; save(); showTab('post');
+} };
+
 const h0 = location.hash.slice(1);
 showTab(['signs', 'pack', 'post', 'links'].includes(h0) ? h0 : 'signs');
 if (h0.startsWith('printtest')) { /* 인쇄 모양 시험용: #printtest-p4, #printpost-risk */
@@ -688,6 +707,7 @@ window._sf = { SIGNS, signSVG, signPages, postPages, ST, showTab, PACKS, renderP
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 <script src="../remake.js"></script>
 </body>
 </html>

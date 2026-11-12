@@ -783,7 +783,18 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('btnClear').addEventListener('click',function(){S=fresh();save();[['vTitle','title'],['vTo','to'],['vWhen','when'],['vContact','contact'],['vBody','body']].forEach(function(k){$(k[0]).value='';});render();});
   $('pos').addEventListener('click',function(){$('vTitle').focus();});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
-  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C'){S.title='2027년 상반기 어르신 스마트폰 교실 개강 안내';S.to='동 주민센터·경로당 / 지역 어르신';S.when='2027-03-09(화) 10:00~11:30, 복지관 2층 교육실, 쓰시는 스마트폰 지참';S.contact='서비스제공팀 02-000-0000';S.body='어르신 스마트폰 교실을 새로 엽니다. 처음 배우는 분도 올 수 있습니다. 신청은 복지관 안내 창구나 전화로 받습니다.';['vTitle','vTo','vWhen','vContact','vBody'].forEach(function(id,i){$(id).value=S[['title','to','when','contact','body'][i]];});}
+  /* 가상 예시 — #예시 주소와 「가상 예시로 해 보기」 단추가 함께 씀 (지어낸 행사) */
+  function sample(){
+    S.kind='both';S.tone='warm';
+    S.title='2026 사랑의 김장 나눔 자원봉사자 모집 안내';
+    S.to='동 주민센터·자원봉사센터 / 지역 주민';
+    S.when='2026-12-05(토) 09:30~13:00, ○○복지관 앞마당, 앞치마·고무장갑 지참(장화는 복지관에서 빌려 드림)';
+    S.contact='지역조직팀 (복지관 대표전화 내선 3번)';
+    S.body='홀로 사시는 어르신 120가구에 보낼 김장을 함께 담글 자원봉사자 30명을 모십니다. 11월 30일(월)까지 복지관 안내 창구나 전화로 신청해 주세요. 점심은 복지관에서 준비합니다. 봉사 시간은 인정해 드립니다.';
+    ['vTitle','vTo','vWhen','vContact','vBody'].forEach(function(id,i){$(id).value=S[['title','to','when','contact','body'][i]];});
+  }
+  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C')sample();
+  window.JT_SAMPLE={what:'가상 행사 안내 하나(김장 나눔 자원봉사)',go:'#prompt',fill:function(){sample();save();render();}};
   function tick(){JT.showNow(new Date());}
   render();save();tick();setInterval(tick,1000);
 })();
@@ -791,5 +802,6 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
 <script src="../ai-kit.js"></script>
 <script>AIK.attach();</script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

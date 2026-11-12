@@ -797,11 +797,19 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('pos').addEventListener('click',function(){$('vDoc').focus();});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
   $('vDoc').value=S.docName;
-  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C')$('vQ').value=EXS[0];
+  /* 가상 예시 — #예시 주소와 「가상 예시로 해 보기」 단추가 함께 씀 (지어낸 상황) */
+  function sample(){
+    S.doc='jahwal';S.docName=DOCS[0][1];S.ai='gemini';
+    $('vDoc').value=S.docName;
+    $('vQ').value='12월 송년 나눔 행사 때 ○○상사에서 지정후원금 300만 원을 받았는데 50만 원이 남았습니다. 남은 돈을 1월 겨울나기 물품 구입에 써도 되나요? 후원자에게 알리는 결과보고는 언제까지, 어떤 서식으로 해야 하나요?';
+  }
+  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C')sample();
+  window.JT_SAMPLE={what:'가상 질문 하나(지정후원금 남은 돈)',go:'#prompt',fill:function(){sample();save();render();}};
   function tick(){JT.showNow(new Date());}
   render();save();tick();setInterval(tick,1000);
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

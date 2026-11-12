@@ -864,10 +864,19 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('pos').addEventListener('click',function(){$('vName').focus();$('vName').scrollIntoView({block:'center'});});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
   $('vName').value=S.name;$('vUse').value=S.use;$('vFields').value=S.fields;
+  /* 가상 예시 — #예시 주소와 「가상 예시로 해 보기」 단추가 함께 씀 (지어낸 양식) */
+  function sample(){
+    S.name='자원봉사 활동 확인서';S.use='자원봉사자가 활동한 날짜·시간·내용을 확인해 내주는 서류';
+    S.fields='봉사자 이름, 활동일, 활동 시간, 활동 내용, 담당 부서, 확인자, 발급일';S.pid=true;S.ai='gemini';
+    $('vName').value=S.name;$('vUse').value=S.use;$('vFields').value=S.fields;
+  }
+  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C')sample();
+  window.JT_SAMPLE={what:'가상 양식 하나(자원봉사 활동 확인서)',go:'#prompt1',fill:function(){sample();save();render();}};
   function tick(){JT.showNow(new Date());}
   render();save();tick();setInterval(tick,1000);
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

@@ -920,12 +920,23 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
       $('fileNote').textContent='내려받기를 요청했습니다. 파일이 안 생기면 위 글을 복사해 메모장에 보관하세요.';
     }catch(e){$('fileNote').textContent='이 화면에서는 내려받기가 막혀 있습니다. 위 글을 복사해 메모장에 보관하세요.';}
   });
+  /* 예시 안건 단추와 가상 예시 단추가 같이 쓰는 함수(2026-11-12) */
+  function usePreset(p){
+    if(started()&&!S.finished&&!window.confirm('진행 중인 회의 기록이 지워집니다. 예시로 바꿀까요?'))return false;
+    S.title=p.label;S.agendas=fromPreset(p);resetProgress(S);keepAwake(false);save();renderAll();
+  }
+  var SAMPLE={label:'12월 사례관리팀 주간회의',items:[['지난주 결정 사항 확인 (팀장 김하늘)',5],['어르신 스마트폰 교실 결과 공유 (이바다)',10],['김장 나눔 행사 역할 나누기 (박구름)',10],['신규 사례 2건 배정 (최들판)',10],['12월 일정과 공지 (정나무)',5]]};
+  function isPresetList(){
+    var c=JSON.stringify(S.agendas.map(function(a){return [a.name,Number(a.min)];}));
+    return PRESETS.concat([SAMPLE]).some(function(p){return JSON.stringify(p.items)===c;});
+  }
+  window.JT_SAMPLE={what:'가상 회의 안건 5개 (담당자·분)',ask:false,go:'#stage',fill:function(){
+    if(!started()&&!isPresetList()&&!window.confirm('지금 안건 목록이 가상 예시 안건 5개로 바뀝니다. 바꿀까요?'))return false;
+    return usePreset(SAMPLE);
+  }};
   PRESETS.forEach(function(p){
     var b=document.createElement('button');b.type='button';b.className='btn btn-small';b.textContent=p.label;
-    b.addEventListener('click',function(){
-      if(started()&&!S.finished&&!window.confirm('진행 중인 회의 기록이 지워집니다. 예시로 바꿀까요?'))return;
-      S.title=p.label;S.agendas=fromPreset(p);resetProgress(S);keepAwake(false);save();renderAll();
-    });
+    b.addEventListener('click',function(){usePreset(p);});
     $('presetRow').appendChild(b);
   });
   document.addEventListener('keydown',function(e){
@@ -945,5 +956,6 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
 </script>
 <script src="../drop.js"></script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

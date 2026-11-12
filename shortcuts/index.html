@@ -220,9 +220,12 @@ $('btnPrint').addEventListener('click', () => printList(visible(), q ? '단축�
 $('btnPrintMine').addEventListener('click', () => printList(SC.filter(s => star[idOf(s)]), '내 단축키'));
 window.addEventListener('afterprint', () => { $('printArea').innerHTML = ''; });
 render();
+/* 가상 예시(2026-11-12): 찾기 칸에 낱말 하나를 넣어 찾은 결과를 보여 준다. 별표 목록은 건드리지 않음 */
+window.JT_SAMPLE = { what: '예시 찾기 낱말 「캡처」', ask: false, go: '#out', fill: function () { $('q').value = '캡처'; $('q').dispatchEvent(new Event('input', { bubbles: true })); } };
 window._sc = { SC };
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

@@ -1003,11 +1003,25 @@ var FACES={"ready":"data:image/webp;base64,UklGRng7AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('fileInput').addEventListener('change',function(){var f=$('fileInput').files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){try{var o=JSON.parse(String(rd.result||''));var list=(o&&o.tpls)||[];if(!list.length)throw new Error('empty');var added=0;list.forEach(function(t,i){var n=normTpl(t,S.tpls.length+i);if(!n.img)return;if(S.tpls.some(function(x){return x.id===n.id;}))n.id='tpl'+Date.now()+i;S.tpls.push(n);VALS[n.id]={};added++;});if(!added)throw new Error('none');S.cur=S.tpls[S.tpls.length-1].id;save();renderAll();$('fileNote').textContent=added+'개 틀을 불러왔습니다.';}catch(e){$('fileNote').textContent='불러오지 못했습니다. 이 도구에서 내려받은 파일인지 확인하세요.';}};rd.readAsText(f);$('fileInput').value='';});
   $('pos').addEventListener('click',function(){$('foStage').scrollIntoView({block:'start'});});
 
+  /* ---------- 가상 예시 (2026-11-12) — 회의록 예시 틀에 지어낸 내용을 채움. 틀(예시)로 옮겨 가고, 채운 내용은 평소처럼 저장하지 않음 ---------- */
+  var SAMPLE_VALS={"회의명": "12월 이용자 송년 프로그램 준비 회의", "일시": "2026. 11. 19.(목) 14:00", "장소": "○○복지관 2층 회의실", "참석": "관장, 사례관리팀 2명, 재가복지팀 1명, 자원봉사자 대표 1명 (5명)", "작성자": "사례관리팀 김하늘", "확인": "팀장 이바다", "안건": "1. 송년 프로그램(12. 18.) 일정·장소 확정\n2. 자원봉사자 역할 나누기\n3. 이동이 어려운 이용자 지원 방법", "논의 내용": "- 장소: 3층 강당(80석). 이용자 60명, 가족·봉사자 20명 예상\n- 순서: 인사 → 한 해 사진 보기 → 공연(어르신 합창반) → 나눔 선물\n- 자원봉사자 8명 필요: 안내 3, 배식 3, 사진 1, 이동 도움 1\n- 거동이 불편한 이용자 12명은 차량 2대로 모시고, 도착 시간을 따로 안내\n- 선물은 후원 물품(목도리 70개)으로 하고, 남으면 재가 방문 때 전달", "결정 사항 · 할 일": "- 12. 18.(금) 오후 2시, 3층 강당으로 확정 — 이바다\n- 자원봉사자 모집 공고 11. 25.까지 — 김하늘\n- 차량 배차 신청 12. 4.까지 — 재가복지팀\n- 초대장 발송 12. 1.까지 — 사례관리팀"};
+  function sampleFill(){
+    var t=S.tpls.filter(function(x){return x.id==='tpl-example';})[0];
+    if(!t){t=exampleTpl();S.tpls.unshift(t);VALS[t.id]={};}
+    S.cur=t.id;S.mode='fill';sel=null;
+    var v={};t.fields.forEach(function(f){if(SAMPLE_VALS[f.label]!=null)v[f.id]=SAMPLE_VALS[f.label];});
+    VALS[t.id]=v;
+    renderAll();
+    $('copyNote').textContent='가상 회의록 내용을 채웠습니다. "인쇄"로 모양을 확인해 보고, "채운 내용 지우기"로 지우세요.';
+  }
+  window.JT_SAMPLE={what:'가상 회의록 한 장',go:'#foStage',fill:sampleFill};
+
   function tick(){JT.showNow(new Date());}
   renderAll();save();tick();setInterval(tick,1000);
 })();
 </script>
 <script src="../drop.js"></script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

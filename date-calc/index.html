@@ -463,7 +463,17 @@ th{background:var(--bg);font-size:14px}
     }catch(e){toast('파일을 읽지 못했습니다');}};rd.readAsArrayBuffer(f);
   }
   var pasteT;$('lsPaste').addEventListener('input',function(){clearTimeout(pasteT);pasteT=setTimeout(function(){var t=$('lsPaste').value;setTable(t.split(/\r?\n/).map(function(l){return l.split(/\t/);}));},300);});
-  $('lsExample').addEventListener('click',function(){$('lsPaste').value=['성명\t생년월일\t부서','김하늘\t1958.03.14\t○○팀','이바다\t911207-2\t○○팀','박구름\t19900615\t○○팀','최들판\t1966-11-02\t○○가공','정새벽\t030405-3\t○○편의점','한별\t1961.10.30\t○○팀','오솔\t모름\t○○가공'].join('\n');setTable($('lsPaste').value.split('\n').map(function(l){return l.split('\t');}));});
+  $('lsExample').addEventListener('click',function(){$('lsPaste').value=['성명\t생년월일\t부서','김하늘\t1958.03.14\t사례관리팀','이바다\t911207-2\t사례관리팀','박구름\t19900615\t사례관리팀','최들판\t1966-11-02\t급식지원팀','정새벽\t030405-3\t지역조직팀','한별\t1961.10.30\t사례관리팀','오솔\t모름\t재가복지팀'].join('\n');setTable($('lsPaste').value.split('\n').map(function(l){return l.split('\t');}));});
+
+  /* 가상 예시 (2026-11-12, sample.js) — 네 칸 모두 */
+  window.JT_SAMPLE={what:'가상 생년월일·기간·날짜·명단 7명',fill:function(){
+    function put(id,v){var e=$(id);e.value=v;e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));}
+    put('birth','1958.03.14');
+    put('spS','2026-12-01');put('spE','2027-02-28');
+    put('adBase','2026-11-12');put('adUnit','b');put('adN','7');put('adDir','1');
+    $('lsExample').click();
+  }};
+
   $('lsClear').addEventListener('click',function(){$('lsPaste').value='';setTable([]);});
   ['input','change'].forEach(function(ev){['lsBase','lsRule','lsMin','lsMax'].forEach(function(id){$(id).addEventListener(ev,renderList);});});
   window._dc={setTable:setTable,parseBirth:parseBirth,ageOn:ageOn,visibleRows:visibleRows};
@@ -486,6 +496,7 @@ th{background:var(--bg);font-size:14px}
 </script>
 <script src="../drop.js"></script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 <script src="../remake.js"></script>
 </body>
 </html>

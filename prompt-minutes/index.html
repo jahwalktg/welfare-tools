@@ -787,7 +787,15 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
   $('pos').addEventListener('click',function(){$('vName').focus();});
   $('btnCloseCopy').addEventListener('click',function(){$('copyPanel').hidden=true;});
   $('vName').value=S.name;$('vWhen').value=S.when;$('vCols').value=S.cols;
-  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C'){$('vName').value='10월 직원회의';S.name='10월 직원회의';$('vSrc').value='[회의 타이머 기록]\n1. 사업계획 수정안 검토 — 18분\n2. 프로그램실 운영시간 — 12분 (3분 초과)\n3. 송년회 준비 — 7분\n\n[표결]\n1. 2026년 사업계획(안) 승인 — 찬성 7, 반대 1, 기권 1 → 가결\n\n[메모]\n- 사업계획은 지역조직화팀이 10/20까지 수정안\n- 운영시간 11~19시 의견 다수, 이용자 의견 수렴 후 결정\n- 송년회 12/18(금) 후보, 장소는 운영지원팀 알아보기';}
+  /* 가상 예시 — #예시 주소와 「가상 예시로 해 보기」 단추가 함께 씀 (지어낸 회의) */
+  function sample(){
+    S.name='11월 직원회의';S.when='2026-11-24(화) 14:00, 복지관 3층 회의실';
+    S.cols='회의명, 일시, 장소, 참석, 안건, 논의 내용, 결정 사항, 할 일(담당·기한), 다음 회의';S.style='bullet';
+    $('vName').value=S.name;$('vWhen').value=S.when;$('vCols').value=S.cols;
+    $('vSrc').value='[회의 타이머 기록 2026-11-24]\n1. 12월 김장 나눔 행사 준비 — 15분\n2. 2027년 사업계획(안) 검토 — 20분 (5분 초과)\n3. 겨울철 시설 안전점검 — 8분\n\n[표결]\n1. 2027년 사업계획(안) 원안 승인 — 찬성 8, 반대 0, 기권 1 → 가결\n\n[메모]\n- 참석: 관장, 부장, 사례관리팀 3명, 재가복지팀 2명, 급식지원팀 1명, 지역조직팀 2명\n- 김장 나눔 12/5(토) 10시, 복지관 앞마당. 자원봉사자 30명 모집은 지역조직팀이 11/30까지\n- 김장 재료 구입은 급식지원팀, 전달할 120가구 명단 확인은 재가복지팀\n- 사업계획(안) 예산표 숫자 다시 확인 → 부장이 11/27까지\n- 보일러·소화기 점검 12/1~12/3, 시설 담당\n- 다음 회의 12/22(화) 14:00';
+  }
+  if(location.hash==='#예시'||location.hash==='#%EC%98%88%EC%8B%9C')sample();
+  window.JT_SAMPLE={what:'가상 직원회의 기록 하나',go:'#prompt',fill:function(){sample();save();render();}};
   function tick(){JT.showNow(new Date());}
   render();save();tick();setInterval(tick,1000);
 })();
@@ -795,5 +803,6 @@ var FACES={"ready":"data:image/webp;base64,UklGRro5AABXRUJQVlA4WAoAAAAQAAAApwAAp
 <script src="../ai-kit.js"></script>
 <script>AIK.attach();</script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

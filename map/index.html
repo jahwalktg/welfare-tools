@@ -551,6 +551,26 @@ $('btnCard').addEventListener('click', async () => {
   c.toBlob(b => { dl(b, fname('오시는길')); toast('약도 + 안내 그림을 받았습니다'); }, 'image/png');
 });
 
+/* ── 가상 예시 (2026-11-12): 지어낸 동네의 약도와 오시는 길 글 ── */
+window.JT_SAMPLE = { what: '가상 동네 약도와 오시는 길 안내', ask: false, go: '#infoCard', fill: function () {
+  const has = S.els.length > 1 || Object.keys(S.info).some(k => S.info[k]);
+  if (has && !confirm('지금 그린 약도와 적은 글 대신 가상 예시를 넣을까요?\n(「되돌리기」로 약도는 되돌릴 수 있지만, 적은 글은 바뀝니다)')) return false;
+  push(); S.tpl = 'station';
+  S.els = [
+    R('big', 0, 430, 1000, 430, '하늘대로'), R('big', 560, 0, 560, 700, '바다로'), R('small', 560, 220, 1000, 220, '구름길'),
+    P('subway', 300, 470, '하늘역', { line: '#2E9E4F' }), P('exit', 430, 395, '2번 출구'), P('store', 630, 290, '바다편의점'),
+    P('bus', 690, 470, '하늘역 정류장'), P('parking', 900, 330, '공영주차장'),
+    P('building', 800, 160, '구름빌딩'), P('center', 800, 110, '○○복지관 3층'),
+    { id: nid(), t: 'route', pts: [[455, 395], [520, 395], [520, 255], [800, 255], [800, 205]], label: '도보 5분' }
+  ];
+  S.info = { org: '○○복지관', tel: '02-000-0000', addr: '○○시 ○○구 바다로 123', bld: '구름빌딩 3층',
+    subway: '하늘역 2번 출구', walk: '5분 (약 350m)', busStop: '하늘역', busNo: '간선 000, 지선 0000',
+    parking: '건물 주차장이 좁아요. 길 건너 공영주차장(유료)이나 대중교통을 이용해 주세요.',
+    steps: '하늘역 2번 출구로 나와 바다로 쪽으로 직진 200m\n바다편의점을 끼고 오른쪽 구름길로 들어오기\n파란 간판 구름빌딩 3층 (엘리베이터 있음)' };
+  document.querySelectorAll('[data-i]').forEach(el => { el.value = S.info[el.dataset.i] || ''; });
+  sel = null; renderTpls(); render(); renderInfo();
+} };
+
 /* ── 시작 ── */
 try { const v = JSON.parse(localStorage.getItem(KEY) || 'null'); if (v && Array.isArray(v.els)) { S = Object.assign(S, v); uid = 1 + Math.max(0, ...S.els.map(e => +String(e.id).slice(1) || 0)); } } catch (e) {}
 if (!S.els.length) S.els = TPLS[S.tpl].make();
@@ -562,5 +582,6 @@ window._map = { S, render, renderInfo, dirText, mapSvg };
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

@@ -376,10 +376,26 @@ textarea.prompt{min-height:260px;font-size:14px;line-height:1.55;background:var(
     if(!confirm('기관 기본과 카드 '+S.cards.length+'장을 이 브라우저에서 모두 지울까요?'))return;
     AIK.clear();S=AIK.read();[['oType','type'],['oCall','call'],['oTone','tone'],['oAvoid','avoid'],['oExtra','extra']].forEach(function(k){$(k[0]).value='';});resetForm();renderList();$('ioNote').textContent='모두 지웠습니다.';
   });
+  /* 가상 예시 (2026-11-12): 지어낸 ○○복지관의 기관 기본·견본 글·예시 카드. 카드는 칸에만 넣고 저장은 사용자가 「카드 저장」으로 */
+  var EX_SAMPLE='○○복지관\n수신  ○○동 주민센터장\n제목  2026년 겨울나기 김장 나눔 행사 협조 요청\n\n1. 귀 기관의 무궁한 발전을 기원합니다.\n2. 우리 복지관은 혼자 사시는 어르신의 겨울나기를 돕고자 아래와 같이 김장 나눔 행사를 엽니다. 행사 안내와 어르신 추천에 협조하여 주시기 바랍니다.\n\n  가. 일시: 2026. 12. 5.(토) 10:00~13:00\n  나. 장소: ○○복지관 1층 강당\n  다. 대상: 김장 나눔이 필요한 어르신 60가구\n  라. 협조 내용: 동 소식지 안내, 대상 어르신 추천(11. 27.까지)\n  마. 문의: 지역조직팀 김하늘 사회복지사(02-000-0000)\n\n붙임  행사 안내문 1부.  끝.\n\n○○복지관장';
+  var EX_CARD='=== 문서 스타일 카드: 협조 요청 공문 ===\n1. 쓰임: 다른 기관(주민센터·학교 등)에 행사 안내·추천을 부탁하는 공문\n2. 틀\n- 머리: 기관 이름 → 수신 → 제목 (제목은 「연도 + 사업 이름 + 협조 요청」)\n- 본문 번호: 1. → 가. → 1) 순서. 1.은 인사 한 줄, 2.에서 목적과 부탁\n- 2. 아래에 가.일시 나.장소 다.대상 라.협조 내용 마.문의 순서로 한 줄씩\n- 끝: 「붙임  ○○ 1부.  끝.」 → 기관장 이름\n3. 말투: ~합니다 / ~하여 주시기 바랍니다. 자주 쓰는 표현 「귀 기관의 무궁한 발전을 기원합니다」 「아래와 같이」 「협조하여 주시기 바랍니다」\n4. 낱말\n- 날짜는 2026. 12. 5.(토), 시각은 10:00~13:00\n- 「독거노인」 대신 「혼자 사시는 어르신」\n- 문의는 부서 + 이름 + 직함 + 대표 전화\n5. 분량: 본문 12~15줄, 항목마다 한 줄\n6. 채워야 할 칸: 수신 기관, 행사 이름, 일시, 장소, 대상과 인원, 부탁할 일과 마감일, 문의 담당, 붙임 자료\n=== 끝 ===';
+  window.JT_SAMPLE={what:'가상 ○○복지관 공문 견본과 예시 카드',ask:false,go:'#sample',fill:function(){
+    var had=AIK.hasOrg(S)||S.cards.length||$('sample').value.trim()||$('cText').value.trim();
+    if(had&&!confirm('지금 적어 둔 기관 기본과 견본 글 칸 대신 가상 예시를 넣을까요?\n(저장한 카드는 그대로 둡니다. 기관 기본은 예시로 바뀌어 저장됩니다)'))return false;
+    var o={type:'종합사회복지관',call:'어르신, 이용자',tone:'공문은 ~합니다, 안내문은 ~해요',avoid:'수급자, 독거노인, 결손가정 → 쓰지 않음',extra:'날짜는 2026. 12. 5.(토)처럼, 시각은 14:00처럼 씁니다. 기관 이름은 「○○복지관」 한 가지로만 씁니다. 문의는 부서·이름·직함·대표 전화.'};
+    [['oType','type'],['oCall','call'],['oTone','tone'],['oAvoid','avoid'],['oExtra','extra']].forEach(function(k){S.org[k[1]]=o[k[1]];$(k[0]).value=o[k[1]];});
+    var pb=$('howTabs').querySelector('[data-h="paste"]');if(pb&&how!=='paste')pb.click();
+    $('sample').value=EX_SAMPLE;$('names').value='김하늘';keep=new Set();$('fileMsg').textContent='';
+    resetForm();$('cName').value='협조 요청 공문';$('cText').value=EX_CARD;
+    save();maskScan();renderPrompt();
+    $('saveNote').textContent='예시 카드는 아직 저장 전입니다. 써 보려면 「카드 저장」을 누르세요.';
+    $('ioNote').textContent='가상 예시의 기관 기본이 저장되었습니다. 내 기관 것으로 고치거나 「모두 지우기」로 지우세요.';
+  }};
   renderList();
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 <script src="../remake.js"></script>
 </body>
 </html>

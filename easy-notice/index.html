@@ -1666,6 +1666,13 @@ if(typeof module!=='undefined'&&module.exports)module.exports=EN;
 <script src="../ai-kit.js"></script>
 <script>/* AI 주문서 끝에 우리 기관 스타일(기관 기본)을 붙인다 */
 (function(){if(!window.EN||!window.AIK||!EN.buildPrompt)return;var o=EN.buildPrompt;EN.buildPrompt=function(){var p=o.apply(this,arguments),st=AIK.read(),b=st.use?AIK.block(null,st):'';return p&&b?p+'\n\n'+b:p;};})();</script>
-<script src="../videos.js?v=5"></script><script src="../remake.js"></script>
+<script src="../videos.js?v=5"></script>
+<script>/* 가상 예시 (2026-11-12): 지금 열린 모드의 예시 글(쉬운 안내문 = 모집 안내, 공문 점검 = 협조 요청 공문)을 넣는다 — 원래 「예시 넣기」 단추를 그대로 누름(단추가 알아서 물음) */
+window.JT_SAMPLE={ask:false,go:'#h-in',what:'지금 모드의 지어낸 예시 글',fill:function(){
+  var doc=window._en&&window._en.state().mode==='doc',b=document.querySelector('[data-ex="'+(doc?3:0)+'"]');
+  if(!b)return false;var before=document.getElementById('src')?document.getElementById('src').value:null;b.click();
+  if(before!==null&&before.trim()&&document.getElementById('src').value===before)return false; /* 「취소」를 누르면 알림 안 띄움 */
+}};</script>
+<script src="../sample.js"></script><script src="../remake.js"></script>
 </body>
 </html>

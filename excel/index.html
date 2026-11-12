@@ -417,9 +417,42 @@ document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () =>
 $('errs').innerHTML = ERRS.map(e => '<div class="err"><h3>' + esc(e[0]) + '</h3><p><b>' + esc(e[1]) + '</b></p><p>' + esc(e[2]) + '</p><p class="fix">→ ' + esc(e[3]) + '</p></div>').join('');
 if (location.hash === '#err') document.querySelector('.tab[data-tab=err]').click();
 renderList();
+/* 가상 예시 (2026-11-12): 지금 고른 함수의 「수식 만들어 주기」 칸에 지어낸 값을 넣음 */
+const SAMPLE_B = {
+  'VLOOKUP': { look: 'A3', rng: '이용자명단!A:D', col: '4' },
+  'XLOOKUP': { look: 'A3', col: '이용자명단!A:A', ret: '이용자명단!D:D', nf: '명단에 없음' },
+  'INDEX·MATCH': { ret: '이용자명단!D:D', look: 'A3', col: '이용자명단!A:A' },
+  'SUMIF': { crng: 'B2:B120', cond: '"재가복지팀"', srng: 'D2:D120' },
+  'SUMIFS': { srng: 'D:D', c1: 'B:B', v1: '"재가복지팀"', c2: 'A:A', from: '2026-11-01', to: '2026-11-30' },
+  'COUNTIF': { rng: 'C2:C80', cond: '"재가복지팀"' },
+  'COUNTIFS': { r1: 'C:C', c1: '"재가복지팀"', r2: 'E:E', c2: '"여"' },
+  'ROUNDDOWN': { num: 'F3', dig: '-2' },
+  '부가세 나누기': { amt: 'E5' },
+  'DATEDIF': { from: 'C3', to: 'DATE(2026,12,31)', u: 'Y' },
+  '주민번호 → 생년월일': { c: 'B3', p: '8' },
+  'NETWORKDAYS': { s: 'DATE(2026,11,2)', e: 'DATE(2026,11,30)', h: '공휴일!A2:A20' },
+  'TEXT': { v: 'B3', fm: 'yyyy. m. d.(aaa)' },
+  'SUBSTITUTE': { c: 'D3', o: ' ', n: '' },
+  'IF': { cond: 'E3>=18', y: '"수료"', n: '"보충 필요"' },
+  'IFERROR': { x: 'VLOOKUP(A3,이용자명단!A:D,4,FALSE)', e: '확인 필요' },
+  '중복 찾기': { rng: '$B$2:$B$300', c: 'B2' }
+};
+window.JT_SAMPLE = {
+  what: '고른 함수의 수식 칸에 가상 표 위치',
+  fill: function () {
+    let f = FN.find(x => x.n === cur);
+    if (!f || !f.b || !SAMPLE_B[f.n]) { cur = 'VLOOKUP'; q = ''; cat = ''; $('q').value = ''; renderList(); f = FN.find(x => x.n === cur); }
+    else renderDetail();
+    const v = SAMPLE_B[f.n];
+    $('detail').querySelectorAll('[data-b]').forEach(el => { if (v[el.dataset.b] != null) el.value = v[el.dataset.b]; });
+    buildNow(f);
+  },
+  go: '#detail'
+};
 window._xl = { FN };
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>

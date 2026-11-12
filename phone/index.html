@@ -600,10 +600,30 @@ if (typeof module !== 'undefined' && module.exports) module.exports = PHONE;
     renderPrac();
   }
 
+  /* ── 가상 예시 (2026-11-12): 지어낸 기관·부서·매뉴얼 빈칸·내선 번호표 — 저장 꼴은 PHONE.clean으로 맞춤 ── */
+  window.JT_SAMPLE = { what: '가상 ○○복지관 재가복지팀의 전화 응대판', ask: false, go: '#mentBox', fill: function () {
+    var saved = null; try { saved = localStorage.getItem(PHONE.KEY); } catch (e) { }
+    if (saved && !confirm('이 브라우저에 저장한 기관 정보·멘트·매뉴얼 칸 대신 가상 예시를 넣을까요?\n(지금 저장한 것은 바뀝니다)')) return false;
+    st = PHONE.clean({
+      org: { name: '○○복지관', dept: '재가복지팀', who: 'title', title: '사회복지사', me: '', call: '어르신', tel: '02-000-0000', hours: '평일 9시~18시' },
+      ment: {},
+      manual: {
+        long: '10분이 넘으면 「말씀 잘 들었습니다. 정리해서 담당자가 다시 전화드리겠습니다」로 마무리하고, 받은 내용은 전화 메모지에 적어 팀장에게 전합니다.',
+        loud: '목소리를 낮추고 천천히 말합니다. 「불편을 드려 죄송합니다. 끝까지 듣겠습니다」. 욕설이 이어지면 「이대로는 통화를 이어 가기 어렵습니다」라고 한 번 알리고 팀장에게 넘깁니다.',
+        repeat: '같은 문의가 하루 세 번이 넘으면 응대 기록에 적고, 팀 회의에서 한 사람이 맡아 정해진 시간에 다시 전화드리는 방식으로 정합니다.',
+        hard: '혼자 끝까지 받지 않아도 됩니다. 「담당자와 확인해서 다시 전화드리겠습니다」로 마무리한 뒤 팀장(내선 210)에게 바로 알리고, 쉬는 시간을 가집니다.'
+      },
+      ext: [{ d: '안내 데스크', n: '내선 100' }, { d: '재가복지팀', n: '내선 210' }, { d: '사례관리팀', n: '내선 220' }, { d: '급식지원팀', n: '내선 230' }, { d: '총무팀(후원 문의)', n: '내선 105' }, { d: '팩스', n: '02-000-0001' }],
+      size: 'm', memo: 4
+    });
+    prac = null; save(); fillOrg(); fillMan(); renderExt(); render();
+  } };
+
   fillOrg(); fillMan(); renderExt(); render();
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 <script src="../remake.js"></script>
 </body>
 </html>

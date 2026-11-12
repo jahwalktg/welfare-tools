@@ -409,7 +409,7 @@ document.querySelectorAll('.mode').forEach(b => b.onclick = () => {
 
 /* ═════════ 나누기 ═════════ */
 let S = null; // { bytes, name, doc, n, thumbs[], texts[], names[] }
-App.bindDrop($('dropS'), $('fileS'), async f => {
+const loadSplit = async f => {
   if (!/\.pdf$/i.test(f.name)) { toast('PDF 파일만 넣을 수 있습니다'); return; }
   $('loadedS').classList.remove('hidden'); $('loadedS').textContent = f.name + ' 읽는 중…';
   try {
@@ -422,7 +422,8 @@ App.bindDrop($('dropS'), $('fileS'), async f => {
     renderPages();
     for (let i = 1; i <= S.n; i++) { const pg = await doc.getPage(i); S.thumbs[i - 1] = await renderPage(pg, 220); const el = $('pg' + i); if (el) { el.querySelector('.ph').replaceWith(S.thumbs[i - 1]); } }
   } catch (e) { $('loadedS').textContent = '읽지 못했습니다: ' + (e.message || e); S = null; }
-});
+};
+App.bindDrop($('dropS'), $('fileS'), loadSplit);
 
 function groups(){
   const u = document.querySelector('input[name=unit]:checked').value, n = S.n, g = [];
@@ -673,10 +674,11 @@ $('goMerge').onclick = async () => {
 
 /* ═════════ 용량 줄이기 ═════════ */
 let K = null;
-App.bindDrop($('dropK'), $('fileK'), f => {
+const loadShrink = f => {
   if (!/\.pdf$/i.test(f.name)) { toast('PDF 파일만 넣을 수 있습니다'); return; }
   K = f; $('loadedK').classList.remove('hidden'); $('loadedK').textContent = `${f.name} · ${mb(f.data.length)}`; $('stepK2').classList.remove('hidden');
-});
+};
+App.bindDrop($('dropK'), $('fileK'), loadShrink);
 $('goShrink').onclick = async () => {
   if (!K) return;
   $('goShrink').disabled = true; $('resK').classList.add('hidden'); prog('progK', 0);
@@ -691,8 +693,83 @@ $('goShrink').onclick = async () => {
   } catch (e) { toast('줄이지 못했습니다: ' + (e.message || e)); }
   prog('progK', null); $('goShrink').disabled = false;
 };
+
+/* ═════════ 가상 예시 (2026-11-12) — 지어낸 수료증 PDF·사진을 이 화면 안에서 그려 넣음 (내려받기 없음) ═════════
+   그림으로 그린 PDF라 「쪽에서 읽기」는 못 하고, 이름 목록을 붙여 넣어 「목록대로 넣기」를 누른 것과 같게 채운다. */
+const SAMPLE = {
+  title: '2026 어르신 디지털 배움 교실',
+  period: '2026. 10. 6. ~ 2026. 11. 24. (8회 16시간)',
+  place: '○○복지관',
+  names: ['김하늘', '이바다', '박솔', '최다온', '정이안', '윤새봄'],
+  pdfName: '가상예시_디지털배움교실_수료증(6명).pdf',
+  lesson: '오늘 배울 것: 사진 보내기 · 영상 통화',
+  photos: [['가상예시_1_활동사진.jpg', '사진', '어르신 디지털 배움 교실 3회차'], ['가상예시_2_영수증.jpg', '영수증', '○○문구']]
+};
+function sampleCanvas(w, h){ const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, w, h); g.textAlign = 'center'; g.textBaseline = 'middle'; return [c, g]; }
+function sampleCert(name, i){
+  const [c, g] = sampleCanvas(1240, 1754);
+  g.strokeStyle = '#B8963E'; g.lineWidth = 14; g.strokeRect(60, 60, 1120, 1634); g.lineWidth = 3; g.strokeRect(92, 92, 1056, 1570);
+  g.fillStyle = '#555'; g.font = '28px sans-serif'; g.textAlign = 'left'; g.fillText('No. 2026-' + String(i + 1).padStart(4, '0'), 140, 160);
+  g.textAlign = 'center'; g.fillStyle = '#222'; g.font = 'bold 110px serif'; g.fillText('수 료 증', 620, 370);
+  g.textAlign = 'left'; g.font = '42px sans-serif';
+  [['성    명', name], ['과    정', SAMPLE.title], ['기    간', SAMPLE.period]].forEach(([k, v], j) => g.fillText(k + ' : ' + v, 170, 590 + j * 90, 900));
+  g.textAlign = 'center'; g.font = '40px sans-serif';
+  g.fillText('위 사람은 ' + SAMPLE.place + '에서 운영한 위 과정을', 620, 1000, 960);
+  g.fillText('성실히 마쳤기에 이 증서를 드립니다.', 620, 1070, 960);
+  g.font = '40px sans-serif'; g.fillText('2026년 11월 24일', 620, 1260);
+  g.font = 'bold 54px serif'; g.fillText(SAMPLE.place + '장', 600, 1420);
+  g.strokeStyle = '#C62828'; g.lineWidth = 5; g.beginPath(); g.arc(880, 1420, 52, 0, Math.PI * 2); g.stroke(); g.fillStyle = '#C62828'; g.font = 'bold 26px sans-serif'; g.fillText('(직인)', 880, 1420);
+  g.fillStyle = '#7A5AF8'; g.font = '24px sans-serif'; g.fillText('가상 예시 — 지어낸 자료입니다', 620, 1620);
+  return c;
+}
+function samplePhoto(kind, cap){
+  const [c, g] = sampleCanvas(1200, 900);
+  if (kind === '영수증') {
+    g.fillStyle = '#E6E9EF'; g.fillRect(0, 0, 1200, 900); g.fillStyle = '#fff'; g.fillRect(380, 40, 440, 780);
+    g.fillStyle = '#222'; g.font = 'bold 40px sans-serif'; g.fillText('영 수 증', 600, 110); g.font = '28px sans-serif'; g.fillText(cap, 600, 170);
+    g.font = '26px sans-serif';
+    [['교재 인쇄 (20부)', '60,000'], ['색지 2묶음', '8,000'], ['네임펜 10개', '12,000']].forEach(([a, b], i) => { g.textAlign = 'left'; g.fillText(a, 410, 260 + i * 60); g.textAlign = 'right'; g.fillText(b, 790, 260 + i * 60); });
+    g.fillRect(410, 450, 380, 3); g.font = 'bold 30px sans-serif'; g.textAlign = 'left'; g.fillText('합계', 410, 500); g.textAlign = 'right'; g.fillText('80,000원', 790, 500);
+    g.textAlign = 'center'; g.font = '22px sans-serif'; g.fillStyle = '#666'; g.fillText('2026. 11. 17. 14:32', 600, 580);
+  } else {
+    g.fillStyle = '#F4EBD9'; g.fillRect(0, 0, 1200, 900); g.fillStyle = '#2F5D50'; g.fillRect(200, 80, 800, 380);
+    g.fillStyle = '#fff'; g.font = 'bold 44px sans-serif'; g.fillText(cap, 600, 220, 740); g.font = '32px sans-serif'; g.fillText(SAMPLE.lesson, 600, 320, 740);
+    for (let i = 0; i < 3; i++) { g.fillStyle = '#333'; g.fillRect(220 + i * 330, 545, 120, 55); g.fillStyle = '#B07A47'; g.fillRect(150 + i * 330, 600, 260, 40); }
+  }
+  g.textAlign = 'center'; g.fillStyle = '#5B3FD0'; g.font = 'bold 22px sans-serif'; g.fillText('가상 예시 그림 · 지어낸 자료', 600, 865);
+  return c;
+}
+async function samplePdf(){
+  const out = await PDFLib.PDFDocument.create();
+  for (let i = 0; i < SAMPLE.names.length; i++) {
+    const jpg = await out.embedJpg(await bytesOf(await toBlob(sampleCert(SAMPLE.names[i], i), 'image/jpeg', 0.8)));
+    out.addPage([595.28, 841.89]).drawImage(jpg, { x: 0, y: 0, width: 595.28, height: 841.89 });
+  }
+  return out.save();
+}
+async function sampleFill(){
+  if (typeof PDFLib === 'undefined' || typeof pdfjsLib === 'undefined') { toast('PDF 도구를 불러오지 못했습니다. 인터넷 연결을 확인한 뒤 새로 고침해 주세요.'); return; }
+  document.querySelector('.mode[data-m="split"]').click();
+  const pdf = await samplePdf();
+  /* 나누기: 수료증 6쪽 → 쪽마다 한 파일, 이름 목록대로 */
+  await loadSplit({ name: SAMPLE.pdfName, data: pdf });
+  if (!S) return;
+  document.querySelector('input[name=unit][value="1"]').checked = true; $('ranges').classList.add('hidden');
+  $('pattern').value = '{번호}_{이름}_수료증';
+  $('names').value = SAMPLE.names.join('\n');
+  $('applyNames').click();
+  /* 합치기: 같은 PDF + 사진 2장 / 용량 줄이기: 같은 PDF (탭을 누르면 보임) */
+  M = []; $('nameM').value = '';
+  await addMerge({ name: SAMPLE.pdfName, data: pdf });
+  for (const [n, kind, cap] of SAMPLE.photos) await addMerge({ name: n, data: await bytesOf(await toBlob(samplePhoto(kind, cap), 'image/jpeg', 0.85)) });
+  $('nameM').value = '가상예시_교육 증빙서류 전체';
+  loadShrink({ name: SAMPLE.pdfName, data: pdf });
+  $('stepS3').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+window.JT_SAMPLE = { what: '가상 수료증 6명분 PDF(나누기) · 사진 2장(합치기)', fill: () => { sampleFill().catch(e => toast('예시를 넣지 못했습니다: ' + (e.message || e))); } };
 })();
 </script>
 <script src="../videos.js?v=5"></script>
+<script src="../sample.js"></script>
 </body>
 </html>
