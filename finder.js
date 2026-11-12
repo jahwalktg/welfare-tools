@@ -4,6 +4,7 @@
 (function () {
   var KW = {
     'search': '지침 찾기 지침찾기 관리안내 사회복지시설 관리안내 사회복지관 업무처리 안내 서울시 처우개선 인건비 가이드라인 호봉 경력인정 수당 후원금 운영위원회 재무회계규칙 예산 결산 안전점검 책임보험 시설평가 쪽수 근거 작년 비교 개정 바뀐점 원문',
+    'benefit-find': '복지제도 찾기 복지로 복지서비스 제도 찾기 지원 가능한 제도 받을 수 있는 대상자 맞춤 생애주기 가구상황 저소득 장애인 한부모 다문화 다자녀 보훈 노인 아동 청년 영유아 임신 출산 지자체 중앙부처 지원금 바우처 수당 감면 난방비 에너지바우처 기초연금 장애인연금 신청방법 선정기준 문의처 상담 준비 자원 연계 서비스 연계',
     'basic': '국기초 가늠표 국민기초생활보장 수급 가늠 소득인정액 생계급여 의료급여 주거급여 교육급여 기준중위소득 선정기준 부양의무자 근로소득공제 기본재산액 차상위 제도 복지제도 모의계산',
     'guide': '신입 안내서 처음 입사 신입 용어 사전 쉬운말 보조금 후원금 결산 예산 추경 이월금 품의 지출결의 4대보험 연차 취업규칙 인건비가이드라인 호봉 법정의무교육 운영위원회 시설평가 안전점검 희망이음 사례관리 한해달력 체크리스트 인수인계 품의서 견적서 지출결의서 결재 기안 수입결의 전월이월금 관항목 전용 예비비 법인전입금 클린카드 비지정후원금 임면보고 경력인정 책임보험 원천세 이직확인서 절차',
     'phone': '전화 응대 전화응대 멘트 대본 스크립트 통화 메모지 전화메모 민원 내선 인사말 신입 전화예절 당겨받기 돌려주기 악성민원',
@@ -51,15 +52,15 @@
     'gangnam': '지역공동도구 다른지역 틀나눔 강남구 강남 이음도구 공동도구 게시판 키워드 찾습니다 나눔 일정 프로그램 제안 시연 협의 시설네트워크 연계 의뢰'
   };
   var ROLES = [
-    ['case', '사례관리·상담', ['search', 'basic', 'phone', 'guide', 'mask-privacy', 'date-calc', 'list-compare', 'doc-remake', 'easy-notice', 'prompt-notice', 'prompt-guide', 'repeat-checklist', 'gangnam']],
+    ['case', '사례관리·상담', ['search', 'benefit-find', 'basic', 'phone', 'guide', 'mask-privacy', 'date-calc', 'list-compare', 'doc-remake', 'easy-notice', 'prompt-notice', 'prompt-guide', 'repeat-checklist', 'gangnam']],
     ['prog', '프로그램·교육', ['attendance', 'cert-print', 'group-maker', 'random-pick', 'survey-tally', 'doc-remake', 'prompt-survey', 'break-timer', 'qr', 'file-tools', 'face-mask']],
     ['org', '지역조직·자원봉사', ['attendance', 'group-maker', 'survey-tally', 'show-vote', 'newsletter', 'greeting', 'qr', 'map', 'labels', 'cert-print', 'doc-remake', 'easy-notice']],
     ['acct', '행정·회계', ['search', 'guide', 'work-board', 'eval-folders', 'repeat-checklist', 'leave-tracker', 'date-calc', 'excel', 'form-overlay', 'form-prompt', 'doc-remake', 'easy-notice', 'style-card', 'prompt-minutes', 'show-vote', 'shortcuts']],
     ['fund', '후원·홍보', ['newsletter', 'press', 'greeting', 'easy-notice', 'doc-remake', 'labels', 'face-mask', 'map', 'qr', 'prompt-directions']],
     ['fac', '총무·시설·안전', ['work-board', 'eval-folders', 'phone', 'safety', 'safety-post', 'safety-links', 'repeat-checklist', 'leave-tracker', 'meeting-timer', 'labels']],
-    ['new', '처음 왔어요', ['search', 'guide', 'work-board', 'phone', 'style-card', 'ai-howto', 'repeat-checklist', 'mask-privacy', 'shortcuts', 'excel']]
+    ['new', '처음 왔어요', ['search', 'benefit-find', 'guide', 'work-board', 'phone', 'style-card', 'ai-howto', 'repeat-checklist', 'mask-privacy', 'shortcuts', 'excel']]
   ];
-  var QUICK = ['우리 기관 스타일', '문서 바꾸기', '지침 찾기', '인수인계', '공문 점검', '신입 안내서', '국기초 가늠', '만 나이', '명단 대조', '개인정보 가리기', '수료증 나누기', '주소 라벨', '소식지', '안내문 쉬운 말', '안전표지', '회의록'];
+  var QUICK = ['우리 기관 스타일', '문서 바꾸기', '지침 찾기', '복지제도 찾기', '인수인계', '공문 점검', '신입 안내서', '국기초 가늠', '만 나이', '명단 대조', '개인정보 가리기', '수료증 나누기', '주소 라벨', '소식지', '안내문 쉬운 말', '안전표지', '회의록'];
   var KEY = 'welfare-tools.mybox.v1';
 
   var root = document.getElementById('finder'); if (!root) return;
